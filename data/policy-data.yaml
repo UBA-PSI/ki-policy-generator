@@ -1,0 +1,629 @@
+# KI-Policy-Generator - Textbausteine
+# Version: 3.0
+# Sprache: de
+#
+# Hinweise zur Bearbeitung:
+# - Texte sind in Markdown formatiert
+# - Für Fettdruck: **text**
+# - Für Kursiv: *text*
+# - Für Listen: - item (mit Bindestrich)
+# - Mehrzeilige Texte mit | beginnen
+
+version: "3.0"
+language: "de"
+
+metadata:
+  title: "KI-Policy-Creator für Lehrende"
+  subtitle: "Erstellen Sie Ihre individuelle KI-Nutzungsrichtlinie"
+  default_document_title: "KI-Richtlinie für meine Lehrveranstaltung"
+  default_document_intro: |
+    Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Ziel ist es, Klarheit für Sie als Studierende zu schaffen und eine faire Bewertung zu gewährleisten, während Sie gleichzeitig die Möglichkeiten von KI erkunden können. Bitte fragen Sie nach, wenn Teile dieser Richtlinie unklar sind.
+
+categories:
+  # ============================================================
+  # KATEGORIE 1: Grundlagen und Lernziele
+  # ============================================================
+  - id: "grundlagen-lernziele"
+    title: "1. Grundlagen und Lernziele"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "grundprinzip"
+        title: "Grundprinzip zum KI-Einsatz"
+        guidance: |
+          Legen Sie zu Beginn klar fest, ob und wie KI genutzt werden darf. Eine grundsätzliche Erlaubnis mit spezifischen Einschränkungen ist oft praktikabler als ein generelles Verbot. Dieser Baustein schafft eine klare Basis.
+        items:
+          - id: "grundsatz-erlaubt"
+            tags:
+              - { label: "Grundsatz", type: "grundsatz" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung grundsätzlich als Hilfsmittel zur Unterstützung des Lernprozesses erlaubt. Es gelten jedoch die spezifischen Regelungen dieser Policy bezüglich erlaubter und verbotener Nutzung, Kennzeichnung und akademischer Integrität.
+
+          - id: "grundsatz-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** KI ist Teil der Lebens- und Arbeitswelt. Statt eines Verbots soll ein transparenter und reflektierter Umgang gefördert werden. Diese grundsätzliche Erlaubnis entbindet Sie aber nicht von der Pflicht zur Kennzeichnung und zur Einhaltung der Regeln guter wissenschaftlicher Praxis. Ihre Eigenleistung und Ihr kritisches Denken stehen im Vordergrund.
+
+      # ----------------------------------------------------------
+      - id: "lernziele"
+        title: "Lernziele in Bezug auf KI"
+        guidance: |
+          Als Lehrperson können Sie hier festlegen, welche KI-bezogenen Kompetenzen in Ihrer Lehrveranstaltung adressiert werden. Dies hilft Studierenden, den Fokus zu verstehen. Wählen Sie zwischen einer Standard- und einer erweiterten Variante. Passen Sie die Aufzählung an die tatsächlichen Inhalte Ihrer Lehrveranstaltung an.
+        items:
+          - id: "kompetenzen-standard"
+            tags:
+              - { label: "Kompetenzen", type: "kompetenz" }
+              - { label: "Regel: Standard", type: "regel-standard" }
+            text: |
+              In dieser Lehrveranstaltung sollen Sie folgende grundlegende KI-bezogene Kompetenzen entwickeln bzw. vertiefen:
+
+              - Kritisches Beurteilen von KI-generierten Inhalten auf Richtigkeit, Relevanz und mögliche Verzerrungen (Bias).
+              - Effektives Formulieren von Anfragen (Prompts) zur Erzielung präziser und hilfreicher Ergebnisse.
+              - Reflektierter Einsatz von KI-Werkzeuge als Ergänzung zum eigenen Denken und zur Unterstützung von Lernprozessen.
+              - Transparente und korrekte Dokumentation der KI-Nutzung im akademischen Kontext gemäß den Vorgaben.
+
+          - id: "kompetenzen-erweitert"
+            tags:
+              - { label: "Kompetenzen", type: "kompetenz" }
+              - { label: "Regel: Erweitert", type: "regel-erweitert" }
+            text: |
+              Zusätzlich zu den grundlegenden KI-Kompetenzen sollen Sie in dieser Lehrveranstaltung lernen:
+
+              - Die spezifischen Stärken und Schwächen verschiedener KI-Modelle und Betriebsarten (z.B. lokale Modelle versus kommerziell angebotene Modelle) für unterschiedliche Aufgaben einzuschätzen.
+              - Strategien zur Überprüfung und Validierung von KI-generierten Informationen mithilfe wissenschaftlicher Methoden anzuwenden.
+              - Die ethischen Implikationen des KI-Einsatzes im Fachgebiet zu diskutieren.
+              - KI-Werkzeuge zur [konkrete fachspezifische Anwendung, z.B. Code-Generierung, Datenanalyse, Literaturrecherche] gezielt einzusetzen.
+
+          - id: "lernziele-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Der Umgang mit KI erfordert spezifische Fähigkeiten. Diese Lernziele sollen Ihnen helfen, KI nicht nur zu nutzen, sondern dies auch kritisch, effektiv und verantwortungsbewusst im akademischen Kontext zu tun. Je nach Ausrichtung der Lehrveranstaltung können die Anforderungen variieren (Standard vs. Erweitert).
+
+  # ============================================================
+  # KATEGORIE 2: Erlaubte und verbotene Nutzung
+  # ============================================================
+  - id: "erlaubte-verbotene-nutzung"
+    title: "2. Erlaubte und verbotene Nutzung"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "erlaubt-ohne-kennzeichnung"
+        title: "Erlaubte Nutzung ohne Kennzeichnungspflicht"
+        guidance: |
+          Hier können Sie definieren, welche KI-Nutzungen als unkritische, persönliche Lernhilfen gelten und keiner Kennzeichnung bedürfen. Dies reduziert Unsicherheiten bei Studierenden und vermeidet unnötigen Dokumentationsaufwand.
+        items:
+          - id: "erlaubt-ohne-kennzeichnung-regel"
+            tags:
+              - { label: "Empfohlen", type: "empfohlen" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Folgende Nutzungsarten von KI sind als persönliche Lernhilfe erlaubt und müssen **nicht** gesondert gekennzeichnet werden:
+
+              - Nutzung zur individuellen Prüfungsvorbereitung (z.B. Erstellen von Übungsfragen, Zusammenfassungen eigener Notizen, Lernkarten).
+              - Generieren von Erklärungen zu Konzepten oder Fachbegriffen für das eigene Verständnis.
+              - Übersetzen von fremdsprachigen Texten (z.B. Fachartikeln) für das eigene Verständnis.
+              - Nutzung in explizit dafür vorgesehenen Übungsphasen während der Lehrveranstaltung (wenn von der Lehrperson angeleitet).
+              - Rechtschreib- und Grammatikprüfung durch Standard-Software (z.B. in Word).
+              - Unterstützung bei der Formatierung und Zitierweise von schriftlichen Aufgaben.
+
+          - id: "erlaubt-ohne-kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Wenn Sie KI nur für sich selbst zum Lernen nutzen (z.B. zum Verstehen von Texten, zur Prüfungsvorbereitung), ohne dass dies direkt in eine bewertete Abgabe einfließt, müssen Sie das nicht angeben.
+
+      # ----------------------------------------------------------
+      - id: "erlaubt-mit-kennzeichnung"
+        title: "Erlaubte Nutzung mit Kennzeichnungspflicht"
+        guidance: |
+          Legen Sie fest, welche unterstützenden KI-Nutzungen erlaubt sind, aber dokumentiert werden müssen, da sie die abgegebene Leistung beeinflussen können. Betonen Sie die Notwendigkeit der Eigenleistung bei der Kernarbeit.
+        items:
+          - id: "erlaubt-mit-kennzeichnung-regel"
+            tags:
+              - { label: "Empfohlen", type: "empfohlen" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Folgende Nutzungsarten von KI sind erlaubt, sofern sie transparent und nachvollziehbar gemäß den Vorgaben dieser Richtlinie gekennzeichnet werden:
+
+              - Unterstützung bei der Ideenfindung, Strukturierung und Gliederung von schriftlichen Arbeiten, Hausaufgaben oder Präsentationen.
+              - Hilfe bei der sprachlichen Überarbeitung und Verbesserung eigener Texte (über reine Rechtschreib-/Grammatikkorrektur hinausgehend, z.B. Stil, Formulierungsvorschläge).
+              - Generieren von Beispielen, Analogien oder alternativen Erklärungsansätzen zur Veranschaulichung eigener Argumente.
+              - Brainstorming zu möglichen Argumenten, Gegenargumenten oder Perspektiven für eine Analyse.
+              - Unterstützung bei der Literaturrecherche (z.B. Vorschläge für Suchbegriffe, Zusammenfassung von Abstracts, Suche nach Quellen mit "Deep Research"-Funktionen von KI-Werkzeuge.
+              - Generierung von Code-Snippets oder Debugging-Hilfe (falls relevant für das Fach).
+              - Erstellung von Visualisierungen und Grafiken zur Unterstützung von Präsentationen oder schriftlichen Arbeiten (z.B. durch Tools zur automatischen Visualisierung von Daten oder Konzepten).
+              - Transkription und Zusammenfassung von Audio-/Videoquellen.
+
+              **Entscheidend ist:** Die Kernleistung (Analyse, Argumentation, kritische Einordnung, eigene Schlussfolgerungen) muss von Ihnen selbst erbracht werden.
+
+          - id: "erlaubt-mit-kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Wenn KI Sie bei Aufgaben unterstützt, die bewertet werden (z.B. Ideenfindung, Gliederung, Textverbesserung), müssen Sie dies angeben. Es geht darum, transparent zu machen, woher die Unterstützung kam. Die eigentliche Denkarbeit und die Verantwortung für den Inhalt liegen aber bei Ihnen.
+
+              *Hinweise zur Kennzeichnungspflicht folgen in Abschnitt 4 dieser Policy.*
+
+      # ----------------------------------------------------------
+      - id: "verboten"
+        title: "Verbotene KI-Nutzung"
+        guidance: |
+          Definieren Sie klare Grenzen, um Täuschungsversuche und die Umgehung von Lernzielen zu verhindern. Verweisen Sie auf die APO und die Konsequenzen. Wenn Sie bestimmte Nutzungsarten verbieten, sollten Sie dies didaktisch begründen und darauf achten, dass Sie die Missachtung der Verbote auch tatsächlich zuverlässig erkennen können.
+        items:
+          - id: "verboten-regel"
+            tags:
+              - { label: "Empfohlen", type: "empfohlen" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Folgende Nutzungsarten von KI sind in dieser Lehrveranstaltung ausdrücklich **nicht** erlaubt:
+
+              - Einreichen von KI-generierten Inhalten als eigene Arbeit ohne ausreichende Kennzeichnung – dies kann als Täuschungsversuch gewertet werden.
+              - Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich durch die Prüfungsordnung oder die Lehrperson gestattet – dies kann als Täuschungsversuch gewertet werden.
+              - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken, kreatives Problemlösen, Analysefähigkeiten oder spezifische methodische Kompetenzen erfordern.
+              - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis (siehe Abschnitt 3).
+
+          - id: "verboten-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** KI darf nicht dazu verwendet werden, eigene Arbeit vorzutäuschen oder Lernziele zu umgehen. Das Einreichen von KI-generierten Texten als eigene Leistung ohne Kennzeichnung ist ein Täuschungsversuch, der in der Regel das Nichtbestehen der Prüfung zur Folge hat.
+
+  # ============================================================
+  # KATEGORIE 3: Urheberrecht und Datenschutz
+  # ============================================================
+  - id: "urheberrecht-datenschutz"
+    title: "3. Urheberrecht und Datenschutz"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "urheberrecht"
+        title: "Umgang mit urheberrechtlich geschützten Materialien"
+        guidance: |
+          Dies ist ein heikler Aspekt. Standardmäßig sollten Uploads von Kursmaterialien zu externen Diensten verboten werden, da Kursunterlagen in der Regel urheberrechtlich geschützt sind. Wenn Sie Ausnahmen erlauben möchten (z.B. für spezifische, von Ihnen freigegebene Materialien), wählen Sie die alternative Regel und definieren Sie die Bedingungen klar.
+        items:
+          - id: "urheberrecht-verbot"
+            tags:
+              - { label: "Urheberrecht", type: "recht" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel: Standard (Verbot)", type: "regel-standard" }
+            text: |
+              Die in diesem Kurs bereitgestellten Lehrmaterialien (Folien, Skripte, Aufgaben etc.) sind urheberrechtlich geschützt. Es ist Ihnen **nicht** gestattet, diese Materialien oder wesentliche Teile davon zu externen Cloud-basierten KI-Diensten (wie ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) hochzuladen oder diese dort zur Analyse oder Verarbeitung einzugeben.
+
+          - id: "urheberrecht-erlaubnis"
+            tags:
+              - { label: "Urheberrecht", type: "recht" }
+              - { label: "Regel: Alternativ (Erlaubnis)", type: "regel-alternativ" }
+            text: |
+              Die meisten in diesem Kurs bereitgestellten Lehrmaterialien sind urheberrechtlich geschützt. Für folgende, explizit gekennzeichnete Materialien ist die Verarbeitung durch KI-Dienste jedoch unter Auflagen erlaubt:
+
+              - Materialien im Ordner "[Name des Ordners, z.B. 'Freigegeben für KI']".
+              - Dokumente, die explizit mit dem Vermerk "[z.B. 'KI-Nutzung erlaubt']" gekennzeichnet sind.
+
+              Dieses Nutzungsrecht **gilt nur** für die Dienste [Liste der erlaubten Dienste, z.B. HAWKI, ChatGPT, Copilot, Claude, Gemini] und nur zum Zweck [Zweck definieren, z.B. der persönlichen Zusammenfassung, der Verständniskontrolle]. Das Hochladen zu anderen Diensten oder zu anderen Zwecken ist nicht gestattet.
+
+              Alle anderen Materialien dürfen **nicht** zu KI-Diensten hochgeladen werden.
+
+          - id: "urheberrecht-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Kursmaterialien sind wie Lehrbücher geistiges Eigentum der Lehrenden oder der Universität. Das Hochladen zu externen Diensten kann eine unerlaubte Verbreitung darstellen und gegen das Urheberrecht verstoßen. Halten Sie sich daher genau an die Vorgaben, welche Materialien Sie ggf. für KI-Werkzeuge nutzen dürfen.
+
+      # ----------------------------------------------------------
+      - id: "datenschutz"
+        title: "Datenschutzaspekte"
+        guidance: |
+          Sensibilisieren Sie Studierende für Datenschutzrisiken, insbesondere bei der Eingabe personenbezogener Daten in Cloud-Tools. Weisen Sie auf datenschutzfreundlichere Alternativen wie HAWKI oder lokale Modelle hin, falls verfügbar und relevant.
+        items:
+          - id: "datenschutz-regel"
+            tags:
+              - { label: "Datenschutz", type: "datenschutz" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Beachten Sie bei der Nutzung von KI-Diensten den Datenschutz:
+
+              - Geben Sie **keine personenbezogenen Daten** (z.B. Namen, Matrikelnummern, E-Mail-Adressen, Diskussionsbeiträge) in externe KI-Werkzeuge ein (weder eigene noch die von anderen Studierenden oder die Daten von Dozierenden).
+              - Seien Sie sich bewusst, dass viele Cloud-basierte KI-Dienste Ihre Eingaben speichern und potenziell zum Training ihrer Modelle verwenden.
+              - Nutzen Sie nach Möglichkeit datenschutzfreundlichere Alternativen wie den universitätseigenen Dienst HAWKI oder lokal auf Ihrem Rechner laufende KI-Modelle, falls möglich.
+
+          - id: "datenschutz-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Der Schutz Ihrer Daten und der Daten anderer ist wichtig. Externe KI-Firmen unterliegen möglicherweise nicht den strengen europäischen Datenschutzregeln. Vermeiden Sie es daher, persönliche Informationen preiszugeben. Ihre Eingaben könnten gespeichert und weiterverwendet werden.
+
+  # ============================================================
+  # KATEGORIE 4: Kennzeichnung der KI-Nutzung
+  # ============================================================
+  - id: "kennzeichnung"
+    title: "4. Kennzeichnung der KI-Nutzung"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "kennzeichnung-format"
+        title: "Format der Kennzeichnung"
+        guidance: |
+          Legen Sie ein klares Format für die Kennzeichnung fest. Die Variante "Einfach" ist weniger aufwändig, die Variante "Detailliert" fördert die Reflexion stärker. Wählen Sie die für Ihre Lernziele und den erwarteten KI-Einsatz passendere Variante.
+        items:
+          - id: "kennzeichnung-einfach"
+            tags:
+              - { label: "Kennzeichnung", type: "kennzeichnung" }
+              - { label: "Empfohlen", type: "empfohlen" }
+              - { label: "Regel: Variante Einfach", type: "regel-standard" }
+            text: |
+              Kennzeichnen Sie die Nutzung von KI-Systemen in schriftlichen Abgaben wie folgt:
+
+              Fügen Sie am Ende Ihrer Arbeit (vor dem Literaturverzeichnis) einen separaten Abschnitt mit der Überschrift "Erklärung zur Nutzung von KI-Werkzeugen" ein. Geben Sie dort stichpunktartig an:
+
+              - Welche KI-Werkzeuge Sie verwendet haben (z.B. "ChatGPT-4, HAWKI, DeepL Write").
+              - Für welche Arbeitsschritte Sie diese eingesetzt haben (z.B. "Ideenfindung", "Sprachliche Überarbeitung Einleitung", "Literaturrecherche-Keywords", "Code-Generierung für Funktion X").
+
+              *Beispiel:*
+              **Erklärung zur Nutzung von KI-Werkzeugen**
+              Verwendete Tools: ChatGPT-4, DeepL Write
+              Einsatzzwecke: Brainstorming für Gliederungspunkte, sprachliche Überarbeitung des Methodenteils.
+
+              Zusätzlich ist ggf. die Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
+
+          - id: "kennzeichnung-detailliert"
+            tags:
+              - { label: "Kennzeichnung", type: "kennzeichnung" }
+              - { label: "Regel: Variante Detailliert", type: "regel-alternativ" }
+            text: |
+              Kennzeichnen Sie die Nutzung von KI-Systemen in schriftlichen Abgaben wie folgt:
+
+              **1. Abschnitt "Dokumentation der KI-Nutzung" im Anhang:**
+
+              - **Verwendete Tools:** Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. "ChatGPT-4 (OpenAI, Stand Mai 2024)", "HAWKI (Universität Bamberg)").
+              - **Nutzungsprotokoll (Beispiele):** Dokumentieren Sie exemplarisch Anfragen (Prompts) und die daraus resultierenden KI-Antworten, die Ihre Arbeit beeinflusst haben. Beschreiben Sie kurz, wie Sie die Antwort verwendet oder überarbeitet haben. (Umfang nach Absprache mit Lehrperson, z.B. 2-3 Beispiele).
+              - **Reflexion:** Fügen Sie eine kurze persönliche Reflexion (ca. 100-200 Wörter) hinzu: Wie hat die KI-Nutzung Ihren Arbeitsprozess beeinflusst? Wo lagen die Vorteile, wo die Herausforderungen oder Grenzen?
+
+              **2. Direkte Kennzeichnung im Text (nur bei direkter Übernahme):**
+
+              - Bei wörtlicher oder leicht paraphrasierter Übernahme von KI-generierten Passagen, kennzeichnen Sie diese direkt im Text (z.B. durch eine Fußnote: "Dieser Absatz basiert auf einem Vorschlag von ChatGPT-4.").
+
+              **3. KI-gestützt gefundene Quellen im Literaturverzeichnis:**
+
+              - Wenn Sie Literaturquellen mithilfe von KI-Werkzeugen gefunden haben (z.B. durch "Deep Research"-Funktionen), kennzeichnen Sie dies im Literaturverzeichnis durch einen Zusatz wie "[via KI-Recherche]" oder dokumentieren Sie es im Abschnitt zur KI-Nutzung.
+              - Überprüfen Sie alle KI-vorgeschlagenen Quellen sorgfältig auf Existenz und korrekte bibliographische Angaben, bevor Sie diese übernehmen.
+
+              Zusätzlich ist ggf. die allgemeine Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
+
+          - id: "kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Transparenz ist entscheidend für wissenschaftliche Redlichkeit. Die Kennzeichnungspflicht stellt sicher, dass Ihre Eigenleistung nachvollziehbar bleibt und klar ist, welche Hilfsmittel Sie verwendet haben. Das hier festgelegte Format dient dazu, den Einsatz von KI fair und einheitlich zu dokumentieren.
+
+      # ----------------------------------------------------------
+      - id: "kennzeichnung-ausnahmen"
+        title: "Ausnahmen von der Kennzeichnungspflicht"
+        guidance: |
+          Dieser Baustein ähnelt dem Textbaustein unter "Erlaubte Nutzung ohne Kennzeichnungspflicht" (Punkt 2). Er kann hier platziert oder wiederholt werden, um klarzustellen, dass die unter Punkt 2 genannten Fälle von der in Punkt 4 definierten Kennzeichnungspflicht ausgenommen sind.
+        items:
+          - id: "kennzeichnung-ausnahmen-regel"
+            tags:
+              - { label: "Kennzeichnung", type: "kennzeichnung" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Eine explizite Kennzeichnung der KI-Nutzung ist in folgenden Fällen **nicht** erforderlich:
+
+              - Bei der individuellen Vorbereitung auf Prüfungen (z.B. Erstellen von Übungsfragen, Zusammenfassungen).
+              - Bei der Nutzung zur reinen Verständnisförderung (z.B. Erklärungen, Übersetzungen für den Eigengebrauch).
+              - Bei nicht bewerteten Übungen, sofern nicht anders von der Lehrperson angegeben.
+              - Bei der Nutzung von Standard-Rechtschreib- und Grammatikprüfungen.
+
+          - id: "kennzeichnung-ausnahmen-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Nicht jede Nutzung von KI muss dokumentiert werden. Wenn Sie KI nur als rein persönliche Lernhilfe verwenden, ohne dass dies direkt in eine bewertete Leistung einfließt, entfällt die Kennzeichnungspflicht.
+
+  # ============================================================
+  # KATEGORIE 5: Chancengleichheit und Zugang
+  # ============================================================
+  - id: "chancengleichheit"
+    title: "5. Chancengleichheit und Zugang"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "zugang"
+        title: "Zugang zu KI-Werkzeuge"
+        guidance: |
+          Adressieren Sie mögliche Ungleichheiten beim Zugang zu (insbesondere kostenpflichtigen) KI-Werkzeuge. Weisen Sie auf kostenlose Basisversionen und universitäre Angebote wie HAWKI hin. Überlegen Sie sich, wie Sie sichersellen können, dass Ihre Anforderungen und Bewertungen nicht von der Nutzung spezifischer kostenpflichtiger Tools abhängen und machen Sie dies transparent.
+        items:
+          - id: "zugang-chancengleichheit"
+            tags:
+              - { label: "Chancengleichheit", type: "fairness" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Um die Chancengleichheit zu wahren, wird in dieser Lehrveranstaltung nicht vorausgesetzt, dass Sie Zugang zu kostenpflichtigen KI-Premiumdiensten haben. Die Lernziele der Lehrveranstaltung können auf folgende Weise erreicht werden:
+
+              - Nutzung kostenfreier Basisversionen gängiger KI-Anbieter (z.B. ChatGPT, Claude, Gemini).
+              - Der universitätseigene Dienst HAWKI, der allen Studierenden kostenlos zur Verfügung steht.
+
+              Die Nutzung kostenpflichtiger Dienste erfolgt auf eigene Verantwortung und eigene Kosten.
+
+          - id: "zugang-pruefungsgestaltung"
+            tags:
+              - { label: "Chancengleichheit", type: "fairness" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Die Lehrveranstaltung und die Prüfungsform wurden so gestaltet, dass die potenziell höhere Qualität von Prüfungsleistungen, die aus der Nutzung von Premium-Diensten resultiert, keinen wesentlichen Einfluss auf die Bewertung der Prüfungsleistung hat.
+
+              Um dieses Ziel zu erreichen [z.B. wird die Prüfungsleistung unter Aufsicht ohne Unterstützung durch KI-Werkzeuge erbracht / ist neben einer einzureichenden schriftlichen Ausarbeitung eine mündliche Prüfungsleistung zu erbringen].
+
+          - id: "zugang-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Nicht alle haben den gleichen Zugang zu teuren KI-Werkzeuge. Deshalb wird sichergestellt, dass Sie auch mit kostenlosen oder universitätseigenen Werkzeugen alle Aufgaben bearbeiten können und keine Nachteile bei der Bewertung entstehen, wenn Sie keine Premium-Versionen nutzen.
+
+      # ----------------------------------------------------------
+      - id: "pruefungsgrundsaetze"
+        title: "Prüfungsgrundsätze und KI-Nutzung"
+        guidance: |
+          Die unbemerkte KI-Nutzung bei unbeaufsichtigten Prüfungen gefährdet Fairness und Chancengleichheit. Erläutern Sie den Studierenden transparent, welche Maßnahmen Sie ergreifen (wie in der Bamberger Handreichung empfohlen), um die Eigenleistung dennoch fair bewerten zu können (z.B. beaufsichtigte Prüfungen, mündliche Anteile, Prozessbewertung, Fokus auf Transfer/Anwendung). Bedenken Sie bei der Gestaltung der Prüfungsformen, dass KI-Werkzeuge auch Entwürfe und persönliche Reflexionen generieren können und es auch bei diesen Maßnahmen kaum zu erkennen ist, ob KI-Werkzeuge genutzt wurden.
+        items:
+          - id: "pruefung-massnahmen"
+            tags:
+              - { label: "Prüfung", type: "pruefung" }
+              - { label: "Chancengleichheit", type: "fairness" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Wir sind uns bewusst, dass die Nutzung von KI bei unbeaufsichtigten Prüfungsleistungen (z.B. Hausarbeiten) kaum kontrollierbar ist und dies Chancengleichheit und Fairness gefährden kann. Um dennoch eine valide Bewertung Ihrer individuellen Kompetenzen sicherzustellen, werden in diesem Kurs folgende Maßnahmen angewendet:
+
+              - [Maßnahme 1, z.B. "Die Hauptbewertung erfolgt durch eine schriftliche Prüfung unter Aufsicht."]
+              - [Maßnahme 2, z.B. "Schriftliche Arbeiten werden durch ein mündliches Kolloquium ergänzt, in dem das Verständnis und die Eigenständigkeit überprüft werden."]
+              - [Maßnahme 3, z.B. "Die Aufgabenstellungen zielen verstärkt auf Transferleistungen, kritische Analyse und Anwendung ab, weniger auf reine Wissensreproduktion."]
+              - [Maßnahme 4, z.B. "Es fließen prozessbegleitende Elemente in die Bewertung ein (z.B. Entwürfe, Reflexionen)."]
+              - [Ggf. weitere spezifische Maßnahmen Ihrer LV]
+
+          - id: "pruefung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Da es schwer ist zu kontrollieren, ob und wie KI bei Hausarbeiten etc. genutzt wird, passen wir die Prüfungsformen an. Ziel ist es, Ihre tatsächlichen Fähigkeiten und Ihr Verständnis fair zu bewerten, unabhängig davon, ob KI im Hintergrund genutzt wurde oder nicht. Die genannten Maßnahmen (z.B. Klausur, mündliche Prüfung, bestimmte Aufgabentypen) helfen dabei.
+
+  # ============================================================
+  # KATEGORIE 6: Praktische Tipps zum KI-Einsatz
+  # ============================================================
+  - id: "praktische-tipps"
+    title: "6. Praktische Tipps zum KI-Einsatz"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "prompt-strategien"
+        title: "Prompt-Strategien"
+        guidance: |
+          Gute Prompts sind entscheidend für sinnvolle KI-Ergebnisse. Dieser optionale Baustein gibt Studierenden grundlegende Tipps. Sie können ihn anpassen oder spezifischere Beispiele für Ihr Fach hinzufügen. Bedenken Sie dabei, dass Techniken des "Prompt Engineering" sich schnell wandeln und eine kontinuierliche Aktualisierung des Lehrmaterials erfordern.
+        items:
+          - id: "prompting-tipps"
+            tags:
+              - { label: "Tipps", type: "tipps" }
+              - { label: "Tipp", type: "regel-standard" }
+            text: |
+              Für bessere Ergebnisse bei der KI-Nutzung können folgende Strategien beim Formulieren von Anfragen (Prompts) hilfreich sein:
+
+              - **Spezifisch sein:** Je genauer Ihre Frage, desto besser die Antwort. Vermeiden Sie vage Anfragen.
+              - **Kontext geben:** Erklären Sie kurz den Hintergrund oder das Ziel Ihrer Anfrage (z.B. "Ich schreibe eine Hausarbeit über X und brauche Y").
+              - **Rolle zuweisen:** Bitten Sie die KI, eine bestimmte Rolle einzunehmen (z.B. "Erkläre es mir wie einem Studienanfänger", "Antworte als kritischer Gutachter").
+              - **Format anhand von Beispielen vorgeben:** Sagen Sie der KI, wie die Antwort aussehen soll (z.B. "Liste in Stichpunkten", "Erstelle eine Tabelle", "Fasse in drei Sätzen zusammen", "Antworte wie in diesem Beispiel").
+              - **Iterativ arbeiten:** Stellen Sie Folgefragen, bitten Sie um Klärung oder um Überarbeitung der Antwort. Beachten Sie dabei, dass manche KI-Werkzeuge zu sogenannter "Sycophancy" neigen – sie stimmen Ihnen zu, auch wenn Sie falsch liegen. Hinterfragen Sie daher kritisch, wenn die KI Ihnen uneingeschränkt recht gibt, insbesondere bei komplexen oder kontroversen Themen.
+              - **Neutral formulieren:** Vermeiden Sie suggestive Fragen, die die Antwort in eine Richtung lenken (statt "Stimmt es, dass X gut ist?", besser "Was sind die Vor- und Nachteile von X?").
+
+              *Beispiel für einen spezifischen Prompt:*
+              "Erkläre das Konzept 'Distributed Cognition' für einen Masterstudenten der Pädagogik. Gib zuerst eine kurze Definition (max. 50 Wörter), dann zwei Beispiele aus dem Bildungskontext und nenne abschließend drei Kritikpunkte an diesem Konzept. Strukturiere die Antwort mit klaren Überschriften. Liste einschlägige Literaturquellen auf."
+
+          - id: "prompting-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Wie Sie mit einer KI "sprechen" (prompten), beeinflusst maßgeblich die Qualität der Antwort. Mit präzisen und durchdachten Anfragen erhalten Sie nützlichere und relevantere Ergebnisse für Ihr Studium.
+
+      # ----------------------------------------------------------
+      - id: "ki-fehler"
+        title: "Umgang mit KI-Fehlern (\"Halluzinationen\" etc.)"
+        guidance: |
+          Dies ist ein zentraler Aspekt der KI-Kompetenz. Machen Sie Studierende explizit auf die typischen Fehlerquellen von KI (Faktenfehler, erfundene Quellen, Bias, veraltetes Wissen) aufmerksam und betonen Sie die Notwendigkeit der kritischen Überprüfung.
+        items:
+          - id: "halluzinationen-warnung"
+            tags:
+              - { label: "Tipps", type: "tipps" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Warnung/Hinweis", type: "regel-standard" }
+            text: |
+              KI-Systeme machen Fehler. Verlassen Sie sich nicht blind auf KI-generierte Informationen. Achten Sie insbesondere auf:
+
+              - **Faktische Fehler ("Halluzinationen"):** Die KI erfindet Fakten, Daten oder Ereignisse, die plausibel klingen, aber falsch sind.
+              - **Erfundene Quellen:** Die KI zitiert Quellen (Bücher, Artikel), die nicht existieren oder deren Inhalt falsch wiedergegeben wird.
+              - **Veraltetes Wissen:** Die Trainingsdaten der KI sind nicht immer aktuell. Informationen können veraltet sein.
+              - **Lückenhafte oder einseitige Darstellung:** Wichtige Aspekte, Perspektiven oder Gegenargumente können fehlen.
+              - **Bias:** Die KI kann unbewusste Vorurteile aus den Trainingsdaten reproduzieren.
+
+              **Strategien zur Überprüfung:**
+
+              - Überprüfen Sie zentrale Aussagen und Fakten anhand wissenschaftlicher Quellen (z.B. Fachliteratur, Datenbanken).
+              - Verifizieren Sie Zitate und Quellenangaben – existiert die Quelle wirklich? Stimmt die Aussage?
+              - Vergleichen Sie die Antworten verschiedener KI-Werkzeuge oder suchen Sie aktiv nach Gegenpositionen.
+              - Seien Sie besonders skeptisch bei sehr spezifischen oder überraschenden Aussagen.
+
+          - id: "halluzinationen-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** KI-Werkzeuge sind beeindruckend, aber nicht unfehlbar. Sie können falsche Informationen liefern oder wichtige Details auslassen. Ihre Aufgabe als Akademikerinnen und Akademiker ist es, diese Informationen kritisch zu prüfen und nicht einfach zu übernehmen. Die Verantwortung für die Richtigkeit Ihrer Arbeit liegt immer bei Ihnen, nicht bei der KI.
+
+      # ----------------------------------------------------------
+      - id: "unterstuetzung"
+        title: "Unterstützung bei Fragen zum KI-Einsatz"
+        guidance: |
+          Bieten Sie klare Anlaufstellen für Fragen und Unsicherheiten der Studierenden bezüglich der KI-Policy und des KI-Einsatzes. Fördern Sie eine offene Kommunikationskultur. Verweisen Sie auch auf zentrale Angebote.
+        items:
+          - id: "unterstuetzung-angebot"
+            tags:
+              - { label: "Angebot", type: "angebot" }
+              - { label: "Angebot", type: "regel-standard" }
+            text: |
+              Bei Fragen oder Unsicherheiten zum Einsatz von KI in dieser Lehrveranstaltung oder zur Auslegung dieser Policy können Sie sich gerne an mich wenden:
+
+              - In meiner Sprechstunde
+              - Per E-Mail oder im Forum der Lehrveranstaltung
+              - Im Rahmen der Lehrveranstaltung (wir planen Zeit für Diskussionen ein).
+
+              Zusätzliche Ressourcen und Beratung bieten:
+
+              - Die Hinweise zur Nutzung von KI an der Universität Bamberg: https://www.uni-bamberg.de/cio/ki/
+              - Das Zentrum für Hochschuldidaktik (ZHD): https://www.uni-bamberg.de/zhd/
+              - Die Mediendidaktische Servicestelle (MD): https://www.uni-bamberg.de/md/
+
+          - id: "unterstuetzung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Wenn Sie unsicher sind, wie Sie KI nutzen dürfen oder wie Sie die Nutzung kennzeichnen sollen, fragen Sie bitte nach! Eine offene Kommunikation hilft, Missverständnisse zu vermeiden. Es ist besser, einmal zu viel zu fragen, als versehentlich gegen die Regeln zu verstoßen.
+
+  # ============================================================
+  # KATEGORIE 7: KI-Einsatz durch Lehrende
+  # ============================================================
+  - id: "ki-einsatz-lehrende"
+    title: "7. KI-Einsatz durch Lehrende"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "lehrende-allgemein"
+        title: "Allgemeine Hinweise"
+        guidance: |
+          Transparenz ist wichtig. Wählen Sie die Bausteine aus, die Ihren tatsächlichen KI-Einsatz widerspiegeln. Seien Sie sich der rechtlichen (DSGVO, UrhG) und ethischen Grenzen bewusst, insbesondere bei der Verarbeitung von Studierendendaten. **Vermeiden Sie das Hochladen von personenbezogenen Daten oder urheberrechtlich geschützten Arbeiten von Studierenden in externe Cloud-KI-Systeme ohne explizite Rechtsgrundlage und Beratung (z.B. durch Justiziariat/Datenschutzbeauftragte).**
+        items:
+          - id: "lehrende-keine-ki"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Hinweis", type: "regel-standard" }
+            text: |
+              Die Lehrpersonen, die diese Lehrveranstaltung durchführen, nutzen zur Vorbereitung und Durchführung der Lehrveranstaltung keine KI-Werkzeuge.
+
+          - id: "lehrende-nutzen-ki"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Hinweis", type: "regel-standard" }
+            text: |
+              Auch die Lehrpersonen, die diese Lehrveranstaltung durchführen, nutzen KI-Werkzeuge, etwa um Materialien zu erstellen oder die Kommunikation zu unterstützen. Dabei achten wir stets auf die Einhaltung von Datenschutz und Urheberrecht sowie auf eine kritische Prüfung der KI-Ergebnisse.
+
+          - id: "lehrende-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Wir nutzen KI-Werkzeuge, um unsere Lehre zu verbessern und effizienter zu gestalten. Dies geschieht jedoch immer unter Beachtung der rechtlichen Rahmenbedingungen und mit dem Ziel, Ihnen eine bestmögliche Lernerfahrung zu bieten.
+
+      # ----------------------------------------------------------
+      - id: "studierendendaten"
+        title: "Verarbeitung von Studierendendaten"
+        guidance: |
+          **Dies ist der kritischste Punkt!** Wählen Sie "Keine Cloud-Verarbeitung" als Standard. Die Option "Lokale Verarbeitung" ist nur dann eine (theoretische) Option, wenn Sie über entsprechende Tools verfügen und sicherstellen können, dass Daten **niemals** das Gerät verlassen und idealerweise anonymisiert sind. Selbst dann bleiben Risiken. **Im Zweifel immer die sichere Variante (keine Verarbeitung) wählen oder Rechtsberatung einholen!**
+        items:
+          - id: "daten-keine-cloud"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Datenschutz", type: "datenschutz" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel: Keine Cloud-Verarbeitung (Standard)", type: "regel-standard" }
+            text: |
+              Wir versichern Ihnen, dass von Ihnen eingereichte Arbeiten, personenbezogene Daten oder Diskussionsbeiträge von uns **nicht** in externe, Cloud-basierte KI-Systeme hochgeladen oder zur Analyse eingegeben werden.
+
+          - id: "daten-lokal"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Datenschutz", type: "datenschutz" }
+              - { label: "Regel: Lokale Verarbeitung (Optional)", type: "regel-alternativ" }
+            text: |
+              Zur Erstellung von Feedback oder zur Analyse von [Art der Daten, z.B. anonymisierten Diskussionsbeiträgen] setzen wir gegebenenfalls KI-Werkzeuge ein, die ausschließlich **lokal** auf unseren eigenen Rechnern laufen. Es werden dabei keine Daten an externe Server übermittelt. Es findet keine für die Bewertung relevante Verarbeitung oder automatische Entscheidungsfindung statt. Die Antworten von KI-Werkzeugen werden nicht zur Bewertung herangezogen und stets von einer Lehrperson geprüft bevor sie an Sie weitergegeben werden.
+
+              *(Hinweis: Dieser Baustein sollte nur gewählt werden, wenn die technischen und rechtlichen Voraussetzungen geklärt sind!)*
+
+          - id: "daten-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** Der Schutz Ihrer persönlichen Daten und Ihrer eingereichten Arbeiten hat höchste Priorität. [Je nach gewählter Regel:] Daher werden Ihre Daten von uns nicht an externe KI-Dienste weitergegeben. / [Falls lokale Verarbeitung gewählt wurde:] Falls KI zur Analyse oder Feedbackerstellung auf lokalen Rechnern genutzt wird, geschieht dies nur unter Einhaltung der Anforderungen des Datenschutzes und ohne Übermittlung an externe Firmen. Es wird stets eine kritische Prüfung der KI-Ergebnisse durchgeführt und es erfolgt keine automatische Entscheidungsfindung.
+
+      # ----------------------------------------------------------
+      - id: "kursvorbereitung"
+        title: "Kursvorbereitung und -materialien"
+        guidance: |
+          Dies sind typische, meist unkritische Anwendungsfälle für KI in der Lehre. Transparenz hierüber schafft Vertrauen.
+        items:
+          - id: "materialien-ki"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Hinweis", type: "regel-standard" }
+            text: |
+              Wir setzen KI-Werkzeuge gegebenenfalls zur Unterstützung bei folgenden Aufgaben ein:
+
+              - Planung der Lehrveranstaltungsstruktur und -inhalte.
+              - Erstellung und Überarbeitung von Lehrmaterialien (z.B. Folien, Zusammenfassungen, Visualisierungen).
+              - Generierung von Übungsaufgaben oder Fallbeispielen.
+              - Optimierung von Aufgabenstellungen oder Beschreibungen.
+
+              Alle auf diese Weise erstellten oder bearbeiteten Inhalte werden von uns sorgfältig geprüft und ausgewählt.
+
+          - id: "materialien-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** KI kann helfen, Kursmaterialien vielfältiger zu gestalten oder neue Ideen für Übungen zu entwickeln. Dies dient dazu, die Qualität der Lehre für Sie zu verbessern.
+
+      # ----------------------------------------------------------
+      - id: "kommunikation"
+        title: "Kommunikation"
+        guidance: |
+          Die Nutzung von KI zur Beantwortung von E-Mails kann Zeit sparen, birgt aber die Gefahr unpersönlicher oder ungenauer Antworten. Machen Sie deutlich, dass Sie die Antworten prüfen.
+        items:
+          - id: "kommunikation-ki"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Hinweis", type: "regel-standard" }
+            text: |
+              Um Ihre Anfragen zeitnah und umfassend beantworten zu können, nutzen wir manchmal KI-Werkzeuge zur Unterstützung beim Formulieren von Antworten auf E-Mails oder Forenbeiträge. Jede auf diese Weise erstellte Antwort wird von uns vor dem Absenden überprüft und angepasst. Die endgültige Antwort kommt aber immer von uns. Wir stellen dabei sicher, dass wir keine personenbezogenen Daten an Cloud-basierte KI-Systeme übermitteln.
+
+          - id: "kommunikation-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** KI kann dabei helfen, schneller auf Ihre Fragen einzugehen. Die endgültige Antwort kommt aber immer von uns.
+
+      # ----------------------------------------------------------
+      - id: "feedback-bewertung"
+        title: "Feedback und Bewertung"
+        guidance: |
+          Der Einsatz von KI bei der Bewertung ist heikel (DSGVO Art. 22, Bias-Risiko). Wählen Sie die Option, die Ihrer Praxis entspricht. Option 1 (Kein KI-Einsatz) ist die sicherste. Option 2 (Nur formatives Feedback) ist vertretbar, wenn klar kommuniziert. Option 3 (Unterstützung bei Bewertung) birgt Risiken und erfordert höchste Sorgfalt und Transparenz; die finale Bewertung muss menschlich bleiben. **Lassen Sie sich rechtlich beraten, wenn Sie sich nicht sicher sind.**
+        items:
+          - id: "bewertung-keine-ki"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Bewertung", type: "bewertung" }
+              - { label: "Regel: Kein KI-Einsatz", type: "regel-standard" }
+            text: |
+              Bei der Bewertung von Prüfungsleistungen (z.B. Klausuren, Hausarbeiten, Referate), die in Ihre Endnote einfließen, setzen wir **keine** KI-Werkzeuge ein. Die Bewertung erfolgt ausschließlich durch menschliche Prüferinnen und Prüfer.
+
+          - id: "bewertung-formativ"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Bewertung", type: "bewertung" }
+              - { label: "Regel: Nur formatives Feedback", type: "regel-alternativ" }
+            text: |
+              Wir setzen KI-Werkzeuge ein, um Ihnen **formatives Feedback** zu geben (z.B. zu Entwürfen, Übungsaufgaben), das Ihnen beim Lernen helfen soll, aber **nicht** in die Endnote einfließt. Die Bewertung von prüfungsrelevanten Endleistungen erfolgt ausschließlich durch menschliche Prüferinnen und Prüfer. Wir kontrollieren die Ergebnisse von KI-Werkzeugen sorgfältig und stellen sicher, dass keine personenbezogenen Daten und keine urheberrechtlich geschützten Inhalte an Cloud-basierte KI-Systeme übermittelt.
+
+          - id: "bewertung-unterstuetzung"
+            tags:
+              - { label: "Lehrenden-Nutzung", type: "lehrenden-nutzung" }
+              - { label: "Bewertung", type: "bewertung" }
+              - { label: "Vorsicht", type: "wichtig" }
+              - { label: "Regel: KI als Unterstützung", type: "regel-alternativ" }
+            text: |
+              Bei der Bewertung von Prüfungsleistungen setzen wir KI-Werkzeuge eventuell als **Unterstützungswerkzeug** ein (z.B. zur Identifikation von Mustern, zur Konsistenzprüfung oder zur Formulierung von Feedback-Textbausteinen). Die finale Bewertung und Notenfindung erfolgt jedoch **immer** durch menschliche Prüferinnen und Prüfer nach sorgfältiger Kontrolle.
+
+          - id: "bewertung-erlaeuterung"
+            tags:
+              - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
+            text: |
+              **Erläuterung:** [Je nach gewählter Regel:] Die Bewertung Ihrer Prüfungsleistungen erfolgt ohne den Einsatz von KI, um eine faire und nachvollziehbare Beurteilung sicherzustellen. / KI kann helfen, Ihnen schnelleres oder detaillierteres Feedback zu Übungen zu geben, beeinflusst aber nicht Ihre Endnote. / KI kann uns bei der Korrektur unterstützen, aber die endgültige Entscheidung über Ihre Note treffen immer Menschen.

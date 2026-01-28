@@ -1,0 +1,3047 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self';">
+    <title>KI-Policy-Creator für Lehrende</title>
+    <script src="pako.min.js"></script>
+    <script src="lib/js-yaml.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0060df;
+            --primary-hover: #0250bb;
+            --secondary-color: #f5f5f5;
+            --secondary-hover: #e5e5e5;
+            --border-color: #e0e0e0;
+            --dark-gray: #333;
+            --medium-gray: #666;
+            --light-gray: #999;
+            --very-light-gray: #f9f9f9;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --warning-color: #ffc107;
+            --text-color: #333;
+            --white: #fff;
+            --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8f9fa;
+        }
+
+        /* Roboto */
+        @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 300;
+        src: url('./fonts/Roboto-300.woff2') format('woff2');
+        }
+        @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        src: url('./fonts/Roboto-400.woff2') format('woff2');
+        }
+        @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        src: url('./fonts/Roboto-700.woff2') format('woff2');
+        }
+
+        /* Apply Fonts */
+        body {
+        font-family: 'Roboto', sans-serif;
+        }
+
+        /* Anpassung des Container-Layouts */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body:has(#welcome-view.active-view) .container {
+            display: none;
+        }
+
+        /* View management */
+        .view {
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .active-view {
+            display: flex;
+        }
+        
+        /* Footer für Startseite anpassen */
+        body:has(#welcome-view.active-view) footer {
+            margin-top: 10px;
+        }
+        
+        #welcome-view.active-view {
+            min-height: auto;
+        }
+        
+        #welcome-view.active-view ~ .container {
+            min-height: auto;
+        }
+
+        /* Welcome View */
+        .welcome-content {
+            max-width: 1600px; /* Increased to use even more screen width */
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem 1rem; /* Reduced horizontal padding */
+            background: transparent; /* Changed to transparent since columns have their own background */
+            border-radius: 8px;
+            box-shadow: none; /* Removed since columns have their own shadow */
+        }
+
+        .description {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .description p {
+            margin-bottom: 1rem;
+        }
+
+        .disclaimer {
+            text-align: left;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f8f8;
+            border-left: 4px solid #f0ad4e;
+            border-radius: 4px;
+        }
+
+        .disclaimer h3 {
+            color: #8a6d3b;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .disclaimer p {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .disclaimer a {
+            color: #337ab7;
+            text-decoration: underline;
+        }
+
+
+        /* Editor View */
+        .editor-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .header-title-area {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .intro-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .document-intro {
+            flex-grow: 1;
+            background-color: #fafafa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-right: 12px;
+            line-height: 1.5;
+            font-size: 1em;
+            color: #333;
+            border: 1px solid #f0f0f0;
+        }
+
+        .editable-title {
+            margin: 0;
+            padding: 5px 0;
+            border-radius: 4px;
+            background-color: transparent;
+            transition: background-color 0.2s;
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .secondary-btn {
+            background-color: var(--secondary-color);
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+            padding: 5px 10px;
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Result View */
+        .result-header {
+            gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        #policy-result {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            line-height: 1.5;
+        }
+
+        /* Common Styles */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            color: var(--medium-gray);
+            font-size: 1.2rem;
+        }
+
+        /* Existing/Modified Content */
+        .left-panel {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            padding: 10px;
+        }
+
+        .category {
+            border: 1px solid #eee;
+            margin-bottom: 35px;
+            padding: 22px 24px 12px 24px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .category-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .category-header h2 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #333;
+            font-weight: 600;
+        }
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .subcategory {
+            margin-bottom: 30px;
+            padding-left: 0;
+            padding-top: 5px;
+        }
+        .subcategory-title {
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #444;
+            font-size: 1.1em;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+        /* Styling für den Hinweis an Lehrende */
+        .instructor-guidance {
+            background-color: #f7f9fa;
+            border-left: 3px solid #ccc;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            font-size: 0.95em;
+            color: #555;
+            border-radius: 2px;
+        }
+        .instructor-guidance .policy-tags {
+            margin-bottom: 6px;
+        }
+        .policy-item {
+            border: 1px solid #f0f0f0;
+            padding: 16px;
+            margin-bottom: 18px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+        .policy-tags {
+            margin-bottom: 12px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 6px;
+            margin-bottom: 3px;
+            border: none;
+            background-color: #f5f5f5;
+            color: #555;
+        }
+        /* Simplified Tag Colors */
+        .tag-grundsatz, .tag-kompetenz, .tag-angebot, .tag-tipps { 
+            background-color: #f0f7ff; 
+            color: #2c5282; 
+        }
+        .tag-empfohlen, .tag-wichtig, .tag-recht, .tag-datenschutz { 
+            background-color: #f9f5ff; 
+            color: #553c9a; 
+        }
+        .tag-regel-standard, .tag-regel-alternativ, .tag-regel-erweitert { 
+            background-color: #f0fff4; 
+            color: #276749; 
+        }
+        .tag-erlaeuterung-studierende, .tag-hinweis-lehrende, .tag-kennzeichnung { 
+            background-color: #fffaf0; 
+            color: #744210; 
+        }
+        .tag-fairness, .tag-pruefung { 
+            background-color: #f0f5ff; 
+            color: #2a4365; 
+        }
+
+        .policy-text {
+            margin-bottom: 14px;
+            color: #333;
+            line-height: 1.5;
+            font-size: 1em;
+        }
+
+        .policy-text ul, .policy-text ol {
+            margin-left: 20px;
+        }
+        .item-actions button {
+            padding: 6px 12px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-right: 8px;
+            border: 1px solid #eee;
+            background-color: #f9f9f9;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 4px;
+        }
+        .item-actions button:hover {
+            background-color: #f0f0f0;
+        }
+        .item-actions button svg {
+            width: 14px;
+            height: 14px;
+            fill: #333;
+        }
+        .add-item-btn {
+            background-color: #fafafa;
+        }
+        .edit-item-btn {
+            background-color: #fafafa;
+        }
+
+        .chevron {
+            font-size: 1rem;
+            transition: transform 0.2s;
+            margin-right: 8px;
+            display: inline-block;
+            color: #888;
+        }
+
+        .category.expanded .chevron {
+            transform: rotate(180deg);
+        }
+
+        
+        .category.expanded .category-content {
+            max-height: 5000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+
+        .policy-item.selected {
+            border: 2px solid var(--primary-color);
+            background-color: rgba(0, 96, 223, 0.05);
+        }
+
+        /* Inline editing styles */
+        .policy-item.editing {
+            border: 2px solid #4a90e2;
+            background-color: #f8fbff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .inline-editor {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 0 10px 10px 10px;
+        }
+
+        .policy-item.editing .inline-editor {
+            display: flex;
+        }
+
+        .editor-hint {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .inline-editor textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        /* Title and intro editing styles */
+        .editable-title.editing {
+            position: relative;
+            padding-bottom: 60px;
+            margin-bottom: 20px;
+            background-color: #f8fbff;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-intro.editing {
+            position: relative;
+            padding-bottom: 60px;
+            margin-bottom: 20px;
+            background-color: #f8fbff;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title-editor, .intro-editor {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            background-color: #f0f7ff;
+            border-top: 1px solid #d0e0f0;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .editable-title.editing .title-editor,
+        .document-intro.editing .intro-editor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .title-editor input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1.2rem;
+        }
+
+        .intro-editor textarea {
+            flex: 1;
+            min-height: 150px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .inline-editor-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .inline-editor-actions button {
+            padding: 5px 12px;
+            font-size: 0.9rem;
+        }
+
+        .save-edit-btn {
+            background-color: #4caf50;
+        }
+        .save-edit-btn:hover {
+            background-color: #3d8b40;
+        }
+
+        .cancel-edit-btn {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+        .cancel-edit-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .revert-inline-edit {
+            margin-left: auto;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .revert-inline-edit:hover {
+            text-decoration: underline;
+        }
+
+        .policy-item.editing .policy-text {
+            display: none;
+        }
+
+        .policy-item.editing .item-actions {
+            display: none;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+            opacity: 0.9;
+        }
+
+        .action-btn {
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+        }
+
+        .back-btn {
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: var(--dark-gray);
+        }
+
+        .back-btn:hover {
+            background-color: #e5e5e5;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 0;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            max-height: 90vh;
+            width: 90%;
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .close-modal {
+            color: var(--light-gray);
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            color: var(--dark-gray);
+        }
+
+        /* Save/Load Modal Specific */
+        .save-load-modal-content {
+            width: 90%;
+            max-width: 600px;
+        }
+        
+
+        /* Utility classes */
+        .copy-success {
+            background-color: var(--success-color) !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        /* Verbesserungen für kleine Bildschirme */
+        @media (max-height: 600px) {
+            .modal {
+                align-items: flex-start;
+                padding-top: 10px;
+            }
+            
+            .modal-content {
+                margin: 10px auto;
+                padding: 15px;
+                max-height: 95vh;
+            }
+            
+            #edit-textarea {
+                min-height: 100px;
+                max-height: calc(95vh - 150px);
+            }
+        }
+        
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* Generated policy styles */
+        .generated-policy h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .generated-policy h2 {
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .policy-date {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .policy-intro {
+            margin-bottom: 1rem;
+        }
+
+        .policy-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-category h2 {
+            font-size: 1.4rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .policy-item-result {
+            margin-bottom: 1.2rem;
+        }
+
+        .policy-item-text p {
+            margin-bottom: 0.3rem;
+        }
+
+        .policy-item-text ul, 
+        .policy-item-text ol {
+            margin-top: 0.2rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1.5rem;
+        }
+
+
+
+        .policy-item-text li {
+            margin-bottom: 0.2rem;
+        }
+
+        /* Handle bullet points that use • character directly */
+        .policy-item-text p:has(> br) {
+            margin-bottom: 0;
+        }
+
+        /* Improve spacing for lists with bullet points entered as characters */
+        .policy-content .policy-item-text {
+            line-height: 1.5;
+        }
+
+        /* Save/Load Feature Styles */
+        .save-load-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        #save-container, #load-container {
+            background-color: var(--very-light-gray);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        #state-file-input {
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .save-load-modal-content {
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        /* Footer-Stil - weniger aufdringlich */
+        footer {
+            margin-top: 30px;
+            padding: 15px 20px;
+            background-color: var(--very-light-gray);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-section {
+            margin-bottom: 15px;
+        }
+        
+        .footer-section h3 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+        }
+        
+        .footer-section p {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 12px 0;
+        }
+        
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-license {
+            margin: 12px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-license a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        /* Hinweis auf der Ergebnisseite */
+        .result-notice {
+            background-color: var(--very-light-gray);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        /* Responsive Design für kleinere Bildschirme */
+        @media (max-width: 768px) {
+            .header-top-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-buttons {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            #main-title {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .editable-title {
+                font-size: 1.5rem;
+                width: 100%;
+            }
+        }
+        
+        #welcome-view #main-title {
+            display: none;
+        }
+        
+        /* Verstecke den Haupttitel auf dem Willkommensbildschirm */
+        #welcome-view header {
+            display: none;
+        }
+        
+        /* Hide header-top-row in welcome view */
+        #welcome-view .header-top-row {
+            display: none;
+        }
+        
+        /* Verstecke header-top-row und header im Willkommensbildschirm */
+        body:has(#welcome-view.active-view) header {
+            display: none !important;
+        }
+
+        /* Override styles for edit/add buttons */
+        .item-actions button.edit-item-btn,
+        .item-actions button.add-item-btn {
+            border: 1px solid #ccc;
+        }
+
+        .item-actions button.edit-item-btn:hover,
+        .item-actions button.add-item-btn:hover {
+            background-color: #e5e5e5;
+        }
+
+        .item-actions button.edit-item-btn {
+            background-color: #f7f7f0;
+            border-color: #d9d9c0;
+        }
+
+        .item-actions button.add-item-btn {
+            background-color: #f0f7f0;
+            border-color: #c0d9c0;
+        }
+
+        .item-actions button svg {
+            fill: #333;
+        }
+
+        /* Language Switcher Styles */
+        .language-switcher {
+            display: inline-flex;
+            gap: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+
+        .language-switcher button {
+            padding: 6px 12px;
+            border: none;
+            background: var(--white);
+            color: var(--medium-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .language-switcher button:not(:last-child) {
+            border-right: 1px solid var(--border-color);
+        }
+
+        .language-switcher button:hover {
+            background: var(--secondary-color);
+        }
+
+        .language-switcher button.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .welcome-title-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header-language-switcher {
+            margin-left: auto;
+        }
+
+        /* New Welcome Screen Styles */
+        .welcome-content h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .version-info {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            text-align: center;
+            margin-bottom: 0rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .welcome-section {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .welcome-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Center the button in its section */
+        .welcome-section button.action-btn {
+            display: block;
+            margin: 0 auto; 
+            width: fit-content;
+        }
+        
+        
+        .welcome-section h2 {
+            font-size: 1.5rem;
+            color: var(--primary-hover);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .welcome-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .welcome-section ul {
+            list-style: disc;
+            padding-left: 25px;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .component-item {
+            background-color: var(--very-light-gray);
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--dark-gray);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            word-break: break-word;
+            hyphens: auto;
+            font-size: 0.9rem;
+        }
+        
+        .component-item.intro-item {
+            background-color: #e7f0ff; /* Light blue background */
+            color: var(--primary-hover);
+            border-color: #c4d7f5;
+        }
+        
+        .disclaimer-box {
+            background-color: #fefcf5; /* Much lighter background */
+            /*border: 1px solid #e8e0cc; */ /* Lighter border */
+            padding: 0;
+            text-align: left;
+        }
+        
+        .disclaimer-box h2 {
+            color: #ab8b36; /* Less intense color */
+            font-size: 1.2rem;
+            margin: 0 0 0.7rem 0;
+            padding: 0;
+            border-bottom: 1px solid #e8e0cc;
+            padding-bottom: 0.7rem;
+        }
+        
+        .disclaimer-box p {
+            margin-bottom: 0.6rem;
+            color: #8a6d3b; /* Text color for disclaimer */
+        }
+                
+        .disclaimer-box li {
+            color: #8a6d3b; /* Text color for disclaimer */
+            line-height: 1.4;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.7rem;
+            position: relative;
+            border-bottom: 1px dotted rgba(138, 109, 59, 0.15);
+        }
+        
+        .disclaimer-box li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+        }
+        
+        .disclaimer-box li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .technical-notes {
+            background-color: #f7f9fa; /* Light blue-gray background */
+            border: 1px solid #e2e8ed;
+            padding: 0;
+            text-align: left;
+        }
+        
+        .technical-notes h2 {
+            font-size: 1.2rem;
+            color: #456789; /* Blue-gray color */
+            margin: 0 0 0.7rem 0;
+            padding: 0;
+            border-bottom: 1px solid #e2e8ed;
+            padding-bottom: 0.7rem;
+        }
+        
+        .disclaimer-box ul, .technical-notes ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .technical-notes li {
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.7rem;
+            padding-left: 0rem;
+            position: relative;
+            line-height: 1.4;
+            border-bottom: 1px dotted rgba(100, 100, 100, 0.15);
+            font-size: 0.9rem;
+            color: #555;
+        }
+                
+        .technical-notes li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .technical-notes p {
+            line-height: 1.5;
+        }
+
+        .technical-notes a {
+            color: var(--primary-color);
+        }
+
+        /* License box styling */
+        .license-box {
+            background-color: #f7faf7;
+            border: 1px solid #d4e8d4;
+        }
+
+        .license-box h2 {
+            font-size: 1.2rem;
+            color: #2d6a2d;
+            margin: 0 0 0.7rem 0;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #d4e8d4;
+        }
+
+        .license-box p {
+            padding: 0 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #3d7a3d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .license-box p:last-child {
+            padding-bottom: 1rem;
+            margin-bottom: 0;
+        }
+
+        .license-box a {
+            color: #2d6a2d;
+            text-decoration: underline;
+            text-decoration: underline;
+        }
+        
+        #start-editor {
+            display: block;
+            margin-top: -2rem;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+            font-size: 1.2rem;
+            padding: 0.75rem 2.5rem;
+        }
+
+        /* Two-column welcome layout */
+        .welcome-flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .welcome-primary-column {
+            flex: 3;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .welcome-primary-column h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-primary-column .version-info {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-primary-column .intro-text {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-section:last-child {
+            margin-bottom: 0;
+            flex-grow: 1; /* Let the last section grow to fill space */
+        }
+        
+        .welcome-secondary-column {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .welcome-secondary-box {
+            flex: 0 0 auto; /* Don't grow, don't shrink */
+            background: var(--white);
+            border-radius: 8px;
+            padding: 0; /* Remove padding as we'll control it with inner elements */
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        /* Make it responsive */
+        @media (max-width: 1200px) {
+            .welcome-flex-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .welcome-primary-column,
+            .welcome-secondary-column {
+                width: 100%;
+            }
+            
+            .welcome-secondary-column {
+                gap: 1.5rem;
+            }
+        }
+
+        /* Adjust margins for the primary column sections */
+        .welcome-primary-column h1,
+        .welcome-primary-column .version-info,
+        .welcome-primary-column .intro-text {
+            text-align: center;
+        }
+        
+        .welcome-primary-column section:first-of-type {
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        
+        #welcome-view.active-view {
+            display: flex;
+            width: 100%;
+        }
+        
+        #welcome-view:not(.active-view) {
+            display: none;
+        }
+
+        /* Welcome View styling when outside container */
+        #welcome-view {
+            padding: 2rem 0;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Common styles for both boxes */
+        .disclaimer-box h2, .technical-notes h2 {
+            padding: 1rem 1.5rem;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .disclaimer-box p {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .disclaimer-box ul, .technical-notes ul {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            margin: 0;
+        }
+        
+        .disclaimer-box li, .technical-notes li {
+            padding-left: 0rem;
+        }
+        
+        /* Ensure proper line wrapping in grid items */
+        .component-item {
+            word-break: break-word;
+            hyphens: auto;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden; /* Hide everything by default */
+            }
+
+            #result-view, #result-view * {
+                visibility: visible; /* Make result view and its children visible */
+            }
+
+            #result-view {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 0; /* Remove padding */
+                margin: 0; /* Remove margin */
+            }
+
+            .result-header, .result-notice, header, footer, #welcome-view, #editor-view, #save-load-modal, #save-load-btn, #generate-policy-btn, .header-buttons {
+                display: none !important; /* Force hide specific elements */
+                visibility: hidden !important;
+            }
+
+            #policy-result-container { /* Updated ID */
+                box-shadow: none; /* Remove shadow */
+                border: none; /* Remove border */
+                padding: 1cm; /* Add some print margin */
+                visibility: visible !important;
+            }
+            
+            #policy-result-container * {
+                 visibility: visible !important; /* Ensure children are visible */
+            }
+
+            /* Optional: Adjust font size for printing */
+            .generated-policy {
+                font-size: 10pt;
+            }
+            .generated-policy h1 {
+                font-size: 16pt;
+            }
+            .generated-policy h2 {
+                font-size: 12pt;
+            }
+            
+            /* Ensure links are visible when printed */
+            a:link, a:visited {
+                text-decoration: underline;
+                color: #000; /* Ensure links are black for printing */
+            }
+            
+            /* Optional: Show URL for links in print */
+            a[href]:after {
+                content: " (" attr(href) ")";
+                font-size: 90%;
+                color: #555;
+            }
+            /* Don't show href for internal links */
+            a[href^="#"]:after {
+                content: "";
+            }
+            /* Hide specific UI elements within policy text if needed */
+             .item-actions { display: none; } /* Hide buttons if they ever appear here */
+        }
+
+        .policy-subcategory {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .policy-subcategory:first-child {
+            margin-top: 0.8rem;
+        }
+
+        .subcategory-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.8rem;
+        }
+
+        .generated-policy {
+            padding: 2rem;
+        }
+
+        .generated-policy h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.6rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome View - moved outside main container -->
+    <div id="welcome-view" class="view active-view">
+        <div class="welcome-content">
+            <div class="welcome-flex-container">
+                <div class="welcome-primary-column">
+                    <div class="welcome-title-row">
+                        <h1>KI-Policy-Generator</h1>
+                        <div class="language-switcher">
+                            <button data-lang="de" class="active" title="Deutsch">DE</button>
+                            <button data-lang="en" title="English">EN</button>
+                        </div>
+                    </div>
+                    <p class="version-info">Version v3 / 2025-01-28</p>
+                    <p class="intro-text">Ein Tool zum Erstellen einer KI-Richtlinie für Lehrveranstaltungen</p>
+
+                    <section class="welcome-section">
+                        <button id="start-editor" class="action-btn">Editor öffnen</button>
+                    </section>
+
+                    <section class="welcome-section">
+                        <h2>Wie Sie dieses Tool nutzen</h2>
+                        <ul>
+                            <li>Wählen Sie aus rund <strong>50 vordefinierten Textbausteinen</strong>.</li>
+                            <li>Passen Sie die Bausteine an Ihre Bedürfnisse an. Ergänzen Sie eigene Inhalte.</li>
+                            <li>Ihren Fortschritt können Sie jederzeit herunterladen und später wieder laden.</li>
+                            <li>Die fertige Richtlinie können Sie herunterladen.</li>
+                        </ul>
+                    </section>
+
+                    <section class="welcome-section">
+                        <h2>Kategorien</h2>
+                        <p>Ihre Richtlinie kann aus den folgenden Bausteinen zusammengestellt werden:</p>
+                        <div class="component-grid">
+                            <div class="component-item">Einleitung</div>
+                            <div class="component-item"> Grundlagen und Lernziele</div>
+                            <div class="component-item"> Erlaubte und verbotene Nutzung</div>
+                            <div class="component-item"> Urheberrecht und Datenschutz</div>
+                            <div class="component-item"> Kennzeichnung der KI-Nutzung</div>
+                            <div class="component-item"> Chancengleichheit und Zugang</div>
+                            <div class="component-item"> Praktische Tipps</div>
+                            <div class="component-item"> KI-Einsatz durch Lehrende</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="welcome-secondary-column">
+                    <div class="welcome-secondary-box disclaimer-box">
+                        <h2>Wichtige Hinweise</h2>
+                        <p>Dieser Generator ist ein <strong>unterstützendes Angebot</strong>.</p>
+                        <ul>
+                            <li><strong>Nicht unreflektiert einsetzen:</strong> Lehrveranstaltungsspezifische KI-Richtlinien können zu neuen Problemen führen. Studierende erhalten am Semesteranfang in mehreren Lehrveranstaltungen ähnliche Dokumente mit leicht unterschiedlichem Inhalt – wie bei AGB liest dann niemand mehr das Kleingedruckte. Außerdem besteht die Gefahr des „Bike-Sheddings“: Jede Lehrperson glaubt zu wissen, wie man KI am besten nutzt – am Ende diskutieren wir länger über Policys als wir unterrichten. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">Mehr dazu hier einem Beitrag von Dominik Herrmann.</a></li>
+                            <li><strong>Keine Verpflichtung:</strong> Es besteht <strong>keine Verpflichtung</strong> seitens der Universität Bamberg, eine solche Richtlinie zu erstellen oder dieses Tool zu nutzen.</li>
+                            <li><strong>Keine offizielle Position:</strong> Die bereitgestellten Textbausteine und Inhalte stellen <strong>keine</strong> offizielle Position der Universität Bamberg dar.</li>
+                            <li><strong>Keine Produktempfehlung:</strong> Werden in den Bausteinen beispielhaft KI-Werkzeuge genannt, dient dies rein informativen Zwecken zur Veranschaulichung. Es handelt sich dabei <strong>nicht</strong> um eine Empfehlung oder Aufforderung zur Nutzung bestimmter Produkte.</li>
+                            <li><strong>Ihre Verantwortung:</strong> Die Verantwortung für die Einhaltung der rechtlichen Rahmenbedingungen und die finale inhaltliche Ausgestaltung Ihrer KI-Policy liegt bei Ihnen als Lehrperson.</li>
+                            <li><strong>Dynamische Inhalte:</strong> Aufgrund des fortlaufenden wissenschaftlichen Diskurses könnte sich der Inhalt dieses Generators in Zukunft ändern. Die Inhalte dieser Version bleiben unverändert online zugänglich. Alte Versionen enthalten einen Link zur jeweils aktuellen Version des Generators.</li>
+                        </ul>
+                    </div>
+
+                    <div class="welcome-secondary-box technical-notes">
+                        <h2>Technische Hinweise</h2>
+                        <ul>
+                            <li>Sie nutzen aktuell <strong>Version v3</strong> dieses Generators. Die vorherige Version war <a href="../v2.html">Version v2</a>.</li>
+                            <li><strong>Speichern und Laden:</strong> Export und Import funktionieren <strong>nur innerhalb derselben Version</strong> des Generators. Ältere Versionen bleiben weiterhin online zugänglich.</li>
+                            <li><strong>Fertige Policy erzeugen:</strong> Sie können Ihre KI-Richtlinie jederzeit in die Zwischenablage kopieren und in Ihre eigenen Dokumente oder Lernmanagementsysteme einfügen.</li>
+                            <li><strong>Datensparsamkeit:</strong> Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</li>
+                            <li><strong>Formatierung:</strong> In den Textfeldern können Sie Markdown verwenden: **fett**, *kursiv*, - für Listen.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-top-row">
+                <div class="header-title-area">
+                    <h1 id="main-title">KI-Policy-Generator für die Lehre</h1>
+                </div>
+                <div class="header-buttons">
+                        <div class="language-switcher header-language-switcher">
+                            <button data-lang="de" class="active" title="Deutsch">DE</button>
+                            <button data-lang="en" title="English">EN</button>
+                        </div>
+                        <button id="save-load-btn" class="action-btn">Daten-Export und -Import</button>
+                        <button id="generate-policy-btn" class="action-btn">Richtlinie generieren</button>
+                    </div>
+            </div>
+        </header>
+
+        <!-- Editor View -->
+        <div id="editor-view" class="view">
+            <div class="editor-header">
+                
+                <div class="header-top-row">
+                    <h2 id="document-title" class="editable-title">KI-Richtlinie für meine Lehrveranstaltung</h2>
+                    <button id="edit-title-btn" class="secondary-btn">Titel bearbeiten</button>
+                </div>
+                <div class="intro-row">
+                    <div id="document-intro-display" class="document-intro"></div>
+                    <button id="edit-intro-btn" class="secondary-btn">Einleitung bearbeiten</button>
+                </div>
+            </div>
+            
+            <div class="panels">
+                <div class="left-panel">
+                    <!-- Policy items werden dynamisch aus policy-data.yaml geladen -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Result View -->
+        <div id="result-view" class="view">
+            <div class="result-header">
+                <button id="back-to-editor" class="back-btn">Zurück zum Editor</button>
+                <button id="copy-result" class="action-btn">Text kopieren</button>
+                <button id="download-html-btn" class="action-btn">Als HTML herunterladen</button> 
+            </div>
+            <div class="result-notice">
+                <p>Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden.</p> <!-- Updated Text -->
+            </div>
+            <div id="policy-result-container"></div> <!-- Renamed ID -->
+        </div>
+    </div>
+
+    <!-- Save/Load Modal -->
+    <div id="save-load-modal" class="modal" style="display: none;">
+        <div class="modal-content save-load-modal-content">
+            <span class="close-modal" id="close-save-load-modal">&times;</span>
+            <h2>Speichern & Laden</h2>
+            <div class="save-load-container">
+                <div id="save-container">
+                    <p>Speichern Sie Ihre aktuelle Konfiguration in einer Datei:</p>
+                    <button id="save-state-btn" class="action-btn">Als Datei speichern</button>
+                </div>
+                <div id="load-container">
+                    <p>Laden Sie eine gespeicherte Konfiguration:</p>
+                    <input type="file" id="state-file-input" accept=".export" />
+                    <button id="load-state-btn" class="action-btn">Geladene Datei importieren</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Über diesen Generator</h3>
+                <p>Dieser KI-Policy-Generator wird vom <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office der Universität Bamberg</a> betrieben.</p>
+                <p>Bei der Entwicklung der Texte und des Generators kam Generative KI zum Einsatz.</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">Weiterführende Informationen</a>
+                <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
+                <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Impressum</a>
+                <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Datenschutz</a>
+            </div>
+
+            <div class="footer-license">
+                <p>Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a>, Code unter <a href="https://opensource.org/licenses/MIT" target="_blank">MIT-Lizenz</a></p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // SVG Icons
+        window.svgIcons = {
+            edit: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path d="M15.728 9.686l-1.414-1.414L5 17.586V19h1.414l9.314-9.314zm1.414-1.414l1.414-1.414-1.414-1.414-1.414 1.414 1.414 1.414zM7.242 21H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 21z"/></svg>',
+            plus: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>',
+            trash: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z"/></svg>',
+            handle: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></svg>',
+        };
+
+        // Helper function to escape HTML to prevent XSS attacks
+        function escapeHTML(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Helper function to parse markdown
+        function parseMarkdown(text) {
+            if (!text) return '';
+            
+            // First escape HTML to prevent XSS
+            text = escapeHTML(text);
+            
+            // Bold: **text** -> <strong>text</strong>
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            
+            // Italic: *text* -> <em>text</em>
+            text = text.replace(/\*([^\*]+?)\*/g, '<em>$1</em>');
+            
+            // URLs: http(s)://... -> <a href="...">...</a>
+            text = text.replace(/(?<!href=["'])(https?:\/\/[^\s<]+)/g, function(match) {
+                // Escape URL but maintain the already HTML-escaped characters
+                return '<a href="' + match + '" target="_blank">' + match + '</a>';
+            });
+            
+            // Convert bullet point lists (lines starting with - or *)
+            let listMatches = text.match(/(?:^|\n)((?:[\-\*]\s+.+(?:\n|$))+)/g);
+            if (listMatches) {
+                listMatches.forEach(listBlock => {
+                    let htmlList = '<ul>\n';
+                    listBlock.split('\n').forEach(line => {
+                        if (/^[\-\*]\s+/.test(line)) {
+                            let content = line.replace(/^[\-\*]\s+/, '');
+                            htmlList += `<li>${content}</li>\n`;
+                        }
+                    });
+                    htmlList += '</ul>';
+                    text = text.replace(listBlock, htmlList);
+                });
+            }
+            
+            // Convert numbered lists (lines starting with 1., 2., etc)
+            let numberedListMatches = text.match(/(?:^|\n)((?:\d+\.\s+.+(?:\n|$))+)/g);
+            if (numberedListMatches) {
+                numberedListMatches.forEach(listBlock => {
+                    let htmlList = '<ol>\n';
+                    listBlock.split('\n').forEach(line => {
+                        if (/^\d+\.\s+/.test(line)) {
+                            let content = line.replace(/^\d+\.\s+/, '');
+                            htmlList += `<li>${content}</li>\n`;
+                        }
+                    });
+                    htmlList += '</ol>';
+                    text = text.replace(listBlock, htmlList);
+                });
+            }
+            
+            // Handle bullet character lists (•) - convert to proper HTML lists
+            if (text.includes('•')) {
+                let bulletListMatches = text.match(/(?:^|\n)?(.+\n(?:•\s+.+(?:\n|$))+)/g);
+                if (bulletListMatches) {
+                    bulletListMatches.forEach(listBlock => {
+                        // Capture the heading line if it exists
+                        let heading = '';
+                        let bulletItems = listBlock.split('\n');
+                        
+                        // Check if the first line is not a bullet point
+                        if (bulletItems[0] && !bulletItems[0].trim().startsWith('•')) {
+                            heading = bulletItems.shift();
+                        }
+                        
+                        let htmlList = heading ? heading + '\n<ul>\n' : '<ul>\n';
+                        
+                        bulletItems.forEach(line => {
+                            if (line.trim().startsWith('•')) {
+                                let content = line.replace(/^•\s+/, '').trim();
+                                if (content) {
+                                    htmlList += `<li>${content}</li>\n`;
+                                }
+                            }
+                        });
+                        
+                        htmlList += '</ul>';
+                        text = text.replace(listBlock, htmlList);
+                    });
+                }
+            }
+            
+            // Handle paragraphs: Add paragraph tags for text blocks
+            text = '<p>' + text.replace(/\n\n+/g, '</p>\n\n<p>') + '</p>';
+            
+            // Fix lists that might have gotten paragraph tags
+            text = text.replace(/<p><[ou]l>/g, '<$1>');
+            text = text.replace(/<\/[ou]l><\/p>/g, '</$1>');
+            
+            // Fix nested paragraph tags in list items
+            text = text.replace(/<li><p>(.*?)<\/p><\/li>/g, '<li>$1</li>');
+            
+            return text;
+        }
+
+       
+        // Function to convert HTML back to Markdown format
+        function convertHtmlToMarkdown(html) {
+            if (!html) return '';
+            
+            // Create a temporary div to handle the HTML content
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Process lists first to avoid interference with other tag conversions
+            
+            // Convert unordered lists back to Markdown bullet points
+            const ulLists = tempDiv.querySelectorAll('ul');
+            ulLists.forEach(ul => {
+                // Create a document fragment to hold the markdown text
+                const fragment = document.createDocumentFragment();
+                const listItems = ul.querySelectorAll('li');
+                
+                // Add a newline before the list if not at the beginning
+                if (ul.previousSibling) {
+                    fragment.appendChild(document.createTextNode('\n'));
+                }
+                
+                // Convert each list item to a markdown bullet
+                listItems.forEach((item, index) => {
+                    // Add newline between items but not before the first one
+                    if (index > 0) {
+                        fragment.appendChild(document.createTextNode('\n'));
+                    }
+                    
+                    const markdownItem = `- ${item.textContent}`;
+                    fragment.appendChild(document.createTextNode(markdownItem));
+                });
+                
+                // Add a newline after the list
+                fragment.appendChild(document.createTextNode('\n'));
+                
+                // Replace the ul with the markdown
+                ul.parentNode.replaceChild(fragment, ul);
+            });
+            
+            // Convert ordered lists back to Markdown numbered points
+            const olLists = tempDiv.querySelectorAll('ol');
+            olLists.forEach(ol => {
+                // Create a document fragment to hold the markdown text
+                const fragment = document.createDocumentFragment();
+                const listItems = ol.querySelectorAll('li');
+                
+                // Add a newline before the list if not at the beginning
+                if (ol.previousSibling) {
+                    fragment.appendChild(document.createTextNode('\n'));
+                }
+                
+                // Convert each list item to a markdown number
+                listItems.forEach((item, index) => {
+                    // Add newline between items but not before the first one
+                    if (index > 0) {
+                        fragment.appendChild(document.createTextNode('\n'));
+                    }
+                    
+                    const markdownItem = `${index + 1}. ${item.textContent}`;
+                    fragment.appendChild(document.createTextNode(markdownItem));
+                });
+                
+                // Add a newline after the list
+                fragment.appendChild(document.createTextNode('\n'));
+                
+                // Replace the ol with the markdown
+                ol.parentNode.replaceChild(fragment, ol);
+            });
+            
+            // Now convert other HTML elements to markdown
+            
+            // Convert strong tags back to Markdown bold
+            const strongTags = tempDiv.querySelectorAll('strong');
+            strongTags.forEach(tag => {
+                const text = tag.textContent;
+                const markdown = `**${text}**`;
+                const textNode = document.createTextNode(markdown);
+                tag.parentNode.replaceChild(textNode, tag);
+            });
+            
+            // Convert em tags back to Markdown italic
+            const emTags = tempDiv.querySelectorAll('em');
+            emTags.forEach(tag => {
+                const text = tag.textContent;
+                const markdown = `*${text}*`;
+                const textNode = document.createTextNode(markdown);
+                tag.parentNode.replaceChild(textNode, tag);
+            });
+            
+            // Convert anchor tags back to URLs
+            const anchors = tempDiv.querySelectorAll('a');
+            anchors.forEach(anchor => {
+                // If it's a simple URL that was auto-linked, just use the URL
+                if (anchor.textContent === anchor.getAttribute('href')) {
+                    const url = anchor.getAttribute('href');
+                    const textNode = document.createTextNode(url);
+                    anchor.parentNode.replaceChild(textNode, anchor);
+                }
+            });
+            
+            // Convert paragraph tags to line breaks
+            let markdownText = tempDiv.innerHTML;
+            markdownText = markdownText.replace(/<p>/g, '');
+            markdownText = markdownText.replace(/<\/p>/g, '\n\n');
+            
+            // Clean up any remaining HTML tags
+            markdownText = markdownText.replace(/<[^>]*>/g, '');
+            
+            // Handle HTML entities
+            markdownText = markdownText.replace(/&lt;/g, '<');
+            markdownText = markdownText.replace(/&gt;/g, '>');
+            markdownText = markdownText.replace(/&quot;/g, '"');
+            markdownText = markdownText.replace(/&#039;/g, "'");
+            markdownText = markdownText.replace(/&amp;/g, '&');
+            
+            // Fix duplicate newlines that might have been created
+            markdownText = markdownText.replace(/\n{3,}/g, '\n\n');
+            
+            // Trim to remove any extra whitespace
+            return markdownText.trim();
+        }
+
+        // DOM Elements
+        const welcomeView = document.getElementById('welcome-view');
+        const editorView = document.getElementById('editor-view');
+        const resultView = document.getElementById('result-view');
+        const startEditorBtn = document.getElementById('start-editor');
+        const generatePolicyBtn = document.getElementById('generate-policy-btn');
+        const backToEditorBtn = document.getElementById('back-to-editor');
+        const leftPanel = document.querySelector('.left-panel');
+        const policyResultContainer = document.getElementById('policy-result-container'); // Updated ID
+        const copyResultBtn = document.getElementById('copy-result');
+        const editTitleBtn = document.getElementById('edit-title-btn');
+        const editIntroBtn = document.getElementById('edit-intro-btn');
+        const documentTitle = document.getElementById('document-title');
+        const documentIntroDisplay = document.getElementById('document-intro-display');
+        
+        
+        
+        let currentView = 'welcome';
+        let documentIntro = "Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Ziel ist es, Klarheit für Sie als Studierende zu schaffen und eine faire Bewertung zu gewährleisten, während Sie gleichzeitig die Möglichkeiten von KI erkunden können. Bitte fragen Sie nach, wenn Teile dieser Richtlinie unklar sind.";
+        
+
+        // Add SVGs to buttons
+        function addSvgIcons() {
+            document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                btn.innerHTML = window.svgIcons.edit + ' Bearbeiten';
+            });
+            
+            document.querySelectorAll('.add-item-btn').forEach(btn => {
+                btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+            });
+        }
+
+        // Update intro display
+        function updateIntroDisplay() {
+            if (documentIntroDisplay) {
+                // Use window.documentIntro if set by policy-loader, otherwise use local documentIntro
+                // Security: parseMarkdown escapes HTML before processing, intro comes from trusted local YAML
+                const introText = window.documentIntro || documentIntro;
+                documentIntroDisplay.innerHTML = '<strong style="color: var(--medium-gray);">Einleitung: </strong>' + parseMarkdown(introText);
+            }
+        }
+
+        // Handle ESC key for modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (saveLoadModal.style.display === 'flex') {
+                    saveLoadModal.style.display = 'none';
+                }
+            }
+        });
+
+        // Navigation between views
+        function switchView(targetView) {
+            // Hide all views
+            welcomeView.classList.remove('active-view');
+            editorView.classList.remove('active-view');
+            resultView.classList.remove('active-view');
+            
+            // Show target view
+            if (targetView === 'welcome') {
+                welcomeView.classList.add('active-view');
+                currentView = 'welcome';
+            } else if (targetView === 'editor') {
+                editorView.classList.add('active-view');
+                currentView = 'editor';
+                // Update intro display when switching to editor view
+                updateIntroDisplay();
+            } else if (targetView === 'result') {
+                resultView.classList.add('active-view');
+                currentView = 'result';
+            }
+        }
+
+        // Event Listeners for View Navigation
+        startEditorBtn.addEventListener('click', () => switchView('editor'));
+        generatePolicyBtn.addEventListener('click', () => {
+            generatePolicy();
+            switchView('result');
+        });
+        backToEditorBtn.addEventListener('click', () => switchView('editor'));
+
+        // Selected items
+        const selectedItems = [];
+        // Store original content for all policy items
+        const originalPolicyItems = {};
+        
+        
+        // Function adjusted to only manage data, remove unused DOM creation
+        function addSelectedItem(id, text, categoryTitle) { 
+            //const id = createUniqueId(); // Alte Zeile: Erzeugt neue ID
+            const itemElement = document.createElement('div');
+            itemElement.className = 'selected-item';
+            itemElement.setAttribute('draggable', 'true');
+            itemElement.dataset.id = id; // Verwende die übergebene ID
+            
+            // Create the element using DOM methods instead of innerHTML to avoid XSS
+            const textDiv = document.createElement('div');
+            textDiv.className = 'selected-item-text';
+            textDiv.textContent = text;
+            itemElement.appendChild(textDiv);
+            
+            // Find the subcategory if available
+            const policyItem = document.querySelector(`.policy-item[data-id="${id}"]`);
+            let subcategoryTitle = 'Allgemein';
+            
+            if (policyItem) {
+                const subcategoryElement = policyItem.closest('.subcategory');
+                if (subcategoryElement) {
+                    const titleElement = subcategoryElement.querySelector('.subcategory-title');
+                    if (titleElement && titleElement.textContent) {
+                        subcategoryTitle = titleElement.textContent.trim();
+                        console.log(`addSelectedItem: Found subcategory "${subcategoryTitle}" for item ${id}`);
+                    }
+                }
+            }
+            
+            // Add to array using the passed ID
+            selectedItems.push({
+                id, // Verwende die übergebene ID
+                text,
+                categoryTitle: categoryTitle, // Store category title
+                subcategoryTitle: subcategoryTitle, // Store subcategory title
+                element: policyItem // Store the actual DOM element
+            });
+            
+            console.log(`Item added to selectedItems:`, { id, categoryTitle, subcategoryTitle });
+            
+            // return id; // Rückgabe nicht mehr nötig
+        }
+        
+        function removeSelectedItem(id) {
+            const index = selectedItems.findIndex(item => item.id === id);
+            if (index !== -1) {
+                selectedItems.splice(index, 1);
+                
+                // Find and update the policy item button
+                const policyItem = document.querySelector(`.policy-item[data-id="${id}"]`);
+                if (policyItem) {
+                    const btn = policyItem.querySelector('.add-item-btn');
+                    btn.classList.remove('added');
+                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                    policyItem.classList.remove('selected');
+                }
+            }
+        }
+
+        // Edit document title
+        editTitleBtn.addEventListener('click', () => {
+            // Close any open inline editors
+            document.querySelectorAll('.policy-item.editing').forEach(item => {
+                exitInlineEditMode(item);
+            });
+            
+            // Exit any other editing mode
+            if (documentIntroDisplay.classList.contains('editing')) {
+                exitIntroEditMode();
+            }
+            
+            // Enable title editing
+            enableTitleEditing();
+        });
+        
+        // Edit document intro
+        editIntroBtn.addEventListener('click', () => {
+            // Close any open inline editors
+            document.querySelectorAll('.policy-item.editing').forEach(item => {
+                exitInlineEditMode(item);
+            });
+            
+            // Exit any other editing mode
+            if (documentTitle.classList.contains('editing')) {
+                exitTitleEditMode();
+            }
+            
+            // Enable intro editing
+            enableIntroEditing();
+        });
+
+        // Enable title inline editing
+        function enableTitleEditing() {
+            documentTitle.classList.add('editing');
+            
+            // Remove existing editor if any
+            const existingEditor = documentTitle.querySelector('.title-editor');
+            if (existingEditor) {
+                existingEditor.remove();
+            }
+            
+            // Create editor elements
+            const titleEditor = document.createElement('div');
+            titleEditor.className = 'title-editor';
+            
+            // Create input for title
+            const titleInput = document.createElement('input');
+            titleInput.type = 'text';
+            
+            // Get the title content, converting from HTML if needed
+            let titleContent = documentTitle.textContent;
+            if (titleContent.includes('<') && titleContent.includes('>')) {
+                titleContent = convertHtmlToMarkdown(titleContent);
+            }
+            titleInput.value = titleContent;
+            
+            titleEditor.appendChild(titleInput);
+            
+            // Create action buttons
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'save-edit-btn';
+            saveBtn.textContent = 'Speichern';
+            saveBtn.addEventListener('click', () => {
+                // Set the text content directly since titles usually don't have formatting
+                documentTitle.textContent = titleInput.value;
+                exitTitleEditMode();
+            });
+            
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'cancel-edit-btn';
+            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.addEventListener('click', exitTitleEditMode);
+            
+            titleEditor.appendChild(saveBtn);
+            titleEditor.appendChild(cancelBtn);
+            
+            // Add editor to title element
+            documentTitle.appendChild(titleEditor);
+            
+            // Focus the input
+            titleInput.focus();
+            titleInput.select();
+            
+            // Add keyboard shortcuts
+            titleInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    documentTitle.textContent = titleInput.value;
+                    exitTitleEditMode();
+                }
+                if (e.key === 'Escape') {
+                    exitTitleEditMode();
+                }
+            });
+        }
+
+        // Exit title editing mode
+        function exitTitleEditMode() {
+            documentTitle.classList.remove('editing');
+            const titleEditor = documentTitle.querySelector('.title-editor');
+            if (titleEditor) {
+                titleEditor.remove();
+            }
+        }
+
+        // Enable intro inline editing
+        function enableIntroEditing() {
+            documentIntroDisplay.classList.add('editing');
+            
+            // Remove existing editor if any
+            const existingEditor = documentIntroDisplay.querySelector('.intro-editor');
+            if (existingEditor) {
+                existingEditor.remove();
+            }
+            
+            // Create editor elements
+            const introEditor = document.createElement('div');
+            introEditor.className = 'intro-editor';
+            
+            // Create textarea for intro
+            const introTextarea = document.createElement('textarea');
+            
+            // Check if documentIntro contains HTML and convert it to Markdown if needed
+            if (documentIntro.includes('<') && documentIntro.includes('>')) {
+                introTextarea.value = convertHtmlToMarkdown(documentIntro);
+            } else {
+                introTextarea.value = documentIntro;
+            }
+            
+            introEditor.appendChild(introTextarea);
+            
+            // Create action buttons
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'save-edit-btn';
+            saveBtn.textContent = 'Speichern';
+            saveBtn.addEventListener('click', () => {
+                documentIntro = introTextarea.value;
+                updateIntroDisplay(); // This function already uses parseMarkdown
+                exitIntroEditMode();
+            });
+            
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'cancel-edit-btn';
+            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.addEventListener('click', exitIntroEditMode);
+            
+            introEditor.appendChild(saveBtn);
+            introEditor.appendChild(cancelBtn);
+            
+            // Add editor to intro element
+            documentIntroDisplay.appendChild(introEditor);
+            
+            // Focus the textarea
+            introTextarea.focus();
+            
+            // Add keyboard shortcuts
+            introTextarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    exitIntroEditMode();
+                }
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    documentIntro = introTextarea.value;
+                    updateIntroDisplay();
+                    exitIntroEditMode();
+                }
+            });
+        }
+
+        // Exit intro editing mode
+        function exitIntroEditMode() {
+            documentIntroDisplay.classList.remove('editing');
+            const introEditor = documentIntroDisplay.querySelector('.intro-editor');
+            if (introEditor) {
+                introEditor.remove();
+            }
+        }
+
+        // Category accordions
+        function initializeAccordions() {
+            // First remove any existing click handlers by disabling and re-enabling them
+            document.querySelectorAll('.category-header').forEach(header => {
+                // Make sure header displays h2 and chevron in correct positions
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.style.width = '100%';
+                
+                // Remove old chevrons first
+                const oldChevron = header.querySelector('.chevron');
+                if (oldChevron) {
+                    oldChevron.remove();
+                }
+                
+                // Add new chevron
+                const chevron = document.createElement('span');
+                chevron.className = 'chevron';
+                chevron.innerHTML = '&#9660;'; // Down arrow
+                header.appendChild(chevron);
+            });
+            
+            // Remove old click handlers by using event delegation instead
+            document.removeEventListener('click', categoryClickHandler);
+            document.addEventListener('click', categoryClickHandler);
+            
+            // Close all categories first
+            document.querySelectorAll('.category').forEach(category => {
+                category.classList.remove('expanded');
+            });
+            
+            // Expand only the first category by default
+            const firstCategory = document.querySelector('.category');
+            if (firstCategory) {
+                firstCategory.classList.add('expanded');
+            }
+        }
+
+        function categoryClickHandler(event) {
+            // Check if the click was directly on the header, its h2, or the chevron
+            const header = event.target.closest('.category-header');
+            if (!header) return;
+            
+            // Don't trigger if clicking on buttons or their content
+            if (event.target.closest('.item-actions') || 
+                event.target.closest('button')) {
+                return;
+            }
+            
+            // If we got here, it's a valid header click
+            const category = header.closest('.category');
+            if (category) {
+                category.classList.toggle('expanded');
+            }
+        }
+
+        
+
+        // Generate policy
+        function generatePolicy() {
+            // Group items by category
+            const itemsByCategory = {};
+            selectedItems.forEach(item => {
+                if (!itemsByCategory[item.categoryTitle]) {
+                    itemsByCategory[item.categoryTitle] = [];
+                }
+                itemsByCategory[item.categoryTitle].push(item);
+            });
+            
+            // For debugging - show all selected items and their structure
+            console.log("Selected items for policy generation:", selectedItems);
+            
+            let policyHtml = `
+                <div class="generated-policy">
+                    <h1>${escapeHTML(documentTitle.textContent)}</h1>
+                    <div class="policy-date">Stand: ${new Date().toLocaleDateString('de-DE')}</div>
+                    <div class="policy-intro">${parseMarkdown(documentIntro)}</div>
+                    <div class="policy-content">
+            `;
+            
+            if (selectedItems.length === 0) {
+                policyHtml += `<p class="empty-policy">Keine Bausteine ausgewählt. Kehren Sie zurück zum Editor, um Bausteine hinzuzufügen.</p>`;
+            } else {
+                // Iterate through categories and add content
+                Object.entries(itemsByCategory).forEach(([categoryTitle, items]) => {
+                    // Add category heading (Remove numbering like "1. " etc.)
+                    const cleanCategoryTitle = categoryTitle.replace(/^\d+\.\s*/, '');
+                    policyHtml += `<div class="policy-category">
+                        <h2 class="category-title">${escapeHTML(cleanCategoryTitle)}</h2>`;
+                    
+                    // Group items by subcategory using the stored subcategoryTitle
+                    const itemsBySubcategory = {};
+                    
+                    items.forEach(item => {
+                        // Use the stored subcategoryTitle from when the item was added
+                        const subcategoryTitle = item.subcategoryTitle || 'Allgemein';
+                        
+                        if (!itemsBySubcategory[subcategoryTitle]) {
+                            itemsBySubcategory[subcategoryTitle] = [];
+                        }
+                        itemsBySubcategory[subcategoryTitle].push(item);
+                    });
+                    
+                    console.log("Items by subcategory for category", cleanCategoryTitle, ":", itemsBySubcategory);
+                    
+                    // Add items grouped by subcategory
+                    Object.entries(itemsBySubcategory).forEach(([subcategoryTitle, subcatItems]) => {
+                        // Always add subcategory title for better structure
+                        policyHtml += `<div class="policy-subcategory">
+                            <h3 class="subcategory-title">${escapeHTML(subcategoryTitle)}</h3>`;
+                        console.log("Adding subcategory title to output:", subcategoryTitle);
+                        
+                        // Add items in this subcategory
+                        subcatItems.forEach(item => {
+                            // Check if the text is already HTML (contains tags) or needs to be parsed from markdown
+                            const itemContent = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>')) 
+                                ? item.text // Use HTML directly if it contains tags
+                                : parseMarkdown(item.text); // Otherwise parse from markdown
+                                
+                            policyHtml += `<div class="policy-item-result">
+                                <div class="policy-item-text">${itemContent}</div>
+                            </div>`;
+                        });
+                        
+                        // Close subcategory div
+                        policyHtml += `</div>`;
+                    });
+                    
+                    // Close category div
+                    policyHtml += `</div>`;
+                });
+            }
+            
+            policyHtml += `</div></div>`;
+            
+            policyResultContainer.innerHTML = policyHtml; // Updated ID
+        }
+        
+        // Copy to clipboard function
+        copyResultBtn.addEventListener('click', () => {
+            // Get the policy container
+            const policyContainer = policyResultContainer.querySelector('.generated-policy');
+            if (!policyContainer) {
+                console.error("Policy container not found");
+                return;
+            }
+            
+            // Process text with proper formatting for categories and subcategories
+            let formattedText = '';
+            
+            // Add title and date
+            const title = policyContainer.querySelector('h1');
+            if (title) {
+                formattedText += title.textContent.trim() + '\n';
+            }
+            
+            const date = policyContainer.querySelector('.policy-date');
+            if (date) {
+                formattedText += date.textContent.trim() + '\n\n';
+            }
+            
+            // Add introduction
+            const intro = policyContainer.querySelector('.policy-intro');
+            if (intro) {
+                formattedText += intro.textContent.trim() + '\n\n';
+            }
+            
+            // Process categories and subcategories with proper spacing
+            const categories = policyContainer.querySelectorAll('.policy-category');
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2');
+                if (categoryTitle) {
+                    // Add two newlines before category title
+                    formattedText += '\n\n' + categoryTitle.textContent.trim() + '\n';
+                }
+                
+                // Process subcategories
+                const subcategories = category.querySelectorAll('.policy-subcategory');
+                subcategories.forEach(subcategory => {
+                    const subcategoryTitle = subcategory.querySelector('h3.subcategory-title');
+                    if (subcategoryTitle) {
+                        // Add one newline before subcategory title
+                        formattedText += '\n' + subcategoryTitle.textContent.trim() + '\n';
+                    }
+                    
+                    // Add policy items
+                    const items = subcategory.querySelectorAll('.policy-item-result');
+                    items.forEach(item => {
+                        formattedText += '\n' + item.textContent.trim() + '\n';
+                    });
+                });
+            });
+            
+            // Trim any excess whitespace and normalize line breaks
+            formattedText = formattedText.trim()
+                                        .replace(/\n{3,}/g, '\n\n') // Replace 3+ newlines with 2
+                                        .split('\n')
+                                        .map(line => line.trimStart()) // Remove leading whitespace from each line
+                                        .join('\n');
+            
+            navigator.clipboard.writeText(formattedText)
+                .then(() => {
+                    // Show success message
+                    copyResultBtn.textContent = "Kopiert!";
+                    copyResultBtn.classList.add('copy-success');
+                    setTimeout(() => {
+                        copyResultBtn.textContent = "Text kopieren";
+                        copyResultBtn.classList.remove('copy-success');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Fehler beim Kopieren in die Zwischenablage: ', err);
+                    alert('Konnte nicht in die Zwischenablage kopieren. Bitte manuell kopieren.');
+                });
+        });
+        
+        
+
+        // Funktion zum Anwenden des geladenen Zustands
+        function applyLoadedState(appState) {
+            console.log("Wende geladenen Zustand an:", appState);
+            
+            // 1. Titel und Einleitung aktualisieren
+            documentTitle.textContent = appState.title;
+            documentIntro = appState.intro;
+            updateIntroDisplay(); // Einleitung im Display aktualisieren
+            
+            // 2. Alle Elemente zurücksetzen
+            document.querySelectorAll('.policy-item').forEach(item => {
+                // Entferne alle Auswahl-Klassen
+                item.classList.remove('selected');
+                
+                // Reset buttons
+                const btn = item.querySelector('.add-item-btn');
+                if (btn) {
+                    btn.classList.remove('added');
+                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                }
+            });
+            
+            // 3. selectedItems-Array leeren
+            selectedItems.length = 0;
+            
+            // 4. Wende die Elementzustände an
+            if (appState.elements) {
+                Object.entries(appState.elements).forEach(([id, elementData]) => {
+                    const item = document.querySelector(`.policy-item[data-id="${id}"]`);
+                    if (!item) {
+                        console.warn(`Element mit ID ${id} nicht gefunden`);
+                        return;
+                    }
+                    
+                    // a. Text mit HTML aktualisieren (sanitized)
+                    const policyText = item.querySelector('.policy-text');
+                    if (policyText && elementData.currentText) {
+                        // Security: Convert to markdown first, then re-parse (escapes malicious HTML)
+                        const markdownText = convertHtmlToMarkdown(elementData.currentText);
+                        policyText.innerHTML = parseMarkdown(markdownText);
+                    }
+                    
+                    // b. Originaltext aktualisieren
+                    if (elementData.originalText) {
+                        originalPolicyItems[id] = elementData.originalText;
+                    }
+                    
+                    // c. Wenn das Element als hinzugefügt markiert ist
+                    if (elementData.isAdded) {
+                        // Als ausgewählt markieren
+                        item.classList.add('selected');
+                        
+                        // Button auf "Nicht verwenden" umstellen
+                        const btn = item.querySelector('.add-item-btn');
+                        if (btn) {
+                            btn.classList.add('added');
+                            btn.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
+                        }
+                        
+                        // Zum selectedItems-Array hinzufügen
+                        const categoryHeader = item.closest('.category').querySelector('.category-header h2');
+                        const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
+                        
+                        // Get subcategory title if available
+                        const subcategoryElement = item.closest('.subcategory');
+                        let subcategoryTitle = 'Allgemein';
+                        if (subcategoryElement) {
+                            const titleElement = subcategoryElement.querySelector('.subcategory-title');
+                            if (titleElement && titleElement.textContent) {
+                                subcategoryTitle = titleElement.textContent.trim();
+                            }
+                        }
+                        
+                        // Füge das Element zu selectedItems hinzu
+                        selectedItems.push({
+                            id: id,
+                            text: policyText.innerHTML, // Use innerHTML to preserve formatting
+                            categoryTitle: categoryTitle,
+                            subcategoryTitle: subcategoryTitle, // Store subcategory title
+                            element: item
+                        });
+                    }
+                });
+            }
+        }
+
+        // Initialisierung aller policy-items mit eindeutigen IDs
+        function initializeAllPolicyItems() {
+            console.log("Initialisiere alle policy-items mit eindeutigen IDs");
+            
+            // Sammle alle policy-items
+            const allPolicyItems = document.querySelectorAll('.policy-item');
+            
+            // Weise jedem Item eine eindeutige, fortlaufende ID zu
+            allPolicyItems.forEach((item, index) => {
+                const id = `item-${index + 1}`;
+                item.dataset.id = id;
+                
+                // Speichere den Originaltext
+                const policyText = item.querySelector('.policy-text');
+                if (policyText) {
+                    originalPolicyItems[id] = policyText.textContent.trim();
+                }
+                
+                console.log(`Initialisiert: ID ${id}, Text: "${policyText.textContent.trim().substring(0, 30)}..."`);
+            });
+            
+            console.log(`${allPolicyItems.length} Elemente initialisiert`);
+        }
+
+        // Function to enable inline editing mode
+        function enableInlineEditing(policyItem, itemId, currentText) {
+            // Close any other open editors first
+            document.querySelectorAll('.policy-item.editing').forEach(item => {
+                if (item !== policyItem) {
+                    exitInlineEditMode(item);
+                }
+            });
+            
+            // Mark the item as being edited
+            policyItem.classList.add('editing');
+            
+            // Check if inline editor already exists, remove if it does
+            let existingEditor = policyItem.querySelector('.inline-editor');
+            if (existingEditor) {
+                existingEditor.remove();
+            }
+            
+            // Create inline editor elements
+            const inlineEditor = document.createElement('div');
+            inlineEditor.className = 'inline-editor';
+
+            // Create markdown hint
+            const editorHint = document.createElement('p');
+            editorHint.className = 'editor-hint';
+            editorHint.textContent = 'Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen';
+            inlineEditor.appendChild(editorHint);
+
+            // Create textarea with current content
+            const textarea = document.createElement('textarea');
+            
+            // Convert HTML to Markdown if the content contains HTML
+            if (currentText.includes('<') && currentText.includes('>')) {
+                textarea.value = convertHtmlToMarkdown(currentText);
+            } else {
+                textarea.value = currentText;
+            }
+            
+            inlineEditor.appendChild(textarea);
+            
+            // Create action buttons
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'inline-editor-actions';
+            
+            // Save button
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'save-edit-btn';
+            saveBtn.textContent = 'Speichern';
+            saveBtn.addEventListener('click', () => saveInlineEdit(policyItem, itemId, textarea.value));
+            
+            // Cancel button
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'cancel-edit-btn';
+            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.addEventListener('click', () => cancelInlineEdit(policyItem));
+            
+            // Revert link
+            const revertLink = document.createElement('a');
+            revertLink.className = 'revert-inline-edit';
+            revertLink.href = '#';
+            revertLink.textContent = 'Originaltext wiederherstellen';
+            revertLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (originalPolicyItems[itemId]) {
+                    textarea.value = originalPolicyItems[itemId];
+                }
+            });
+            
+            // Add buttons to actions div
+            actionsDiv.appendChild(saveBtn);
+            actionsDiv.appendChild(cancelBtn);
+            actionsDiv.appendChild(revertLink);
+            
+            // Add actions to the editor
+            inlineEditor.appendChild(actionsDiv);
+            
+            // Add the editor to the policy item
+            policyItem.appendChild(inlineEditor);
+            
+            // Focus the textarea
+            textarea.focus();
+            
+            // Add keyboard shortcuts (Escape to cancel, Ctrl+Enter to save)
+            textarea.addEventListener('keydown', (e) => {
+                // Escape key to cancel
+                if (e.key === 'Escape') {
+                    cancelInlineEdit(policyItem);
+                }
+                // Ctrl+Enter to save
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    saveInlineEdit(policyItem, itemId, textarea.value);
+                }
+            });
+        }
+
+        // Function to save inline edit
+        function saveInlineEdit(policyItem, itemId, newText) {
+            const policyTextElement = policyItem.querySelector('.policy-text');
+            if (policyTextElement) {
+                // First convert any HTML in the text to Markdown format
+                const markdownText = convertHtmlToMarkdown(newText);
+                
+                // Set the text content and update the HTML display with parsed markdown
+                policyTextElement.innerHTML = parseMarkdown(markdownText);
+                
+                // Update selectedItems if this item is selected
+                const selectedIndex = selectedItems.findIndex(item => item.id === itemId);
+                if (selectedIndex !== -1) {
+                    selectedItems[selectedIndex].text = markdownText;
+                }
+            }
+            
+            // Exit editing mode
+            exitInlineEditMode(policyItem);
+        }
+
+        // Function to cancel inline edit
+        function cancelInlineEdit(policyItem) {
+            // Just exit editing mode without saving
+            exitInlineEditMode(policyItem);
+        }
+
+        // Function to exit inline editing mode
+        function exitInlineEditMode(policyItem) {
+            // Remove editing class
+            policyItem.classList.remove('editing');
+            
+            // Remove the inline editor
+            const inlineEditor = policyItem.querySelector('.inline-editor');
+            if (inlineEditor) {
+                inlineEditor.remove();
+            }
+        }
+
+        // --- New Helper Functions for Initialization ---
+        function initializeUI() {
+            console.log("Initializing UI elements...");
+            addSvgIcons();
+            updateIntroDisplay();
+            initializeAccordions();
+            console.log("UI elements initialized.");
+        }
+
+        function setupViewNavigation() {
+            console.log("Setting up view navigation...");
+            // Need to access these globally defined buttons
+            const startEditorBtn = document.getElementById('start-editor');
+            const generatePolicyBtn = document.getElementById('generate-policy-btn');
+            const backToEditorBtn = document.getElementById('back-to-editor');
+            
+            startEditorBtn.addEventListener('click', () => switchView('editor'));
+            generatePolicyBtn.addEventListener('click', () => {
+                generatePolicy();
+                switchView('result');
+            });
+            backToEditorBtn.addEventListener('click', () => switchView('editor'));
+            console.log("View navigation setup complete.");
+        }
+
+        function setupEditorInteractions() {
+            console.log("Setting up editor interactions...");
+            // Need to access these globally defined buttons/elements
+            const editTitleBtn = document.getElementById('edit-title-btn');
+            const editIntroBtn = document.getElementById('edit-intro-btn');
+            const documentIntroDisplay = document.getElementById('document-intro-display');
+            const documentTitle = document.getElementById('document-title');
+            
+            // Title and Intro editing
+            editTitleBtn.addEventListener('click', () => {
+                document.querySelectorAll('.policy-item.editing').forEach(item => exitInlineEditMode(item));
+                if (documentIntroDisplay.classList.contains('editing')) exitIntroEditMode();
+                enableTitleEditing();
+            });
+            editIntroBtn.addEventListener('click', () => {
+                document.querySelectorAll('.policy-item.editing').forEach(item => exitInlineEditMode(item));
+                if (documentTitle.classList.contains('editing')) exitTitleEditMode();
+                enableIntroEditing();
+            });
+
+            // Policy item buttons (Edit/Add)
+            document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                const clone = btn.cloneNode(true);
+                btn.parentNode.replaceChild(clone, btn);
+                clone.addEventListener('click', function() {
+                    const policyItem = this.closest('.policy-item');
+                    const policyTextElement = policyItem.querySelector('.policy-text');
+                    if (!policyTextElement) return;
+                    const policyTextContent = policyTextElement.innerHTML;
+                    let id = policyItem.dataset.id;
+                    if (!id) {
+                        console.error("Error: Edit button clicked on item missing ID:", policyItem);
+                        return;
+                    }
+                    enableInlineEditing(policyItem, id, policyTextContent);
+                });
+            });
+
+            document.querySelectorAll('.add-item-btn').forEach(btn => {
+                const clone = btn.cloneNode(true);
+                btn.parentNode.replaceChild(clone, btn);
+                clone.addEventListener('click', function() {
+                    const policyItem = this.closest('.policy-item');
+                    if (!policyItem) return;
+                    const policyTextElement = policyItem.querySelector('.policy-text');
+                    if (!policyTextElement) return;
+                    const policyText = policyTextElement.innerHTML;
+                    const categoryHeader = policyItem.closest('.category').querySelector('.category-header h2');
+                    const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
+                    
+                    // Find subcategory
+                    const subcategoryElement = policyItem.closest('.subcategory');
+                    let subcategoryTitle = 'Allgemein';
+                    if (subcategoryElement) {
+                        const titleElement = subcategoryElement.querySelector('.subcategory-title');
+                        if (titleElement && titleElement.textContent) {
+                            subcategoryTitle = titleElement.textContent.trim();
+                            console.log(`Button click: Found subcategory "${subcategoryTitle}" for item`);
+                        }
+                    }
+                    
+                    let id = policyItem.dataset.id;
+                    if (!id) {
+                        console.error("Error: Add button clicked on item missing ID:", policyItem);
+                        return;
+                    }
+                    
+                    if (clone.classList.contains('added')) {
+                        removeSelectedItem(id);
+                        clone.classList.remove('added');
+                        clone.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                        policyItem.classList.remove('selected');
+                    } else {
+                        // Push directly to selectedItems with subcategory info
+                        selectedItems.push({
+                            id: id,
+                            text: policyText,
+                            categoryTitle: categoryTitle,
+                            subcategoryTitle: subcategoryTitle,
+                            element: policyItem
+                        });
+                        console.log(`Added item to selectedItems with subcategory "${subcategoryTitle}"`);
+                        
+                        clone.classList.add('added');
+                        clone.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
+                        policyItem.classList.add('selected');
+                    }
+                });
+            });
+            console.log("Editor interactions setup complete.");
+        }
+
+        function setupSaveLoadModal() {
+            console.log("Setting up save/load modal...");
+            // Define these constants here as they are only used in this setup function
+            const saveLoadBtn = document.getElementById('save-load-btn');
+            const saveLoadModal = document.getElementById('save-load-modal');
+            const closeSaveLoadModal = document.getElementById('close-save-load-modal');
+            const saveStateBtn = document.getElementById('save-state-btn');
+            const loadStateBtn = document.getElementById('load-state-btn');
+            const stateFileInput = document.getElementById('state-file-input');
+            // Need access to documentTitle and documentIntro from global scope
+            const documentTitle = document.getElementById('document-title'); 
+            
+            saveLoadBtn.addEventListener('click', () => { 
+                if(saveLoadModal) saveLoadModal.style.display = 'flex'; 
+            });
+            if (closeSaveLoadModal) {
+                 closeSaveLoadModal.addEventListener('click', () => { 
+                     if(saveLoadModal) saveLoadModal.style.display = 'none'; 
+                 });
+            }
+            if (saveStateBtn) {
+                saveStateBtn.addEventListener('click', () => { /* Save logic */
+                    const isDebugMode = new URLSearchParams(window.location.search).get('debug') === 'true';
+                    const elements = {};
+                    document.querySelectorAll('.policy-item').forEach(item => {
+                        const id = item.dataset.id;
+                        if (!id) return;
+                        const policyText = item.querySelector('.policy-text');
+                        if (!policyText) return;
+                        const isAdded = item.classList.contains('selected');
+                        elements[id] = {
+                            currentText: policyText.innerHTML,
+                            originalText: originalPolicyItems[id] || "",
+                            isAdded: isAdded
+                        };
+                    });
+                    const appState = {
+                        title: documentTitle ? documentTitle.textContent : 'KI-Richtlinie', // Add null check
+                        intro: documentIntro, // Use global documentIntro variable
+                        elements: elements,
+                        version: '3.0'
+                    };
+                    if (isDebugMode) console.log("App-Zustand (Debug):", JSON.stringify(appState, null, 2));
+                    const jsonString = JSON.stringify(appState);
+                    const compressed = pako.deflate(jsonString, { level: 9 });
+                    const base64Encoded = btoa(String.fromCharCode.apply(null, compressed));
+                    let filename = documentTitle ? documentTitle.textContent.toLowerCase().replace(/[äÄ]/g, 'ae').replace(/[öÖ]/g, 'oe').replace(/[üÜ]/g, 'ue').replace(/[ß]/g, 'ss').replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').substring(0, 30) : 'ki-policy';
+                    if (!filename) filename = "ki-policy";
+                    filename += ".export";
+                    const a = document.createElement('a');
+                    a.href = 'data:application/octet-stream;base64,' + base64Encoded;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            }
+            if (loadStateBtn) {
+                loadStateBtn.addEventListener('click', () => { /* Load logic */
+                    try {
+                        if (!stateFileInput || !stateFileInput.files || stateFileInput.files.length === 0) { alert('Bitte wählen Sie zuerst eine Datei aus.'); return; }
+                        const file = stateFileInput.files[0];
+                        // Security: Validate file size (max 1MB compressed)
+                        const MAX_FILE_SIZE = 1024 * 1024; // 1MB
+                        const MAX_DECOMPRESSED_SIZE = 10 * 1024 * 1024; // 10MB
+                        if (file.size > MAX_FILE_SIZE) {
+                            alert('Die Datei ist zu groß. Maximale Größe: 1MB.');
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const fileContent = e.target.result.split(',')[1];
+                                const binaryString = atob(fileContent);
+                                const bytes = new Uint8Array(binaryString.length);
+                                for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+                                const decompressed = pako.inflate(bytes, { to: 'string' });
+                                // Security: Check decompressed size to prevent zip bombs
+                                if (decompressed.length > MAX_DECOMPRESSED_SIZE) {
+                                    throw new Error('Dekomprimierte Daten zu groß. Möglicher Decompression-Angriff.');
+                                }
+                                const appState = JSON.parse(decompressed);
+                                if (appState.version !== '3.0') throw new Error(`Nicht unterstützte Version: ${appState.version}. Diese App unterstützt nur Version 3.0.`);
+                                applyLoadedState(appState);
+                                alert('Zustand erfolgreich geladen!');
+                                if(saveLoadModal) saveLoadModal.style.display = 'none';
+                            } catch (error) { console.error("Fehler beim Verarbeiten der Datei:", error); alert('Fehler beim Laden des Zustands: ' + error.message); }
+                        };
+                        reader.onerror = function() { alert('Fehler beim Lesen der Datei.'); };
+                        reader.readAsDataURL(file);
+                    } catch (error) { console.error('Fehler beim Laden des Zustands:', error); alert('Fehler beim Laden des Zustands: ' + error.message); }
+                });
+            }
+            if (stateFileInput) {
+                 stateFileInput.addEventListener('change', (event) => { /* Optional: Auto-trigger */ });
+            }
+            console.log("Save/load modal setup complete.");
+        }
+        // --- End of New Helper Functions ---
+
+        function setupHTMLDownload() {
+            const downloadHtmlBtn = document.getElementById('download-html-btn');
+            // policyResultContainer and documentTitle are already defined globally
+
+            if (downloadHtmlBtn && policyResultContainer && typeof documentTitle !== 'undefined') { // Added check for documentTitle
+                downloadHtmlBtn.addEventListener('click', () => {
+                    try {
+                        const policyHtmlContent = policyResultContainer.innerHTML;
+                        const policyTitleText = documentTitle ? documentTitle.textContent : 'KI-Richtlinie'; // Get title text
+
+                        // Create the full HTML content for the downloadable file
+                        const fullHtml = `
+                            <!DOCTYPE html>
+                            <html lang="de">
+                            <head>
+                                <meta charset="UTF-8">
+                                <title>${escapeHTML(policyTitleText)}</title> <!-- Use escaped title -->
+                                <style>
+                                    /* Basic styles for Word compatibility and Browser viewing */
+                                    body { 
+                                        margin: 0; /* Let Word handle page margins */
+                                        padding: 20px; /* Add padding for browser view */
+                                        font-family: Calibri, sans-serif; 
+                                        font-size: 11pt; 
+                                        line-height: 1.5; 
+                                    }
+                                    .policy-container {
+                                        max-width: 750px; /* Constrain width */
+                                        margin: 0 auto; /* Center in browser */
+                                        padding: 30px;
+                                        background-color: #ffffff; /* White background for content area */
+                                        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for browser */
+                                        border-radius: 4px; /* Slightly rounded corners */
+                                    }
+                                    h1 { font-size: 16pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; }
+                                    h2 { font-size: 13pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; }
+                                    h3 { font-size: 11pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; }
+                                    p { margin-bottom: 0.5em; }
+                                    ul { margin-left: 10px; margin-bottom: 0.5em; list-style-type: disc; }
+                                    ol { margin-left: 10px; margin-bottom: 0.5em; }
+                                    li { margin-bottom: 0.2em; }
+                                    strong { font-weight: bold; }
+                                    em { font-style: italic; }
+                                    a { color: blue; text-decoration: underline; }
+                                    /* Add generated policy specific styles from the main CSS */
+                                    .generated-policy h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+                                    .generated-policy h2 { font-size: 1.4rem; margin-top: 1rem; margin-bottom: 0.4rem; }
+                                    .policy-date { color: #666; margin-bottom: 1rem; font-style: italic; }
+                                    .policy-intro { margin-bottom: 1rem; }
+                                    .policy-category { margin-bottom: 1.5rem; }
+                                    .policy-category h2 { font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+                                    .policy-subcategory { margin-top: 1.5rem; margin-bottom: 1rem; }
+                                    .policy-subcategory:first-child { margin-top: 0.8rem; }
+                                    .subcategory-title { font-size: 1rem; font-weight: 600; color: #555; margin-bottom: 0.8rem; }
+                                    .policy-item-result { margin-bottom: 1.2rem; }
+                                    .policy-item-text p { margin-bottom: 0.3rem; }
+                                    .policy-item-text ul, .policy-item-text ol { margin-top: 0.2rem; margin-bottom: 0.3rem; padding-left: 1.5rem; }
+                                    .policy-item-text li { margin-bottom: 0.2rem; }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="policy-container">
+                                    ${policyHtmlContent}
+                                </div>
+                            </body>
+                            </html>
+                        `;
+
+                        // Create a Blob from the HTML string
+                        const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+
+                        // Create a URL for the Blob
+                        const url = URL.createObjectURL(blob);
+
+                        // Create a temporary anchor element
+                        const a = document.createElement('a');
+                        a.style.display = 'none'; // Hide the link
+
+                        // Determine filename
+                        let filename = policyTitleText.toLowerCase().replace(/[äÄ]/g, 'ae').replace(/[öÖ]/g, 'oe').replace(/[üÜ]/g, 'ue').replace(/[ß]/g, 'ss').replace(/[^\w\s-]/gi, '').replace(/\s+/g, '-').substring(0, 50);
+                        if (!filename) filename = "ki-policy";
+                        filename += ".html";
+
+                        // Set the download attribute and href
+                        a.href = url;
+                        a.download = filename;
+
+                        // Append the anchor to the body, click it, and remove it
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+
+                        // Revoke the Blob URL to free up resources
+                        URL.revokeObjectURL(url);
+
+                    } catch (error) {
+                        console.error("Fehler beim Erstellen der HTML-Datei:", error);
+                        alert("Fehler beim Erstellen der HTML-Datei. Details siehe Konsole.");
+                    }
+                });
+            } else {
+                console.error("HTML Download Button, result container, or document title not found.");
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load policy data from YAML and render items
+            try {
+                await initializePolicyLoader('de');
+            } catch (error) {
+                console.error('Failed to load policy data:', error);
+            }
+
+            // Setup different parts of the application
+            initializeUI();
+            setupViewNavigation();
+            setupSaveLoadModal();
+            setupHTMLDownload();
+
+            // Initialize language switcher
+            initLanguageSwitcher();
+
+            console.log("Application fully initialized.");
+        });
+
+        function addPolicyItem(item) {
+            // Get the item ID
+            const itemId = item.dataset.id;
+            
+            // Check if item already exists in selectedItems
+            const existingIndex = selectedItems.findIndex(selected => selected.id === itemId);
+            
+            // If it already exists, remove it
+            if (existingIndex > -1) {
+                selectedItems.splice(existingIndex, 1);
+                item.classList.remove('selected');
+                
+                // Update the button
+                const btn = item.querySelector('.add-item-btn');
+                if (btn) {
+                    btn.classList.remove('added');
+                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                }
+                
+                return;
+            }
+            
+            // Mark the item as selected
+            item.classList.add('selected');
+            
+            // Get the category title from the hierarchy
+            const categoryHeader = item.closest('.category').querySelector('.category-header h2');
+            const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
+            
+            // Get the subcategory title if available
+            const subcategoryElement = item.closest('.subcategory');
+            let subcategoryTitle = 'Allgemein';
+            if (subcategoryElement) {
+                const titleElement = subcategoryElement.querySelector('.subcategory-title');
+                if (titleElement && titleElement.textContent) {
+                    subcategoryTitle = titleElement.textContent.trim();
+                }
+            }
+            
+            // Get the policy text
+            const policyText = item.querySelector('.policy-text');
+            const text = policyText ? policyText.innerHTML.trim() : '';
+            
+            // Add the item to selectedItems
+            selectedItems.push({
+                id: itemId,
+                text: text,
+                categoryTitle: categoryTitle,
+                subcategoryTitle: subcategoryTitle, // Store subcategory title
+                element: item
+            });
+            
+            // Update the button
+            const btn = item.querySelector('.add-item-btn');
+            if (btn) {
+                btn.classList.add('added');
+                btn.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
+            }
+        }
+    </script>
+    <script src="policy-loader.js"></script>
+</body>
+</html>

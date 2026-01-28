@@ -1,0 +1,629 @@
+# AI Policy Generator - Text Modules
+# Version: 3.0
+# Language: en
+#
+# Editing notes:
+# - Texts are formatted in Markdown
+# - For bold: **text**
+# - For italic: *text*
+# - For lists: - item (with hyphen)
+# - Multi-line texts start with |
+
+version: "3.0"
+language: "en"
+
+metadata:
+  title: "AI Policy Creator for Educators"
+  subtitle: "Create your individual AI usage policy"
+  default_document_title: "AI Policy for my Course"
+  default_document_intro: |
+    This document establishes the guidelines for the use of AI tools in this course. The aim is to provide clarity for you as students and ensure fair assessment, while also allowing you to explore the possibilities of AI. Please ask if any parts of this policy are unclear.
+
+categories:
+  # ============================================================
+  # CATEGORY 1: Fundamentals and Learning Objectives
+  # ============================================================
+  - id: "grundlagen-lernziele"
+    title: "1. Fundamentals and Learning Objectives"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "grundprinzip"
+        title: "Basic Principle for AI Use"
+        guidance: |
+          Establish clearly at the outset whether and how AI may be used. A general permission with specific restrictions is often more practical than a blanket ban. This module creates a clear foundation.
+        items:
+          - id: "grundsatz-erlaubt"
+            tags:
+              - { label: "Principle", type: "grundsatz" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) is generally permitted in this course as an aid to support the learning process. However, the specific regulations of this policy regarding permitted and prohibited use, labeling, and academic integrity apply.
+
+          - id: "grundsatz-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** AI is part of everyday life and work. Rather than banning it, we aim to promote transparent and reflective use. However, this general permission does not exempt you from the obligation to label AI use and comply with the rules of good scientific practice. Your own contribution and critical thinking remain paramount.
+
+      # ----------------------------------------------------------
+      - id: "lernziele"
+        title: "Learning Objectives Related to AI"
+        guidance: |
+          As an instructor, you can specify here which AI-related competencies will be addressed in your course. This helps students understand the focus. Choose between a standard and an extended version. Adapt the list to the actual content of your course.
+        items:
+          - id: "kompetenzen-standard"
+            tags:
+              - { label: "Competencies", type: "kompetenz" }
+              - { label: "Rule: Standard", type: "regel-standard" }
+            text: |
+              In this course, you should develop or deepen the following basic AI-related competencies:
+
+              - Critically evaluating AI-generated content for accuracy, relevance, and potential biases.
+              - Effectively formulating requests (prompts) to achieve precise and helpful results.
+              - Reflective use of AI tools as a complement to your own thinking and to support learning processes.
+              - Transparent and correct documentation of AI use in an academic context according to the guidelines.
+
+          - id: "kompetenzen-erweitert"
+            tags:
+              - { label: "Competencies", type: "kompetenz" }
+              - { label: "Rule: Extended", type: "regel-erweitert" }
+            text: |
+              In addition to the basic AI competencies, you should learn in this course:
+
+              - To assess the specific strengths and weaknesses of different AI models and operating modes (e.g., local models versus commercially offered models) for different tasks.
+              - To apply strategies for verifying and validating AI-generated information using scientific methods.
+              - To discuss the ethical implications of AI use in the field.
+              - To use AI tools specifically for [specific discipline application, e.g., code generation, data analysis, literature research].
+
+          - id: "lernziele-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Working with AI requires specific skills. These learning objectives are meant to help you not only use AI but do so critically, effectively, and responsibly in an academic context. Depending on the course orientation, requirements may vary (Standard vs. Extended).
+
+  # ============================================================
+  # CATEGORY 2: Permitted and Prohibited Use
+  # ============================================================
+  - id: "erlaubte-verbotene-nutzung"
+    title: "2. Permitted and Prohibited Use"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "erlaubt-ohne-kennzeichnung"
+        title: "Permitted Use Without Labeling Requirement"
+        guidance: |
+          Here you can define which AI uses are considered non-critical, personal learning aids and do not require labeling. This reduces uncertainty among students and avoids unnecessary documentation effort.
+        items:
+          - id: "erlaubt-ohne-kennzeichnung-regel"
+            tags:
+              - { label: "Recommended", type: "empfohlen" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The following types of AI use are permitted as personal learning aids and do **not** need to be specifically labeled:
+
+              - Use for individual exam preparation (e.g., creating practice questions, summaries of your own notes, flashcards).
+              - Generating explanations of concepts or technical terms for your own understanding.
+              - Translating foreign language texts (e.g., academic articles) for your own understanding.
+              - Use in explicitly designated practice phases during the course (when guided by the instructor).
+              - Spell and grammar checking through standard software (e.g., in Word).
+              - Support with formatting and citation styles for written assignments.
+
+          - id: "erlaubt-ohne-kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** If you only use AI for your own learning (e.g., to understand texts, for exam preparation), without it directly flowing into a graded submission, you do not need to declare it.
+
+      # ----------------------------------------------------------
+      - id: "erlaubt-mit-kennzeichnung"
+        title: "Permitted Use With Labeling Requirement"
+        guidance: |
+          Specify which supportive AI uses are permitted but must be documented, as they may influence the submitted work. Emphasize the necessity of independent contribution for the core work.
+        items:
+          - id: "erlaubt-mit-kennzeichnung-regel"
+            tags:
+              - { label: "Recommended", type: "empfohlen" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The following types of AI use are permitted, provided they are transparently and traceably labeled according to the guidelines of this policy:
+
+              - Support with brainstorming, structuring, and outlining written work, homework, or presentations.
+              - Help with linguistic revision and improvement of your own texts (beyond mere spelling/grammar correction, e.g., style, phrasing suggestions).
+              - Generating examples, analogies, or alternative explanatory approaches to illustrate your own arguments.
+              - Brainstorming possible arguments, counterarguments, or perspectives for an analysis.
+              - Support with literature research (e.g., suggestions for search terms, summarizing abstracts, searching for sources with "Deep Research" functions of AI tools).
+              - Generation of code snippets or debugging assistance (if relevant to the subject).
+              - Creation of visualizations and graphics to support presentations or written work (e.g., through tools for automatic visualization of data or concepts).
+              - Transcription and summarization of audio/video sources.
+
+              **What matters is:** The core work (analysis, argumentation, critical evaluation, your own conclusions) must be done by yourself.
+
+          - id: "erlaubt-mit-kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** When AI assists you with tasks that are graded (e.g., brainstorming, outlining, text improvement), you must declare this. The goal is to make transparent where the support came from. However, the actual thinking work and responsibility for the content lies with you.
+
+              *Notes on labeling requirements follow in Section 4 of this policy.*
+
+      # ----------------------------------------------------------
+      - id: "verboten"
+        title: "Prohibited AI Use"
+        guidance: |
+          Define clear boundaries to prevent cheating attempts and circumvention of learning objectives. Refer to the examination regulations and consequences. If you prohibit certain uses, you should justify this didactically and ensure that you can reliably detect violations of the prohibitions.
+        items:
+          - id: "verboten-regel"
+            tags:
+              - { label: "Recommended", type: "empfohlen" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The following types of AI use are expressly **not** permitted in this course:
+
+              - Submitting AI-generated content as your own work without adequate labeling – this may be considered an attempt to deceive.
+              - Use of AI during supervised examinations (exams, etc.), unless expressly permitted by the examination regulations or the instructor – this may be considered an attempt to deceive.
+              - Using AI to circumvent learning objectives that explicitly require independent critical thinking, creative problem-solving, analytical skills, or specific methodological competencies.
+              - Uploading copyrighted course materials or personal data to cloud-based AI systems without explicit permission (see Section 3).
+
+          - id: "verboten-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** AI must not be used to simulate your own work or circumvent learning objectives. Submitting AI-generated texts as your own work without labeling is an attempt to deceive, which usually results in failing the examination.
+
+  # ============================================================
+  # CATEGORY 3: Copyright and Data Protection
+  # ============================================================
+  - id: "urheberrecht-datenschutz"
+    title: "3. Copyright and Data Protection"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "urheberrecht"
+        title: "Handling Copyrighted Materials"
+        guidance: |
+          This is a sensitive aspect. By default, uploads of course materials to external services should be prohibited, as course materials are usually copyrighted. If you want to allow exceptions (e.g., for specific materials you have released), choose the alternative rule and clearly define the conditions.
+        items:
+          - id: "urheberrecht-verbot"
+            tags:
+              - { label: "Copyright", type: "recht" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule: Standard (Prohibition)", type: "regel-standard" }
+            text: |
+              The teaching materials provided in this course (slides, scripts, assignments, etc.) are protected by copyright. You are **not** permitted to upload these materials or substantial parts thereof to external cloud-based AI services (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) or enter them there for analysis or processing.
+
+          - id: "urheberrecht-erlaubnis"
+            tags:
+              - { label: "Copyright", type: "recht" }
+              - { label: "Rule: Alternative (Permission)", type: "regel-alternativ" }
+            text: |
+              Most teaching materials provided in this course are protected by copyright. However, for the following explicitly marked materials, processing by AI services is permitted under conditions:
+
+              - Materials in the folder "[Name of the folder, e.g., 'Released for AI']".
+              - Documents explicitly marked with the note "[e.g., 'AI use permitted']".
+
+              This usage right **applies only** to the services [list of permitted services, e.g., HAWKI, ChatGPT, Copilot, Claude, Gemini] and only for the purpose [define purpose, e.g., personal summarization, comprehension check]. Uploading to other services or for other purposes is not permitted.
+
+              All other materials may **not** be uploaded to AI services.
+
+          - id: "urheberrecht-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Course materials are, like textbooks, intellectual property of the instructors or the university. Uploading to external services may constitute unauthorized distribution and violate copyright law. Therefore, adhere exactly to the guidelines on which materials you may use for AI tools.
+
+      # ----------------------------------------------------------
+      - id: "datenschutz"
+        title: "Data Protection Aspects"
+        guidance: |
+          Sensitize students to data protection risks, especially when entering personal data into cloud tools. Point out more privacy-friendly alternatives like HAWKI or local models, if available and relevant.
+        items:
+          - id: "datenschutz-regel"
+            tags:
+              - { label: "Data Protection", type: "datenschutz" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              When using AI services, observe data protection:
+
+              - Do **not** enter any personal data (e.g., names, student IDs, email addresses, discussion contributions) into external AI tools (neither your own nor those of other students or instructors).
+              - Be aware that many cloud-based AI services store your inputs and potentially use them to train their models.
+              - Where possible, use more privacy-friendly alternatives such as the university's own HAWKI service or AI models running locally on your computer, if possible.
+
+          - id: "datenschutz-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Protecting your data and the data of others is important. External AI companies may not be subject to strict European data protection rules. Therefore, avoid disclosing personal information. Your inputs could be stored and reused.
+
+  # ============================================================
+  # CATEGORY 4: Labeling of AI Use
+  # ============================================================
+  - id: "kennzeichnung"
+    title: "4. Labeling of AI Use"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "kennzeichnung-format"
+        title: "Labeling Format"
+        guidance: |
+          Establish a clear format for labeling. The "Simple" variant is less effort, the "Detailed" variant promotes reflection more strongly. Choose the variant more suitable for your learning objectives and expected AI use.
+        items:
+          - id: "kennzeichnung-einfach"
+            tags:
+              - { label: "Labeling", type: "kennzeichnung" }
+              - { label: "Recommended", type: "empfohlen" }
+              - { label: "Rule: Simple Variant", type: "regel-standard" }
+            text: |
+              Label the use of AI systems in written submissions as follows:
+
+              At the end of your work (before the bibliography), add a separate section with the heading "Declaration on the Use of AI Tools". There, briefly list:
+
+              - Which AI tools you used (e.g., "ChatGPT-4, HAWKI, DeepL Write").
+              - For which work steps you used them (e.g., "brainstorming", "linguistic revision of introduction", "literature research keywords", "code generation for function X").
+
+              *Example:*
+              **Declaration on the Use of AI Tools**
+              Tools used: ChatGPT-4, DeepL Write
+              Purposes: Brainstorming for outline points, linguistic revision of the methods section.
+
+              Additionally, the declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
+
+          - id: "kennzeichnung-detailliert"
+            tags:
+              - { label: "Labeling", type: "kennzeichnung" }
+              - { label: "Rule: Detailed Variant", type: "regel-alternativ" }
+            text: |
+              Label the use of AI systems in written submissions as follows:
+
+              **1. "Documentation of AI Use" section in the appendix:**
+
+              - **Tools used:** List of all AI tools used with name, provider, and version if applicable (e.g., "ChatGPT-4 (OpenAI, as of May 2024)", "HAWKI (University of Bamberg)").
+              - **Usage protocol (examples):** Document exemplary requests (prompts) and the resulting AI responses that influenced your work. Briefly describe how you used or revised the response. (Scope by agreement with instructor, e.g., 2-3 examples).
+              - **Reflection:** Add a brief personal reflection (approx. 100-200 words): How did AI use influence your work process? What were the advantages, where were the challenges or limitations?
+
+              **2. Direct labeling in the text (only for direct adoption):**
+
+              - For verbatim or slightly paraphrased adoption of AI-generated passages, label these directly in the text (e.g., with a footnote: "This paragraph is based on a suggestion from ChatGPT-4.").
+
+              **3. AI-assisted sources in the bibliography:**
+
+              - If you found literature sources with the help of AI tools (e.g., through "Deep Research" functions), mark this in the bibliography with an addition like "[via AI research]" or document it in the section on AI use.
+              - Carefully verify all AI-suggested sources for existence and correct bibliographic information before adopting them.
+
+              Additionally, the general declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
+
+          - id: "kennzeichnung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Transparency is crucial for academic integrity. The labeling requirement ensures that your own contribution remains traceable and it is clear which tools you used. The format established here serves to document AI use fairly and uniformly.
+
+      # ----------------------------------------------------------
+      - id: "kennzeichnung-ausnahmen"
+        title: "Exceptions to the Labeling Requirement"
+        guidance: |
+          This module is similar to the text module under "Permitted Use Without Labeling Requirement" (Point 2). It can be placed here or repeated to clarify that the cases mentioned under Point 2 are exempt from the labeling requirement defined in Point 4.
+        items:
+          - id: "kennzeichnung-ausnahmen-regel"
+            tags:
+              - { label: "Labeling", type: "kennzeichnung" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              Explicit labeling of AI use is **not** required in the following cases:
+
+              - For individual preparation for examinations (e.g., creating practice questions, summaries).
+              - For use purely to promote understanding (e.g., explanations, translations for personal use).
+              - For non-graded exercises, unless otherwise indicated by the instructor.
+              - For the use of standard spell and grammar checkers.
+
+          - id: "kennzeichnung-ausnahmen-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Not every use of AI needs to be documented. If you use AI only as a purely personal learning aid, without it directly flowing into a graded performance, the labeling requirement does not apply.
+
+  # ============================================================
+  # CATEGORY 5: Equal Opportunity and Access
+  # ============================================================
+  - id: "chancengleichheit"
+    title: "5. Equal Opportunity and Access"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "zugang"
+        title: "Access to AI Tools"
+        guidance: |
+          Address possible inequalities in access to (especially paid) AI tools. Point out free basic versions and university offerings like HAWKI. Consider how you can ensure that your requirements and assessments do not depend on the use of specific paid tools, and make this transparent.
+        items:
+          - id: "zugang-chancengleichheit"
+            tags:
+              - { label: "Equal Opportunity", type: "fairness" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              To maintain equal opportunity, this course does not assume that you have access to paid AI premium services. The learning objectives of the course can be achieved in the following ways:
+
+              - Using free basic versions of common AI providers (e.g., ChatGPT, Claude, Gemini).
+              - The university's own HAWKI service, which is available free of charge to all students.
+
+              The use of paid services is at your own responsibility and expense.
+
+          - id: "zugang-pruefungsgestaltung"
+            tags:
+              - { label: "Equal Opportunity", type: "fairness" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The course and examination format have been designed so that the potentially higher quality of examination performances resulting from the use of premium services does not have a significant impact on the assessment of examination performance.
+
+              To achieve this goal [e.g., the examination performance is taken under supervision without AI tool support / in addition to a written paper to be submitted, an oral examination performance is required].
+
+          - id: "zugang-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Not everyone has the same access to expensive AI tools. Therefore, it is ensured that you can complete all tasks with free or university-owned tools and that no disadvantages arise in the assessment if you do not use premium versions.
+
+      # ----------------------------------------------------------
+      - id: "pruefungsgrundsaetze"
+        title: "Examination Principles and AI Use"
+        guidance: |
+          Undetected AI use in unsupervised examinations jeopardizes fairness and equal opportunity. Explain transparently to students what measures you are taking (as recommended in the Bamberg guidelines) to still be able to fairly assess independent performance (e.g., supervised examinations, oral components, process assessment, focus on transfer/application). When designing examination formats, consider that AI tools can also generate drafts and personal reflections, and even with these measures it is hardly possible to detect whether AI tools were used.
+        items:
+          - id: "pruefung-massnahmen"
+            tags:
+              - { label: "Examination", type: "pruefung" }
+              - { label: "Equal Opportunity", type: "fairness" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              We are aware that the use of AI in unsupervised examination performances (e.g., term papers) is hardly controllable and that this can jeopardize equal opportunity and fairness. To nevertheless ensure a valid assessment of your individual competencies, the following measures are applied in this course:
+
+              - [Measure 1, e.g., "The main assessment is done through a written examination under supervision."]
+              - [Measure 2, e.g., "Written work is supplemented by an oral colloquium in which understanding and independence are verified."]
+              - [Measure 3, e.g., "The assignments increasingly focus on transfer performances, critical analysis, and application, less on pure knowledge reproduction."]
+              - [Measure 4, e.g., "Process-accompanying elements are included in the assessment (e.g., drafts, reflections)."]
+              - [If applicable, further specific measures for your course]
+
+          - id: "pruefung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** Since it is difficult to control whether and how AI is used for term papers, etc., we adapt the examination formats. The goal is to fairly assess your actual abilities and understanding, regardless of whether AI was used in the background or not. The measures mentioned (e.g., exam, oral examination, certain task types) help with this.
+
+  # ============================================================
+  # CATEGORY 6: Practical Tips for AI Use
+  # ============================================================
+  - id: "praktische-tipps"
+    title: "6. Practical Tips for AI Use"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "prompt-strategien"
+        title: "Prompt Strategies"
+        guidance: |
+          Good prompts are crucial for meaningful AI results. This optional module gives students basic tips. You can adapt it or add more specific examples for your field. Keep in mind that "prompt engineering" techniques are rapidly evolving and require continuous updating of teaching materials.
+        items:
+          - id: "prompting-tipps"
+            tags:
+              - { label: "Tips", type: "tipps" }
+              - { label: "Tip", type: "regel-standard" }
+            text: |
+              For better results when using AI, the following strategies for formulating requests (prompts) can be helpful:
+
+              - **Be specific:** The more precise your question, the better the answer. Avoid vague requests.
+              - **Provide context:** Briefly explain the background or goal of your request (e.g., "I'm writing a term paper about X and need Y").
+              - **Assign a role:** Ask the AI to take on a specific role (e.g., "Explain it to me like I'm a first-year student", "Respond as a critical reviewer").
+              - **Specify format using examples:** Tell the AI how the answer should look (e.g., "List in bullet points", "Create a table", "Summarize in three sentences", "Answer like in this example").
+              - **Work iteratively:** Ask follow-up questions, request clarification, or ask for revision of the answer. Note that some AI tools tend toward so-called "sycophancy" – they agree with you even when you're wrong. Therefore, critically question when the AI unreservedly agrees with you, especially on complex or controversial topics.
+              - **Formulate neutrally:** Avoid suggestive questions that steer the answer in one direction (instead of "Is it true that X is good?", better "What are the pros and cons of X?").
+
+              *Example of a specific prompt:*
+              "Explain the concept of 'Distributed Cognition' for a master's student in education. First give a brief definition (max. 50 words), then two examples from an educational context, and finally name three criticisms of this concept. Structure the answer with clear headings. List relevant literature sources."
+
+          - id: "prompting-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** How you "talk" to an AI (prompting) significantly influences the quality of the answer. With precise and thoughtful requests, you get more useful and relevant results for your studies.
+
+      # ----------------------------------------------------------
+      - id: "ki-fehler"
+        title: "Dealing with AI Errors (\"Hallucinations\", etc.)"
+        guidance: |
+          This is a central aspect of AI competency. Make students explicitly aware of typical AI error sources (factual errors, invented sources, bias, outdated knowledge) and emphasize the necessity of critical verification.
+        items:
+          - id: "halluzinationen-warnung"
+            tags:
+              - { label: "Tips", type: "tipps" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Warning/Note", type: "regel-standard" }
+            text: |
+              AI systems make mistakes. Do not blindly rely on AI-generated information. Pay particular attention to:
+
+              - **Factual errors ("hallucinations"):** The AI invents facts, data, or events that sound plausible but are wrong.
+              - **Invented sources:** The AI cites sources (books, articles) that do not exist or whose content is incorrectly represented.
+              - **Outdated knowledge:** The AI's training data is not always current. Information may be outdated.
+              - **Incomplete or one-sided presentation:** Important aspects, perspectives, or counterarguments may be missing.
+              - **Bias:** The AI can reproduce unconscious biases from the training data.
+
+              **Verification strategies:**
+
+              - Verify central statements and facts using scientific sources (e.g., academic literature, databases).
+              - Verify citations and source references – does the source really exist? Is the statement accurate?
+              - Compare the answers of different AI tools or actively search for opposing positions.
+              - Be particularly skeptical of very specific or surprising statements.
+
+          - id: "halluzinationen-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** AI tools are impressive but not infallible. They can provide incorrect information or omit important details. Your job as academics is to critically examine this information and not simply adopt it. The responsibility for the correctness of your work always lies with you, not with the AI.
+
+      # ----------------------------------------------------------
+      - id: "unterstuetzung"
+        title: "Support for Questions About AI Use"
+        guidance: |
+          Offer clear contact points for student questions and uncertainties regarding the AI policy and AI use. Promote an open communication culture. Also refer to central offerings.
+        items:
+          - id: "unterstuetzung-angebot"
+            tags:
+              - { label: "Offering", type: "angebot" }
+              - { label: "Offering", type: "regel-standard" }
+            text: |
+              If you have questions or uncertainties about the use of AI in this course or about the interpretation of this policy, please feel free to contact me:
+
+              - During my office hours
+              - By email or in the course forum
+              - During the course (we will schedule time for discussions).
+
+              Additional resources and advice are offered by:
+
+              - Information on the use of AI at the University of Bamberg: https://www.uni-bamberg.de/cio/ki/
+              - The Center for University Didactics (ZHD): https://www.uni-bamberg.de/zhd/
+              - The Media Didactics Service Center (MD): https://www.uni-bamberg.de/md/
+
+          - id: "unterstuetzung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** If you are unsure how you may use AI or how you should label the use, please ask! Open communication helps avoid misunderstandings. It is better to ask once too often than to accidentally violate the rules.
+
+  # ============================================================
+  # CATEGORY 7: AI Use by Instructors
+  # ============================================================
+  - id: "ki-einsatz-lehrende"
+    title: "7. AI Use by Instructors"
+    subcategories:
+      # ----------------------------------------------------------
+      - id: "lehrende-allgemein"
+        title: "General Information"
+        guidance: |
+          Transparency is important. Select the modules that reflect your actual AI use. Be aware of the legal (GDPR, copyright) and ethical limits, especially when processing student data. **Avoid uploading personal data or copyrighted student work to external cloud AI systems without explicit legal basis and advice (e.g., from legal department/data protection officer).**
+        items:
+          - id: "lehrende-keine-ki"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Note", type: "regel-standard" }
+            text: |
+              The instructors conducting this course do not use AI tools for the preparation and delivery of the course.
+
+          - id: "lehrende-nutzen-ki"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Note", type: "regel-standard" }
+            text: |
+              The instructors conducting this course also use AI tools, for example to create materials or support communication. In doing so, we always ensure compliance with data protection and copyright, as well as critical review of AI results.
+
+          - id: "lehrende-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** We use AI tools to improve our teaching and work more efficiently. However, this is always done in compliance with the legal framework and with the goal of providing you with the best possible learning experience.
+
+      # ----------------------------------------------------------
+      - id: "studierendendaten"
+        title: "Processing of Student Data"
+        guidance: |
+          **This is the most critical point!** Choose "No Cloud Processing" as the default. The "Local Processing" option is only a (theoretical) option if you have the appropriate tools and can ensure that data **never** leaves the device and is ideally anonymized. Even then, risks remain. **When in doubt, always choose the safe option (no processing) or seek legal advice!**
+        items:
+          - id: "daten-keine-cloud"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Data Protection", type: "datenschutz" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule: No Cloud Processing (Standard)", type: "regel-standard" }
+            text: |
+              We assure you that work you submit, personal data, or discussion contributions will **not** be uploaded to or entered into external, cloud-based AI systems by us for analysis.
+
+          - id: "daten-lokal"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Data Protection", type: "datenschutz" }
+              - { label: "Rule: Local Processing (Optional)", type: "regel-alternativ" }
+            text: |
+              For creating feedback or analyzing [type of data, e.g., anonymized discussion contributions], we may use AI tools that run exclusively **locally** on our own computers. No data is transmitted to external servers. No processing or automatic decision-making relevant to assessment takes place. The responses of AI tools are not used for assessment and are always reviewed by an instructor before being shared with you.
+
+              *(Note: This module should only be selected if the technical and legal requirements have been clarified!)*
+
+          - id: "daten-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** The protection of your personal data and your submitted work has the highest priority. [Depending on the rule chosen:] Therefore, your data will not be passed on to external AI services by us. / [If local processing was chosen:] If AI is used for analysis or feedback creation on local computers, this is only done in compliance with data protection requirements and without transmission to external companies. A critical review of AI results is always carried out and no automatic decision-making takes place.
+
+      # ----------------------------------------------------------
+      - id: "kursvorbereitung"
+        title: "Course Preparation and Materials"
+        guidance: |
+          These are typical, usually non-critical use cases for AI in teaching. Transparency about this builds trust.
+        items:
+          - id: "materialien-ki"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Note", type: "regel-standard" }
+            text: |
+              We may use AI tools to support the following tasks:
+
+              - Planning the course structure and content.
+              - Creating and revising teaching materials (e.g., slides, summaries, visualizations).
+              - Generating practice exercises or case studies.
+              - Optimizing task descriptions or instructions.
+
+              All content created or edited in this way is carefully reviewed and selected by us.
+
+          - id: "materialien-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** AI can help make course materials more diverse or develop new ideas for exercises. This serves to improve the quality of teaching for you.
+
+      # ----------------------------------------------------------
+      - id: "kommunikation"
+        title: "Communication"
+        guidance: |
+          Using AI to answer emails can save time, but carries the risk of impersonal or inaccurate responses. Make clear that you review the responses.
+        items:
+          - id: "kommunikation-ki"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Note", type: "regel-standard" }
+            text: |
+              In order to respond to your inquiries promptly and comprehensively, we sometimes use AI tools to help formulate responses to emails or forum posts. Each response created this way is reviewed and adapted by us before sending. However, the final response always comes from us. We ensure that we do not transmit personal data to cloud-based AI systems.
+
+          - id: "kommunikation-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** AI can help respond to your questions more quickly. However, the final response always comes from us.
+
+      # ----------------------------------------------------------
+      - id: "feedback-bewertung"
+        title: "Feedback and Assessment"
+        guidance: |
+          The use of AI in assessment is sensitive (GDPR Art. 22, bias risk). Choose the option that matches your practice. Option 1 (No AI use) is the safest. Option 2 (Only formative feedback) is justifiable if clearly communicated. Option 3 (Support in assessment) carries risks and requires the utmost care and transparency; the final assessment must remain human. **Seek legal advice if you are unsure.**
+        items:
+          - id: "bewertung-keine-ki"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Assessment", type: "bewertung" }
+              - { label: "Rule: No AI Use", type: "regel-standard" }
+            text: |
+              When assessing examination performances (e.g., exams, term papers, presentations) that count toward your final grade, we do **not** use AI tools. Assessment is carried out exclusively by human examiners.
+
+          - id: "bewertung-formativ"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Assessment", type: "bewertung" }
+              - { label: "Rule: Only Formative Feedback", type: "regel-alternativ" }
+            text: |
+              We use AI tools to give you **formative feedback** (e.g., on drafts, practice exercises) that is meant to help you learn, but does **not** count toward the final grade. The assessment of examination-relevant final performances is carried out exclusively by human examiners. We carefully check the results of AI tools and ensure that no personal data and no copyrighted content is transmitted to cloud-based AI systems.
+
+          - id: "bewertung-unterstuetzung"
+            tags:
+              - { label: "Instructor Use", type: "lehrenden-nutzung" }
+              - { label: "Assessment", type: "bewertung" }
+              - { label: "Caution", type: "wichtig" }
+              - { label: "Rule: AI as Support", type: "regel-alternativ" }
+            text: |
+              When assessing examination performances, we may use AI tools as a **support tool** (e.g., to identify patterns, for consistency checking, or to formulate feedback text modules). However, the final assessment and grading is **always** carried out by human examiners after careful review.
+
+          - id: "bewertung-erlaeuterung"
+            tags:
+              - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
+            text: |
+              **Explanation:** [Depending on the rule chosen:] The assessment of your examination performances is done without the use of AI to ensure a fair and traceable evaluation. / AI can help provide you with faster or more detailed feedback on exercises, but does not affect your final grade. / AI can assist us in grading, but the final decision about your grade is always made by humans.
