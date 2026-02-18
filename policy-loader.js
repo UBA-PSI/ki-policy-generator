@@ -12,8 +12,27 @@
 // Globale Variable für die geladenen Policy-Daten
 let policyData = null;
 
+// UI-Übersetzungen
+let uiStrings = {};
+
 // Aktuelle Sprache
 let currentLanguage = 'de';
+
+// Preset-Daten
+let presetsData = null;
+
+// Map: YAML-Item-ID → Runtime-ID (z.B. "grundsatz-erlaubt" → "item-1")
+let yamlIdToRuntimeId = {};
+
+/**
+ * Gibt den übersetzten UI-String für den gegebenen Key zurück
+ * @param {string} key - Der Übersetzungsschlüssel
+ * @param {string} fallback - Fallback-Text wenn Key nicht gefunden
+ * @returns {string} Der übersetzte Text
+ */
+function t(key, fallback) {
+    return uiStrings[key] || fallback || key;
+}
 
 /**
  * Lädt die Policy-Daten aus der YAML-Datei
@@ -157,12 +176,12 @@ function renderPolicyItem(item) {
 
     const editBtn = document.createElement('button');
     editBtn.className = 'edit-item-btn';
-    editBtn.textContent = 'Bearbeiten';
+    editBtn.textContent = t('btn_edit', 'Bearbeiten');
     actionsDiv.appendChild(editBtn);
 
     const addBtn = document.createElement('button');
     addBtn.className = 'add-item-btn';
-    addBtn.textContent = 'Hinzufügen';
+    addBtn.textContent = t('btn_add', 'Hinzufügen');
     actionsDiv.appendChild(addBtn);
 
     itemDiv.appendChild(actionsDiv);
@@ -199,6 +218,46 @@ function initializeAfterLoad() {
 }
 
 /**
+ * Baut eine Map von YAML-Item-IDs zu Runtime-IDs
+ * Muss nach initializeAllPolicyItems() aufgerufen werden
+ */
+function buildIdMap() {
+    yamlIdToRuntimeId = {};
+    document.querySelectorAll('.policy-item').forEach(item => {
+        const yamlId = item.dataset.itemId;
+        const runtimeId = item.dataset.id;
+        if (yamlId && runtimeId) {
+            yamlIdToRuntimeId[yamlId] = runtimeId;
+        }
+    });
+    console.log('ID map built:', Object.keys(yamlIdToRuntimeId).length, 'entries');
+}
+
+/**
+ * Lädt die Preset-Daten aus der YAML-Datei
+ * @param {string} language - Sprachcode (default: 'de')
+ * @returns {Promise<object>} Die geparsten Preset-Daten
+ */
+async function loadPresets(language = 'de') {
+    const filename = language === 'de' ? 'presets.yaml' : `presets-${language}.yaml`;
+
+    try {
+        const response = await fetch(`data/${filename}`);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${filename}: ${response.status}`);
+        }
+        const yamlText = await response.text();
+        presetsData = jsyaml.load(yamlText, { schema: jsyaml.SAFE_SCHEMA });
+        console.log(`Presets loaded successfully (${language}):`, presetsData.presets.length, 'presets');
+        return presetsData;
+    } catch (error) {
+        console.error('Error loading presets:', error);
+        presetsData = null;
+        return null;
+    }
+}
+
+/**
  * Hauptfunktion: Lädt Daten und rendert die UI
  * @param {string} language - Sprachcode (default: 'de')
  */
@@ -207,10 +266,20 @@ async function initializePolicyLoader(language = 'de') {
         // Lade YAML-Daten
         const data = await loadPolicyData(language);
 
+        // Store UI strings globally (must happen before rendering so t() works)
+        if (data.ui_strings) {
+            uiStrings = data.ui_strings;
+        }
+
         // Finde den Container
         const container = document.querySelector('.left-panel');
         if (!container) {
             throw new Error('Container .left-panel not found');
+        }
+
+        // Reset preset state (e.g. on language switch)
+        if (typeof resetPresetState === 'function') {
+            resetPresetState();
         }
 
         // Rendere Policy-Items
@@ -231,6 +300,18 @@ async function initializePolicyLoader(language = 'de') {
                     updateIntroDisplay();
                 }
             }
+        }
+
+        // Apply UI translations
+        applyUITranslations(language);
+
+        // Build ID map (YAML-ID → Runtime-ID) after items are initialized
+        buildIdMap();
+
+        // Load presets and render cards
+        await loadPresets(language);
+        if (presetsData && typeof renderPresetCards === 'function') {
+            renderPresetCards(presetsData.presets);
         }
 
         console.log('Policy loader initialization complete');
@@ -255,7 +336,7 @@ async function initializePolicyLoader(language = 'de') {
             errorDiv.style.cssText = 'padding: 20px; color: #c00; background: #fee; border: 1px solid #c00; border-radius: 4px; margin: 20px;';
 
             const h3 = document.createElement('h3');
-            h3.textContent = 'Fehler beim Laden der Policy-Daten';
+            h3.textContent = t('error_loading_title', 'Fehler beim Laden der Policy-Daten');
             errorDiv.appendChild(h3);
 
             const p1 = document.createElement('p');
@@ -263,7 +344,7 @@ async function initializePolicyLoader(language = 'de') {
             errorDiv.appendChild(p1);
 
             const p2 = document.createElement('p');
-            p2.textContent = 'Stellen Sie sicher, dass die Datei über einen Webserver geladen wird (nicht file://).';
+            p2.textContent = t('error_loading_hint', 'Stellen Sie sicher, dass die Datei über einen Webserver geladen wird (nicht file://)');
             errorDiv.appendChild(p2);
 
             container.appendChild(errorDiv);
@@ -281,11 +362,7 @@ async function switchLanguage(language) {
     // Warnung anzeigen, dass Änderungen verloren gehen könnten
     const hasChanges = checkForUnsavedChanges();
     if (hasChanges) {
-        const confirmSwitch = confirm(
-            language === 'en'
-                ? 'Switching the language will reload all text modules. Unsaved changes will be lost. Continue?'
-                : 'Beim Sprachwechsel werden alle Textbausteine neu geladen. Nicht gespeicherte Änderungen gehen verloren. Fortfahren?'
-        );
+        const confirmSwitch = confirm(t('confirm_language_switch'));
         if (!confirmSwitch) return;
     }
 
@@ -294,11 +371,7 @@ async function switchLanguage(language) {
         console.log(`Language switched to ${language}`);
     } catch (error) {
         console.error('Failed to switch language:', error);
-        alert(
-            language === 'en'
-                ? 'Failed to load English text modules.'
-                : 'Fehler beim Laden der Textbausteine.'
-        );
+        alert(t('alert_language_error'));
     }
 }
 
@@ -307,9 +380,8 @@ async function switchLanguage(language) {
  * @returns {boolean} true wenn Änderungen vorhanden
  */
 function checkForUnsavedChanges() {
-    const addedItems = document.querySelectorAll('.policy-item.added');
-    const editedItems = document.querySelectorAll('.policy-item[data-edited="true"]');
-    return addedItems.length > 0 || editedItems.length > 0;
+    const selectedItems = document.querySelectorAll('.policy-item.selected');
+    return selectedItems.length > 0;
 }
 
 /**
@@ -340,5 +412,51 @@ function initLanguageSwitcher() {
                 switchLanguage(lang);
             }
         });
+    });
+}
+
+/**
+ * Wendet UI-Übersetzungen auf alle markierten Elemente an
+ * Hinweis: data-i18n-html Werte stammen aus lokalen, vertrauenswürdigen YAML-Dateien
+ * (gleiche Vertrauensstufe wie die Policy-Texte, die ebenfalls via innerHTML gesetzt werden)
+ * @param {string} language - Aktuelle Sprache ('de' oder 'en')
+ */
+function applyUITranslations(language) {
+    // Update html lang attribute
+    document.documentElement.lang = language;
+
+    // Update page title
+    document.title = t('page_title', document.title);
+
+    // Apply text translations via data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        const translated = uiStrings[key];
+        if (translated) {
+            // Preserve SVG icons in buttons
+            const svg = el.querySelector('svg');
+            if (svg) {
+                el.textContent = '';
+                el.appendChild(svg);
+                el.appendChild(document.createTextNode(' ' + translated));
+            } else {
+                el.textContent = translated;
+            }
+        }
+    });
+
+    // Apply HTML translations via data-i18n-html attribute
+    // Security: These values come from trusted local YAML files (same trust level as policy content)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.dataset.i18nHtml;
+        const translated = uiStrings[key];
+        if (translated) {
+            el.innerHTML = translated;
+        }
+    });
+
+    // Toggle language-specific content blocks
+    document.querySelectorAll('[data-ui-lang]').forEach(el => {
+        el.style.display = el.dataset.uiLang === language ? '' : 'none';
     });
 }

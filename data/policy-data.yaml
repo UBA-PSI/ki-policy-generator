@@ -627,3 +627,87 @@ categories:
               - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
             text: |
               **Erläuterung:** [Je nach gewählter Regel:] Die Bewertung Ihrer Prüfungsleistungen erfolgt ohne den Einsatz von KI, um eine faire und nachvollziehbare Beurteilung sicherzustellen. / KI kann helfen, Ihnen schnelleres oder detaillierteres Feedback zu Übungen zu geben, beeinflusst aber nicht Ihre Endnote. / KI kann uns bei der Korrektur unterstützen, aber die endgültige Entscheidung über Ihre Note treffen immer Menschen.
+
+# ============================================================
+# UI-Strings für die Benutzeroberfläche
+# ============================================================
+ui_strings:
+  # Seitentitel
+  page_title: "KI-Policy-Creator für Lehrende"
+  main_title: "KI-Policy-Generator für die Lehre"
+
+  # Buttons - Editor
+  btn_start_editor: "Editor öffnen"
+  btn_save_load: "Daten-Export und -Import"
+  btn_generate: "Richtlinie generieren"
+  btn_edit_title: "Titel bearbeiten"
+  btn_edit_intro: "Einleitung bearbeiten"
+  btn_edit: "Bearbeiten"
+  btn_add: "Hinzufügen"
+  btn_remove: "Nicht verwenden"
+
+  # Buttons - Ergebnisseite
+  btn_back_to_editor: "Zurück zum Editor"
+  btn_copy_result: "Text kopieren"
+  btn_download_html: "Als HTML herunterladen"
+
+  # Buttons - Allgemein
+  btn_save: "Speichern"
+  btn_cancel: "Abbrechen"
+  btn_revert: "Originaltext wiederherstellen"
+
+  # Modal: Speichern/Laden
+  modal_title: "Speichern & Laden"
+  modal_save_desc: "Speichern Sie Ihre aktuelle Konfiguration in einer Datei:"
+  modal_load_desc: "Laden Sie eine gespeicherte Konfiguration:"
+  btn_save_state: "Als Datei speichern"
+  btn_load_state: "Geladene Datei importieren"
+
+  # Labels
+  label_intro: "Einleitung: "
+  editor_hint: "Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen"
+
+  # Meldungen
+  copy_success: "Kopiert!"
+  empty_policy: "Keine Bausteine ausgewählt. Kehren Sie zurück zum Editor, um Bausteine hinzuzufügen."
+  alert_no_file: "Bitte wählen Sie zuerst eine Datei aus."
+  alert_file_too_large: "Die Datei ist zu groß. Maximale Größe: 1MB."
+  alert_load_success: "Zustand erfolgreich geladen!"
+  alert_load_error: "Fehler beim Laden des Zustands: "
+  alert_read_error: "Fehler beim Lesen der Datei."
+  alert_copy_error: "Konnte nicht in die Zwischenablage kopieren. Bitte manuell kopieren."
+  alert_html_error: "Fehler beim Erstellen der HTML-Datei. Details siehe Konsole."
+  confirm_language_switch: "Beim Sprachwechsel werden alle Textbausteine neu geladen. Nicht gespeicherte Änderungen gehen verloren. Fortfahren?"
+  alert_language_error: "Fehler beim Laden der Textbausteine."
+  error_decompression: "Dekomprimierte Daten zu groß. Möglicher Decompression-Angriff."
+
+  # Fehlermeldungen
+  error_loading_title: "Fehler beim Laden der Policy-Daten"
+  error_loading_hint: "Stellen Sie sicher, dass die Datei über einen Webserver geladen wird (nicht file://)."
+
+  # Datum
+  date_label: "Stand"
+  date_locale: "de-DE"
+
+  # Kategorien
+  uncategorized: "Unkategorisiert"
+  default_subcategory: "Allgemein"
+
+  # Ergebnisseite
+  result_notice: "Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden."
+
+  # Presets
+  preset_section_title: "Schnellstart: Vorlagen"
+  preset_section_desc: "Wählen Sie eine Vorlage als Ausgangspunkt oder passen Sie sie an Ihre Lehrveranstaltung an."
+  preset_more: "weitere"
+  preset_tldr_title: "Zusammenfassung (TL;DR)"
+  preset_items_title: "Enthaltene Bausteine"
+  btn_preset_use: "Direkt verwenden"
+  btn_preset_customize: "Anpassen"
+  btn_copy_card: "Policy Card kopieren"
+  preset_based_on: "Basiert auf"
+  preset_card_footer: "Erstellt mit dem KI-Policy-Generator der Universität Bamberg"
+  preset_upload_label: "Kursmaterialien-Upload erlaubt"
+  preset_detail_title: "Vorlage"
+  preset_modified: "Angepasst – Preset-Name entfernt"
+  preset_or_editor: "oder"

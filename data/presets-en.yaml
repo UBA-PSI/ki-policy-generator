@@ -1,0 +1,203 @@
+# AI Policy Generator - Preset Templates
+# Version: 1.0
+# Language: en
+
+version: "1.0"
+
+presets:
+  # ============================================================
+  # AI-None: No AI Use
+  # ============================================================
+  - id: "ai-none"
+    name: "AI-None"
+    description: "No AI use. Examination in controlled setting."
+    color: "oklch(58.63% 0.231 19.6)"
+    upload_default: false
+    tldr:
+      - "AI tools may **not** be used in this course."
+      - "Examination is conducted without AI support in a controlled setting."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-None"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. In this course, the use of AI tools is generally not permitted. The examination is conducted in a controlled setting without AI support.
+    items:
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"
+
+  # ============================================================
+  # AI-Learn: AI free for learning
+  # ============================================================
+  - id: "ai-learn"
+    name: "AI-Learn"
+    description: "AI free for learning. Examination without AI."
+    color: "oklch(74.61% 0.171 51.56)"
+    upload_default: false
+    tldr:
+      - "AI tools may be freely used for learning during the semester."
+      - "Examination is conducted without AI support."
+      - "No labeling of AI use required."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-Learn"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. The use of AI is generally permitted for learning purposes. The examination is conducted without AI support. Labeling of AI use is not required.
+    items:
+      - "grundsatz-erlaubt"
+      - "erlaubt-ohne-kennzeichnung-regel"
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"
+
+  # ============================================================
+  # AI-DocShort: Simple labeling
+  # ============================================================
+  - id: "ai-docshort"
+    name: "AI-DocShort"
+    description: "AI permitted for submissions. Simple labeling (tool + purpose)."
+    color: "oklch(82.39% 0.133 91.5)"
+    upload_default: false
+    tldr:
+      - "AI tools may be used as aids for submissions."
+      - "Simple labeling required: state tool used and purpose."
+      - "Core work (analysis, argumentation) must be done independently."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-DocShort"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented with simple labeling (tool + purpose).
+    items:
+      - "grundsatz-erlaubt"
+      - "erlaubt-ohne-kennzeichnung-regel"
+      - "erlaubt-mit-kennzeichnung-regel"
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "kennzeichnung-einfach"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"
+
+  # ============================================================
+  # AI-DocLog: Prompt log + reflection
+  # ============================================================
+  - id: "ai-doclog"
+    name: "AI-DocLog"
+    description: "AI permitted for submissions. Prompt log and reflection required."
+    color: "oklch(54.87% 0.222 260.33)"
+    upload_default: false
+    tldr:
+      - "AI tools may be used as aids for submissions."
+      - "Detailed documentation required: prompt log and reflection."
+      - "Core work (analysis, argumentation) must be done independently."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-DocLog"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented in detail with a prompt log and reflection.
+    items:
+      - "grundsatz-erlaubt"
+      - "erlaubt-ohne-kennzeichnung-regel"
+      - "erlaubt-mit-kennzeichnung-regel"
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "kennzeichnung-detailliert"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"
+
+  # ============================================================
+  # AI-Defend: Competence proof through defense
+  # ============================================================
+  - id: "ai-defend"
+    name: "AI-Defend"
+    description: "AI without restrictions. Competence proof through defense."
+    color: "oklch(49.39% 0.215 298.31)"
+    upload_default: false
+    tldr:
+      - "AI tools may be used without restrictions."
+      - "Competence is demonstrated through oral or written defense."
+      - "No labeling of AI use required for submissions."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-Defend"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. AI tools may be used without restrictions. Competence is demonstrated through an oral or written defense of the submitted work.
+    items:
+      - "grundsatz-erlaubt"
+      - "erlaubt-ohne-kennzeichnung-regel"
+      - "erlaubt-mit-kennzeichnung-regel"
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"
+
+  # ============================================================
+  # AI-Skill: AI competence as learning objective
+  # ============================================================
+  - id: "ai-skill"
+    name: "AI-Skill"
+    description: "AI competence is a learning objective. Process and result are assessed."
+    color: "oklch(75.23% 0.209 144.64)"
+    upload_default: false
+    tldr:
+      - "AI competence is an explicit learning objective of this course."
+      - "AI tools may and should be actively used."
+      - "Both the process and result of AI use are assessed."
+      - "Do not enter personal data into AI services."
+      - "Critically review AI results – AI makes mistakes."
+    tldr_upload: "Course materials may be uploaded to AI tools."
+    tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
+    document_title: "AI Policy: AI-Skill"
+    document_intro: |
+      This document establishes the guidelines for the use of AI tools in this course. AI competence is an explicit learning objective. AI tools should be used actively and reflectively. Both the process and the result of AI use are part of the assessment.
+    items:
+      - "grundsatz-erlaubt"
+      - "kompetenzen-erweitert"
+      - "erlaubt-ohne-kennzeichnung-regel"
+      - "erlaubt-mit-kennzeichnung-regel"
+      - "verboten-regel"
+      - "datenschutz-regel"
+      - "kennzeichnung-detailliert"
+      - "pruefung-massnahmen"
+      - "halluzinationen-warnung"
+      - "lehrende-nutzen-ki"
+      - "daten-keine-cloud"
+      - "bewertung-keine-ki"
+    upload_item: "urheberrecht-erlaubnis"
+    no_upload_item: "urheberrecht-verbot"

@@ -54,6 +54,12 @@
         @font-face {
         font-family: 'Roboto';
         font-style: normal;
+        font-weight: 500;
+        src: url('./fonts/Roboto-500.woff2') format('woff2');
+        }
+        @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
         font-weight: 700;
         src: url('./fonts/Roboto-700.woff2') format('woff2');
         }
@@ -415,7 +421,7 @@
 
         
         .category.expanded .category-content {
-            max-height: 5000px;
+            max-height: 20000px;
             transition: max-height 0.5s ease-in;
         }
 
@@ -631,10 +637,13 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             overflow-y: auto;
-            display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 20px 0;
+        }
+
+        .modal.visible {
+            display: flex;
         }
 
         .modal-content {
@@ -1204,7 +1213,6 @@
         .license-box a {
             color: #2d6a2d;
             text-decoration: underline;
-            text-decoration: underline;
         }
         
         #start-editor {
@@ -1413,6 +1421,17 @@
             }
             /* Hide specific UI elements within policy text if needed */
              .item-actions { display: none; } /* Hide buttons if they ever appear here */
+
+            /* Policy Card: keep together on print */
+            .policy-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            #policy-card-container, #policy-card-container * {
+                visibility: visible !important;
+            }
         }
 
         .policy-subcategory {
@@ -1439,6 +1458,511 @@
             font-size: 1.8rem;
             margin-bottom: 0.6rem;
         }
+
+        /* ============================================================
+         * Preset Feature Styles
+         * ============================================================ */
+
+        /* Preset Section in Welcome View */
+        .preset-section {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .preset-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preset-section > p {
+            margin-bottom: 1.5rem;
+            color: var(--medium-gray);
+        }
+
+        /* Preset Grid */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .preset-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .preset-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Preset Card */
+        .preset-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preset-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .preset-card-body {
+            padding: 0.85rem 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .preset-card-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .preset-card-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .preset-card-desc {
+            font-size: 0.82rem;
+            color: var(--medium-gray);
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .preset-card-tldr {
+            font-size: 0.8rem;
+            color: #555;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.4rem 0;
+            flex: 1;
+        }
+
+        .preset-card-tldr li {
+            padding-left: 1em;
+            position: relative;
+            margin-bottom: 0.2rem;
+            line-height: 1.35;
+        }
+
+        .preset-card-tldr li::before {
+            content: "\2013";
+            position: absolute;
+            left: 0;
+            color: var(--light-gray);
+        }
+
+        .preset-card-more {
+            font-size: 0.75rem;
+            color: var(--light-gray);
+        }
+
+        /* Upload Toggle */
+        .preset-upload-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--very-light-gray);
+            font-size: 0.8rem;
+            color: var(--medium-gray);
+        }
+
+        .preset-upload-toggle label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            user-select: none;
+        }
+
+        .upload-switch {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .upload-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .upload-switch .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.2s;
+            border-radius: 18px;
+        }
+
+        .upload-switch .slider::before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.2s;
+            border-radius: 50%;
+        }
+
+        .upload-switch input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        .upload-switch input:checked + .slider::before {
+            transform: translateX(16px);
+        }
+
+        /* Preset or editor divider */
+        .preset-or-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .preset-or-divider span {
+            background: var(--white);
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .preset-or-divider::before {
+            content: "";
+            display: block;
+            position: relative;
+            top: 0.7em;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Preset Detail Modal */
+        .preset-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .preset-detail-modal.visible {
+            display: flex;
+        }
+
+        .preset-detail-content {
+            background: var(--white);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .preset-detail-header {
+            padding: 0;
+            position: relative;
+        }
+
+        .preset-detail-header-inner {
+            padding: 1.5rem 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .preset-detail-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preset-detail-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .preset-detail-desc {
+            font-size: 0.95rem;
+            color: var(--medium-gray);
+            margin-top: 0.3rem;
+        }
+
+        .preset-detail-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light-gray);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .preset-detail-close:hover {
+            color: var(--dark-gray);
+        }
+
+        .preset-detail-body {
+            padding: 1.5rem;
+        }
+
+        .preset-detail-body h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.7rem;
+        }
+
+        .preset-detail-tldr {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .preset-detail-tldr li {
+            padding: 0.4rem 0 0.4rem 1.5em;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-bottom: 1px dotted var(--border-color);
+        }
+
+        .preset-detail-tldr li:last-child {
+            border-bottom: none;
+        }
+
+        .preset-detail-tldr li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0.3em;
+            font-weight: bold;
+        }
+
+        .preset-detail-items {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .preset-detail-items li {
+            padding: 0.3rem 0;
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            border-bottom: 1px dotted var(--border-color);
+        }
+
+        .preset-detail-items li:last-child {
+            border-bottom: none;
+        }
+
+        .preset-detail-upload-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .preset-detail-upload-toggle label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            user-select: none;
+        }
+
+        .preset-detail-actions {
+            display: flex;
+            gap: 0.75rem;
+            padding-top: 0.5rem;
+        }
+
+        .preset-detail-actions .action-btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-preset-secondary {
+            background-color: var(--secondary-color);
+            color: var(--dark-gray);
+        }
+
+        .btn-preset-secondary:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Preset Hint Banner (Editor) */
+        .preset-hint {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #e7f0ff;
+            border: 1px solid #c4d7f5;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--primary-hover);
+        }
+
+        .preset-hint-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preset-hint-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .preset-hint-dismiss {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            padding: 0 0.3rem;
+            line-height: 1;
+        }
+
+        .preset-hint-dismiss:hover {
+            color: var(--primary-hover);
+        }
+
+        /* Policy Card (Result View) */
+        .policy-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .policy-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .policy-card-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .policy-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .policy-card-upload-badge {
+            font-size: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            background: var(--very-light-gray);
+            border: 1px solid var(--border-color);
+            color: var(--medium-gray);
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .policy-card-tldr {
+            list-style: none;
+            padding: 1rem 1.2rem;
+            margin: 0;
+        }
+
+        .policy-card-tldr li {
+            padding: 0.3rem 0 0.3rem 1.3em;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .policy-card-tldr li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .policy-card-footer {
+            padding: 0.6rem 1.2rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--very-light-gray);
+            font-size: 0.75rem;
+            color: var(--light-gray);
+            text-align: center;
+        }
+
+        /* Policy TL;DR section in generated policy */
+        .policy-tldr-section {
+            background: var(--very-light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-tldr-section h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            border: none;
+            padding: 0;
+        }
+
+        .policy-tldr-section ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+
+        .policy-tldr-section li {
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
@@ -1455,61 +1979,132 @@
                         </div>
                     </div>
                     <p class="version-info">Version v3 / 2025-01-28</p>
-                    <p class="intro-text">Ein Tool zum Erstellen einer KI-Richtlinie für Lehrveranstaltungen</p>
+                    <p class="intro-text" data-i18n="welcome_intro">Ein Tool zum Erstellen einer KI-Richtlinie für Lehrveranstaltungen</p>
 
-                    <section class="welcome-section">
-                        <button id="start-editor" class="action-btn">Editor öffnen</button>
-                    </section>
-
-                    <section class="welcome-section">
-                        <h2>Wie Sie dieses Tool nutzen</h2>
-                        <ul>
-                            <li>Wählen Sie aus rund <strong>50 vordefinierten Textbausteinen</strong>.</li>
-                            <li>Passen Sie die Bausteine an Ihre Bedürfnisse an. Ergänzen Sie eigene Inhalte.</li>
-                            <li>Ihren Fortschritt können Sie jederzeit herunterladen und später wieder laden.</li>
-                            <li>Die fertige Richtlinie können Sie herunterladen.</li>
-                        </ul>
-                    </section>
-
-                    <section class="welcome-section">
-                        <h2>Kategorien</h2>
-                        <p>Ihre Richtlinie kann aus den folgenden Bausteinen zusammengestellt werden:</p>
-                        <div class="component-grid">
-                            <div class="component-item">Einleitung</div>
-                            <div class="component-item"> Grundlagen und Lernziele</div>
-                            <div class="component-item"> Erlaubte und verbotene Nutzung</div>
-                            <div class="component-item"> Urheberrecht und Datenschutz</div>
-                            <div class="component-item"> Kennzeichnung der KI-Nutzung</div>
-                            <div class="component-item"> Chancengleichheit und Zugang</div>
-                            <div class="component-item"> Praktische Tipps</div>
-                            <div class="component-item"> KI-Einsatz durch Lehrende</div>
+                    <section class="preset-section" id="preset-section">
+                        <h2 data-i18n="preset_section_title">Schnellstart: Vorlagen</h2>
+                        <p data-i18n="preset_section_desc">Wählen Sie eine Vorlage als Ausgangspunkt oder passen Sie sie an Ihre Lehrveranstaltung an.</p>
+                        <div id="preset-grid" class="preset-grid">
+                            <!-- Preset cards rendered dynamically -->
                         </div>
                     </section>
+
+                    <div class="preset-or-divider"><span data-i18n="preset_or_editor">oder</span></div>
+
+                    <section class="welcome-section">
+                        <button id="start-editor" class="action-btn" data-i18n="btn_start_editor">Editor öffnen</button>
+                    </section>
+
+                    <!-- German welcome content -->
+                    <div class="welcome-lang-content" data-ui-lang="de">
+                        <section class="welcome-section">
+                            <h2>Wie Sie dieses Tool nutzen</h2>
+                            <ul>
+                                <li>Wählen Sie aus rund <strong>50 vordefinierten Textbausteinen</strong>.</li>
+                                <li>Passen Sie die Bausteine an Ihre Bedürfnisse an. Ergänzen Sie eigene Inhalte.</li>
+                                <li>Ihren Fortschritt können Sie jederzeit herunterladen und später wieder laden.</li>
+                                <li>Die fertige Richtlinie können Sie herunterladen.</li>
+                            </ul>
+                        </section>
+
+                        <section class="welcome-section">
+                            <h2>Kategorien</h2>
+                            <p>Ihre Richtlinie kann aus den folgenden Bausteinen zusammengestellt werden:</p>
+                            <div class="component-grid">
+                                <div class="component-item">Einleitung</div>
+                                <div class="component-item">Grundlagen und Lernziele</div>
+                                <div class="component-item">Erlaubte und verbotene Nutzung</div>
+                                <div class="component-item">Urheberrecht und Datenschutz</div>
+                                <div class="component-item">Kennzeichnung der KI-Nutzung</div>
+                                <div class="component-item">Chancengleichheit und Zugang</div>
+                                <div class="component-item">Praktische Tipps</div>
+                                <div class="component-item">KI-Einsatz durch Lehrende</div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- English welcome content -->
+                    <div class="welcome-lang-content" data-ui-lang="en" style="display:none">
+                        <section class="welcome-section">
+                            <h2>How to Use This Tool</h2>
+                            <ul>
+                                <li>Choose from around <strong>50 predefined text modules</strong>.</li>
+                                <li>Customize the modules to suit your needs. Add your own content.</li>
+                                <li>You can download your progress at any time and reload it later.</li>
+                                <li>Download the finished policy when you're done.</li>
+                            </ul>
+                        </section>
+
+                        <section class="welcome-section">
+                            <h2>Categories</h2>
+                            <p>Your policy can be assembled from the following modules:</p>
+                            <div class="component-grid">
+                                <div class="component-item">Introduction</div>
+                                <div class="component-item">Fundamentals and Learning Objectives</div>
+                                <div class="component-item">Permitted and Prohibited Use</div>
+                                <div class="component-item">Copyright and Data Protection</div>
+                                <div class="component-item">Labeling of AI Use</div>
+                                <div class="component-item">Equal Opportunity and Access</div>
+                                <div class="component-item">Practical Tips</div>
+                                <div class="component-item">AI Use by Instructors</div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
 
                 <div class="welcome-secondary-column">
-                    <div class="welcome-secondary-box disclaimer-box">
-                        <h2>Wichtige Hinweise</h2>
-                        <p>Dieser Generator ist ein <strong>unterstützendes Angebot</strong>.</p>
-                        <ul>
-                            <li><strong>Nicht unreflektiert einsetzen:</strong> Lehrveranstaltungsspezifische KI-Richtlinien können zu neuen Problemen führen. Studierende erhalten am Semesteranfang in mehreren Lehrveranstaltungen ähnliche Dokumente mit leicht unterschiedlichem Inhalt – wie bei AGB liest dann niemand mehr das Kleingedruckte. Außerdem besteht die Gefahr des „Bike-Sheddings“: Jede Lehrperson glaubt zu wissen, wie man KI am besten nutzt – am Ende diskutieren wir länger über Policys als wir unterrichten. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">Mehr dazu hier einem Beitrag von Dominik Herrmann.</a></li>
-                            <li><strong>Keine Verpflichtung:</strong> Es besteht <strong>keine Verpflichtung</strong> seitens der Universität Bamberg, eine solche Richtlinie zu erstellen oder dieses Tool zu nutzen.</li>
-                            <li><strong>Keine offizielle Position:</strong> Die bereitgestellten Textbausteine und Inhalte stellen <strong>keine</strong> offizielle Position der Universität Bamberg dar.</li>
-                            <li><strong>Keine Produktempfehlung:</strong> Werden in den Bausteinen beispielhaft KI-Werkzeuge genannt, dient dies rein informativen Zwecken zur Veranschaulichung. Es handelt sich dabei <strong>nicht</strong> um eine Empfehlung oder Aufforderung zur Nutzung bestimmter Produkte.</li>
-                            <li><strong>Ihre Verantwortung:</strong> Die Verantwortung für die Einhaltung der rechtlichen Rahmenbedingungen und die finale inhaltliche Ausgestaltung Ihrer KI-Policy liegt bei Ihnen als Lehrperson.</li>
-                            <li><strong>Dynamische Inhalte:</strong> Aufgrund des fortlaufenden wissenschaftlichen Diskurses könnte sich der Inhalt dieses Generators in Zukunft ändern. Die Inhalte dieser Version bleiben unverändert online zugänglich. Alte Versionen enthalten einen Link zur jeweils aktuellen Version des Generators.</li>
-                        </ul>
+                    <!-- German disclaimer and technical notes -->
+                    <div data-ui-lang="de">
+                        <div class="welcome-secondary-box disclaimer-box">
+                            <h2>Wichtige Hinweise</h2>
+                            <p>Dieser Generator ist ein <strong>unterstützendes Angebot</strong>.</p>
+                            <ul>
+                                <li><strong>Nicht unreflektiert einsetzen:</strong> Lehrveranstaltungsspezifische KI-Richtlinien können zu neuen Problemen führen. Studierende erhalten am Semesteranfang in mehreren Lehrveranstaltungen ähnliche Dokumente mit leicht unterschiedlichem Inhalt – wie bei AGB liest dann niemand mehr das Kleingedruckte. Außerdem besteht die Gefahr des „Bike-Sheddings": Jede Lehrperson glaubt zu wissen, wie man KI am besten nutzt – am Ende diskutieren wir länger über Policys als wir unterrichten. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">Mehr dazu hier einem Beitrag von Dominik Herrmann.</a></li>
+                                <li><strong>Keine Verpflichtung:</strong> Es besteht <strong>keine Verpflichtung</strong> seitens der Universität Bamberg, eine solche Richtlinie zu erstellen oder dieses Tool zu nutzen.</li>
+                                <li><strong>Keine offizielle Position:</strong> Die bereitgestellten Textbausteine und Inhalte stellen <strong>keine</strong> offizielle Position der Universität Bamberg dar.</li>
+                                <li><strong>Keine Produktempfehlung:</strong> Werden in den Bausteinen beispielhaft KI-Werkzeuge genannt, dient dies rein informativen Zwecken zur Veranschaulichung. Es handelt sich dabei <strong>nicht</strong> um eine Empfehlung oder Aufforderung zur Nutzung bestimmter Produkte.</li>
+                                <li><strong>Ihre Verantwortung:</strong> Die Verantwortung für die Einhaltung der rechtlichen Rahmenbedingungen und die finale inhaltliche Ausgestaltung Ihrer KI-Policy liegt bei Ihnen als Lehrperson.</li>
+                                <li><strong>Dynamische Inhalte:</strong> Aufgrund des fortlaufenden wissenschaftlichen Diskurses könnte sich der Inhalt dieses Generators in Zukunft ändern. Die Inhalte dieser Version bleiben unverändert online zugänglich. Alte Versionen enthalten einen Link zur jeweils aktuellen Version des Generators.</li>
+                            </ul>
+                        </div>
+
+                        <div class="welcome-secondary-box technical-notes">
+                            <h2>Technische Hinweise</h2>
+                            <ul>
+                                <li>Sie nutzen aktuell <strong>Version v3</strong> dieses Generators. Die vorherige Version war <a href="../v2.html">Version v2</a>.</li>
+                                <li><strong>Speichern und Laden:</strong> Export und Import funktionieren <strong>nur innerhalb derselben Version</strong> des Generators. Ältere Versionen bleiben weiterhin online zugänglich.</li>
+                                <li><strong>Fertige Policy erzeugen:</strong> Sie können Ihre KI-Richtlinie jederzeit in die Zwischenablage kopieren und in Ihre eigenen Dokumente oder Lernmanagementsysteme einfügen.</li>
+                                <li><strong>Datensparsamkeit:</strong> Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</li>
+                                <li><strong>Formatierung:</strong> In den Textfeldern können Sie Markdown verwenden: **fett**, *kursiv*, - für Listen.</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="welcome-secondary-box technical-notes">
-                        <h2>Technische Hinweise</h2>
-                        <ul>
-                            <li>Sie nutzen aktuell <strong>Version v3</strong> dieses Generators. Die vorherige Version war <a href="../v2.html">Version v2</a>.</li>
-                            <li><strong>Speichern und Laden:</strong> Export und Import funktionieren <strong>nur innerhalb derselben Version</strong> des Generators. Ältere Versionen bleiben weiterhin online zugänglich.</li>
-                            <li><strong>Fertige Policy erzeugen:</strong> Sie können Ihre KI-Richtlinie jederzeit in die Zwischenablage kopieren und in Ihre eigenen Dokumente oder Lernmanagementsysteme einfügen.</li>
-                            <li><strong>Datensparsamkeit:</strong> Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</li>
-                            <li><strong>Formatierung:</strong> In den Textfeldern können Sie Markdown verwenden: **fett**, *kursiv*, - für Listen.</li>
-                        </ul>
+                    <!-- English disclaimer and technical notes -->
+                    <div data-ui-lang="en" style="display:none">
+                        <div class="welcome-secondary-box disclaimer-box">
+                            <h2>Important Notes</h2>
+                            <p>This generator is a <strong>supporting tool</strong>.</p>
+                            <ul>
+                                <li><strong>Don't use without reflection:</strong> Course-specific AI policies can lead to new problems. Students receive similar documents with slightly different content in multiple courses at the beginning of each semester – like with terms and conditions, nobody reads the fine print anymore. There is also the danger of "bike-shedding": every instructor thinks they know how to best use AI – and we end up discussing policies longer than we teach. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">More on this in an article by Dominik Herrmann.</a></li>
+                                <li><strong>No obligation:</strong> There is <strong>no obligation</strong> by the University of Bamberg to create such a policy or to use this tool.</li>
+                                <li><strong>No official position:</strong> The provided text modules and content do <strong>not</strong> represent an official position of the University of Bamberg.</li>
+                                <li><strong>No product recommendation:</strong> When AI tools are mentioned as examples in the modules, this serves purely informational purposes for illustration. This does <strong>not</strong> constitute a recommendation or invitation to use specific products.</li>
+                                <li><strong>Your responsibility:</strong> The responsibility for compliance with the legal framework and the final content of your AI policy lies with you as the instructor.</li>
+                                <li><strong>Dynamic content:</strong> Due to the ongoing scientific discourse, the content of this generator may change in the future. The content of this version will remain available online unchanged. Older versions contain a link to the current version of the generator.</li>
+                            </ul>
+                        </div>
+
+                        <div class="welcome-secondary-box technical-notes">
+                            <h2>Technical Notes</h2>
+                            <ul>
+                                <li>You are currently using <strong>Version v3</strong> of this generator. The previous version was <a href="../v2.html">Version v2</a>.</li>
+                                <li><strong>Save and Load:</strong> Export and import only work <strong>within the same version</strong> of the generator. Older versions remain accessible online.</li>
+                                <li><strong>Generate policy:</strong> You can copy your AI policy to the clipboard at any time and paste it into your own documents or learning management systems.</li>
+                                <li><strong>Data privacy:</strong> The AI Policy Generator runs entirely client-side. The content you enter is not sent to the server.</li>
+                                <li><strong>Formatting:</strong> You can use Markdown in the text fields: **bold**, *italic*, - for lists.</li>
+                            </ul>
+                        </div>
                     </div>
 
                 </div>
@@ -1521,15 +2116,15 @@
         <header>
             <div class="header-top-row">
                 <div class="header-title-area">
-                    <h1 id="main-title">KI-Policy-Generator für die Lehre</h1>
+                    <h1 id="main-title" data-i18n="main_title">KI-Policy-Generator für die Lehre</h1>
                 </div>
                 <div class="header-buttons">
                         <div class="language-switcher header-language-switcher">
                             <button data-lang="de" class="active" title="Deutsch">DE</button>
                             <button data-lang="en" title="English">EN</button>
                         </div>
-                        <button id="save-load-btn" class="action-btn">Daten-Export und -Import</button>
-                        <button id="generate-policy-btn" class="action-btn">Richtlinie generieren</button>
+                        <button id="save-load-btn" class="action-btn" data-i18n="btn_save_load">Daten-Export und -Import</button>
+                        <button id="generate-policy-btn" class="action-btn" data-i18n="btn_generate">Richtlinie generieren</button>
                     </div>
             </div>
         </header>
@@ -1540,11 +2135,11 @@
                 
                 <div class="header-top-row">
                     <h2 id="document-title" class="editable-title">KI-Richtlinie für meine Lehrveranstaltung</h2>
-                    <button id="edit-title-btn" class="secondary-btn">Titel bearbeiten</button>
+                    <button id="edit-title-btn" class="secondary-btn" data-i18n="btn_edit_title">Titel bearbeiten</button>
                 </div>
                 <div class="intro-row">
                     <div id="document-intro-display" class="document-intro"></div>
-                    <button id="edit-intro-btn" class="secondary-btn">Einleitung bearbeiten</button>
+                    <button id="edit-intro-btn" class="secondary-btn" data-i18n="btn_edit_intro">Einleitung bearbeiten</button>
                 </div>
             </div>
             
@@ -1558,31 +2153,33 @@
         <!-- Result View -->
         <div id="result-view" class="view">
             <div class="result-header">
-                <button id="back-to-editor" class="back-btn">Zurück zum Editor</button>
-                <button id="copy-result" class="action-btn">Text kopieren</button>
-                <button id="download-html-btn" class="action-btn">Als HTML herunterladen</button> 
+                <button id="back-to-editor" class="back-btn" data-i18n="btn_back_to_editor">Zurück zum Editor</button>
+                <button id="copy-result" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
+                <button id="download-html-btn" class="action-btn" data-i18n="btn_download_html">Als HTML herunterladen</button>
+                <button id="copy-card-btn" class="action-btn" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
             </div>
             <div class="result-notice">
-                <p>Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden.</p> <!-- Updated Text -->
+                <p data-i18n-html="result_notice">Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden.</p>
             </div>
+            <div id="policy-card-container" style="display:none"></div>
             <div id="policy-result-container"></div> <!-- Renamed ID -->
         </div>
     </div>
 
     <!-- Save/Load Modal -->
-    <div id="save-load-modal" class="modal" style="display: none;">
+    <div id="save-load-modal" class="modal">
         <div class="modal-content save-load-modal-content">
             <span class="close-modal" id="close-save-load-modal">&times;</span>
-            <h2>Speichern & Laden</h2>
+            <h2 data-i18n="modal_title">Speichern & Laden</h2>
             <div class="save-load-container">
                 <div id="save-container">
-                    <p>Speichern Sie Ihre aktuelle Konfiguration in einer Datei:</p>
-                    <button id="save-state-btn" class="action-btn">Als Datei speichern</button>
+                    <p data-i18n="modal_save_desc">Speichern Sie Ihre aktuelle Konfiguration in einer Datei:</p>
+                    <button id="save-state-btn" class="action-btn" data-i18n="btn_save_state">Als Datei speichern</button>
                 </div>
                 <div id="load-container">
-                    <p>Laden Sie eine gespeicherte Konfiguration:</p>
+                    <p data-i18n="modal_load_desc">Laden Sie eine gespeicherte Konfiguration:</p>
                     <input type="file" id="state-file-input" accept=".export" />
-                    <button id="load-state-btn" class="action-btn">Geladene Datei importieren</button>
+                    <button id="load-state-btn" class="action-btn" data-i18n="btn_load_state">Geladene Datei importieren</button>
                 </div>
             </div>
         </div>
@@ -1591,28 +2188,88 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>Über diesen Generator</h3>
-                <p>Dieser KI-Policy-Generator wird vom <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office der Universität Bamberg</a> betrieben.</p>
-                <p>Bei der Entwicklung der Texte und des Generators kam Generative KI zum Einsatz.</p>
+            <!-- German footer -->
+            <div data-ui-lang="de">
+                <div class="footer-section">
+                    <h3>Über diesen Generator</h3>
+                    <p>Dieser KI-Policy-Generator wird vom <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office der Universität Bamberg</a> betrieben.</p>
+                    <p>Bei der Entwicklung der Texte und des Generators kam Generative KI zum Einsatz.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">Weiterführende Informationen</a>
+                    <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
+                    <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Impressum</a>
+                    <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Datenschutz</a>
+                </div>
+                <div class="footer-license">
+                    <p>Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a>, Code unter <a href="https://opensource.org/licenses/MIT" target="_blank">MIT-Lizenz</a></p>
+                </div>
+                <div class="footer-bottom">
+                    <p>Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</p>
+                </div>
             </div>
-            
-            <div class="footer-links">
-                <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">Weiterführende Informationen</a>
-                <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
-                <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Impressum</a>
-                <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Datenschutz</a>
-            </div>
-
-            <div class="footer-license">
-                <p>Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a>, Code unter <a href="https://opensource.org/licenses/MIT" target="_blank">MIT-Lizenz</a></p>
-            </div>
-
-            <div class="footer-bottom">
-                <p>Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</p>
+            <!-- English footer -->
+            <div data-ui-lang="en" style="display:none">
+                <div class="footer-section">
+                    <h3>About this Generator</h3>
+                    <p>This AI Policy Generator is operated by the <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office of the University of Bamberg</a>.</p>
+                    <p>Generative AI was used in the development of the texts and the generator.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">More Information</a>
+                    <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
+                    <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Legal Notice</a>
+                    <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Privacy Policy</a>
+                </div>
+                <div class="footer-license">
+                    <p>Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank">CC BY-SA 4.0</a>, code under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
+                </div>
+                <div class="footer-bottom">
+                    <p>The AI Policy Generator runs entirely client-side. The content you enter is not sent to the server.</p>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Preset Detail Modal -->
+    <div id="preset-detail-modal" class="preset-detail-modal">
+        <div class="preset-detail-content">
+            <div class="preset-detail-header">
+                <div class="preset-detail-header-inner">
+                    <div>
+                        <div id="preset-detail-name" class="preset-detail-name">
+                            <span id="preset-detail-dot" class="preset-detail-dot"></span>
+                            <span id="preset-detail-name-text"></span>
+                        </div>
+                        <div id="preset-detail-desc" class="preset-detail-desc"></div>
+                    </div>
+                    <button id="preset-detail-close" class="preset-detail-close">&times;</button>
+                </div>
+            </div>
+            <div class="preset-detail-body">
+                <h3 data-i18n="preset_tldr_title">Zusammenfassung (TL;DR)</h3>
+                <ul id="preset-detail-tldr" class="preset-detail-tldr"></ul>
+
+                <div class="preset-detail-upload-toggle">
+                    <label>
+                        <span class="upload-switch">
+                            <input type="checkbox" id="preset-detail-upload-toggle">
+                            <span class="slider"></span>
+                        </span>
+                        <span data-i18n="preset_upload_label">Kursmaterialien-Upload erlaubt</span>
+                    </label>
+                </div>
+
+                <h3 data-i18n="preset_items_title">Enthaltene Bausteine</h3>
+                <ul id="preset-detail-items" class="preset-detail-items"></ul>
+
+                <div class="preset-detail-actions">
+                    <button id="preset-detail-use" class="action-btn" data-i18n="btn_preset_use">Direkt verwenden</button>
+                    <button id="preset-detail-customize" class="action-btn btn-preset-secondary" data-i18n="btn_preset_customize">Anpassen</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // SVG Icons
@@ -1720,8 +2377,8 @@
             text = '<p>' + text.replace(/\n\n+/g, '</p>\n\n<p>') + '</p>';
             
             // Fix lists that might have gotten paragraph tags
-            text = text.replace(/<p><[ou]l>/g, '<$1>');
-            text = text.replace(/<\/[ou]l><\/p>/g, '</$1>');
+            text = text.replace(/<p><([ou]l)>/g, '<$1>');
+            text = text.replace(/<\/([ou]l)><\/p>/g, '</$1>');
             
             // Fix nested paragraph tags in list items
             text = text.replace(/<li><p>(.*?)<\/p><\/li>/g, '<li>$1</li>');
@@ -1872,16 +2529,22 @@
         
         let currentView = 'welcome';
         let documentIntro = "Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Ziel ist es, Klarheit für Sie als Studierende zu schaffen und eine faire Bewertung zu gewährleisten, während Sie gleichzeitig die Möglichkeiten von KI erkunden können. Bitte fragen Sie nach, wenn Teile dieser Richtlinie unklar sind.";
-        
+
+        // Preset state
+        let activePreset = null;
+        let presetModified = false;
+        let presetUploadFlags = {};
 
         // Add SVGs to buttons
         function addSvgIcons() {
             document.querySelectorAll('.edit-item-btn').forEach(btn => {
-                btn.innerHTML = window.svgIcons.edit + ' Bearbeiten';
+                // Security: SVG icons are defined locally in this file, t() returns trusted YAML strings
+                btn.innerHTML = window.svgIcons.edit + ' ' + t('btn_edit', 'Bearbeiten');
             });
-            
+
             document.querySelectorAll('.add-item-btn').forEach(btn => {
-                btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                // Security: SVG icons are defined locally in this file, t() returns trusted YAML strings
+                btn.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
             });
         }
 
@@ -1891,15 +2554,17 @@
                 // Use window.documentIntro if set by policy-loader, otherwise use local documentIntro
                 // Security: parseMarkdown escapes HTML before processing, intro comes from trusted local YAML
                 const introText = window.documentIntro || documentIntro;
-                documentIntroDisplay.innerHTML = '<strong style="color: var(--medium-gray);">Einleitung: </strong>' + parseMarkdown(introText);
+                // Security: t() returns trusted local YAML strings, parseMarkdown escapes HTML
+                documentIntroDisplay.innerHTML = '<strong style="color: var(--medium-gray);">' + escapeHTML(t('label_intro', 'Einleitung: ')) + '</strong>' + parseMarkdown(introText);
             }
         }
 
         // Handle ESC key for modals
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                if (saveLoadModal.style.display === 'flex') {
-                    saveLoadModal.style.display = 'none';
+                const modal = document.getElementById('save-load-modal');
+                if (modal && modal.classList.contains('visible')) {
+                    modal.classList.remove('visible');
                 }
             }
         });
@@ -1923,66 +2588,21 @@
             } else if (targetView === 'result') {
                 resultView.classList.add('active-view');
                 currentView = 'result';
+                // Hide policy card and copy button if no preset is active
+                const cardContainer = document.getElementById('policy-card-container');
+                const copyCardBtn = document.getElementById('copy-card-btn');
+                if (!activePreset) {
+                    if (cardContainer) cardContainer.style.display = 'none';
+                    if (copyCardBtn) copyCardBtn.style.display = 'none';
+                }
             }
         }
-
-        // Event Listeners for View Navigation
-        startEditorBtn.addEventListener('click', () => switchView('editor'));
-        generatePolicyBtn.addEventListener('click', () => {
-            generatePolicy();
-            switchView('result');
-        });
-        backToEditorBtn.addEventListener('click', () => switchView('editor'));
 
         // Selected items
         const selectedItems = [];
         // Store original content for all policy items
         const originalPolicyItems = {};
-        
-        
-        // Function adjusted to only manage data, remove unused DOM creation
-        function addSelectedItem(id, text, categoryTitle) { 
-            //const id = createUniqueId(); // Alte Zeile: Erzeugt neue ID
-            const itemElement = document.createElement('div');
-            itemElement.className = 'selected-item';
-            itemElement.setAttribute('draggable', 'true');
-            itemElement.dataset.id = id; // Verwende die übergebene ID
-            
-            // Create the element using DOM methods instead of innerHTML to avoid XSS
-            const textDiv = document.createElement('div');
-            textDiv.className = 'selected-item-text';
-            textDiv.textContent = text;
-            itemElement.appendChild(textDiv);
-            
-            // Find the subcategory if available
-            const policyItem = document.querySelector(`.policy-item[data-id="${id}"]`);
-            let subcategoryTitle = 'Allgemein';
-            
-            if (policyItem) {
-                const subcategoryElement = policyItem.closest('.subcategory');
-                if (subcategoryElement) {
-                    const titleElement = subcategoryElement.querySelector('.subcategory-title');
-                    if (titleElement && titleElement.textContent) {
-                        subcategoryTitle = titleElement.textContent.trim();
-                        console.log(`addSelectedItem: Found subcategory "${subcategoryTitle}" for item ${id}`);
-                    }
-                }
-            }
-            
-            // Add to array using the passed ID
-            selectedItems.push({
-                id, // Verwende die übergebene ID
-                text,
-                categoryTitle: categoryTitle, // Store category title
-                subcategoryTitle: subcategoryTitle, // Store subcategory title
-                element: policyItem // Store the actual DOM element
-            });
-            
-            console.log(`Item added to selectedItems:`, { id, categoryTitle, subcategoryTitle });
-            
-            // return id; // Rückgabe nicht mehr nötig
-        }
-        
+
         function removeSelectedItem(id) {
             const index = selectedItems.findIndex(item => item.id === id);
             if (index !== -1) {
@@ -1993,43 +2613,12 @@
                 if (policyItem) {
                     const btn = policyItem.querySelector('.add-item-btn');
                     btn.classList.remove('added');
-                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                    // Security: SVG icons defined locally, t() returns trusted YAML strings
+                    btn.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
                     policyItem.classList.remove('selected');
                 }
             }
         }
-
-        // Edit document title
-        editTitleBtn.addEventListener('click', () => {
-            // Close any open inline editors
-            document.querySelectorAll('.policy-item.editing').forEach(item => {
-                exitInlineEditMode(item);
-            });
-            
-            // Exit any other editing mode
-            if (documentIntroDisplay.classList.contains('editing')) {
-                exitIntroEditMode();
-            }
-            
-            // Enable title editing
-            enableTitleEditing();
-        });
-        
-        // Edit document intro
-        editIntroBtn.addEventListener('click', () => {
-            // Close any open inline editors
-            document.querySelectorAll('.policy-item.editing').forEach(item => {
-                exitInlineEditMode(item);
-            });
-            
-            // Exit any other editing mode
-            if (documentTitle.classList.contains('editing')) {
-                exitTitleEditMode();
-            }
-            
-            // Enable intro editing
-            enableIntroEditing();
-        });
 
         // Enable title inline editing
         function enableTitleEditing() {
@@ -2061,16 +2650,16 @@
             // Create action buttons
             const saveBtn = document.createElement('button');
             saveBtn.className = 'save-edit-btn';
-            saveBtn.textContent = 'Speichern';
+            saveBtn.textContent = t('btn_save', 'Speichern');
             saveBtn.addEventListener('click', () => {
                 // Set the text content directly since titles usually don't have formatting
                 documentTitle.textContent = titleInput.value;
                 exitTitleEditMode();
             });
-            
+
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'cancel-edit-btn';
-            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.textContent = t('btn_cancel', 'Abbrechen');
             cancelBtn.addEventListener('click', exitTitleEditMode);
             
             titleEditor.appendChild(saveBtn);
@@ -2133,16 +2722,16 @@
             // Create action buttons
             const saveBtn = document.createElement('button');
             saveBtn.className = 'save-edit-btn';
-            saveBtn.textContent = 'Speichern';
+            saveBtn.textContent = t('btn_save', 'Speichern');
             saveBtn.addEventListener('click', () => {
                 documentIntro = introTextarea.value;
                 updateIntroDisplay(); // This function already uses parseMarkdown
                 exitIntroEditMode();
             });
-            
+
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'cancel-edit-btn';
-            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.textContent = t('btn_cancel', 'Abbrechen');
             cancelBtn.addEventListener('click', exitIntroEditMode);
             
             introEditor.appendChild(saveBtn);
@@ -2249,16 +2838,33 @@
             // For debugging - show all selected items and their structure
             console.log("Selected items for policy generation:", selectedItems);
             
+            // Security: all content from trusted local sources (escapeHTML + parseMarkdown used)
             let policyHtml = `
                 <div class="generated-policy">
                     <h1>${escapeHTML(documentTitle.textContent)}</h1>
-                    <div class="policy-date">Stand: ${new Date().toLocaleDateString('de-DE')}</div>
-                    <div class="policy-intro">${parseMarkdown(documentIntro)}</div>
-                    <div class="policy-content">
+                    <div class="policy-date">${escapeHTML(t('date_label', 'Stand'))}: ${new Date().toLocaleDateString(t('date_locale', 'de-DE'))}</div>
+                    <div class="policy-intro">${parseMarkdown(window.documentIntro || documentIntro)}</div>
             `;
+
+            // Add TL;DR section if preset is active
+            if (activePreset && !presetModified) {
+                const uploadBullet = activePreset.uploadEnabled ? activePreset.tldr_upload : activePreset.tldr_no_upload;
+                const allBullets = [...activePreset.tldr, uploadBullet];
+                const uploadSuffix = activePreset.uploadEnabled ? '-Upload' : '-NoUpload';
+                policyHtml += `<div class="policy-tldr-section">`;
+                policyHtml += `<h2>${escapeHTML(activePreset.name + uploadSuffix)} – ${escapeHTML(t('preset_tldr_title', 'Zusammenfassung (TL;DR)'))}</h2>`;
+                policyHtml += `<ul>`;
+                allBullets.forEach(bullet => {
+                    // Security: parseMarkdown escapes HTML before processing
+                    policyHtml += `<li>${parseMarkdown(bullet).replace(/<\/?p>/g, '')}</li>`;
+                });
+                policyHtml += `</ul></div>`;
+            }
+
+            policyHtml += `<div class="policy-content">`;
             
             if (selectedItems.length === 0) {
-                policyHtml += `<p class="empty-policy">Keine Bausteine ausgewählt. Kehren Sie zurück zum Editor, um Bausteine hinzuzufügen.</p>`;
+                policyHtml += `<p class="empty-policy">${escapeHTML(t('empty_policy', 'Keine Bausteine ausgewählt. Kehren Sie zurück zum Editor, um Bausteine hinzuzufügen.'))}</p>`;
             } else {
                 // Iterate through categories and add content
                 Object.entries(itemsByCategory).forEach(([categoryTitle, items]) => {
@@ -2272,7 +2878,7 @@
                     
                     items.forEach(item => {
                         // Use the stored subcategoryTitle from when the item was added
-                        const subcategoryTitle = item.subcategoryTitle || 'Allgemein';
+                        const subcategoryTitle = item.subcategoryTitle || t('default_subcategory', 'Allgemein');
                         
                         if (!itemsBySubcategory[subcategoryTitle]) {
                             itemsBySubcategory[subcategoryTitle] = [];
@@ -2380,16 +2986,16 @@
             navigator.clipboard.writeText(formattedText)
                 .then(() => {
                     // Show success message
-                    copyResultBtn.textContent = "Kopiert!";
+                    copyResultBtn.textContent = t('copy_success', 'Kopiert!');
                     copyResultBtn.classList.add('copy-success');
                     setTimeout(() => {
-                        copyResultBtn.textContent = "Text kopieren";
+                        copyResultBtn.textContent = t('btn_copy_result', 'Text kopieren');
                         copyResultBtn.classList.remove('copy-success');
                     }, 2000);
                 })
                 .catch(err => {
-                    console.error('Fehler beim Kopieren in die Zwischenablage: ', err);
-                    alert('Konnte nicht in die Zwischenablage kopieren. Bitte manuell kopieren.');
+                    console.error('Copy to clipboard error:', err);
+                    alert(t('alert_copy_error', 'Konnte nicht in die Zwischenablage kopieren. Bitte manuell kopieren.'));
                 });
         });
         
@@ -2402,6 +3008,7 @@
             // 1. Titel und Einleitung aktualisieren
             documentTitle.textContent = appState.title;
             documentIntro = appState.intro;
+            window.documentIntro = appState.intro;
             updateIntroDisplay(); // Einleitung im Display aktualisieren
             
             // 2. Alle Elemente zurücksetzen
@@ -2413,10 +3020,11 @@
                 const btn = item.querySelector('.add-item-btn');
                 if (btn) {
                     btn.classList.remove('added');
-                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                    // Security: SVG icons defined locally, t() returns trusted YAML strings
+                    btn.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
                 }
             });
-            
+
             // 3. selectedItems-Array leeren
             selectedItems.length = 0;
             
@@ -2451,16 +3059,17 @@
                         const btn = item.querySelector('.add-item-btn');
                         if (btn) {
                             btn.classList.add('added');
-                            btn.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
+                            // Security: SVG icons defined locally, t() returns trusted YAML strings
+                            btn.innerHTML = window.svgIcons.trash + ' ' + t('btn_remove', 'Nicht verwenden');
                         }
-                        
+
                         // Zum selectedItems-Array hinzufügen
                         const categoryHeader = item.closest('.category').querySelector('.category-header h2');
-                        const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
+                        const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : t('uncategorized', 'Unkategorisiert');
                         
                         // Get subcategory title if available
                         const subcategoryElement = item.closest('.subcategory');
-                        let subcategoryTitle = 'Allgemein';
+                        let subcategoryTitle = t('default_subcategory', 'Allgemein');
                         if (subcategoryElement) {
                             const titleElement = subcategoryElement.querySelector('.subcategory-title');
                             if (titleElement && titleElement.textContent) {
@@ -2530,7 +3139,7 @@
             // Create markdown hint
             const editorHint = document.createElement('p');
             editorHint.className = 'editor-hint';
-            editorHint.textContent = 'Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen';
+            editorHint.textContent = t('editor_hint', 'Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen');
             inlineEditor.appendChild(editorHint);
 
             // Create textarea with current content
@@ -2552,20 +3161,20 @@
             // Save button
             const saveBtn = document.createElement('button');
             saveBtn.className = 'save-edit-btn';
-            saveBtn.textContent = 'Speichern';
+            saveBtn.textContent = t('btn_save', 'Speichern');
             saveBtn.addEventListener('click', () => saveInlineEdit(policyItem, itemId, textarea.value));
-            
+
             // Cancel button
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'cancel-edit-btn';
-            cancelBtn.textContent = 'Abbrechen';
+            cancelBtn.textContent = t('btn_cancel', 'Abbrechen');
             cancelBtn.addEventListener('click', () => cancelInlineEdit(policyItem));
-            
+
             // Revert link
             const revertLink = document.createElement('a');
             revertLink.className = 'revert-inline-edit';
             revertLink.href = '#';
-            revertLink.textContent = 'Originaltext wiederherstellen';
+            revertLink.textContent = t('btn_revert', 'Originaltext wiederherstellen');
             revertLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (originalPolicyItems[itemId]) {
@@ -2637,6 +3246,448 @@
             if (inlineEditor) {
                 inlineEditor.remove();
             }
+        }
+
+        // ============================================================
+        // Preset Feature Functions
+        // ============================================================
+
+        /**
+         * Rendert die 6 Preset-Cards im Grid
+         */
+        function renderPresetCards(presets) {
+            const grid = document.getElementById('preset-grid');
+            if (!grid || !presets) return;
+
+            // Clear grid using DOM methods
+            while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+            presets.forEach(preset => {
+                // Initialize upload flag if not set
+                if (!(preset.id in presetUploadFlags)) {
+                    presetUploadFlags[preset.id] = preset.upload_default || false;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'preset-card';
+                card.dataset.presetId = preset.id;
+
+                // Body
+                const body = document.createElement('div');
+                body.className = 'preset-card-body';
+
+                const name = document.createElement('div');
+                name.className = 'preset-card-name';
+                const dot = document.createElement('span');
+                dot.className = 'preset-card-dot';
+                dot.style.backgroundColor = preset.color;
+                name.appendChild(dot);
+                name.appendChild(document.createTextNode(preset.name));
+                body.appendChild(name);
+
+                const desc = document.createElement('div');
+                desc.className = 'preset-card-desc';
+                desc.textContent = preset.description;
+                body.appendChild(desc);
+
+                // First 3 TL;DR bullets
+                const tldrList = document.createElement('ul');
+                tldrList.className = 'preset-card-tldr';
+                const maxBullets = 3;
+                preset.tldr.slice(0, maxBullets).forEach(bullet => {
+                    const li = document.createElement('li');
+                    li.textContent = bullet.replace(/\*\*/g, '');
+                    tldrList.appendChild(li);
+                });
+                if (preset.tldr.length > maxBullets) {
+                    const more = document.createElement('span');
+                    more.className = 'preset-card-more';
+                    more.textContent = `+${preset.tldr.length - maxBullets} ${t('preset_more', 'weitere')}`;
+                    tldrList.appendChild(more);
+                }
+                body.appendChild(tldrList);
+                card.appendChild(body);
+
+                // Click handler on card body (not toggle)
+                body.addEventListener('click', () => showPresetDetail(preset));
+
+                // Upload toggle
+                const toggleDiv = document.createElement('div');
+                toggleDiv.className = 'preset-upload-toggle';
+                const toggleLabel = document.createElement('label');
+                const switchSpan = document.createElement('span');
+                switchSpan.className = 'upload-switch';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = presetUploadFlags[preset.id];
+                checkbox.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    presetUploadFlags[preset.id] = checkbox.checked;
+                });
+                checkbox.addEventListener('click', (e) => e.stopPropagation());
+                const slider = document.createElement('span');
+                slider.className = 'slider';
+                switchSpan.appendChild(checkbox);
+                switchSpan.appendChild(slider);
+                toggleLabel.appendChild(switchSpan);
+                const labelText = document.createElement('span');
+                labelText.textContent = t('preset_upload_label', 'Kursmaterialien-Upload erlaubt');
+                toggleLabel.appendChild(labelText);
+                toggleDiv.appendChild(toggleLabel);
+                toggleDiv.addEventListener('click', (e) => e.stopPropagation());
+                card.appendChild(toggleDiv);
+
+                grid.appendChild(card);
+            });
+        }
+
+        /**
+         * Zeigt das Preset-Detail-Modal
+         */
+        function showPresetDetail(preset) {
+            const modal = document.getElementById('preset-detail-modal');
+            if (!modal) return;
+
+            // Store reference to current preset
+            modal._currentPreset = preset;
+
+            // Color dot
+            document.getElementById('preset-detail-dot').style.backgroundColor = preset.color;
+
+            // Name & description
+            document.getElementById('preset-detail-name-text').textContent = preset.name;
+            document.getElementById('preset-detail-desc').textContent = preset.description;
+
+            // TL;DR list - built with safe DOM methods
+            const tldrList = document.getElementById('preset-detail-tldr');
+            while (tldrList.firstChild) tldrList.removeChild(tldrList.firstChild);
+            const uploadEnabled = presetUploadFlags[preset.id] || false;
+            const allBullets = [...preset.tldr, uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload];
+            allBullets.forEach(bullet => {
+                const li = document.createElement('li');
+                // Security: bullet text from trusted local YAML, parseMarkdown escapes HTML
+                li.innerHTML = parseMarkdown(bullet).replace(/<\/?p>/g, '');
+                tldrList.appendChild(li);
+            });
+
+            // Upload toggle
+            const detailToggle = document.getElementById('preset-detail-upload-toggle');
+            detailToggle.checked = uploadEnabled;
+            detailToggle.onchange = () => {
+                presetUploadFlags[preset.id] = detailToggle.checked;
+                // Update card toggle too
+                const cardToggle = document.querySelector(`.preset-card[data-preset-id="${preset.id}"] .upload-switch input`);
+                if (cardToggle) cardToggle.checked = detailToggle.checked;
+                // Re-render TL;DR
+                showPresetDetail(preset);
+            };
+
+            // Items list - built with safe DOM methods
+            const itemsList = document.getElementById('preset-detail-items');
+            while (itemsList.firstChild) itemsList.removeChild(itemsList.firstChild);
+            const allItems = [...preset.items];
+            // Add upload/no-upload item
+            allItems.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
+
+            allItems.forEach(yamlId => {
+                const runtimeId = yamlIdToRuntimeId[yamlId];
+                const li = document.createElement('li');
+                if (runtimeId) {
+                    const el = document.querySelector(`.policy-item[data-id="${runtimeId}"] .policy-text`);
+                    if (el) {
+                        // Show first ~80 chars of text content
+                        const text = el.textContent.trim();
+                        li.textContent = text.length > 80 ? text.substring(0, 80) + '...' : text;
+                    } else {
+                        li.textContent = yamlId;
+                    }
+                } else {
+                    li.textContent = yamlId;
+                }
+                itemsList.appendChild(li);
+            });
+
+            modal.classList.add('visible');
+        }
+
+        /**
+         * Schließt das Preset-Detail-Modal
+         */
+        function closePresetDetail() {
+            const modal = document.getElementById('preset-detail-modal');
+            if (modal) modal.classList.remove('visible');
+        }
+
+        /**
+         * Wendet ein Preset an
+         * @param {object} preset - Das Preset-Objekt
+         * @param {boolean} goToEditor - true = Editor, false = direkt Result
+         */
+        function applyPreset(preset, goToEditor) {
+            const uploadEnabled = presetUploadFlags[preset.id] || false;
+
+            // Build items list with upload toggle
+            const yamlIds = [...preset.items];
+            yamlIds.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
+
+            // Build appState compatible with applyLoadedState()
+            const elements = {};
+            yamlIds.forEach(yamlId => {
+                const runtimeId = yamlIdToRuntimeId[yamlId];
+                if (runtimeId) {
+                    elements[runtimeId] = {
+                        isAdded: true
+                    };
+                } else {
+                    console.warn(`Preset item "${yamlId}" not found in ID map`);
+                }
+            });
+
+            const appState = {
+                title: preset.document_title,
+                intro: preset.document_intro.trim(),
+                elements: elements
+            };
+
+            // Apply
+            applyLoadedState(appState);
+
+            // Set active preset
+            activePreset = { ...preset, uploadEnabled };
+            presetModified = false;
+
+            closePresetDetail();
+
+            if (goToEditor) {
+                switchView('editor');
+                showPresetHint(preset.name, preset.color);
+            } else {
+                generatePolicy();
+                renderPolicyCard(preset, uploadEnabled);
+                switchView('result');
+            }
+        }
+
+        /**
+         * Rendert die Policy Card im Result View
+         * Security: All content comes from trusted local YAML files (same trust as policy texts)
+         */
+        function renderPolicyCard(preset, uploadEnabled) {
+            const container = document.getElementById('policy-card-container');
+            const copyBtn = document.getElementById('copy-card-btn');
+            if (!container) return;
+
+            // Clear container
+            while (container.firstChild) container.removeChild(container.firstChild);
+
+            const uploadBullet = uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload;
+            const allBullets = [...preset.tldr, uploadBullet];
+            const uploadSuffix = uploadEnabled ? '-Upload' : '-NoUpload';
+
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'policy-card';
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'policy-card-header';
+
+            const dot = document.createElement('span');
+            dot.className = 'policy-card-dot';
+            dot.style.backgroundColor = preset.color;
+            header.appendChild(dot);
+
+            const title = document.createElement('span');
+            title.className = 'policy-card-title';
+            title.textContent = preset.name + uploadSuffix;
+            header.appendChild(title);
+
+            const badge = document.createElement('span');
+            badge.className = 'policy-card-upload-badge';
+            badge.textContent = uploadEnabled ? t('preset_upload_label', 'Upload erlaubt') : 'No Upload';
+            header.appendChild(badge);
+
+            cardDiv.appendChild(header);
+
+            // TL;DR list
+            const tldrUl = document.createElement('ul');
+            tldrUl.className = 'policy-card-tldr';
+            allBullets.forEach(bullet => {
+                const li = document.createElement('li');
+                // Security: bullet text from trusted local YAML, parseMarkdown escapes HTML
+                li.innerHTML = parseMarkdown(bullet).replace(/<\/?p>/g, '');
+                tldrUl.appendChild(li);
+            });
+            cardDiv.appendChild(tldrUl);
+
+            // Footer
+            const footer = document.createElement('div');
+            footer.className = 'policy-card-footer';
+            footer.textContent = t('preset_card_footer', 'Erstellt mit dem KI-Policy-Generator der Universität Bamberg');
+            cardDiv.appendChild(footer);
+
+            container.appendChild(cardDiv);
+            container.style.display = 'block';
+            if (copyBtn) copyBtn.style.display = '';
+        }
+
+        /**
+         * Zeigt den Preset-Hint im Editor
+         */
+        function showPresetHint(presetName, color) {
+            // Remove existing hint
+            const existing = document.querySelector('.preset-hint');
+            if (existing) existing.remove();
+
+            const editorHeader = document.querySelector('.editor-header');
+            if (!editorHeader) return;
+
+            const hint = document.createElement('div');
+            hint.className = 'preset-hint';
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'preset-hint-text';
+            const dotEl = document.createElement('span');
+            dotEl.className = 'preset-hint-dot';
+            dotEl.style.backgroundColor = color;
+            textSpan.appendChild(dotEl);
+            textSpan.appendChild(document.createTextNode(t('preset_based_on', 'Basiert auf') + ': ' + presetName));
+            hint.appendChild(textSpan);
+
+            const dismissBtn = document.createElement('button');
+            dismissBtn.className = 'preset-hint-dismiss';
+            dismissBtn.textContent = '\u00D7';
+            dismissBtn.addEventListener('click', () => hint.remove());
+            hint.appendChild(dismissBtn);
+
+            editorHeader.insertBefore(hint, editorHeader.firstChild);
+        }
+
+        /**
+         * Kopiert die Policy Card als Klartext
+         */
+        function copyPolicyCard() {
+            if (!activePreset) return;
+            const uploadEnabled = activePreset.uploadEnabled || false;
+            const uploadBullet = uploadEnabled ? activePreset.tldr_upload : activePreset.tldr_no_upload;
+            const allBullets = [...activePreset.tldr, uploadBullet];
+            const uploadSuffix = uploadEnabled ? '-Upload' : '-NoUpload';
+
+            let text = activePreset.name + uploadSuffix + '\n\n';
+            allBullets.forEach(bullet => {
+                text += '\u2022 ' + bullet.replace(/\*\*/g, '') + '\n';
+            });
+            text += '\n' + t('preset_card_footer', 'Erstellt mit dem KI-Policy-Generator der Universität Bamberg');
+
+            const copyBtn = document.getElementById('copy-card-btn');
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    if (copyBtn) {
+                        copyBtn.textContent = t('copy_success', 'Kopiert!');
+                        copyBtn.classList.add('copy-success');
+                        setTimeout(() => {
+                            copyBtn.textContent = t('btn_copy_card', 'Policy Card kopieren');
+                            copyBtn.classList.remove('copy-success');
+                        }, 2000);
+                    }
+                })
+                .catch(err => {
+                    console.error('Copy error:', err);
+                    alert(t('alert_copy_error', 'Konnte nicht in die Zwischenablage kopieren.'));
+                });
+        }
+
+        /**
+         * Setzt den Preset-State zurück (z.B. bei Sprachwechsel)
+         * Wird von policy-loader.js aufgerufen
+         */
+        function resetPresetState() {
+            activePreset = null;
+            presetModified = false;
+            const hint = document.querySelector('.preset-hint');
+            if (hint) hint.remove();
+        }
+
+        /**
+         * Markiert das Preset als modifiziert wenn Items geändert werden
+         */
+        function markPresetModified() {
+            if (activePreset && !presetModified) {
+                presetModified = true;
+                activePreset = null;
+                // Remove hint
+                const hint = document.querySelector('.preset-hint');
+                if (hint) hint.remove();
+            }
+        }
+
+        /**
+         * Setup-Funktion für alle Preset-Event-Handler
+         */
+        function setupPresetHandlers() {
+            // Close modal
+            const closeBtn = document.getElementById('preset-detail-close');
+            if (closeBtn) closeBtn.addEventListener('click', closePresetDetail);
+
+            const modal = document.getElementById('preset-detail-modal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closePresetDetail();
+                });
+            }
+
+            // Use / Customize buttons
+            const useBtn = document.getElementById('preset-detail-use');
+            if (useBtn) {
+                useBtn.addEventListener('click', () => {
+                    const preset = modal._currentPreset;
+                    if (preset) applyPreset(preset, false);
+                });
+            }
+
+            const customizeBtn = document.getElementById('preset-detail-customize');
+            if (customizeBtn) {
+                customizeBtn.addEventListener('click', () => {
+                    const preset = modal._currentPreset;
+                    if (preset) applyPreset(preset, true);
+                });
+            }
+
+            // Copy policy card button
+            const copyCardBtn = document.getElementById('copy-card-btn');
+            if (copyCardBtn) {
+                copyCardBtn.addEventListener('click', copyPolicyCard);
+            }
+
+            // ESC to close preset modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closePresetDetail();
+                }
+            });
+        }
+
+        /**
+         * URL-Parameter verarbeiten (?preset=ai-learn&upload=true)
+         */
+        function handlePresetUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const presetParam = params.get('preset');
+            if (!presetParam || !presetsData) return false;
+
+            const preset = presetsData.presets.find(p => p.id === presetParam);
+            if (!preset) {
+                console.warn(`Preset "${presetParam}" not found`);
+                return false;
+            }
+
+            // Set upload flag from URL
+            const uploadParam = params.get('upload');
+            if (uploadParam === 'true') {
+                presetUploadFlags[preset.id] = true;
+            }
+
+            applyPreset(preset, false);
+            return true;
         }
 
         // --- New Helper Functions for Initialization ---
@@ -2712,11 +3763,11 @@
                     if (!policyTextElement) return;
                     const policyText = policyTextElement.innerHTML;
                     const categoryHeader = policyItem.closest('.category').querySelector('.category-header h2');
-                    const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
-                    
+                    const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : t('uncategorized', 'Unkategorisiert');
+
                     // Find subcategory
                     const subcategoryElement = policyItem.closest('.subcategory');
-                    let subcategoryTitle = 'Allgemein';
+                    let subcategoryTitle = t('default_subcategory', 'Allgemein');
                     if (subcategoryElement) {
                         const titleElement = subcategoryElement.querySelector('.subcategory-title');
                         if (titleElement && titleElement.textContent) {
@@ -2734,8 +3785,10 @@
                     if (clone.classList.contains('added')) {
                         removeSelectedItem(id);
                         clone.classList.remove('added');
-                        clone.innerHTML = window.svgIcons.plus + ' Hinzufügen';
+                        // Security: SVG icons defined locally, t() returns trusted YAML strings
+                        clone.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
                         policyItem.classList.remove('selected');
+                        markPresetModified();
                     } else {
                         // Push directly to selectedItems with subcategory info
                         selectedItems.push({
@@ -2746,10 +3799,12 @@
                             element: policyItem
                         });
                         console.log(`Added item to selectedItems with subcategory "${subcategoryTitle}"`);
-                        
+
                         clone.classList.add('added');
-                        clone.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
+                        // Security: SVG icons defined locally, t() returns trusted YAML strings
+                        clone.innerHTML = window.svgIcons.trash + ' ' + t('btn_remove', 'Nicht verwenden');
                         policyItem.classList.add('selected');
+                        markPresetModified();
                     }
                 });
             });
@@ -2768,12 +3823,12 @@
             // Need access to documentTitle and documentIntro from global scope
             const documentTitle = document.getElementById('document-title'); 
             
-            saveLoadBtn.addEventListener('click', () => { 
-                if(saveLoadModal) saveLoadModal.style.display = 'flex'; 
+            saveLoadBtn.addEventListener('click', () => {
+                if(saveLoadModal) saveLoadModal.classList.add('visible');
             });
             if (closeSaveLoadModal) {
-                 closeSaveLoadModal.addEventListener('click', () => { 
-                     if(saveLoadModal) saveLoadModal.style.display = 'none'; 
+                 closeSaveLoadModal.addEventListener('click', () => {
+                     if(saveLoadModal) saveLoadModal.classList.remove('visible');
                  });
             }
             if (saveStateBtn) {
@@ -2793,8 +3848,9 @@
                         };
                     });
                     const appState = {
-                        title: documentTitle ? documentTitle.textContent : 'KI-Richtlinie', // Add null check
-                        intro: documentIntro, // Use global documentIntro variable
+                        title: documentTitle ? documentTitle.textContent : 'KI-Richtlinie',
+                        intro: window.documentIntro || documentIntro,
+                        language: typeof currentLanguage !== 'undefined' ? currentLanguage : 'de',
                         elements: elements,
                         version: '3.0'
                     };
@@ -2816,17 +3872,17 @@
             if (loadStateBtn) {
                 loadStateBtn.addEventListener('click', () => { /* Load logic */
                     try {
-                        if (!stateFileInput || !stateFileInput.files || stateFileInput.files.length === 0) { alert('Bitte wählen Sie zuerst eine Datei aus.'); return; }
+                        if (!stateFileInput || !stateFileInput.files || stateFileInput.files.length === 0) { alert(t('alert_no_file', 'Bitte wählen Sie zuerst eine Datei aus.')); return; }
                         const file = stateFileInput.files[0];
                         // Security: Validate file size (max 1MB compressed)
                         const MAX_FILE_SIZE = 1024 * 1024; // 1MB
                         const MAX_DECOMPRESSED_SIZE = 10 * 1024 * 1024; // 10MB
                         if (file.size > MAX_FILE_SIZE) {
-                            alert('Die Datei ist zu groß. Maximale Größe: 1MB.');
+                            alert(t('alert_file_too_large', 'Die Datei ist zu groß. Maximale Größe: 1MB.'));
                             return;
                         }
                         const reader = new FileReader();
-                        reader.onload = function(e) {
+                        reader.onload = async function(e) {
                             try {
                                 const fileContent = e.target.result.split(',')[1];
                                 const binaryString = atob(fileContent);
@@ -2835,18 +3891,23 @@
                                 const decompressed = pako.inflate(bytes, { to: 'string' });
                                 // Security: Check decompressed size to prevent zip bombs
                                 if (decompressed.length > MAX_DECOMPRESSED_SIZE) {
-                                    throw new Error('Dekomprimierte Daten zu groß. Möglicher Decompression-Angriff.');
+                                    throw new Error(t('error_decompression', 'Dekomprimierte Daten zu groß. Möglicher Decompression-Angriff.'));
                                 }
                                 const appState = JSON.parse(decompressed);
-                                if (appState.version !== '3.0') throw new Error(`Nicht unterstützte Version: ${appState.version}. Diese App unterstützt nur Version 3.0.`);
+                                if (appState.version !== '3.0') throw new Error(`Unsupported version: ${appState.version}`);
+                                // If saved state has a different language, switch first
+                                const savedLang = appState.language || 'de';
+                                if (savedLang !== currentLanguage && typeof initializePolicyLoader === 'function') {
+                                    await initializePolicyLoader(savedLang);
+                                }
                                 applyLoadedState(appState);
-                                alert('Zustand erfolgreich geladen!');
-                                if(saveLoadModal) saveLoadModal.style.display = 'none';
-                            } catch (error) { console.error("Fehler beim Verarbeiten der Datei:", error); alert('Fehler beim Laden des Zustands: ' + error.message); }
+                                alert(t('alert_load_success', 'Zustand erfolgreich geladen!'));
+                                if(saveLoadModal) saveLoadModal.classList.remove('visible');
+                            } catch (error) { console.error("Error processing file:", error); alert(t('alert_load_error', 'Fehler beim Laden des Zustands: ') + error.message); }
                         };
-                        reader.onerror = function() { alert('Fehler beim Lesen der Datei.'); };
+                        reader.onerror = function() { alert(t('alert_read_error', 'Fehler beim Lesen der Datei.')); };
                         reader.readAsDataURL(file);
-                    } catch (error) { console.error('Fehler beim Laden des Zustands:', error); alert('Fehler beim Laden des Zustands: ' + error.message); }
+                    } catch (error) { console.error('Error loading state:', error); alert(t('alert_load_error', 'Fehler beim Laden des Zustands: ') + error.message); }
                 });
             }
             if (stateFileInput) {
@@ -2863,13 +3924,16 @@
             if (downloadHtmlBtn && policyResultContainer && typeof documentTitle !== 'undefined') { // Added check for documentTitle
                 downloadHtmlBtn.addEventListener('click', () => {
                     try {
-                        const policyHtmlContent = policyResultContainer.innerHTML;
+                        // Include policy card if present
+                        const policyCardContainer = document.getElementById('policy-card-container');
+                        const policyCardHtml = (policyCardContainer && policyCardContainer.style.display !== 'none') ? policyCardContainer.innerHTML : '';
+                        const policyHtmlContent = policyCardHtml + policyResultContainer.innerHTML;
                         const policyTitleText = documentTitle ? documentTitle.textContent : 'KI-Richtlinie'; // Get title text
 
                         // Create the full HTML content for the downloadable file
                         const fullHtml = `
                             <!DOCTYPE html>
-                            <html lang="de">
+                            <html lang="${typeof currentLanguage !== 'undefined' ? currentLanguage : 'de'}">
                             <head>
                                 <meta charset="UTF-8">
                                 <title>${escapeHTML(policyTitleText)}</title> <!-- Use escaped title -->
@@ -2914,6 +3978,19 @@
                                     .policy-item-text p { margin-bottom: 0.3rem; }
                                     .policy-item-text ul, .policy-item-text ol { margin-top: 0.2rem; margin-bottom: 0.3rem; padding-left: 1.5rem; }
                                     .policy-item-text li { margin-bottom: 0.2rem; }
+                                    .policy-tldr-section { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; }
+                                    .policy-tldr-section h2 { font-size: 1.1rem; margin-bottom: 0.5rem; border: none; padding: 0; }
+                                    .policy-tldr-section ul { list-style: disc; padding-left: 1.5rem; margin: 0; }
+                                    .policy-tldr-section li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+                                    .policy-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; }
+                                    .policy-card-header { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; }
+                                    .policy-card-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+                                    .policy-card-title { font-size: 1.1rem; font-weight: 700; }
+                                    .policy-card-upload-badge { font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: #f9f9f9; border: 1px solid #e0e0e0; color: #666; margin-left: auto; }
+                                    .policy-card-tldr { list-style: none; padding: 1rem 1.2rem; margin: 0; }
+                                    .policy-card-tldr li { padding: 0.3rem 0 0.3rem 1.3em; position: relative; font-size: 0.9rem; }
+                                    .policy-card-tldr li::before { content: "\\2022"; position: absolute; left: 0; font-weight: bold; }
+                                    .policy-card-footer { padding: 0.6rem 1.2rem; border-top: 1px solid #e0e0e0; background: #f9f9f9; font-size: 0.75rem; color: #999; text-align: center; }
                                 </style>
                             </head>
                             <body>
@@ -2952,8 +4029,8 @@
                         URL.revokeObjectURL(url);
 
                     } catch (error) {
-                        console.error("Fehler beim Erstellen der HTML-Datei:", error);
-                        alert("Fehler beim Erstellen der HTML-Datei. Details siehe Konsole.");
+                        console.error("Error creating HTML file:", error);
+                        alert(t('alert_html_error', 'Fehler beim Erstellen der HTML-Datei. Details siehe Konsole.'));
                     }
                 });
             } else {
@@ -2975,72 +4052,17 @@
             setupViewNavigation();
             setupSaveLoadModal();
             setupHTMLDownload();
+            setupPresetHandlers();
 
             // Initialize language switcher
             initLanguageSwitcher();
 
+            // Handle URL parameters for presets (?preset=ai-learn&upload=true)
+            handlePresetUrlParams();
+
             console.log("Application fully initialized.");
         });
 
-        function addPolicyItem(item) {
-            // Get the item ID
-            const itemId = item.dataset.id;
-            
-            // Check if item already exists in selectedItems
-            const existingIndex = selectedItems.findIndex(selected => selected.id === itemId);
-            
-            // If it already exists, remove it
-            if (existingIndex > -1) {
-                selectedItems.splice(existingIndex, 1);
-                item.classList.remove('selected');
-                
-                // Update the button
-                const btn = item.querySelector('.add-item-btn');
-                if (btn) {
-                    btn.classList.remove('added');
-                    btn.innerHTML = window.svgIcons.plus + ' Hinzufügen';
-                }
-                
-                return;
-            }
-            
-            // Mark the item as selected
-            item.classList.add('selected');
-            
-            // Get the category title from the hierarchy
-            const categoryHeader = item.closest('.category').querySelector('.category-header h2');
-            const categoryTitle = categoryHeader ? categoryHeader.textContent.trim() : 'Unkategorisiert';
-            
-            // Get the subcategory title if available
-            const subcategoryElement = item.closest('.subcategory');
-            let subcategoryTitle = 'Allgemein';
-            if (subcategoryElement) {
-                const titleElement = subcategoryElement.querySelector('.subcategory-title');
-                if (titleElement && titleElement.textContent) {
-                    subcategoryTitle = titleElement.textContent.trim();
-                }
-            }
-            
-            // Get the policy text
-            const policyText = item.querySelector('.policy-text');
-            const text = policyText ? policyText.innerHTML.trim() : '';
-            
-            // Add the item to selectedItems
-            selectedItems.push({
-                id: itemId,
-                text: text,
-                categoryTitle: categoryTitle,
-                subcategoryTitle: subcategoryTitle, // Store subcategory title
-                element: item
-            });
-            
-            // Update the button
-            const btn = item.querySelector('.add-item-btn');
-            if (btn) {
-                btn.classList.add('added');
-                btn.innerHTML = window.svgIcons.trash + ' Nicht verwenden';
-            }
-        }
     </script>
     <script src="policy-loader.js"></script>
 </body>

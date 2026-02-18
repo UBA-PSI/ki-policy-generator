@@ -627,3 +627,87 @@ categories:
               - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
             text: |
               **Explanation:** [Depending on the rule chosen:] The assessment of your examination performances is done without the use of AI to ensure a fair and traceable evaluation. / AI can help provide you with faster or more detailed feedback on exercises, but does not affect your final grade. / AI can assist us in grading, but the final decision about your grade is always made by humans.
+
+# ============================================================
+# UI Strings for the User Interface
+# ============================================================
+ui_strings:
+  # Page title
+  page_title: "AI Policy Creator for Educators"
+  main_title: "AI Policy Generator for Teaching"
+
+  # Buttons - Editor
+  btn_start_editor: "Open Editor"
+  btn_save_load: "Data Export and Import"
+  btn_generate: "Generate Policy"
+  btn_edit_title: "Edit Title"
+  btn_edit_intro: "Edit Introduction"
+  btn_edit: "Edit"
+  btn_add: "Add"
+  btn_remove: "Remove"
+
+  # Buttons - Result page
+  btn_back_to_editor: "Back to Editor"
+  btn_copy_result: "Copy Text"
+  btn_download_html: "Download as HTML"
+
+  # Buttons - General
+  btn_save: "Save"
+  btn_cancel: "Cancel"
+  btn_revert: "Restore original text"
+
+  # Modal: Save/Load
+  modal_title: "Save & Load"
+  modal_save_desc: "Save your current configuration to a file:"
+  modal_load_desc: "Load a saved configuration:"
+  btn_save_state: "Save as File"
+  btn_load_state: "Import Loaded File"
+
+  # Labels
+  label_intro: "Introduction: "
+  editor_hint: "Tip: Markdown supported: **bold**, *italic*, - for lists"
+
+  # Messages
+  copy_success: "Copied!"
+  empty_policy: "No modules selected. Return to the editor to add modules."
+  alert_no_file: "Please select a file first."
+  alert_file_too_large: "The file is too large. Maximum size: 1MB."
+  alert_load_success: "Configuration loaded successfully!"
+  alert_load_error: "Error loading configuration: "
+  alert_read_error: "Error reading the file."
+  alert_copy_error: "Could not copy to clipboard. Please copy manually."
+  alert_html_error: "Error creating HTML file. See console for details."
+  confirm_language_switch: "Switching the language will reload all text modules. Unsaved changes will be lost. Continue?"
+  alert_language_error: "Failed to load text modules."
+  error_decompression: "Decompressed data too large. Possible decompression attack."
+
+  # Error messages
+  error_loading_title: "Error loading policy data"
+  error_loading_hint: "Make sure the file is loaded via a web server (not file://)."
+
+  # Date
+  date_label: "Date"
+  date_locale: "en-US"
+
+  # Categories
+  uncategorized: "Uncategorized"
+  default_subcategory: "General"
+
+  # Result page
+  result_notice: "You can now <strong>print</strong> the generated policy directly in the browser. You can also <strong>select</strong> the text and <strong>copy</strong> it with formatting into a word processor. Alternatively, you can <strong>copy the unformatted text to the clipboard</strong> or <strong>download the formatted text as an HTML file</strong>. The HTML file can be opened in Microsoft Word for further editing."
+
+  # Presets
+  preset_section_title: "Quick Start: Templates"
+  preset_section_desc: "Choose a template as a starting point or customize it for your course."
+  preset_more: "more"
+  preset_tldr_title: "Summary (TL;DR)"
+  preset_items_title: "Included Modules"
+  btn_preset_use: "Use Directly"
+  btn_preset_customize: "Customize"
+  btn_copy_card: "Copy Policy Card"
+  preset_based_on: "Based on"
+  preset_card_footer: "Created with the AI Policy Generator of the University of Bamberg"
+  preset_upload_label: "Course material upload allowed"
+  preset_detail_title: "Template"
+  preset_modified: "Modified – preset name removed"
+  preset_or_editor: "or"
