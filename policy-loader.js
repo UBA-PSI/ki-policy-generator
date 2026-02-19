@@ -24,6 +24,10 @@ let presetsData = null;
 // Map: YAML-Item-ID → Runtime-ID (z.B. "grundsatz-erlaubt" → "item-1")
 let yamlIdToRuntimeId = {};
 
+// Map: YAML-Item-ID → Array von Preset-Textvarianten
+// z.B. { "pruefung-massnahmen": [{presetId, presetName, text}, ...] }
+let presetVariantsByItemId = {};
+
 /**
  * Gibt den übersetzten UI-String für den gegebenen Key zurück
  * @param {string} key - Der Übersetzungsschlüssel
@@ -234,6 +238,105 @@ function buildIdMap() {
 }
 
 /**
+ * Normalisiert einen Preset-Item-Eintrag (String oder Objekt) zu einheitlichem Format
+ * @param {string|object} entry - "yaml-id" oder { id: "yaml-id", text: "..." }
+ * @returns {{ yamlId: string, text: string|null }|null}
+ */
+function normalizePresetItem(entry) {
+    if (typeof entry === 'string') {
+        return { yamlId: entry, text: null };
+    }
+    if (entry && typeof entry === 'object' && entry.id) {
+        return { yamlId: entry.id, text: entry.text || null };
+    }
+    console.warn('Unrecognized preset item entry:', entry);
+    return null;
+}
+
+/**
+ * Baut eine Map von YAML-Item-IDs zu ihren Preset-spezifischen Textvarianten.
+ * Wird nach dem Laden der Presets aufgerufen.
+ * @param {object} data - Die geladenen Preset-Daten
+ */
+function buildPresetVariantMap(data) {
+    presetVariantsByItemId = {};
+    if (!data || !data.presets) return;
+
+    data.presets.forEach(preset => {
+        // Alle Item-Einträge sammeln (reguläre + upload + no_upload)
+        const allEntries = [
+            ...(preset.items || []),
+            preset.upload_item,
+            preset.no_upload_item
+        ].filter(Boolean);
+
+        allEntries.forEach(entry => {
+            const normalized = normalizePresetItem(entry);
+            if (!normalized || !normalized.text) return;
+
+            const { yamlId, text } = normalized;
+            const textTrimmed = text.trim();
+
+            if (!presetVariantsByItemId[yamlId]) {
+                presetVariantsByItemId[yamlId] = [];
+            }
+
+            // Duplikate vermeiden (gleicher Text)
+            const exists = presetVariantsByItemId[yamlId].some(
+                v => v.text === textTrimmed
+            );
+            if (!exists) {
+                presetVariantsByItemId[yamlId].push({
+                    presetId: preset.id,
+                    presetName: preset.name,
+                    text: textTrimmed
+                });
+            }
+        });
+    });
+
+    console.log('Preset variant map built:', Object.keys(presetVariantsByItemId).length, 'items with variants');
+}
+
+/**
+ * Fügt Variant-Badges an Items an, die Preset-Textvarianten haben.
+ * Wird nach buildPresetVariantMap() aufgerufen.
+ */
+function addVariantBadges() {
+    // Remove existing badges first (for language switch)
+    document.querySelectorAll('.variant-badge').forEach(b => b.remove());
+
+    Object.keys(presetVariantsByItemId).forEach(yamlId => {
+        const variants = presetVariantsByItemId[yamlId];
+        if (!variants || variants.length === 0) return;
+
+        const item = document.querySelector(`.policy-item[data-item-id="${yamlId}"]`);
+        if (!item) return;
+
+        const actions = item.querySelector('.item-actions');
+        if (!actions) return;
+
+        const badge = document.createElement('span');
+        badge.className = 'variant-badge';
+        badge.title = t('variant_badge_tooltip', 'Textvarianten aus Vorlagen verfügbar');
+        badge.textContent = '\u27D0 ' + t('variant_badge_label', 'Vorlagen');
+        badge.addEventListener('click', () => {
+            const itemId = item.dataset.id;
+            const policyTextEl = item.querySelector('.policy-text');
+            if (itemId && policyTextEl && typeof enableInlineEditing === 'function') {
+                enableInlineEditing(item, itemId, policyTextEl.innerHTML);
+            } else if (!itemId) {
+                console.warn('Variant badge clicked but item has no runtime ID:', item.dataset.itemId);
+            }
+        });
+
+        actions.insertBefore(badge, actions.firstChild);
+    });
+
+    console.log('Variant badges added');
+}
+
+/**
  * Lädt die Preset-Daten aus der YAML-Datei
  * @param {string} language - Sprachcode (default: 'de')
  * @returns {Promise<object>} Die geparsten Preset-Daten
@@ -293,9 +396,11 @@ async function initializePolicyLoader(language = 'de') {
             const docTitle = document.getElementById('document-title');
             if (data.metadata.default_document_title && docTitle) {
                 docTitle.textContent = data.metadata.default_document_title;
+                window.defaultDocumentTitle = data.metadata.default_document_title;
             }
             if (data.metadata.default_document_intro) {
                 window.documentIntro = data.metadata.default_document_intro;
+                window.defaultDocumentIntro = data.metadata.default_document_intro;
                 if (typeof updateIntroDisplay === 'function') {
                     updateIntroDisplay();
                 }
@@ -308,10 +413,14 @@ async function initializePolicyLoader(language = 'de') {
         // Build ID map (YAML-ID → Runtime-ID) after items are initialized
         buildIdMap();
 
-        // Load presets and render cards
+        // Load presets, build variant map, and render cards
         await loadPresets(language);
-        if (presetsData && typeof renderPresetCards === 'function') {
-            renderPresetCards(presetsData.presets);
+        if (presetsData) {
+            buildPresetVariantMap(presetsData);
+            if (typeof renderPresetCards === 'function') {
+                renderPresetCards(presetsData.presets);
+            }
+            addVariantBadges();
         }
 
         console.log('Policy loader initialization complete');

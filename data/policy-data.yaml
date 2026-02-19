@@ -708,6 +708,23 @@ ui_strings:
   preset_based_on: "Basiert auf"
   preset_card_footer: "Erstellt mit dem KI-Policy-Generator der Universität Bamberg"
   preset_upload_label: "Kursmaterialien-Upload erlaubt"
+  preset_no_upload_label: "Kein Upload"
   preset_detail_title: "Vorlage"
   preset_modified: "Angepasst – Preset-Name entfernt"
+  preset_modified_suffix: "(angepasst)"
   preset_or_editor: "oder"
+  variant_picker_label: "Vorlage:"
+  variant_custom: "— Eigener Text —"
+
+  # Navigation
+  btn_back_to_welcome: "Andere Vorlage wählen"
+  confirm_leave_editor: "Möchten Sie die aktuelle Richtlinie verlassen? Nicht gespeicherte Änderungen gehen verloren."
+
+  # TL;DR Editor
+  preset_add_bullet: "+ Bullet hinzufügen"
+  preset_based_on_modified: "Basiert auf {name}, individuell angepasst"
+  preset_edit_hint: "Tipp: Bei größeren Anpassungen sollten Sie auch den Vorlagennamen und das TL;DR oben anpassen."
+
+  # Variant badges
+  variant_badge_tooltip: "Textvarianten aus Vorlagen verfügbar"
+  variant_badge_label: "Vorlagen"

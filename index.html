@@ -448,6 +448,76 @@
             padding: 0 10px 10px 10px;
         }
 
+        /* Variant picker in inline editor */
+        .variant-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8f6ff 100%);
+            border: 1px solid #d0d8e8;
+            border-radius: 6px;
+            font-size: 0.82rem;
+        }
+
+        .variant-picker-label {
+            color: var(--medium-gray);
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .variant-picker-icon {
+            width: 14px;
+            height: 14px;
+            opacity: 0.6;
+        }
+
+        .variant-picker-select {
+            flex: 1;
+            min-width: 0;
+            padding: 4px 8px;
+            border: 1px solid #c0c8d8;
+            border-radius: 4px;
+            font-size: inherit;
+            font-family: inherit;
+            background: var(--white);
+            color: var(--dark-gray);
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .variant-picker-select:hover,
+        .variant-picker-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        /* Variant badge on items with preset text variants */
+        .variant-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            background: color-mix(in srgb, var(--primary-color) 6%, var(--white));
+            border: 1px solid color-mix(in srgb, var(--primary-color) 20%, var(--white));
+            border-radius: 4px;
+            padding: 3px 9px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .variant-badge:hover {
+            background: color-mix(in srgb, var(--primary-color) 12%, var(--white));
+            border-color: var(--primary-color);
+            box-shadow: 0 1px 4px color-mix(in srgb, var(--primary-color) 15%, transparent);
+        }
+
         .policy-item.editing .inline-editor {
             display: flex;
         }
@@ -616,14 +686,26 @@
         }
 
         .back-btn {
-            font-size: 1rem;
-            padding: 10px 20px;
+            font-size: 0.9rem;
+            padding: 8px 16px;
             background-color: var(--secondary-color);
-            color: var(--dark-gray);
+            color: var(--medium-gray);
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .back-btn::before {
+            content: "\2039";
+            font-size: 1.2em;
+            line-height: 1;
+            margin-right: 2px;
         }
 
         .back-btn:hover {
-            background-color: #e5e5e5;
+            background-color: var(--secondary-hover);
+            border-color: #ccc;
+            color: var(--dark-gray);
         }
 
         /* Modal styles */
@@ -1830,13 +1912,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #e7f0ff;
-            border: 1px solid #c4d7f5;
+            background: color-mix(in srgb, var(--primary-color) 8%, var(--white));
+            border: 1px solid color-mix(in srgb, var(--primary-color) 20%, var(--white));
             border-radius: 6px;
             padding: 0.6rem 1rem;
             margin-bottom: 1rem;
             font-size: 0.9rem;
             color: var(--primary-hover);
+            flex-wrap: wrap;
         }
 
         .preset-hint-text {
@@ -1864,6 +1947,135 @@
 
         .preset-hint-dismiss:hover {
             color: var(--primary-hover);
+        }
+
+        /* Preset Editor Section (Editor View) */
+        .preset-editor-section {
+            background: color-mix(in srgb, var(--primary-color) 3%, var(--white));
+            border: 1px solid color-mix(in srgb, var(--primary-color) 15%, var(--white));
+            border-left: 3px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .preset-name-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .preset-name-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 10%, var(--white));
+        }
+
+        .preset-editor-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 1px solid color-mix(in srgb, var(--primary-color) 20%, var(--white));
+            border-radius: 4px;
+            padding: 0.3rem 0.6rem;
+            font-family: inherit;
+            background: var(--white);
+            min-width: 120px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .preset-editor-name:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 12%, transparent);
+            outline: none;
+        }
+
+        .preset-editor-suffix {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--medium-gray);
+            user-select: none;
+        }
+
+        .preset-editor-section h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+
+        .preset-editor-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .preset-bullet-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .preset-bullet-row::before {
+            content: "\2022";
+            color: var(--light-gray);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            width: 1em;
+            text-align: center;
+        }
+
+        .preset-bullet-row input {
+            flex: 1;
+            padding: 0.35rem 0.6rem;
+            border: 1px solid color-mix(in srgb, var(--primary-color) 15%, var(--border-color));
+            border-radius: 4px;
+            font-size: 0.88rem;
+            font-family: inherit;
+            background: var(--white);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .preset-bullet-row input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 12%, transparent);
+            outline: none;
+        }
+
+        .preset-bullet-delete {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--light-gray);
+            padding: 0.2rem 0.35rem;
+            line-height: 1;
+            border-radius: 3px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .preset-bullet-delete:hover {
+            color: var(--error-color);
+            background: color-mix(in srgb, var(--error-color) 8%, var(--white));
+        }
+
+        .preset-editor-section .secondary-btn {
+            font-size: 0.82rem;
+            padding: 0.3rem 0.8rem;
+            margin-left: 1.4em; /* align with bullet inputs */
+        }
+
+        .preset-hint-edit-tip {
+            display: block;
+            font-size: 0.82rem;
+            margin-top: 0.4rem;
+            color: var(--medium-gray);
+            font-style: italic;
         }
 
         /* Policy Card (Result View) */
@@ -2132,7 +2344,8 @@
         <!-- Editor View -->
         <div id="editor-view" class="view">
             <div class="editor-header">
-                
+                <button id="back-to-welcome" class="back-btn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
+
                 <div class="header-top-row">
                     <h2 id="document-title" class="editable-title">KI-Richtlinie für meine Lehrveranstaltung</h2>
                     <button id="edit-title-btn" class="secondary-btn" data-i18n="btn_edit_title">Titel bearbeiten</button>
@@ -2142,7 +2355,20 @@
                     <button id="edit-intro-btn" class="secondary-btn" data-i18n="btn_edit_intro">Einleitung bearbeiten</button>
                 </div>
             </div>
-            
+
+            <div id="preset-editor-section" class="preset-editor-section" style="display:none">
+                <div class="preset-name-row">
+                    <span class="preset-name-dot" id="preset-editor-dot"></span>
+                    <input type="text" id="preset-editor-name" class="preset-editor-name" />
+                    <span class="preset-editor-suffix" id="preset-editor-suffix">-NoUpload</span>
+                </div>
+                <h3 data-i18n="preset_tldr_title">TL;DR</h3>
+                <div id="preset-editor-bullets" class="preset-editor-bullets">
+                    <!-- Dynamisch: je ein Input pro Bullet + Löschen-Button -->
+                </div>
+                <button id="preset-add-bullet" class="secondary-btn" data-i18n="preset_add_bullet">+ Bullet hinzufügen</button>
+            </div>
+
             <div class="panels">
                 <div class="left-panel">
                     <!-- Policy items werden dynamisch aus policy-data.yaml geladen -->
@@ -2153,6 +2379,7 @@
         <!-- Result View -->
         <div id="result-view" class="view">
             <div class="result-header">
+                <button id="back-to-welcome-result" class="back-btn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
                 <button id="back-to-editor" class="back-btn" data-i18n="btn_back_to_editor">Zurück zum Editor</button>
                 <button id="copy-result" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
                 <button id="download-html-btn" class="action-btn" data-i18n="btn_download_html">Als HTML herunterladen</button>
@@ -2394,80 +2621,10 @@
             // Create a temporary div to handle the HTML content
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
-            
-            // Process lists first to avoid interference with other tag conversions
-            
-            // Convert unordered lists back to Markdown bullet points
-            const ulLists = tempDiv.querySelectorAll('ul');
-            ulLists.forEach(ul => {
-                // Create a document fragment to hold the markdown text
-                const fragment = document.createDocumentFragment();
-                const listItems = ul.querySelectorAll('li');
-                
-                // Add a newline before the list if not at the beginning
-                if (ul.previousSibling) {
-                    fragment.appendChild(document.createTextNode('\n'));
-                }
-                
-                // Convert each list item to a markdown bullet
-                listItems.forEach((item, index) => {
-                    // Add newline between items but not before the first one
-                    if (index > 0) {
-                        fragment.appendChild(document.createTextNode('\n'));
-                    }
-                    
-                    const markdownItem = `- ${item.textContent}`;
-                    fragment.appendChild(document.createTextNode(markdownItem));
-                });
-                
-                // Add a newline after the list
-                fragment.appendChild(document.createTextNode('\n'));
-                
-                // Replace the ul with the markdown
-                ul.parentNode.replaceChild(fragment, ul);
-            });
-            
-            // Convert ordered lists back to Markdown numbered points
-            const olLists = tempDiv.querySelectorAll('ol');
-            olLists.forEach(ol => {
-                // Create a document fragment to hold the markdown text
-                const fragment = document.createDocumentFragment();
-                const listItems = ol.querySelectorAll('li');
-                
-                // Add a newline before the list if not at the beginning
-                if (ol.previousSibling) {
-                    fragment.appendChild(document.createTextNode('\n'));
-                }
-                
-                // Convert each list item to a markdown number
-                listItems.forEach((item, index) => {
-                    // Add newline between items but not before the first one
-                    if (index > 0) {
-                        fragment.appendChild(document.createTextNode('\n'));
-                    }
-                    
-                    const markdownItem = `${index + 1}. ${item.textContent}`;
-                    fragment.appendChild(document.createTextNode(markdownItem));
-                });
-                
-                // Add a newline after the list
-                fragment.appendChild(document.createTextNode('\n'));
-                
-                // Replace the ol with the markdown
-                ol.parentNode.replaceChild(fragment, ol);
-            });
-            
-            // Now convert other HTML elements to markdown
-            
-            // Convert strong tags back to Markdown bold
-            const strongTags = tempDiv.querySelectorAll('strong');
-            strongTags.forEach(tag => {
-                const text = tag.textContent;
-                const markdown = `**${text}**`;
-                const textNode = document.createTextNode(markdown);
-                tag.parentNode.replaceChild(textNode, tag);
-            });
-            
+
+            // Convert inline formatting FIRST so list textContent preserves markdown markers
+            // Process em BEFORE strong so nested <strong><em>word</em></strong> → ***word***
+
             // Convert em tags back to Markdown italic
             const emTags = tempDiv.querySelectorAll('em');
             emTags.forEach(tag => {
@@ -2476,7 +2633,16 @@
                 const textNode = document.createTextNode(markdown);
                 tag.parentNode.replaceChild(textNode, tag);
             });
-            
+
+            // Convert strong tags back to Markdown bold
+            const strongTags = tempDiv.querySelectorAll('strong');
+            strongTags.forEach(tag => {
+                const text = tag.textContent;
+                const markdown = `**${text}**`;
+                const textNode = document.createTextNode(markdown);
+                tag.parentNode.replaceChild(textNode, tag);
+            });
+
             // Convert anchor tags back to URLs
             const anchors = tempDiv.querySelectorAll('a');
             anchors.forEach(anchor => {
@@ -2486,6 +2652,68 @@
                     const textNode = document.createTextNode(url);
                     anchor.parentNode.replaceChild(textNode, anchor);
                 }
+            });
+
+            // Now convert block elements (lists) — textContent will include markdown markers
+
+            // Convert unordered lists back to Markdown bullet points
+            const ulLists = tempDiv.querySelectorAll('ul');
+            ulLists.forEach(ul => {
+                // Create a document fragment to hold the markdown text
+                const fragment = document.createDocumentFragment();
+                const listItems = ul.querySelectorAll('li');
+
+                // Add a newline before the list if not at the beginning
+                if (ul.previousSibling) {
+                    fragment.appendChild(document.createTextNode('\n'));
+                }
+
+                // Convert each list item to a markdown bullet
+                listItems.forEach((item, index) => {
+                    // Add newline between items but not before the first one
+                    if (index > 0) {
+                        fragment.appendChild(document.createTextNode('\n'));
+                    }
+
+                    const markdownItem = `- ${item.textContent}`;
+                    fragment.appendChild(document.createTextNode(markdownItem));
+                });
+
+                // Add a newline after the list
+                fragment.appendChild(document.createTextNode('\n'));
+
+                // Replace the ul with the markdown
+                ul.parentNode.replaceChild(fragment, ul);
+            });
+
+            // Convert ordered lists back to Markdown numbered points
+            const olLists = tempDiv.querySelectorAll('ol');
+            olLists.forEach(ol => {
+                // Create a document fragment to hold the markdown text
+                const fragment = document.createDocumentFragment();
+                const listItems = ol.querySelectorAll('li');
+
+                // Add a newline before the list if not at the beginning
+                if (ol.previousSibling) {
+                    fragment.appendChild(document.createTextNode('\n'));
+                }
+
+                // Convert each list item to a markdown number
+                listItems.forEach((item, index) => {
+                    // Add newline between items but not before the first one
+                    if (index > 0) {
+                        fragment.appendChild(document.createTextNode('\n'));
+                    }
+
+                    const markdownItem = `${index + 1}. ${item.textContent}`;
+                    fragment.appendChild(document.createTextNode(markdownItem));
+                });
+
+                // Add a newline after the list
+                fragment.appendChild(document.createTextNode('\n'));
+
+                // Replace the ol with the markdown
+                ol.parentNode.replaceChild(fragment, ol);
             });
             
             // Convert paragraph tags to line breaks
@@ -2533,6 +2761,7 @@
         // Preset state
         let activePreset = null;
         let presetModified = false;
+        let presetEditHintShown = false;
         let presetUploadFlags = {};
 
         // Add SVGs to buttons
@@ -2559,12 +2788,15 @@
             }
         }
 
-        // Handle ESC key for modals
+        // Handle ESC key for all modals
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.getElementById('save-load-modal');
-                if (modal && modal.classList.contains('visible')) {
-                    modal.classList.remove('visible');
+                const saveModal = document.getElementById('save-load-modal');
+                if (saveModal && saveModal.classList.contains('visible')) {
+                    saveModal.classList.remove('visible');
+                }
+                if (typeof closePresetDetail === 'function') {
+                    closePresetDetail();
                 }
             }
         });
@@ -2588,10 +2820,13 @@
             } else if (targetView === 'result') {
                 resultView.classList.add('active-view');
                 currentView = 'result';
-                // Hide policy card and copy button if no preset is active
+                // Show or hide policy card based on preset state
                 const cardContainer = document.getElementById('policy-card-container');
                 const copyCardBtn = document.getElementById('copy-card-btn');
-                if (!activePreset) {
+                if (activePreset) {
+                    // Re-render card to pick up any editor changes
+                    renderPolicyCard();
+                } else {
                     if (cardContainer) cardContainer.style.display = 'none';
                     if (copyCardBtn) copyCardBtn.style.display = 'none';
                 }
@@ -2847,18 +3082,21 @@
             `;
 
             // Add TL;DR section if preset is active
-            if (activePreset && !presetModified) {
-                const uploadBullet = activePreset.uploadEnabled ? activePreset.tldr_upload : activePreset.tldr_no_upload;
-                const allBullets = [...activePreset.tldr, uploadBullet];
-                const uploadSuffix = activePreset.uploadEnabled ? '-Upload' : '-NoUpload';
-                policyHtml += `<div class="policy-tldr-section">`;
-                policyHtml += `<h2>${escapeHTML(activePreset.name + uploadSuffix)} – ${escapeHTML(t('preset_tldr_title', 'Zusammenfassung (TL;DR)'))}</h2>`;
-                policyHtml += `<ul>`;
-                allBullets.forEach(bullet => {
-                    // Security: parseMarkdown escapes HTML before processing
-                    policyHtml += `<li>${parseMarkdown(bullet).replace(/<\/?p>/g, '')}</li>`;
-                });
-                policyHtml += `</ul></div>`;
+            if (activePreset) {
+                const { name: tldrName, bullets: tldrBullets } = getCardNameAndBullets();
+                const displayName = presetModified
+                    ? tldrName + ' ' + t('preset_modified_suffix', '(angepasst)')
+                    : tldrName;
+                if (tldrBullets.length > 0) {
+                    policyHtml += `<div class="policy-tldr-section">`;
+                    policyHtml += `<h2>${escapeHTML(displayName)} – ${escapeHTML(t('preset_tldr_title', 'Zusammenfassung (TL;DR)'))}</h2>`;
+                    policyHtml += `<ul>`;
+                    tldrBullets.forEach(bullet => {
+                        // Security: parseMarkdown escapes HTML before processing
+                        policyHtml += `<li>${parseMarkdown(bullet).replace(/<\/?p>/g, '')}</li>`;
+                    });
+                    policyHtml += `</ul></div>`;
+                }
             }
 
             policyHtml += `<div class="policy-content">`;
@@ -2898,8 +3136,8 @@
                         // Add items in this subcategory
                         subcatItems.forEach(item => {
                             // Check if the text is already HTML (contains tags) or needs to be parsed from markdown
-                            const itemContent = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>')) 
-                                ? item.text // Use HTML directly if it contains tags
+                            const itemContent = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>'))
+                                ? item.text // Use HTML directly if it contains tags (from inline editor)
                                 : parseMarkdown(item.text); // Otherwise parse from markdown
                                 
                             policyHtml += `<div class="policy-item-result">
@@ -3114,6 +3352,69 @@
             console.log(`${allPolicyItems.length} Elemente initialisiert`);
         }
 
+        /**
+         * Baut den Variant-Picker für den Inline-Editor.
+         * @param {string} yamlId - Die YAML-Item-ID
+         * @param {HTMLTextAreaElement} textarea - Die Textarea im Editor
+         * @param {string} currentMarkdown - Der aktuelle Markdown-Text
+         * @returns {HTMLElement|null} Das Picker-Element oder null
+         */
+        function buildVariantPicker(yamlId, textarea, currentMarkdown) {
+            const variants = presetVariantsByItemId[yamlId] || [];
+            if (variants.length === 0) return null;
+
+            const container = document.createElement('div');
+            container.className = 'variant-picker';
+
+            const label = document.createElement('span');
+            label.className = 'variant-picker-label';
+            // SVG icon for "template"
+            label.innerHTML = '<svg class="variant-picker-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4h-2.5z"/><path d="M4.5 12.5A.5.5 0 0 1 5 12h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 10h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/></svg>';
+            label.appendChild(document.createTextNode(t('variant_picker_label', 'Vorlage:')));
+            container.appendChild(label);
+
+            const select = document.createElement('select');
+            select.className = 'variant-picker-select';
+
+            // "Custom" option
+            const customOpt = document.createElement('option');
+            customOpt.value = '__custom__';
+            customOpt.textContent = t('variant_custom', '— Eigener Text —');
+            select.appendChild(customOpt);
+
+            // Find which variant matches current text (normalize whitespace for comparison)
+            const normalizeForCompare = (s) => s.trim().replace(/\s+/g, ' ');
+            const normalizedCurrent = normalizeForCompare(currentMarkdown);
+            let matchFound = false;
+
+            variants.forEach((variant, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = variant.presetName;
+                if (normalizeForCompare(variant.text) === normalizedCurrent) {
+                    opt.selected = true;
+                    matchFound = true;
+                }
+                select.appendChild(opt);
+            });
+
+            if (!matchFound) {
+                customOpt.selected = true;
+            }
+
+            select.addEventListener('change', () => {
+                if (select.value === '__custom__') return;
+                const idx = parseInt(select.value, 10);
+                if (!isNaN(idx) && variants[idx]) {
+                    textarea.value = variants[idx].text;
+                    textarea.focus();
+                }
+            });
+
+            container.appendChild(select);
+            return container;
+        }
+
         // Function to enable inline editing mode
         function enableInlineEditing(policyItem, itemId, currentText) {
             // Close any other open editors first
@@ -3136,22 +3437,31 @@
             const inlineEditor = document.createElement('div');
             inlineEditor.className = 'inline-editor';
 
-            // Create markdown hint
-            const editorHint = document.createElement('p');
-            editorHint.className = 'editor-hint';
-            editorHint.textContent = t('editor_hint', 'Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen');
-            inlineEditor.appendChild(editorHint);
-
-            // Create textarea with current content
+            // Create textarea with current content (created first so variant picker can reference it)
             const textarea = document.createElement('textarea');
-            
+
             // Convert HTML to Markdown if the content contains HTML
             if (currentText.includes('<') && currentText.includes('>')) {
                 textarea.value = convertHtmlToMarkdown(currentText);
             } else {
                 textarea.value = currentText;
             }
-            
+
+            // Variant picker (if item has preset text variants)
+            const yamlId = policyItem.dataset.itemId;
+            if (yamlId) {
+                const variantPicker = buildVariantPicker(yamlId, textarea, textarea.value);
+                if (variantPicker) {
+                    inlineEditor.appendChild(variantPicker);
+                }
+            }
+
+            // Create markdown hint
+            const editorHint = document.createElement('p');
+            editorHint.className = 'editor-hint';
+            editorHint.textContent = t('editor_hint', 'Tipp: Markdown möglich: **fett**, *kursiv*, - für Listen');
+            inlineEditor.appendChild(editorHint);
+
             inlineEditor.appendChild(textarea);
             
             // Create action buttons
@@ -3259,8 +3569,7 @@
             const grid = document.getElementById('preset-grid');
             if (!grid || !presets) return;
 
-            // Clear grid using DOM methods
-            while (grid.firstChild) grid.removeChild(grid.firstChild);
+            grid.replaceChildren();
 
             presets.forEach(preset => {
                 // Initialize upload flag if not set
@@ -3360,7 +3669,7 @@
 
             // TL;DR list - built with safe DOM methods
             const tldrList = document.getElementById('preset-detail-tldr');
-            while (tldrList.firstChild) tldrList.removeChild(tldrList.firstChild);
+            tldrList.replaceChildren();
             const uploadEnabled = presetUploadFlags[preset.id] || false;
             const allBullets = [...preset.tldr, uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload];
             allBullets.forEach(bullet => {
@@ -3370,26 +3679,32 @@
                 tldrList.appendChild(li);
             });
 
-            // Upload toggle
+            // Upload toggle — clone to remove old listeners, then add fresh one
             const detailToggle = document.getElementById('preset-detail-upload-toggle');
-            detailToggle.checked = uploadEnabled;
-            detailToggle.onchange = () => {
-                presetUploadFlags[preset.id] = detailToggle.checked;
+            const freshToggle = detailToggle.cloneNode(true);
+            detailToggle.parentNode.replaceChild(freshToggle, detailToggle);
+            freshToggle.checked = uploadEnabled;
+            freshToggle.addEventListener('change', () => {
+                presetUploadFlags[preset.id] = freshToggle.checked;
                 // Update card toggle too
                 const cardToggle = document.querySelector(`.preset-card[data-preset-id="${preset.id}"] .upload-switch input`);
-                if (cardToggle) cardToggle.checked = detailToggle.checked;
+                if (cardToggle) cardToggle.checked = freshToggle.checked;
                 // Re-render TL;DR
                 showPresetDetail(preset);
-            };
+            });
 
             // Items list - built with safe DOM methods
             const itemsList = document.getElementById('preset-detail-items');
-            while (itemsList.firstChild) itemsList.removeChild(itemsList.firstChild);
+            itemsList.replaceChildren();
             const allItems = [...preset.items];
             // Add upload/no-upload item
             allItems.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
 
-            allItems.forEach(yamlId => {
+            allItems.forEach(entry => {
+                // Normalize: string or {id, text} object
+                const normalized = normalizePresetItem(entry);
+                if (!normalized) return;
+                const yamlId = normalized.yamlId;
                 const runtimeId = yamlIdToRuntimeId[yamlId];
                 const li = document.createElement('li');
                 if (runtimeId) {
@@ -3426,21 +3741,31 @@
         function applyPreset(preset, goToEditor) {
             const uploadEnabled = presetUploadFlags[preset.id] || false;
 
-            // Build items list with upload toggle
-            const yamlIds = [...preset.items];
-            yamlIds.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
+            // Build items list with upload toggle — items can be strings or {id, text} objects
+            const rawItems = [...preset.items];
+            rawItems.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
 
             // Build appState compatible with applyLoadedState()
             const elements = {};
-            yamlIds.forEach(yamlId => {
+            rawItems.forEach(entry => {
+                const normalized = normalizePresetItem(entry);
+                if (!normalized) return;
+
+                const { yamlId, text: overrideText } = normalized;
                 const runtimeId = yamlIdToRuntimeId[yamlId];
-                if (runtimeId) {
-                    elements[runtimeId] = {
-                        isAdded: true
-                    };
-                } else {
+                if (!runtimeId) {
                     console.warn(`Preset item "${yamlId}" not found in ID map`);
+                    return;
                 }
+
+                const elementData = { isAdded: true };
+                if (overrideText) {
+                    // currentText: HTML (applyLoadedState expects HTML, runs convertHtmlToMarkdown internally)
+                    elementData.currentText = parseMarkdown(overrideText.trim());
+                    // originalText: raw Markdown for the inline editor "revert" button
+                    elementData.originalText = overrideText.trim();
+                }
+                elements[runtimeId] = elementData;
             });
 
             const appState = {
@@ -3455,34 +3780,69 @@
             // Set active preset
             activePreset = { ...preset, uploadEnabled };
             presetModified = false;
+            presetEditHintShown = false;
 
             closePresetDetail();
 
+            // Render TL;DR editor (visible in editor view)
+            renderPresetEditor(preset, uploadEnabled);
+
             if (goToEditor) {
                 switchView('editor');
-                showPresetHint(preset.name, preset.color);
             } else {
                 generatePolicy();
-                renderPolicyCard(preset, uploadEnabled);
+                renderPolicyCard();
                 switchView('result');
             }
+            showPresetHint(preset.name, preset.color);
+        }
+
+        /**
+         * Berechnet TL;DR-Bullets und Upload-Suffix für ein Preset
+         */
+        function getPresetDisplay(preset, uploadEnabled) {
+            const uploadBullet = uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload;
+            return {
+                allBullets: [...preset.tldr, uploadBullet],
+                uploadSuffix: uploadEnabled ? '-Upload' : '-NoUpload'
+            };
+        }
+
+        /**
+         * Returns the current card name and bullets, reading from editor state
+         * if modified, otherwise from the preset defaults.
+         * @returns {{ name: string, bullets: string[] }}
+         */
+        function getCardNameAndBullets() {
+            if (presetModified) {
+                const editorState = getPresetEditorState();
+                return {
+                    name: editorState.name + editorState.uploadSuffix,
+                    bullets: editorState.bullets
+                };
+            }
+            const uploadEnabled = activePreset.uploadEnabled || false;
+            const { allBullets, uploadSuffix } = getPresetDisplay(activePreset, uploadEnabled);
+            return {
+                name: activePreset.name + uploadSuffix,
+                bullets: allBullets
+            };
         }
 
         /**
          * Rendert die Policy Card im Result View
          * Security: All content comes from trusted local YAML files (same trust as policy texts)
          */
-        function renderPolicyCard(preset, uploadEnabled) {
+        function renderPolicyCard() {
+            if (!activePreset) return;
             const container = document.getElementById('policy-card-container');
             const copyBtn = document.getElementById('copy-card-btn');
             if (!container) return;
 
-            // Clear container
-            while (container.firstChild) container.removeChild(container.firstChild);
+            const uploadEnabled = activePreset.uploadEnabled || false;
+            container.replaceChildren();
 
-            const uploadBullet = uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload;
-            const allBullets = [...preset.tldr, uploadBullet];
-            const uploadSuffix = uploadEnabled ? '-Upload' : '-NoUpload';
+            const { name: cardName, bullets: cardBullets } = getCardNameAndBullets();
 
             const cardDiv = document.createElement('div');
             cardDiv.className = 'policy-card';
@@ -3493,17 +3853,24 @@
 
             const dot = document.createElement('span');
             dot.className = 'policy-card-dot';
-            dot.style.backgroundColor = preset.color;
+            dot.style.backgroundColor = activePreset.color;
             header.appendChild(dot);
 
             const title = document.createElement('span');
             title.className = 'policy-card-title';
-            title.textContent = preset.name + uploadSuffix;
+            title.textContent = cardName;
             header.appendChild(title);
+
+            if (presetModified) {
+                const modBadge = document.createElement('span');
+                modBadge.className = 'policy-card-upload-badge';
+                modBadge.textContent = t('preset_modified_suffix', '(angepasst)');
+                header.appendChild(modBadge);
+            }
 
             const badge = document.createElement('span');
             badge.className = 'policy-card-upload-badge';
-            badge.textContent = uploadEnabled ? t('preset_upload_label', 'Upload erlaubt') : 'No Upload';
+            badge.textContent = uploadEnabled ? t('preset_upload_label', 'Upload erlaubt') : t('preset_no_upload_label', 'Kein Upload');
             header.appendChild(badge);
 
             cardDiv.appendChild(header);
@@ -3511,10 +3878,10 @@
             // TL;DR list
             const tldrUl = document.createElement('ul');
             tldrUl.className = 'policy-card-tldr';
-            allBullets.forEach(bullet => {
+            // Security: bullet text from trusted local YAML or user-edited input, parseMarkdown escapes HTML
+            cardBullets.forEach(bullet => {
                 const li = document.createElement('li');
-                // Security: bullet text from trusted local YAML, parseMarkdown escapes HTML
-                li.innerHTML = parseMarkdown(bullet).replace(/<\/?p>/g, '');
+                li.textContent = bullet.replace(/\*\*/g, '');
                 tldrUl.appendChild(li);
             });
             cardDiv.appendChild(tldrUl);
@@ -3567,13 +3934,11 @@
          */
         function copyPolicyCard() {
             if (!activePreset) return;
-            const uploadEnabled = activePreset.uploadEnabled || false;
-            const uploadBullet = uploadEnabled ? activePreset.tldr_upload : activePreset.tldr_no_upload;
-            const allBullets = [...activePreset.tldr, uploadBullet];
-            const uploadSuffix = uploadEnabled ? '-Upload' : '-NoUpload';
 
-            let text = activePreset.name + uploadSuffix + '\n\n';
-            allBullets.forEach(bullet => {
+            const { name: cardName, bullets: cardBullets } = getCardNameAndBullets();
+
+            let text = cardName + '\n\n';
+            cardBullets.forEach(bullet => {
                 text += '\u2022 ' + bullet.replace(/\*\*/g, '') + '\n';
             });
             text += '\n' + t('preset_card_footer', 'Erstellt mit dem KI-Policy-Generator der Universität Bamberg');
@@ -3603,8 +3968,131 @@
         function resetPresetState() {
             activePreset = null;
             presetModified = false;
+            presetEditHintShown = false;
             const hint = document.querySelector('.preset-hint');
             if (hint) hint.remove();
+            hidePresetEditor();
+        }
+
+        // (presetEditHintShown is declared with other preset state variables above)
+
+        /**
+         * Rendert den TL;DR-Editor mit editierbaren Bullets und Preset-Namen
+         */
+        function renderPresetEditor(preset, uploadEnabled) {
+            const section = document.getElementById('preset-editor-section');
+            if (!section) return;
+
+            const { allBullets, uploadSuffix } = getPresetDisplay(preset, uploadEnabled);
+
+            // Dot color
+            document.getElementById('preset-editor-dot').style.backgroundColor = preset.color;
+
+            // Preset name (editable)
+            document.getElementById('preset-editor-name').value = preset.name;
+
+            // Upload suffix (not editable)
+            document.getElementById('preset-editor-suffix').textContent = uploadSuffix;
+
+            // Bullets
+            const bulletsContainer = document.getElementById('preset-editor-bullets');
+            bulletsContainer.replaceChildren();
+            allBullets.forEach(bullet => {
+                addPresetBulletRow(bulletsContainer, bullet);
+            });
+
+            // Add-bullet button
+            const addBtn = document.getElementById('preset-add-bullet');
+            const freshAddBtn = addBtn.cloneNode(true);
+            addBtn.parentNode.replaceChild(freshAddBtn, addBtn);
+            freshAddBtn.addEventListener('click', () => {
+                addPresetBulletRow(document.getElementById('preset-editor-bullets'), '');
+            });
+
+            section.style.display = '';
+        }
+
+        /**
+         * Fügt eine Bullet-Zeile zum TL;DR-Editor hinzu
+         */
+        function addPresetBulletRow(container, text) {
+            const row = document.createElement('div');
+            row.className = 'preset-bullet-row';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = text.replace(/\*\*/g, '');
+            input.addEventListener('input', () => markPresetModified());
+            row.appendChild(input);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'preset-bullet-delete';
+            deleteBtn.textContent = '\u00D7';
+            deleteBtn.title = t('btn_remove', 'Entfernen');
+            deleteBtn.addEventListener('click', () => {
+                row.remove();
+                markPresetModified();
+            });
+            row.appendChild(deleteBtn);
+
+            container.appendChild(row);
+        }
+
+        /**
+         * Liest den aktuellen Stand (Name, Suffix, Bullets) aus dem TL;DR-Editor
+         */
+        function getPresetEditorState() {
+            const nameInput = document.getElementById('preset-editor-name');
+            const suffix = document.getElementById('preset-editor-suffix');
+            const bulletsContainer = document.getElementById('preset-editor-bullets');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const uploadSuffix = suffix ? suffix.textContent : '';
+            const bullets = [];
+            if (bulletsContainer) {
+                bulletsContainer.querySelectorAll('.preset-bullet-row input').forEach(input => {
+                    const val = input.value.trim();
+                    if (val) bullets.push(val);
+                });
+            }
+            return { name, uploadSuffix, bullets };
+        }
+
+        /**
+         * Versteckt den Preset-Editor
+         */
+        function hidePresetEditor() {
+            const section = document.getElementById('preset-editor-section');
+            if (section) section.style.display = 'none';
+        }
+
+        /**
+         * Aktualisiert den Preset-Hint bei Modifikation
+         */
+        function updatePresetHintModified() {
+            const hint = document.querySelector('.preset-hint');
+            if (!hint || !activePreset) return;
+
+            const textSpan = hint.querySelector('.preset-hint-text');
+            if (textSpan) {
+                const dotEl = textSpan.querySelector('.preset-hint-dot');
+                const modifiedText = t('preset_based_on', 'Basiert auf') + ': ' + activePreset.name + ' ' + t('preset_modified_suffix', '(angepasst)');
+                textSpan.replaceChildren();
+                if (dotEl) textSpan.appendChild(dotEl);
+                textSpan.appendChild(document.createTextNode(modifiedText));
+            }
+
+            // Show one-time edit tip
+            if (!presetEditHintShown) {
+                presetEditHintShown = true;
+                const existingTip = hint.querySelector('.preset-hint-edit-tip');
+                if (!existingTip) {
+                    const tip = document.createElement('span');
+                    tip.className = 'preset-hint-edit-tip';
+                    tip.textContent = t('preset_edit_hint', 'Tipp: Bei größeren Anpassungen sollten Sie auch den Vorlagennamen und das TL;DR oben anpassen.');
+                    hint.appendChild(tip);
+                }
+            }
         }
 
         /**
@@ -3613,10 +4101,7 @@
         function markPresetModified() {
             if (activePreset && !presetModified) {
                 presetModified = true;
-                activePreset = null;
-                // Remove hint
-                const hint = document.querySelector('.preset-hint');
-                if (hint) hint.remove();
+                updatePresetHintModified();
             }
         }
 
@@ -3639,6 +4124,7 @@
             const useBtn = document.getElementById('preset-detail-use');
             if (useBtn) {
                 useBtn.addEventListener('click', () => {
+                    if (!modal) return;
                     const preset = modal._currentPreset;
                     if (preset) applyPreset(preset, false);
                 });
@@ -3647,6 +4133,7 @@
             const customizeBtn = document.getElementById('preset-detail-customize');
             if (customizeBtn) {
                 customizeBtn.addEventListener('click', () => {
+                    if (!modal) return;
                     const preset = modal._currentPreset;
                     if (preset) applyPreset(preset, true);
                 });
@@ -3658,12 +4145,6 @@
                 copyCardBtn.addEventListener('click', copyPolicyCard);
             }
 
-            // ESC to close preset modal
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closePresetDetail();
-                }
-            });
         }
 
         /**
@@ -3712,6 +4193,51 @@
                 switchView('result');
             });
             backToEditorBtn.addEventListener('click', () => switchView('editor'));
+
+            // "Andere Vorlage wählen" buttons — back to welcome with confirmation
+            const backToWelcomeBtn = document.getElementById('back-to-welcome');
+            const backToWelcomeResultBtn = document.getElementById('back-to-welcome-result');
+            function confirmBackToWelcome() {
+                if (selectedItems.length > 0 || activePreset) {
+                    if (!confirm(t('confirm_leave_editor', 'Möchten Sie die aktuelle Richtlinie verlassen? Nicht gespeicherte Änderungen gehen verloren.'))) {
+                        return;
+                    }
+                }
+                // Reset all editor state so "Editor öffnen" starts clean
+                resetPresetState();
+                selectedItems.length = 0;
+                hidePresetEditor();
+                document.querySelectorAll('.policy-item.selected').forEach(item => {
+                    item.classList.remove('selected');
+                    const btn = item.querySelector('.add-item-btn');
+                    if (btn) {
+                        btn.classList.remove('added');
+                        btn.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
+                    }
+                });
+                // Reset document title and intro to defaults
+                const docTitleEl = document.getElementById('document-title');
+                if (docTitleEl && window.defaultDocumentTitle) {
+                    docTitleEl.textContent = window.defaultDocumentTitle;
+                }
+                if (window.defaultDocumentIntro) {
+                    documentIntro = window.defaultDocumentIntro;
+                    window.documentIntro = window.defaultDocumentIntro;
+                    updateIntroDisplay();
+                }
+                // Revert any edited item texts back to originals
+                Object.keys(originalPolicyItems).forEach(id => {
+                    const contentEl = document.getElementById(id);
+                    if (contentEl) {
+                        contentEl.innerHTML = originalPolicyItems[id];
+                    }
+                    delete originalPolicyItems[id];
+                });
+                switchView('welcome');
+            }
+            if (backToWelcomeBtn) backToWelcomeBtn.addEventListener('click', confirmBackToWelcome);
+            if (backToWelcomeResultBtn) backToWelcomeResultBtn.addEventListener('click', confirmBackToWelcome);
+
             console.log("View navigation setup complete.");
         }
 

@@ -708,6 +708,23 @@ ui_strings:
   preset_based_on: "Based on"
   preset_card_footer: "Created with the AI Policy Generator of the University of Bamberg"
   preset_upload_label: "Course material upload allowed"
+  preset_no_upload_label: "No upload"
   preset_detail_title: "Template"
   preset_modified: "Modified – preset name removed"
+  preset_modified_suffix: "(customized)"
   preset_or_editor: "or"
+  variant_picker_label: "Template:"
+  variant_custom: "— Custom text —"
+
+  # Navigation
+  btn_back_to_welcome: "Choose another template"
+  confirm_leave_editor: "Leave the current policy? Unsaved changes will be lost."
+
+  # TL;DR Editor
+  preset_add_bullet: "+ Add bullet"
+  preset_based_on_modified: "Based on {name}, customized"
+  preset_edit_hint: "Tip: For significant changes, you should also adjust the template name and TL;DR above."
+
+  # Variant badges
+  variant_badge_tooltip: "Text variants from templates available"
+  variant_badge_label: "Templates"
