@@ -1,5 +1,5 @@
 # KI-Policy-Generator - Preset-Vorlagen
-# Version: 2.0
+# Version: 2.1
 # Sprache: de
 #
 # Items können entweder als einfacher String (= Default-Text aus policy-data.yaml)
@@ -13,22 +13,29 @@ presets:
   # AI-None: Kein KI-Einsatz
   # ============================================================
   - id: "ai-none"
-    name: "AI-None"
+    name: "AI-None v1"
     description: "Kein KI-Einsatz. Prüfung in kontrolliertem Setting."
     color: "oklch(58.63% 0.231 19.6)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen in dieser Lehrveranstaltung **nicht** eingesetzt werden."
-      - "Die Prüfungsleistung wird ohne KI-Unterstützung in einem kontrollierten Setting erbracht."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
+      - "KI-Werkzeuge sind in dieser Lehrveranstaltung **nicht erlaubt** – weder als Lernhilfe noch bei Abgaben."
+      - "Die Prüfung findet in einem kontrollierten Setting ohne KI-Zugang statt."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-None"
+    document_title: "KI-Richtlinie: AI-None v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. In dieser Veranstaltung ist der Einsatz von KI-Werkzeugen grundsätzlich nicht gestattet. Die Prüfungsleistung wird in einem kontrollierten Setting ohne KI-Unterstützung erbracht.
     items:
-      - "verboten-regel"
+      - id: "grundsatz-erlaubt"
+        text: |
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung **nicht gestattet**. Dies umfasst sowohl die Nutzung bei bewerteten Abgaben als auch die Nutzung als Lernhilfe, soweit nicht ausdrücklich anders angegeben.
+      - id: "verboten-regel"
+        text: |
+          In dieser Lehrveranstaltung ist der Einsatz von KI-Werkzeugen **grundsätzlich nicht gestattet**. Dies umfasst insbesondere:
+
+          - Die Verwendung von KI-Werkzeugen zur Erstellung, Überarbeitung oder Verbesserung von Texten, Präsentationen oder anderen Abgaben.
+          - Die Nutzung von KI-Werkzeugen während beaufsichtigter Prüfungen (Klausuren etc.) – dies wird als Täuschungsversuch gewertet.
+          - Das Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in KI-Systeme.
       - "datenschutz-regel"
       - id: "pruefung-massnahmen"
         text: |
@@ -54,19 +61,17 @@ presets:
   # AI-Learn: KI zum Lernen frei
   # ============================================================
   - id: "ai-learn"
-    name: "AI-Learn"
+    name: "AI-Learn v1"
     description: "KI zum Lernen frei. Prüfungsleistung ohne KI."
     color: "oklch(74.61% 0.171 51.56)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen im Semester frei zum Lernen eingesetzt werden."
-      - "Die Prüfungsleistung wird ohne KI-Unterstützung erbracht."
+      - "KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen)."
+      - "Die Prüfungsleistung wird ohne KI-Unterstützung erbracht (z.B. Klausur)."
       - "Keine Kennzeichnung der KI-Nutzung erforderlich."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-Learn"
+    document_title: "KI-Richtlinie: AI-Learn v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Der Einsatz von KI ist zum Lernen grundsätzlich erlaubt. Die Prüfungsleistung wird ohne KI-Unterstützung erbracht. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich.
     items:
@@ -91,19 +96,17 @@ presets:
   # AI-DocShort: Einfache Kennzeichnung
   # ============================================================
   - id: "ai-docshort"
-    name: "AI-DocShort"
+    name: "AI-DocShort v1"
     description: "KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck)."
     color: "oklch(82.39% 0.133 91.5)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen bei Abgaben als Hilfsmittel eingesetzt werden."
-      - "Einfache Kennzeichnung erforderlich: genutztes Tool und Einsatzzweck angeben."
-      - "Die Kernleistung (Analyse, Argumentation) muss eigenständig erbracht werden."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
+      - "KI-Werkzeuge dürfen auch bei Abgaben als Hilfsmittel eingesetzt werden."
+      - "Einfache Kennzeichnung am Ende der Arbeit: genutztes Tool und Einsatzzweck angeben."
+      - "Die Kernleistung (Analyse, Argumentation, Schlussfolgerungen) muss eigenständig erbracht werden."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-DocShort"
+    document_title: "KI-Richtlinie: AI-DocShort v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen als Hilfsmittel eingesetzt werden, auch bei bewerteten Abgaben. Die Nutzung ist mit einer einfachen Kennzeichnung (Tool + Zweck) zu dokumentieren.
     items:
@@ -131,19 +134,17 @@ presets:
   # AI-DocLog: Prompt-Protokoll + Reflexion
   # ============================================================
   - id: "ai-doclog"
-    name: "AI-DocLog"
+    name: "AI-DocLog v1"
     description: "KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich."
     color: "oklch(54.87% 0.222 260.33)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen bei Abgaben als Hilfsmittel eingesetzt werden."
-      - "Detaillierte Dokumentation erforderlich: Prompt-Protokoll und Reflexion."
-      - "Die Kernleistung (Analyse, Argumentation) muss eigenständig erbracht werden."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
+      - "KI-Werkzeuge dürfen bei Abgaben eingesetzt werden – reflektierte Dokumentation ist Pflicht."
+      - "Prompt-Protokoll und persönliche Reflexion sind Bestandteil jeder Abgabe."
+      - "Die Qualität der KI-Nutzung (Prompts, Prüfung, Weiterverarbeitung) fließt in die Bewertung ein."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-DocLog"
+    document_title: "KI-Richtlinie: AI-DocLog v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen als Hilfsmittel eingesetzt werden, auch bei bewerteten Abgaben. Die Nutzung ist detailliert mit einem Prompt-Protokoll und einer Reflexion zu dokumentieren.
     items:
@@ -171,26 +172,32 @@ presets:
   # AI-Defend: Kompetenznachweis durch Verteidigung
   # ============================================================
   - id: "ai-defend"
-    name: "AI-Defend"
+    name: "AI-Defend v1"
     description: "KI ohne Einschränkung. Kompetenznachweis durch Verteidigung."
     color: "oklch(49.39% 0.215 298.31)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen ohne Einschränkung eingesetzt werden."
-      - "Kompetenznachweis erfolgt durch mündliche oder schriftliche Verteidigung."
-      - "Keine Kennzeichnung der KI-Nutzung bei Abgaben erforderlich."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
+      - "KI-Werkzeuge dürfen uneingeschränkt eingesetzt werden – auch bei Abgaben."
+      - "Kompetenznachweis durch mündliche oder schriftliche Verteidigung der eingereichten Arbeit."
+      - "Keine Kennzeichnung der KI-Nutzung erforderlich."
+      - "Wer die Arbeit nicht überzeugend vertreten kann, muss mit schlechterer Bewertung rechnen."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-Defend"
+    document_title: "KI-Richtlinie: AI-Defend v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen ohne Einschränkung eingesetzt werden. Der Kompetenznachweis erfolgt durch eine mündliche oder schriftliche Verteidigung der eingereichten Arbeit.
     items:
-      - "grundsatz-erlaubt"
+      - id: "grundsatz-erlaubt"
+        text: |
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung **ohne Einschränkung** erlaubt – sowohl zum Lernen als auch bei der Erstellung von Abgaben. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich. Der Kompetenznachweis erfolgt durch eine Verteidigung der eingereichten Arbeit.
       - "erlaubt-ohne-kennzeichnung-regel"
-      - "erlaubt-mit-kennzeichnung-regel"
-      - "verboten-regel"
+      - id: "verboten-regel"
+        text: |
+          Folgende Nutzungsarten von KI sind in dieser Lehrveranstaltung ausdrücklich **nicht** erlaubt:
+
+          - Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich gestattet – dies kann als Täuschungsversuch gewertet werden.
+          - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken oder spezifische methodische Kompetenzen erfordern.
+          - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis.
       - "datenschutz-regel"
       - id: "pruefung-massnahmen"
         text: |
@@ -210,23 +217,24 @@ presets:
   # AI-Skill: KI-Kompetenz als Lernziel
   # ============================================================
   - id: "ai-skill"
-    name: "AI-Skill"
+    name: "AI-Skill v1"
     description: "KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet."
     color: "oklch(75.23% 0.209 144.64)"
     upload_default: false
     tldr:
-      - "KI-Kompetenz ist explizites Lernziel dieser Lehrveranstaltung."
-      - "KI-Werkzeuge dürfen und sollen aktiv eingesetzt werden."
-      - "Prozess und Ergebnis der KI-Nutzung werden bewertet."
-      - "Keine personenbezogenen Daten in KI-Dienste eingeben."
-      - "KI-Ergebnisse kritisch prüfen – KI macht Fehler."
+      - "KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden."
+      - "Prompt-Protokoll mit Reflexion ist Pflichtbestandteil und wird benotet."
+      - "Die Qualität des KI-Einsatzes fließt in die Bewertung ein."
+      - "Ein Portfolio dokumentiert den KI-Einsatz über das Semester."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
-    document_title: "KI-Richtlinie: AI-Skill"
+    document_title: "KI-Richtlinie: AI-Skill v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Kompetenz ist ein explizites Lernziel. KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden. Sowohl der Prozess als auch das Ergebnis der KI-Nutzung fließen in die Bewertung ein.
     items:
-      - "grundsatz-erlaubt"
+      - id: "grundsatz-erlaubt"
+        text: |
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung nicht nur erlaubt, sondern ein **explizites Lernziel**. Sie sollen KI-Werkzeuge aktiv, gezielt und reflektiert einsetzen lernen. Es gelten die spezifischen Regelungen dieser Policy bezüglich Dokumentation und akademischer Integrität.
       - id: "kompetenzen-erweitert"
         text: |
           Zusätzlich zu den grundlegenden KI-Kompetenzen sollen Sie in dieser Lehrveranstaltung lernen:

@@ -257,12 +257,12 @@ categories:
 
               At the end of your work (before the bibliography), add a separate section with the heading "Declaration on the Use of AI Tools". There, briefly list:
 
-              - Which AI tools you used (e.g., "ChatGPT-4, HAWKI, DeepL Write").
+              - Which AI tools you used (e.g., "ChatGPT, HAWKI, DeepL Write").
               - For which work steps you used them (e.g., "brainstorming", "linguistic revision of introduction", "literature research keywords", "code generation for function X").
 
               *Example:*
               **Declaration on the Use of AI Tools**
-              Tools used: ChatGPT-4, DeepL Write
+              Tools used: ChatGPT, DeepL Write
               Purposes: Brainstorming for outline points, linguistic revision of the methods section.
 
               Additionally, the declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
@@ -276,13 +276,13 @@ categories:
 
               **1. "Documentation of AI Use" section in the appendix:**
 
-              - **Tools used:** List of all AI tools used with name, provider, and version if applicable (e.g., "ChatGPT-4 (OpenAI, as of May 2024)", "HAWKI (University of Bamberg)").
+              - **Tools used:** List of all AI tools used with name, provider, and version if applicable (e.g., "ChatGPT (OpenAI, model GPT-5)", "HAWKI (University of Bamberg)").
               - **Usage protocol (examples):** Document exemplary requests (prompts) and the resulting AI responses that influenced your work. Briefly describe how you used or revised the response. (Scope by agreement with instructor, e.g., 2-3 examples).
               - **Reflection:** Add a brief personal reflection (approx. 100-200 words): How did AI use influence your work process? What were the advantages, where were the challenges or limitations?
 
               **2. Direct labeling in the text (only for direct adoption):**
 
-              - For verbatim or slightly paraphrased adoption of AI-generated passages, label these directly in the text (e.g., with a footnote: "This paragraph is based on a suggestion from ChatGPT-4.").
+              - For verbatim or slightly paraphrased adoption of AI-generated passages, label these directly in the text (e.g., with a footnote: "This paragraph is based on a suggestion from ChatGPT.").
 
               **3. AI-assisted sources in the bibliography:**
 
@@ -698,7 +698,8 @@ ui_strings:
 
   # Presets
   preset_section_title: "Quick Start: Templates"
-  preset_section_desc: "Choose a template as a starting point or customize it for your course."
+  preset_section_desc: "Choose a template as a starting point — or <a href='#' id='start-editor-link'>open the free editor</a>."
+  editor_card_desc: "Start without a template and freely compose your AI policy."
   preset_more: "more"
   preset_tldr_title: "Summary (TL;DR)"
   preset_items_title: "Included Modules"

@@ -1,6 +1,10 @@
 # AI Policy Generator - Preset Templates
-# Version: 2.0
+# Version: 2.1
 # Language: en
+#
+# Items can be specified as a simple string (= default text from policy-data-en.yaml)
+# or as an object { id, text } (= preset-specific text).
+# upload_item / no_upload_item follow the same schema.
 
 version: "2.0"
 
@@ -9,26 +13,36 @@ presets:
   # AI-None: No AI Use
   # ============================================================
   - id: "ai-none"
-    name: "AI-None"
+    name: "AI-None v1"
     description: "No AI use. Examination in controlled setting."
     color: "oklch(58.63% 0.231 19.6)"
     upload_default: false
     tldr:
-      - "AI tools may **not** be used in this course."
-      - "Examination is conducted without AI support in a controlled setting."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
+      - "AI tools are **not permitted** in this course – neither as a learning aid nor for submissions."
+      - "The examination takes place in a controlled setting without AI access."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-None"
+    document_title: "AI Policy: AI-None v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. In this course, the use of AI tools is generally not permitted. The examination is conducted in a controlled setting without AI support.
     items:
-      - "verboten-regel"
+      - id: "grundsatz-erlaubt"
+        text: |
+          The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) is **not permitted** in this course. This includes both the use for graded submissions and the use as a learning aid, unless explicitly stated otherwise.
+      - id: "verboten-regel"
+        text: |
+          In this course, the use of AI tools is **generally not permitted**. This includes in particular:
+
+          - The use of AI tools to create, revise, or improve texts, presentations, or other submissions.
+          - The use of AI tools during supervised examinations (written exams, etc.) – this will be treated as an attempt at deception.
+          - Uploading copyrighted course materials or personal data to AI systems.
       - "datenschutz-regel"
-      - "pruefung-massnahmen"
-      - "halluzinationen-warnung"
-      - "lehrende-nutzen-ki"
+      - id: "pruefung-massnahmen"
+        text: |
+          Since AI tools are not permitted in this course, the examination is conducted exclusively in a controlled setting without AI support:
+
+          - The examination takes the form of a **supervised written exam** without access to AI tools or the internet.
+          - Permitted aids will be announced at the beginning of the exam.
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
     upload_item: "urheberrecht-erlaubnis"
@@ -38,19 +52,17 @@ presets:
   # AI-Learn: AI free for learning
   # ============================================================
   - id: "ai-learn"
-    name: "AI-Learn"
+    name: "AI-Learn v1"
     description: "AI free for learning. Examination without AI."
     color: "oklch(74.61% 0.171 51.56)"
     upload_default: false
     tldr:
-      - "AI tools may be freely used for learning during the semester."
-      - "Examination is conducted without AI support."
+      - "AI tools may be freely used for learning (e.g., exam preparation, explanations)."
+      - "The examination is conducted without AI support (e.g., written exam)."
       - "No labeling of AI use required."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-Learn"
+    document_title: "AI Policy: AI-Learn v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. The use of AI is generally permitted for learning purposes. The examination is conducted without AI support. Labeling of AI use is not required.
     items:
@@ -58,7 +70,12 @@ presets:
       - "erlaubt-ohne-kennzeichnung-regel"
       - "verboten-regel"
       - "datenschutz-regel"
-      - "pruefung-massnahmen"
+      - id: "pruefung-massnahmen"
+        text: |
+          AI tools may be used freely for learning during the semester. However, the examination is conducted without AI support to ensure a valid assessment of your individual competencies:
+
+          - The examination takes the form of a **supervised written exam** where AI tools and internet access are not permitted.
+          - The exam focuses on understanding and transfer, not mere knowledge reproduction.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
@@ -70,19 +87,17 @@ presets:
   # AI-DocShort: Simple labeling
   # ============================================================
   - id: "ai-docshort"
-    name: "AI-DocShort"
+    name: "AI-DocShort v1"
     description: "AI permitted for submissions. Simple labeling (tool + purpose)."
     color: "oklch(82.39% 0.133 91.5)"
     upload_default: false
     tldr:
       - "AI tools may be used as aids for submissions."
-      - "Simple labeling required: state tool used and purpose."
-      - "Core work (analysis, argumentation) must be done independently."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
+      - "Simple labeling at the end of the work: state tool used and purpose."
+      - "Core work (analysis, argumentation, conclusions) must be done independently."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-DocShort"
+    document_title: "AI Policy: AI-DocShort v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented with simple labeling (tool + purpose).
     items:
@@ -92,7 +107,13 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-einfach"
-      - "pruefung-massnahmen"
+      - id: "pruefung-massnahmen"
+        text: |
+          We are aware that the use of AI in unsupervised assessments (e.g., term papers) is difficult to control and may compromise fairness and equal opportunity. To ensure a valid assessment of your individual competencies, the following measures are applied in this course:
+
+          - Written submissions are supplemented by a **short oral colloquium** to verify understanding and independent work.
+          - Assignments are designed to focus on **transfer and critical analysis**, not mere knowledge reproduction.
+          - Compliance with the **labeling requirement** (tool + purpose) is considered in the assessment.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
@@ -104,19 +125,17 @@ presets:
   # AI-DocLog: Prompt log + reflection
   # ============================================================
   - id: "ai-doclog"
-    name: "AI-DocLog"
+    name: "AI-DocLog v1"
     description: "AI permitted for submissions. Prompt log and reflection required."
     color: "oklch(54.87% 0.222 260.33)"
     upload_default: false
     tldr:
-      - "AI tools may be used as aids for submissions."
-      - "Detailed documentation required: prompt log and reflection."
-      - "Core work (analysis, argumentation) must be done independently."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
+      - "AI tools may be used for submissions – reflective documentation is mandatory."
+      - "Prompt log and personal reflection are part of every submission."
+      - "The quality of AI use (prompts, review, further processing) is included in the assessment."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-DocLog"
+    document_title: "AI Policy: AI-DocLog v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented in detail with a prompt log and reflection.
     items:
@@ -126,7 +145,13 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
-      - "pruefung-massnahmen"
+      - id: "pruefung-massnahmen"
+        text: |
+          We are aware that the use of AI in unsupervised assessments (e.g., term papers) is difficult to control and may compromise fairness and equal opportunity. To ensure a valid assessment of your individual competencies, the following measures are applied in this course:
+
+          - The **prompt log and reflection** are mandatory components of every submission and are included in the assessment.
+          - Submissions may be supplemented by an **oral colloquium** in which the AI-assisted work process is reflected upon.
+          - Assignments require demonstrably **independent analytical work** that goes beyond merely reproducing AI outputs.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
@@ -138,28 +163,40 @@ presets:
   # AI-Defend: Competence proof through defense
   # ============================================================
   - id: "ai-defend"
-    name: "AI-Defend"
+    name: "AI-Defend v1"
     description: "AI without restrictions. Competence proof through defense."
     color: "oklch(49.39% 0.215 298.31)"
     upload_default: false
     tldr:
-      - "AI tools may be used without restrictions."
-      - "Competence is demonstrated through oral or written defense."
-      - "No labeling of AI use required for submissions."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
+      - "AI tools may be used without restrictions – including for submissions."
+      - "Competence is demonstrated through oral or written defense of the submitted work."
+      - "No labeling of AI use required."
+      - "Those who cannot convincingly represent their work must expect a lower grade."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-Defend"
+    document_title: "AI Policy: AI-Defend v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. AI tools may be used without restrictions. Competence is demonstrated through an oral or written defense of the submitted work.
     items:
-      - "grundsatz-erlaubt"
+      - id: "grundsatz-erlaubt"
+        text: |
+          The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) is permitted **without restrictions** in this course – both for learning and for creating submissions. Labeling of AI use is not required. Competence is demonstrated through a defense of the submitted work.
       - "erlaubt-ohne-kennzeichnung-regel"
-      - "erlaubt-mit-kennzeichnung-regel"
-      - "verboten-regel"
+      - id: "verboten-regel"
+        text: |
+          The following types of AI use are expressly **not** permitted in this course:
+
+          - Use of AI during supervised examinations (written exams, etc.), unless explicitly permitted – this may be treated as an attempt at deception.
+          - Use of AI to circumvent learning objectives that explicitly require independent critical thinking or specific methodological competencies.
+          - Uploading copyrighted course materials or personal data to cloud-based AI systems without explicit permission.
       - "datenschutz-regel"
-      - "pruefung-massnahmen"
+      - id: "pruefung-massnahmen"
+        text: |
+          AI tools may be used without restrictions for creating submissions. Individual competence is demonstrated through a defense:
+
+          - Submitted work is **defended in an oral examination**. It will be verified whether the content and argumentation can be independently represented.
+          - The **oral defense** is a significant factor in the overall assessment.
+          - Those who cannot convincingly represent their submitted work must expect a significantly lower grade.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
@@ -171,30 +208,44 @@ presets:
   # AI-Skill: AI competence as learning objective
   # ============================================================
   - id: "ai-skill"
-    name: "AI-Skill"
+    name: "AI-Skill v1"
     description: "AI competence is a learning objective. Process and result are assessed."
     color: "oklch(75.23% 0.209 144.64)"
     upload_default: false
     tldr:
-      - "AI competence is an explicit learning objective of this course."
-      - "AI tools may and should be actively used."
-      - "Both the process and result of AI use are assessed."
-      - "Do not enter personal data into AI services."
-      - "Critically review AI results – AI makes mistakes."
+      - "AI competence is an explicit learning objective – AI tools should be used actively and reflectively."
+      - "Prompt log with reflection is a mandatory component and is graded."
+      - "The quality of AI use is included in the assessment."
+      - "A portfolio documents AI use throughout the semester."
     tldr_upload: "Course materials may be uploaded to AI tools."
     tldr_no_upload: "Course materials may **not** be uploaded to AI tools."
-    document_title: "AI Policy: AI-Skill"
+    document_title: "AI Policy: AI-Skill v1"
     document_intro: |
       This document establishes the guidelines for the use of AI tools in this course. AI competence is an explicit learning objective. AI tools should be used actively and reflectively. Both the process and the result of AI use are part of the assessment.
     items:
-      - "grundsatz-erlaubt"
-      - "kompetenzen-erweitert"
+      - id: "grundsatz-erlaubt"
+        text: |
+          The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) is not only permitted in this course but is an **explicit learning objective**. You should learn to use AI tools actively, purposefully, and reflectively. The specific regulations of this policy regarding documentation and academic integrity apply.
+      - id: "kompetenzen-erweitert"
+        text: |
+          In addition to basic AI competencies, you should learn the following in this course:
+
+          - To assess the specific strengths and weaknesses of different AI models and operating modes (e.g., local models versus commercially offered models) for different tasks.
+          - To apply strategies for verifying and validating AI-generated information using scientific methods.
+          - To discuss the ethical implications of AI use in the field.
+          - To use AI tools to support scientific work processes (research, analysis, writing) in a targeted and reflective manner.
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
-      - "pruefung-massnahmen"
+      - id: "pruefung-massnahmen"
+        text: |
+          AI competence is an explicit learning objective of this course. Both the process and the result of AI use are assessed:
+
+          - The **prompt log with reflection** is a mandatory component of every submission and is graded.
+          - The **quality of AI use** – prompt quality, critical review of results, independent further processing – is included in the assessment.
+          - A final **portfolio** documents AI use throughout the semester and is part of the examination.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"

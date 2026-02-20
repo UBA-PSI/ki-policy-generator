@@ -109,13 +109,13 @@
 
         /* Welcome View */
         .welcome-content {
-            max-width: 1600px; /* Increased to use even more screen width */
+            max-width: 1100px;
             margin: 0 auto;
             text-align: center;
-            padding: 2rem 1rem; /* Reduced horizontal padding */
-            background: transparent; /* Changed to transparent since columns have their own background */
+            padding: 2rem 1rem;
+            background: transparent;
             border-radius: 8px;
-            box-shadow: none; /* Removed since columns have their own shadow */
+            box-shadow: none;
         }
 
         .description {
@@ -685,6 +685,16 @@
             background-color: var(--primary-color);
         }
 
+        .btn-secondary-action {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary-action:hover {
+            background-color: #f0f5ff;
+        }
+
         .back-btn {
             font-size: 0.9rem;
             padding: 8px 16px;
@@ -1115,14 +1125,6 @@
             margin-bottom: 0;
         }
         
-        /* Center the button in its section */
-        .welcome-section button.action-btn {
-            display: block;
-            margin: 0 auto; 
-            width: fit-content;
-        }
-        
-        
         .welcome-section h2 {
             font-size: 1.5rem;
             color: var(--primary-hover);
@@ -1297,32 +1299,21 @@
             text-decoration: underline;
         }
         
-        #start-editor {
-            display: block;
-            margin-top: -2rem;
-            margin-left: auto;
-            margin-right: auto;
-            width: fit-content;
-            font-size: 1.2rem;
-            padding: 0.75rem 2.5rem;
-        }
-
-        /* Two-column welcome layout */
+        /* Single-column welcome layout */
         .welcome-flex-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 1.5rem;
             width: 100%;
             margin-top: 1.5rem;
         }
-        
+
         .welcome-primary-column {
-            flex: 3;
+            width: 100%;
             background: var(--white);
             border-radius: 8px;
             padding: 2rem;
             box-shadow: var(--box-shadow);
-            background-color: #ffffff;
             display: flex;
             flex-direction: column;
         }
@@ -1348,40 +1339,43 @@
         
         .welcome-section:last-child {
             margin-bottom: 0;
-            flex-grow: 1; /* Let the last section grow to fill space */
         }
         
         .welcome-secondary-column {
-            flex: 3;
+            width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 1.5rem;
         }
-        
-        .welcome-secondary-box {
-            flex: 0 0 auto; /* Don't grow, don't shrink */
-            background: var(--white);
-            border-radius: 8px;
-            padding: 0; /* Remove padding as we'll control it with inner elements */
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
+
+        @media (max-width: 768px) {
+            .welcome-secondary-column {
+                flex-direction: column;
+            }
         }
         
-        /* Make it responsive */
-        @media (max-width: 1200px) {
-            .welcome-flex-container {
+        .welcome-secondary-column > div {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-secondary-column > div {
                 flex-direction: column;
-                gap: 1.5rem;
             }
-            
-            .welcome-primary-column,
-            .welcome-secondary-column {
-                width: 100%;
-            }
-            
-            .welcome-secondary-column {
-                gap: 1.5rem;
-            }
+        }
+
+        .welcome-secondary-box {
+            flex: 1 1 0;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            font-size: 0.9rem;
         }
 
         /* Adjust margins for the primary column sections */
@@ -1391,7 +1385,7 @@
             text-align: center;
         }
         
-        .welcome-primary-column section:first-of-type {
+        .welcome-primary-column > section:first-of-type {
             margin-top: 2rem;
             margin-bottom: 2.5rem;
             text-align: center;
@@ -1569,7 +1563,7 @@
         .preset-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         @media (max-width: 900px) {
@@ -1600,7 +1594,7 @@
         }
 
         .preset-card-body {
-            padding: 0.85rem 1rem;
+            padding: 1.1rem 1.25rem;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1608,7 +1602,7 @@
         }
 
         .preset-card-name {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.3rem;
             color: var(--dark-gray);
@@ -1625,14 +1619,14 @@
         }
 
         .preset-card-desc {
-            font-size: 0.82rem;
+            font-size: 0.9rem;
             color: var(--medium-gray);
             margin-bottom: 0.6rem;
             line-height: 1.4;
         }
 
         .preset-card-tldr {
-            font-size: 0.8rem;
+            font-size: 0.875rem;
             color: #555;
             list-style: none;
             padding: 0;
@@ -1643,8 +1637,8 @@
         .preset-card-tldr li {
             padding-left: 1em;
             position: relative;
-            margin-bottom: 0.2rem;
-            line-height: 1.35;
+            margin-bottom: 0.35rem;
+            line-height: 1.45;
         }
 
         .preset-card-tldr li::before {
@@ -1654,29 +1648,45 @@
             color: var(--light-gray);
         }
 
-        .preset-card-more {
-            font-size: 0.75rem;
-            color: var(--light-gray);
-        }
 
-        /* Upload Toggle */
-        .preset-upload-toggle {
+        /* Global Upload Toggle */
+        .preset-global-upload {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-top: 1px solid var(--border-color);
-            background: var(--very-light-gray);
-            font-size: 0.8rem;
-            color: var(--medium-gray);
+            justify-content: center;
+            margin-bottom: 1.25rem;
         }
 
-        .preset-upload-toggle label {
+        .preset-global-upload label {
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--medium-gray);
             user-select: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--very-light-gray);
+        }
+
+        .preset-global-upload label:hover {
+            border-color: var(--primary-color);
+        }
+
+        /* Editor card in preset grid */
+        .preset-card-editor {
+            border: 2px dashed var(--border-color);
+            background: var(--very-light-gray);
+        }
+
+        .preset-card-editor:hover {
+            border-color: var(--primary-color);
+            background: #f0f5ff;
+        }
+
+        .preset-card-editor .preset-card-name svg {
+            color: var(--primary-color);
         }
 
         .upload-switch {
@@ -1719,28 +1729,6 @@
 
         .upload-switch input:checked + .slider::before {
             transform: translateX(16px);
-        }
-
-        /* Preset or editor divider */
-        .preset-or-divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            color: var(--light-gray);
-            font-size: 0.9rem;
-        }
-
-        .preset-or-divider span {
-            background: var(--white);
-            padding: 0 1rem;
-            position: relative;
-        }
-
-        .preset-or-divider::before {
-            content: "";
-            display: block;
-            position: relative;
-            top: 0.7em;
-            border-top: 1px solid var(--border-color);
         }
 
         /* Preset Detail Modal */
@@ -2195,16 +2183,19 @@
 
                     <section class="preset-section" id="preset-section">
                         <h2 data-i18n="preset_section_title">Schnellstart: Vorlagen</h2>
-                        <p data-i18n="preset_section_desc">Wählen Sie eine Vorlage als Ausgangspunkt oder passen Sie sie an Ihre Lehrveranstaltung an.</p>
+                        <p data-i18n-html="preset_section_desc">Wählen Sie eine Vorlage als Ausgangspunkt — oder <a href="#" id="start-editor-link">öffnen Sie den freien Editor</a>.</p>
+                        <div class="preset-global-upload" id="preset-global-upload">
+                            <label>
+                                <span class="upload-switch">
+                                    <input type="checkbox" id="global-upload-toggle">
+                                    <span class="slider"></span>
+                                </span>
+                                <span data-i18n="preset_upload_label">Kursmaterialien-Upload erlaubt</span>
+                            </label>
+                        </div>
                         <div id="preset-grid" class="preset-grid">
                             <!-- Preset cards rendered dynamically -->
                         </div>
-                    </section>
-
-                    <div class="preset-or-divider"><span data-i18n="preset_or_editor">oder</span></div>
-
-                    <section class="welcome-section">
-                        <button id="start-editor" class="action-btn" data-i18n="btn_start_editor">Editor öffnen</button>
                     </section>
 
                     <!-- German welcome content -->
@@ -2335,7 +2326,7 @@
                             <button data-lang="de" class="active" title="Deutsch">DE</button>
                             <button data-lang="en" title="English">EN</button>
                         </div>
-                        <button id="save-load-btn" class="action-btn" data-i18n="btn_save_load">Daten-Export und -Import</button>
+                        <button id="save-load-btn" class="action-btn btn-secondary-action" data-i18n="btn_save_load">Daten-Export und -Import</button>
                         <button id="generate-policy-btn" class="action-btn" data-i18n="btn_generate">Richtlinie generieren</button>
                     </div>
             </div>
@@ -2382,8 +2373,8 @@
                 <button id="back-to-welcome-result" class="back-btn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
                 <button id="back-to-editor" class="back-btn" data-i18n="btn_back_to_editor">Zurück zum Editor</button>
                 <button id="copy-result" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
-                <button id="download-html-btn" class="action-btn" data-i18n="btn_download_html">Als HTML herunterladen</button>
-                <button id="copy-card-btn" class="action-btn" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
+                <button id="download-html-btn" class="action-btn btn-secondary-action" data-i18n="btn_download_html">Als HTML herunterladen</button>
+                <button id="copy-card-btn" class="action-btn btn-secondary-action" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
             </div>
             <div class="result-notice">
                 <p data-i18n-html="result_notice">Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden.</p>
@@ -2742,7 +2733,6 @@
         const welcomeView = document.getElementById('welcome-view');
         const editorView = document.getElementById('editor-view');
         const resultView = document.getElementById('result-view');
-        const startEditorBtn = document.getElementById('start-editor');
         const generatePolicyBtn = document.getElementById('generate-policy-btn');
         const backToEditorBtn = document.getElementById('back-to-editor');
         const leftPanel = document.querySelector('.left-panel');
@@ -3599,55 +3589,61 @@
                 desc.textContent = preset.description;
                 body.appendChild(desc);
 
-                // First 3 TL;DR bullets
+                // TL;DR bullets (up to 4)
                 const tldrList = document.createElement('ul');
                 tldrList.className = 'preset-card-tldr';
-                const maxBullets = 3;
+                const maxBullets = 4;
                 preset.tldr.slice(0, maxBullets).forEach(bullet => {
                     const li = document.createElement('li');
                     li.textContent = bullet.replace(/\*\*/g, '');
                     tldrList.appendChild(li);
                 });
-                if (preset.tldr.length > maxBullets) {
-                    const more = document.createElement('span');
-                    more.className = 'preset-card-more';
-                    more.textContent = `+${preset.tldr.length - maxBullets} ${t('preset_more', 'weitere')}`;
-                    tldrList.appendChild(more);
-                }
                 body.appendChild(tldrList);
                 card.appendChild(body);
 
-                // Click handler on card body (not toggle)
+                // Click handler on card body
                 body.addEventListener('click', () => showPresetDetail(preset));
-
-                // Upload toggle
-                const toggleDiv = document.createElement('div');
-                toggleDiv.className = 'preset-upload-toggle';
-                const toggleLabel = document.createElement('label');
-                const switchSpan = document.createElement('span');
-                switchSpan.className = 'upload-switch';
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = presetUploadFlags[preset.id];
-                checkbox.addEventListener('change', (e) => {
-                    e.stopPropagation();
-                    presetUploadFlags[preset.id] = checkbox.checked;
-                });
-                checkbox.addEventListener('click', (e) => e.stopPropagation());
-                const slider = document.createElement('span');
-                slider.className = 'slider';
-                switchSpan.appendChild(checkbox);
-                switchSpan.appendChild(slider);
-                toggleLabel.appendChild(switchSpan);
-                const labelText = document.createElement('span');
-                labelText.textContent = t('preset_upload_label', 'Kursmaterialien-Upload erlaubt');
-                toggleLabel.appendChild(labelText);
-                toggleDiv.appendChild(toggleLabel);
-                toggleDiv.addEventListener('click', (e) => e.stopPropagation());
-                card.appendChild(toggleDiv);
 
                 grid.appendChild(card);
             });
+
+            // Editor card as last grid item
+            const editorCard = document.createElement('div');
+            editorCard.className = 'preset-card preset-card-editor';
+            editorCard.id = 'editor-card';
+            const editorBody = document.createElement('div');
+            editorBody.className = 'preset-card-body';
+            const editorName = document.createElement('div');
+            editorName.className = 'preset-card-name';
+            // Static trusted SVG icon for edit
+            const editIconNs = 'http://www.w3.org/2000/svg';
+            const editSvg = document.createElementNS(editIconNs, 'svg');
+            editSvg.setAttribute('width', '16');
+            editSvg.setAttribute('height', '16');
+            editSvg.setAttribute('viewBox', '0 0 24 24');
+            editSvg.setAttribute('fill', 'none');
+            editSvg.setAttribute('stroke', 'currentColor');
+            editSvg.setAttribute('stroke-width', '2');
+            editSvg.setAttribute('stroke-linecap', 'round');
+            editSvg.setAttribute('stroke-linejoin', 'round');
+            const path1 = document.createElementNS(editIconNs, 'path');
+            path1.setAttribute('d', 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7');
+            const path2 = document.createElementNS(editIconNs, 'path');
+            path2.setAttribute('d', 'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z');
+            editSvg.appendChild(path1);
+            editSvg.appendChild(path2);
+            editorName.appendChild(editSvg);
+            const editorNameText = document.createElement('span');
+            editorNameText.textContent = t('btn_start_editor', 'Editor öffnen');
+            editorName.appendChild(editorNameText);
+            editorBody.appendChild(editorName);
+            const editorDesc = document.createElement('div');
+            editorDesc.className = 'preset-card-desc';
+            editorDesc.textContent = t('editor_card_desc', 'Starten Sie ohne Vorlage und stellen Sie Ihre KI-Richtlinie frei zusammen.');
+            editorBody.appendChild(editorDesc);
+            editorCard.appendChild(editorBody);
+            editorCard.addEventListener('click', () => switchView('editor'));
+            grid.appendChild(editorCard);
         }
 
         /**
@@ -3686,9 +3682,13 @@
             freshToggle.checked = uploadEnabled;
             freshToggle.addEventListener('change', () => {
                 presetUploadFlags[preset.id] = freshToggle.checked;
-                // Update card toggle too
-                const cardToggle = document.querySelector(`.preset-card[data-preset-id="${preset.id}"] .upload-switch input`);
-                if (cardToggle) cardToggle.checked = freshToggle.checked;
+                // Sync global upload toggle
+                const globalToggle = document.getElementById('global-upload-toggle');
+                if (globalToggle) {
+                    // Update global toggle: checked if ALL presets have upload enabled
+                    const allEnabled = presetsData && presetsData.presets.every(p => presetUploadFlags[p.id]);
+                    globalToggle.checked = allEnabled;
+                }
                 // Re-render TL;DR
                 showPresetDetail(preset);
             });
@@ -4182,12 +4182,9 @@
 
         function setupViewNavigation() {
             console.log("Setting up view navigation...");
-            // Need to access these globally defined buttons
-            const startEditorBtn = document.getElementById('start-editor');
             const generatePolicyBtn = document.getElementById('generate-policy-btn');
             const backToEditorBtn = document.getElementById('back-to-editor');
-            
-            startEditorBtn.addEventListener('click', () => switchView('editor'));
+
             generatePolicyBtn.addEventListener('click', () => {
                 generatePolicy();
                 switchView('result');
@@ -4237,6 +4234,37 @@
             }
             if (backToWelcomeBtn) backToWelcomeBtn.addEventListener('click', confirmBackToWelcome);
             if (backToWelcomeResultBtn) backToWelcomeResultBtn.addEventListener('click', confirmBackToWelcome);
+
+            // "Editor öffnen" inline link in preset section desc (event delegation for language switch)
+            const presetSection = document.getElementById('preset-section');
+            if (presetSection) {
+                presetSection.addEventListener('click', (e) => {
+                    if (e.target.id === 'start-editor-link' || e.target.closest('#start-editor-link')) {
+                        e.preventDefault();
+                        switchView('editor');
+                    }
+                });
+            }
+
+            // Global upload toggle
+            const globalUploadToggle = document.getElementById('global-upload-toggle');
+            if (globalUploadToggle) {
+                globalUploadToggle.addEventListener('change', () => {
+                    const enabled = globalUploadToggle.checked;
+                    // Set all preset upload flags to the global value
+                    if (presetsData && presetsData.presets) {
+                        presetsData.presets.forEach(p => {
+                            presetUploadFlags[p.id] = enabled;
+                        });
+                    }
+                });
+            }
+
+            // Editor card click handler
+            const editorCard = document.getElementById('editor-card');
+            if (editorCard) {
+                editorCard.addEventListener('click', () => switchView('editor'));
+            }
 
             console.log("View navigation setup complete.");
         }

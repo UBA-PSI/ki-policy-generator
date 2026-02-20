@@ -257,12 +257,12 @@ categories:
 
               Fügen Sie am Ende Ihrer Arbeit (vor dem Literaturverzeichnis) einen separaten Abschnitt mit der Überschrift "Erklärung zur Nutzung von KI-Werkzeugen" ein. Geben Sie dort stichpunktartig an:
 
-              - Welche KI-Werkzeuge Sie verwendet haben (z.B. "ChatGPT-4, HAWKI, DeepL Write").
+              - Welche KI-Werkzeuge Sie verwendet haben (z.B. "ChatGPT, HAWKI, DeepL Write").
               - Für welche Arbeitsschritte Sie diese eingesetzt haben (z.B. "Ideenfindung", "Sprachliche Überarbeitung Einleitung", "Literaturrecherche-Keywords", "Code-Generierung für Funktion X").
 
               *Beispiel:*
               **Erklärung zur Nutzung von KI-Werkzeugen**
-              Verwendete Tools: ChatGPT-4, DeepL Write
+              Verwendete Tools: ChatGPT, DeepL Write
               Einsatzzwecke: Brainstorming für Gliederungspunkte, sprachliche Überarbeitung des Methodenteils.
 
               Zusätzlich ist ggf. die Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
@@ -276,13 +276,13 @@ categories:
 
               **1. Abschnitt "Dokumentation der KI-Nutzung" im Anhang:**
 
-              - **Verwendete Tools:** Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. "ChatGPT-4 (OpenAI, Stand Mai 2024)", "HAWKI (Universität Bamberg)").
+              - **Verwendete Tools:** Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. "ChatGPT (OpenAI, Modell GPT-5)", "HAWKI (Universität Bamberg)").
               - **Nutzungsprotokoll (Beispiele):** Dokumentieren Sie exemplarisch Anfragen (Prompts) und die daraus resultierenden KI-Antworten, die Ihre Arbeit beeinflusst haben. Beschreiben Sie kurz, wie Sie die Antwort verwendet oder überarbeitet haben. (Umfang nach Absprache mit Lehrperson, z.B. 2-3 Beispiele).
               - **Reflexion:** Fügen Sie eine kurze persönliche Reflexion (ca. 100-200 Wörter) hinzu: Wie hat die KI-Nutzung Ihren Arbeitsprozess beeinflusst? Wo lagen die Vorteile, wo die Herausforderungen oder Grenzen?
 
               **2. Direkte Kennzeichnung im Text (nur bei direkter Übernahme):**
 
-              - Bei wörtlicher oder leicht paraphrasierter Übernahme von KI-generierten Passagen, kennzeichnen Sie diese direkt im Text (z.B. durch eine Fußnote: "Dieser Absatz basiert auf einem Vorschlag von ChatGPT-4.").
+              - Bei wörtlicher oder leicht paraphrasierter Übernahme von KI-generierten Passagen, kennzeichnen Sie diese direkt im Text (z.B. durch eine Fußnote: "Dieser Absatz basiert auf einem Vorschlag von ChatGPT.").
 
               **3. KI-gestützt gefundene Quellen im Literaturverzeichnis:**
 
@@ -698,7 +698,8 @@ ui_strings:
 
   # Presets
   preset_section_title: "Schnellstart: Vorlagen"
-  preset_section_desc: "Wählen Sie eine Vorlage als Ausgangspunkt oder passen Sie sie an Ihre Lehrveranstaltung an."
+  preset_section_desc: "Wählen Sie eine Vorlage als Ausgangspunkt — oder <a href='#' id='start-editor-link'>öffnen Sie den freien Editor</a>."
+  editor_card_desc: "Starten Sie ohne Vorlage und stellen Sie Ihre KI-Richtlinie frei zusammen."
   preset_more: "weitere"
   preset_tldr_title: "Zusammenfassung (TL;DR)"
   preset_items_title: "Enthaltene Bausteine"
