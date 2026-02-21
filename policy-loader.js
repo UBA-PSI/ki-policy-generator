@@ -169,7 +169,9 @@ function renderPolicyItem(item) {
     // parseMarkdown escaped HTML-Sonderzeichen bevor Markdown verarbeitet wird
     const textDiv = document.createElement('div');
     textDiv.className = 'policy-text';
-    // parseMarkdown ist die bestehende Funktion aus v3.html die escapeHTML intern aufruft
+    // Store raw Markdown source for correct revert in inline editor
+    textDiv.dataset.originalMarkdown = item.text.trim();
+    // Security: parseMarkdown escapes HTML via escapeHTML() before processing Markdown
     const renderedHtml = parseMarkdown(item.text.trim());
     textDiv.innerHTML = renderedHtml;
     itemDiv.appendChild(textDiv);
@@ -316,9 +318,10 @@ function addVariantBadges() {
         const actions = item.querySelector('.item-actions');
         if (!actions) return;
 
-        const badge = document.createElement('span');
+        const badge = document.createElement('button');
         badge.className = 'variant-badge';
         badge.title = t('variant_badge_tooltip', 'Textvarianten aus Vorlagen verfügbar');
+        badge.type = 'button';
         badge.textContent = '\u27D0 ' + t('variant_badge_label', 'Vorlagen');
         badge.addEventListener('click', () => {
             const itemId = item.dataset.id;
@@ -561,6 +564,17 @@ function applyUITranslations(language) {
         const translated = uiStrings[key];
         if (translated) {
             el.innerHTML = translated;
+        }
+    });
+
+    // Apply attribute translations via data-i18n-attr (format: "attr:key")
+    document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+        const spec = el.dataset.i18nAttr;
+        if (!spec) return;
+        const [attr, key] = spec.split(':');
+        const translated = uiStrings[key];
+        if (translated && attr) {
+            el.setAttribute(attr, translated);
         }
     });
 

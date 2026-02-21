@@ -650,6 +650,19 @@ ui_strings:
   btn_back_to_editor: "Back to Editor"
   btn_copy_result: "Copy Text"
   btn_download_html: "Download as HTML"
+  btn_print_pdf: "Save as PDF"
+
+  # Buttons - Editor Toolbar
+  btn_expand_all: "Expand all"
+  btn_collapse_all: "Collapse all"
+  search_placeholder: "Search items…"
+  search_no_results: "No results for"
+
+  # Preview
+  preview_title: "Preview"
+  preview_empty: "Select items to see a preview."
+  btn_preview: "Preview"
+  btn_preview_close: "Close preview"
 
   # Buttons - General
   btn_save: "Save"
@@ -725,6 +738,13 @@ ui_strings:
   preset_add_bullet: "+ Add bullet"
   preset_based_on_modified: "Based on {name}, customized"
   preset_edit_hint: "Tip: For significant changes, you should also adjust the template name and TL;DR above."
+
+  # Auto-Save
+  autosave_toast: "Saved"
+  autosave_restore_title: "Restore last session?"
+  autosave_restore_text: "A saved session was found. Would you like to restore it?"
+  autosave_restore_yes: "Restore"
+  autosave_restore_no: "Discard"
 
   # Variant badges
   variant_badge_tooltip: "Text variants from templates available"

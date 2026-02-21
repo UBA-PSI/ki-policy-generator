@@ -650,6 +650,19 @@ ui_strings:
   btn_back_to_editor: "Zurück zum Editor"
   btn_copy_result: "Text kopieren"
   btn_download_html: "Als HTML herunterladen"
+  btn_print_pdf: "Als PDF speichern"
+
+  # Buttons - Editor Toolbar
+  btn_expand_all: "Alle aufklappen"
+  btn_collapse_all: "Alle zuklappen"
+  search_placeholder: "Bausteine durchsuchen…"
+  search_no_results: "Keine Treffer für"
+
+  # Vorschau
+  preview_title: "Vorschau"
+  preview_empty: "Wählen Sie Bausteine aus, um eine Vorschau zu sehen."
+  btn_preview: "Vorschau"
+  btn_preview_close: "Vorschau schließen"
 
   # Buttons - Allgemein
   btn_save: "Speichern"
@@ -725,6 +738,13 @@ ui_strings:
   preset_add_bullet: "+ Bullet hinzufügen"
   preset_based_on_modified: "Basiert auf {name}, individuell angepasst"
   preset_edit_hint: "Tipp: Bei größeren Anpassungen sollten Sie auch den Vorlagennamen und das TL;DR oben anpassen."
+
+  # Auto-Save
+  autosave_toast: "Gespeichert"
+  autosave_restore_title: "Letzte Sitzung wiederherstellen?"
+  autosave_restore_text: "Es gibt eine gespeicherte Arbeitssitzung. Möchten Sie diese wiederherstellen?"
+  autosave_restore_yes: "Wiederherstellen"
+  autosave_restore_no: "Verwerfen"
 
   # Variant badges
   variant_badge_tooltip: "Textvarianten aus Vorlagen verfügbar"

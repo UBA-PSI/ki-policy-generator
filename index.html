@@ -161,6 +161,211 @@
             width: 100%;
         }
 
+        .editor-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 2px;
+            gap: 12px;
+        }
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .item-search {
+            width: 100%;
+            padding: 8px 32px 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background-color: var(--white);
+        }
+        .item-search:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0,96,223,0.15);
+        }
+        .search-clear {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--light-gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            line-height: 1;
+        }
+        .search-clear:hover {
+            color: var(--dark-gray);
+        }
+        .search-no-results {
+            text-align: center;
+            padding: 24px;
+            color: var(--medium-gray);
+            font-size: 0.95rem;
+        }
+        .policy-item.search-hidden,
+        .subcategory.search-hidden,
+        .category.search-hidden {
+            display: none;
+        }
+        .policy-item.search-highlight .policy-text {
+            background-color: #fffde7;
+        }
+
+        /* Live Preview */
+        .live-preview {
+            display: none;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .live-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--very-light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .live-preview-header h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+        .live-preview-close {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--light-gray);
+            cursor: pointer;
+            padding: 2px 6px;
+            line-height: 1;
+        }
+        .live-preview-close:hover {
+            color: var(--dark-gray);
+        }
+        .live-preview-content {
+            padding: 16px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .live-preview-content .generated-policy h1 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .live-preview-content .generated-policy h2 {
+            font-size: 1rem;
+            margin-top: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+        .live-preview-content .policy-subcategory h3 {
+            font-size: 0.9rem;
+        }
+        .live-preview-content .policy-tldr-section {
+            padding: 0.6rem 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .live-preview-content .policy-tldr-section h2 {
+            font-size: 0.9rem;
+        }
+        .live-preview-empty {
+            color: var(--light-gray);
+            font-style: italic;
+            text-align: center;
+            padding: 40px 16px;
+        }
+        .live-preview-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 24px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: background 0.2s;
+        }
+        .live-preview-toggle:hover {
+            background: var(--primary-hover);
+        }
+        .live-preview-toggle.active {
+            background: var(--medium-gray);
+        }
+
+        /* Desktop: side-by-side layout >= 1200px */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1600px;
+            }
+            .panels {
+                display: flex;
+                gap: 20px;
+            }
+            .left-panel {
+                flex: 1;
+                min-width: 0;
+            }
+            .live-preview {
+                display: flex;
+                width: 380px;
+                flex-shrink: 0;
+                position: sticky;
+                top: 20px;
+                max-height: calc(100vh - 40px);
+                align-self: flex-start;
+            }
+        }
+
+        /* Smaller screens: overlay panel */
+        @media (max-width: 1199px) {
+            .live-preview-toggle {
+                display: block;
+            }
+            .live-preview {
+                position: fixed;
+                top: 0;
+                right: -400px;
+                width: min(380px, 85vw);
+                height: 100vh;
+                z-index: 500;
+                border-radius: 0;
+                box-shadow: -4px 0 16px rgba(0,0,0,0.15);
+                transition: right 0.25s ease;
+            }
+            .live-preview.open {
+                display: flex;
+                right: 0;
+            }
+            .live-preview-close {
+                display: block;
+            }
+            .live-preview-content {
+                flex: 1;
+            }
+        }
+
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -294,6 +499,24 @@
             font-size: 1.3em;
             color: #333;
             font-weight: 600;
+        }
+        .category-count {
+            display: none;
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            border-radius: 11px;
+            padding: 0 7px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        .category-count.has-items {
+            display: inline-block;
         }
         .category-content {
             max-height: 0;
@@ -684,6 +907,20 @@
             padding: 10px 20px;
             background-color: var(--primary-color);
         }
+        .generate-badge {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.25);
+            color: var(--white);
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 10px;
+            padding: 0 6px;
+            margin-left: 8px;
+        }
 
         .btn-secondary-action {
             background-color: var(--white);
@@ -716,6 +953,63 @@
             background-color: var(--secondary-hover);
             border-color: #ccc;
             color: var(--dark-gray);
+        }
+
+        /* Auto-save toast */
+        .autosave-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--success-color);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 2000;
+            pointer-events: none;
+        }
+        .autosave-toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Auto-save restore banner */
+        .autosave-banner {
+            background-color: #f0f5ff;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .autosave-banner-text {
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+        .autosave-banner-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .back-btn--warn {
+            color: #8a4000;
+            border-color: #e0b870;
+            background-color: #fffaf0;
+        }
+        .back-btn--warn:hover {
+            background-color: #fef3e0;
+            border-color: #d09530;
+            color: #6e3200;
         }
 
         /* Modal styles */
@@ -762,6 +1056,10 @@
             font-weight: bold;
             cursor: pointer;
             z-index: 10;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
         }
 
         .close-modal:hover {
@@ -808,6 +1106,33 @@
             background-color: #f5f5f5;
             padding: 2px 4px;
             border-radius: 3px;
+        }
+
+        /* Skip navigation */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            z-index: 10000;
+            font-size: 0.9rem;
+            border-radius: 0 0 4px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         /* Generated policy styles */
@@ -1452,7 +1777,7 @@
                 margin: 0; /* Remove margin */
             }
 
-            .result-header, .result-notice, header, footer, #welcome-view, #editor-view, #save-load-modal, #save-load-btn, #generate-policy-btn, .header-buttons {
+            .result-header, .result-notice, header, footer, #welcome-view, #editor-view, #save-load-modal, #save-load-btn, #generate-policy-btn, .header-buttons, .live-preview, .live-preview-toggle {
                 display: none !important; /* Force hide specific elements */
                 visibility: hidden !important;
             }
@@ -1508,6 +1833,16 @@
             #policy-card-container, #policy-card-container * {
                 visibility: visible !important;
             }
+
+            /* Keep subcategories together where possible */
+            .policy-subcategory {
+                page-break-inside: avoid;
+            }
+
+            /* TL;DR section: keep together */
+            .policy-tldr-section {
+                page-break-inside: avoid;
+            }
         }
 
         .policy-subcategory {
@@ -1557,6 +1892,79 @@
         .preset-section > p {
             margin-bottom: 1.5rem;
             color: var(--medium-gray);
+        }
+
+        /* Preset Comparison */
+        .preset-comparison {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .preset-comparison summary {
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            padding: 8px 0;
+            list-style: none;
+        }
+        .preset-comparison summary::-webkit-details-marker { display: none; }
+        .preset-comparison summary::before {
+            content: '▸ ';
+            font-size: 0.85rem;
+        }
+        .preset-comparison[open] summary::before {
+            content: '▾ ';
+        }
+        .preset-comparison-table-wrap {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+        .preset-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+        .preset-comparison-table th,
+        .preset-comparison-table td {
+            padding: 6px 10px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .preset-comparison-table th {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            background: var(--very-light-gray);
+        }
+        .preset-comparison-table .row-label {
+            text-align: left;
+            font-weight: 500;
+            color: var(--medium-gray);
+            white-space: normal;
+            min-width: 120px;
+        }
+        .preset-comparison-table .c-yes {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+        .preset-comparison-table .c-no {
+            color: var(--light-gray);
+        }
+        .comparison-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+        .comparison-hint {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--light-gray);
+            margin-top: 6px;
+            margin-bottom: 0;
         }
 
         /* Preset Grid */
@@ -2166,14 +2574,15 @@
     </style>
 </head>
 <body>
+    <a href="#editor-view" class="skip-link">Zum Inhalt springen</a>
     <!-- Welcome View - moved outside main container -->
-    <div id="welcome-view" class="view active-view">
+    <div id="welcome-view" class="view active-view" role="region" aria-label="Startseite">
         <div class="welcome-content">
             <div class="welcome-flex-container">
                 <div class="welcome-primary-column">
                     <div class="welcome-title-row">
                         <h1>KI-Policy-Generator</h1>
-                        <div class="language-switcher">
+                        <div class="language-switcher" role="group" aria-label="Sprache wählen">
                             <button data-lang="de" class="active" title="Deutsch">DE</button>
                             <button data-lang="en" title="English">EN</button>
                         </div>
@@ -2197,6 +2606,72 @@
                             <!-- Preset cards rendered dynamically -->
                         </div>
                     </section>
+
+                    <details id="preset-comparison" class="preset-comparison">
+                        <summary data-ui-lang="de">Vorlagen im Vergleich</summary>
+                        <summary data-ui-lang="en" style="display:none">Compare Templates</summary>
+                        <div class="preset-comparison-table-wrap">
+                            <table class="preset-comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</th>
+                                        <th><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</th>
+                                        <th><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</th>
+                                        <th><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</th>
+                                        <th><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</th>
+                                        <th><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-ui-lang="de">
+                                    <tr>
+                                        <td class="row-label">KI zum Lernen</td>
+                                        <td class="c-no">Nein</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">KI bei Abgaben</td>
+                                        <td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">Kennzeichnung</td>
+                                        <td>Keine</td><td>Keine</td><td>Einfach</td><td>Detailliert</td><td>Keine</td><td>Detailliert</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">Prüfungsform</td>
+                                        <td>Klausur</td><td>Klausur</td><td>Kolloquium</td><td>Kolloquium</td><td>Verteidigung</td><td>Portfolio</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">KI-Kompetenz Lernziel</td>
+                                        <td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-yes">Ja</td>
+                                    </tr>
+                                </tbody>
+                                <tbody data-ui-lang="en" style="display:none">
+                                    <tr>
+                                        <td class="row-label">AI for Learning</td>
+                                        <td class="c-no">No</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">AI for Submissions</td>
+                                        <td class="c-no">No</td><td class="c-no">No</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">Documentation</td>
+                                        <td>None</td><td>None</td><td>Simple</td><td>Detailed</td><td>None</td><td>Detailed</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">Exam Format</td>
+                                        <td>Exam</td><td>Exam</td><td>Colloquium</td><td>Colloquium</td><td>Defense</td><td>Portfolio</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label">AI Competence Goal</td>
+                                        <td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-yes">Yes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="comparison-hint" data-ui-lang="de">Restriktiv &larr; &rarr; Permissiv</p>
+                        <p class="comparison-hint" data-ui-lang="en" style="display:none">Restrictive &larr; &rarr; Permissive</p>
+                    </details>
 
                     <!-- German welcome content -->
                     <div class="welcome-lang-content" data-ui-lang="de">
@@ -2315,14 +2790,14 @@
         </div>
     </div>
 
-    <div class="container">
+    <main class="container" role="main">
         <header>
             <div class="header-top-row">
                 <div class="header-title-area">
                     <h1 id="main-title" data-i18n="main_title">KI-Policy-Generator für die Lehre</h1>
                 </div>
                 <div class="header-buttons">
-                        <div class="language-switcher header-language-switcher">
+                        <div class="language-switcher header-language-switcher" role="group" aria-label="Sprache wählen">
                             <button data-lang="de" class="active" title="Deutsch">DE</button>
                             <button data-lang="en" title="English">EN</button>
                         </div>
@@ -2333,9 +2808,9 @@
         </header>
 
         <!-- Editor View -->
-        <div id="editor-view" class="view">
+        <div id="editor-view" class="view" role="region" aria-label="Editor">
             <div class="editor-header">
-                <button id="back-to-welcome" class="back-btn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
+                <button id="back-to-welcome" class="back-btn back-btn--warn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
 
                 <div class="header-top-row">
                     <h2 id="document-title" class="editable-title">KI-Richtlinie für meine Lehrveranstaltung</h2>
@@ -2360,20 +2835,39 @@
                 <button id="preset-add-bullet" class="secondary-btn" data-i18n="preset_add_bullet">+ Bullet hinzufügen</button>
             </div>
 
+            <div class="editor-toolbar">
+                <div class="search-wrapper">
+                    <input type="text" id="item-search" class="item-search" data-i18n-attr="placeholder:search_placeholder" placeholder="Bausteine durchsuchen…" autocomplete="off" />
+                    <button id="search-clear" class="search-clear" style="display:none" aria-label="Suche zurücksetzen">&times;</button>
+                </div>
+                <button id="toggle-all-categories" class="secondary-btn" data-i18n="btn_expand_all">Alle aufklappen</button>
+            </div>
+
             <div class="panels">
                 <div class="left-panel">
                     <!-- Policy items werden dynamisch aus policy-data.yaml geladen -->
                 </div>
+                <aside id="live-preview" class="live-preview">
+                    <div class="live-preview-header">
+                        <h3 data-i18n="preview_title">Vorschau</h3>
+                        <button id="live-preview-close" class="live-preview-close" aria-label="Vorschau schließen">&times;</button>
+                    </div>
+                    <div id="live-preview-content" class="live-preview-content">
+                        <p class="live-preview-empty" data-i18n="preview_empty">Wählen Sie Bausteine aus, um eine Vorschau zu sehen.</p>
+                    </div>
+                </aside>
             </div>
+            <button id="live-preview-toggle" class="live-preview-toggle" aria-label="Vorschau ein-/ausblenden" data-i18n="btn_preview">Vorschau</button>
         </div>
 
         <!-- Result View -->
-        <div id="result-view" class="view">
+        <div id="result-view" class="view" role="region" aria-label="Ergebnis">
             <div class="result-header">
-                <button id="back-to-welcome-result" class="back-btn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
+                <button id="back-to-welcome-result" class="back-btn back-btn--warn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
                 <button id="back-to-editor" class="back-btn" data-i18n="btn_back_to_editor">Zurück zum Editor</button>
                 <button id="copy-result" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
                 <button id="download-html-btn" class="action-btn btn-secondary-action" data-i18n="btn_download_html">Als HTML herunterladen</button>
+                <button id="print-pdf-btn" class="action-btn btn-secondary-action" data-i18n="btn_print_pdf">Als PDF speichern</button>
                 <button id="copy-card-btn" class="action-btn btn-secondary-action" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
             </div>
             <div class="result-notice">
@@ -2382,13 +2876,13 @@
             <div id="policy-card-container" style="display:none"></div>
             <div id="policy-result-container"></div> <!-- Renamed ID -->
         </div>
-    </div>
+    </main>
 
     <!-- Save/Load Modal -->
-    <div id="save-load-modal" class="modal">
+    <div id="save-load-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="save-load-modal-title">
         <div class="modal-content save-load-modal-content">
-            <span class="close-modal" id="close-save-load-modal">&times;</span>
-            <h2 data-i18n="modal_title">Speichern & Laden</h2>
+            <button class="close-modal" id="close-save-load-modal" aria-label="Schließen">&times;</button>
+            <h2 id="save-load-modal-title" data-i18n="modal_title">Speichern & Laden</h2>
             <div class="save-load-container">
                 <div id="save-container">
                     <p data-i18n="modal_save_desc">Speichern Sie Ihre aktuelle Konfiguration in einer Datei:</p>
@@ -2450,7 +2944,7 @@
     </footer>
 
     <!-- Preset Detail Modal -->
-    <div id="preset-detail-modal" class="preset-detail-modal">
+    <div id="preset-detail-modal" class="preset-detail-modal" role="dialog" aria-modal="true" aria-labelledby="preset-detail-name-text">
         <div class="preset-detail-content">
             <div class="preset-detail-header">
                 <div class="preset-detail-header-inner">
@@ -2461,7 +2955,7 @@
                         </div>
                         <div id="preset-detail-desc" class="preset-detail-desc"></div>
                     </div>
-                    <button id="preset-detail-close" class="preset-detail-close">&times;</button>
+                    <button id="preset-detail-close" class="preset-detail-close" aria-label="Schließen">&times;</button>
                 </div>
             </div>
             <div class="preset-detail-body">
@@ -2880,6 +3374,8 @@
                 // Set the text content directly since titles usually don't have formatting
                 documentTitle.textContent = titleInput.value;
                 exitTitleEditMode();
+                scheduleAutoSave();
+                schedulePreviewUpdate();
             });
 
             const cancelBtn = document.createElement('button');
@@ -2902,6 +3398,8 @@
                 if (e.key === 'Enter') {
                     documentTitle.textContent = titleInput.value;
                     exitTitleEditMode();
+                    scheduleAutoSave();
+                    schedulePreviewUpdate();
                 }
                 if (e.key === 'Escape') {
                     exitTitleEditMode();
@@ -2950,8 +3448,11 @@
             saveBtn.textContent = t('btn_save', 'Speichern');
             saveBtn.addEventListener('click', () => {
                 documentIntro = introTextarea.value;
+                window.documentIntro = introTextarea.value;
                 updateIntroDisplay(); // This function already uses parseMarkdown
                 exitIntroEditMode();
+                scheduleAutoSave();
+                schedulePreviewUpdate();
             });
 
             const cancelBtn = document.createElement('button');
@@ -2975,8 +3476,11 @@
                 }
                 if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                     documentIntro = introTextarea.value;
+                    window.documentIntro = introTextarea.value;
                     updateIntroDisplay();
                     exitIntroEditMode();
+                    scheduleAutoSave();
+                    schedulePreviewUpdate();
                 }
             });
         }
@@ -2999,33 +3503,156 @@
                 header.style.justifyContent = 'space-between';
                 header.style.alignItems = 'center';
                 header.style.width = '100%';
-                
-                // Remove old chevrons first
+
+                // ARIA: make header act as button for screen readers
+                header.setAttribute('role', 'button');
+                header.setAttribute('tabindex', '0');
+                header.setAttribute('aria-expanded', 'false');
+
+                // Remove old chevrons and count badges first
                 const oldChevron = header.querySelector('.chevron');
-                if (oldChevron) {
-                    oldChevron.remove();
-                }
-                
+                if (oldChevron) oldChevron.remove();
+                const oldCount = header.querySelector('.category-count');
+                if (oldCount) oldCount.remove();
+
+                // Add count badge (between h2 and chevron)
+                const countBadge = document.createElement('span');
+                countBadge.className = 'category-count';
+                countBadge.textContent = '0';
+                header.appendChild(countBadge);
+
                 // Add new chevron
                 const chevron = document.createElement('span');
                 chevron.className = 'chevron';
-                chevron.innerHTML = '&#9660;'; // Down arrow
+                chevron.textContent = '\u25BC'; // Down arrow
+                chevron.setAttribute('aria-hidden', 'true');
                 header.appendChild(chevron);
             });
-            
+
             // Remove old click handlers by using event delegation instead
             document.removeEventListener('click', categoryClickHandler);
             document.addEventListener('click', categoryClickHandler);
-            
+
+            // Allow keyboard activation (Enter/Space) on category headers
+            document.removeEventListener('keydown', categoryKeyHandler);
+            document.addEventListener('keydown', categoryKeyHandler);
+
             // Close all categories first
             document.querySelectorAll('.category').forEach(category => {
                 category.classList.remove('expanded');
             });
-            
+
             // Expand only the first category by default
             const firstCategory = document.querySelector('.category');
             if (firstCategory) {
                 firstCategory.classList.add('expanded');
+                const firstHeader = firstCategory.querySelector('.category-header');
+                if (firstHeader) firstHeader.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // Toggle all categories expand/collapse
+        function setupToggleAllCategories() {
+            const btn = document.getElementById('toggle-all-categories');
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                const categories = document.querySelectorAll('.category');
+                const allExpanded = Array.from(categories).every(c => c.classList.contains('expanded'));
+                categories.forEach(c => {
+                    const hdr = c.querySelector('.category-header');
+                    if (allExpanded) {
+                        c.classList.remove('expanded');
+                        if (hdr) hdr.setAttribute('aria-expanded', 'false');
+                    } else {
+                        c.classList.add('expanded');
+                        if (hdr) hdr.setAttribute('aria-expanded', 'true');
+                    }
+                });
+                btn.textContent = allExpanded ? t('btn_expand_all', 'Alle aufklappen') : t('btn_collapse_all', 'Alle zuklappen');
+            });
+        }
+
+        // --- Item search / filter ---
+        function setupItemSearch() {
+            const input = document.getElementById('item-search');
+            const clearBtn = document.getElementById('search-clear');
+            if (!input) return;
+
+            let debounceTimer = null;
+            input.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => filterItems(input.value.trim()), 150);
+                clearBtn.style.display = input.value ? 'block' : 'none';
+            });
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    input.value = '';
+                    clearBtn.style.display = 'none';
+                    filterItems('');
+                    input.focus();
+                });
+            }
+        }
+
+        function filterItems(query) {
+            const leftPanel = document.querySelector('.left-panel');
+            if (!leftPanel) return;
+
+            // Remove previous no-results message
+            const oldMsg = leftPanel.querySelector('.search-no-results');
+            if (oldMsg) oldMsg.remove();
+
+            const items = leftPanel.querySelectorAll('.policy-item');
+            const subcategories = leftPanel.querySelectorAll('.subcategory');
+            const categories = leftPanel.querySelectorAll('.category');
+
+            // Reset visibility
+            if (!query) {
+                items.forEach(el => el.classList.remove('search-hidden', 'search-highlight'));
+                subcategories.forEach(el => el.classList.remove('search-hidden'));
+                categories.forEach(el => el.classList.remove('search-hidden'));
+                return;
+            }
+
+            const lower = query.toLowerCase();
+            let matchCount = 0;
+
+            // Filter items
+            items.forEach(item => {
+                const text = item.querySelector('.policy-text');
+                const tags = item.querySelector('.policy-tags');
+                const content = ((text ? text.textContent : '') + ' ' + (tags ? tags.textContent : '')).toLowerCase();
+                const matches = content.includes(lower);
+                item.classList.toggle('search-hidden', !matches);
+                item.classList.toggle('search-highlight', matches);
+                if (matches) matchCount++;
+            });
+
+            // Hide subcategories with no visible items
+            subcategories.forEach(sub => {
+                const hasVisible = sub.querySelector('.policy-item:not(.search-hidden)');
+                sub.classList.toggle('search-hidden', !hasVisible);
+            });
+
+            // Hide categories with no visible subcategories, expand those with matches
+            categories.forEach(cat => {
+                const hasVisible = cat.querySelector('.subcategory:not(.search-hidden)');
+                cat.classList.toggle('search-hidden', !hasVisible);
+                if (hasVisible) {
+                    cat.classList.add('expanded');
+                    const hdr = cat.querySelector('.category-header');
+                    if (hdr) hdr.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            // Show no-results message
+            if (matchCount === 0) {
+                const msg = document.createElement('div');
+                msg.className = 'search-no-results';
+                msg.setAttribute('role', 'status');
+                msg.setAttribute('aria-live', 'polite');
+                msg.textContent = t('search_no_results', 'Keine Treffer für') + ' "' + query + '"';
+                leftPanel.prepend(msg);
             }
         }
 
@@ -3033,21 +3660,172 @@
             // Check if the click was directly on the header, its h2, or the chevron
             const header = event.target.closest('.category-header');
             if (!header) return;
-            
+
             // Don't trigger if clicking on buttons or their content
-            if (event.target.closest('.item-actions') || 
+            if (event.target.closest('.item-actions') ||
                 event.target.closest('button')) {
                 return;
             }
-            
+
             // If we got here, it's a valid header click
             const category = header.closest('.category');
             if (category) {
                 category.classList.toggle('expanded');
+                header.setAttribute('aria-expanded', category.classList.contains('expanded') ? 'true' : 'false');
+                updateToggleAllLabel();
             }
         }
 
-        
+        function categoryKeyHandler(event) {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            const header = event.target.closest('.category-header');
+            if (!header || header !== event.target) return;
+            event.preventDefault();
+            header.click();
+        }
+
+        // Update selection count badges on category headers and generate button
+        function updateSelectionCounters() {
+            // Count selected items per category
+            const countsByCategory = {};
+            selectedItems.forEach(item => {
+                countsByCategory[item.categoryTitle] = (countsByCategory[item.categoryTitle] || 0) + 1;
+            });
+
+            // Update category header badges
+            document.querySelectorAll('.category').forEach(cat => {
+                const h2 = cat.querySelector('.category-header h2');
+                const badge = cat.querySelector('.category-count');
+                if (!h2 || !badge) return;
+                const title = h2.textContent.trim();
+                const count = countsByCategory[title] || 0;
+                badge.textContent = count;
+                badge.classList.toggle('has-items', count > 0);
+            });
+
+            // Trigger auto-save after selection change
+            scheduleAutoSave();
+
+            // Update live preview
+            schedulePreviewUpdate();
+
+            // Update generate button badge
+            const genBtn = document.getElementById('generate-policy-btn');
+            if (genBtn) {
+                let badge = genBtn.querySelector('.generate-badge');
+                if (selectedItems.length > 0) {
+                    if (!badge) {
+                        badge = document.createElement('span');
+                        badge.className = 'generate-badge';
+                        genBtn.appendChild(badge);
+                    }
+                    badge.textContent = selectedItems.length;
+                } else if (badge) {
+                    badge.remove();
+                }
+            }
+        }
+
+        function updateToggleAllLabel() {
+            const btn = document.getElementById('toggle-all-categories');
+            if (!btn) return;
+            const categories = document.querySelectorAll('.category');
+            const allExpanded = Array.from(categories).every(c => c.classList.contains('expanded'));
+            btn.textContent = allExpanded ? t('btn_collapse_all', 'Alle zuklappen') : t('btn_expand_all', 'Alle aufklappen');
+        }
+
+        // Live Preview
+        let _previewDebounce = null;
+        function schedulePreviewUpdate() {
+            clearTimeout(_previewDebounce);
+            _previewDebounce = setTimeout(updateLivePreview, 150);
+        }
+
+        function updateLivePreview() {
+            const container = document.getElementById('live-preview-content');
+            if (!container) return;
+
+            if (selectedItems.length === 0) {
+                container.innerHTML = `<p class="live-preview-empty">${escapeHTML(t('preview_empty', 'Wählen Sie Bausteine aus, um eine Vorschau zu sehen.'))}</p>`;
+                return;
+            }
+
+            const itemsByCategory = {};
+            selectedItems.forEach(item => {
+                if (!itemsByCategory[item.categoryTitle]) {
+                    itemsByCategory[item.categoryTitle] = [];
+                }
+                itemsByCategory[item.categoryTitle].push(item);
+            });
+
+            let html = `<div class="generated-policy">`;
+            html += `<h1>${escapeHTML(documentTitle.textContent)}</h1>`;
+            html += `<div class="policy-date">${escapeHTML(t('date_label', 'Stand'))}: ${new Date().toLocaleDateString(t('date_locale', 'de-DE'))}</div>`;
+            html += `<div class="policy-intro">${parseMarkdown(window.documentIntro || documentIntro)}</div>`;
+
+            if (activePreset) {
+                const { name: tldrName, bullets: tldrBullets } = getCardNameAndBullets();
+                const displayName = presetModified
+                    ? tldrName + ' ' + t('preset_modified_suffix', '(angepasst)')
+                    : tldrName;
+                if (tldrBullets.length > 0) {
+                    html += `<div class="policy-tldr-section">`;
+                    html += `<h2>${escapeHTML(displayName)} – ${escapeHTML(t('preset_tldr_title', 'Zusammenfassung (TL;DR)'))}</h2>`;
+                    html += `<ul>`;
+                    tldrBullets.forEach(bullet => {
+                        html += `<li>${parseMarkdown(bullet).replace(/<\/?p>/g, '')}</li>`;
+                    });
+                    html += `</ul></div>`;
+                }
+            }
+
+            html += `<div class="policy-content">`;
+            Object.entries(itemsByCategory).forEach(([categoryTitle, items]) => {
+                const cleanCategoryTitle = categoryTitle.replace(/^\d+\.\s*/, '');
+                html += `<div class="policy-category"><h2 class="category-title">${escapeHTML(cleanCategoryTitle)}</h2>`;
+                const itemsBySubcategory = {};
+                items.forEach(item => {
+                    const sub = item.subcategoryTitle || t('default_subcategory', 'Allgemein');
+                    if (!itemsBySubcategory[sub]) itemsBySubcategory[sub] = [];
+                    itemsBySubcategory[sub].push(item);
+                });
+                Object.entries(itemsBySubcategory).forEach(([subTitle, subItems]) => {
+                    html += `<div class="policy-subcategory"><h3 class="subcategory-title">${escapeHTML(subTitle)}</h3>`;
+                    subItems.forEach(item => {
+                        const content = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>'))
+                            ? item.text : parseMarkdown(item.text);
+                        html += `<div class="policy-item-result"><div class="policy-item-text">${content}</div></div>`;
+                    });
+                    html += `</div>`;
+                });
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+
+            container.innerHTML = html;
+        }
+
+        function setupLivePreview() {
+            const toggle = document.getElementById('live-preview-toggle');
+            const panel = document.getElementById('live-preview');
+            const closeBtn = document.getElementById('live-preview-close');
+            if (!toggle || !panel) return;
+
+            toggle.addEventListener('click', () => {
+                const isOpen = panel.classList.toggle('open');
+                toggle.classList.toggle('active', isOpen);
+                toggle.textContent = isOpen ? t('btn_preview_close', 'Vorschau schließen') : t('btn_preview', 'Vorschau');
+                if (isOpen) updateLivePreview();
+            });
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    panel.classList.remove('open');
+                    toggle.classList.remove('active');
+                    toggle.textContent = t('btn_preview', 'Vorschau');
+                });
+            }
+        }
 
         // Generate policy
         function generatePolicy() {
@@ -3316,6 +4094,7 @@
                     }
                 });
             }
+            updateSelectionCounters();
         }
 
         // Initialisierung aller policy-items mit eindeutigen IDs
@@ -3330,10 +4109,10 @@
                 const id = `item-${index + 1}`;
                 item.dataset.id = id;
                 
-                // Speichere den Originaltext
+                // Speichere den Originaltext als Markdown (nicht textContent)
                 const policyText = item.querySelector('.policy-text');
                 if (policyText) {
-                    originalPolicyItems[id] = policyText.textContent.trim();
+                    originalPolicyItems[id] = policyText.dataset.originalMarkdown || policyText.textContent.trim();
                 }
                 
                 console.log(`Initialisiert: ID ${id}, Text: "${policyText.textContent.trim().substring(0, 30)}..."`);
@@ -3528,6 +4307,8 @@
             
             // Exit editing mode
             exitInlineEditMode(policyItem);
+            scheduleAutoSave();
+            schedulePreviewUpdate();
         }
 
         // Function to cancel inline edit
@@ -3723,6 +4504,7 @@
             });
 
             modal.classList.add('visible');
+            trapFocus(modal);
         }
 
         /**
@@ -3731,6 +4513,7 @@
         function closePresetDetail() {
             const modal = document.getElementById('preset-detail-modal');
             if (modal) modal.classList.remove('visible');
+            releaseFocusTrap();
         }
 
         /**
@@ -4103,6 +4886,7 @@
                 presetModified = true;
                 updatePresetHintModified();
             }
+            schedulePreviewUpdate();
         }
 
         /**
@@ -4117,6 +4901,9 @@
             if (modal) {
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) closePresetDetail();
+                });
+                modal.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closePresetDetail();
                 });
             }
 
@@ -4177,6 +4964,9 @@
             addSvgIcons();
             updateIntroDisplay();
             initializeAccordions();
+            setupToggleAllCategories();
+            setupItemSearch();
+            setupLivePreview();
             console.log("UI elements initialized.");
         }
 
@@ -4224,12 +5014,24 @@
                 }
                 // Revert any edited item texts back to originals
                 Object.keys(originalPolicyItems).forEach(id => {
-                    const contentEl = document.getElementById(id);
-                    if (contentEl) {
-                        contentEl.innerHTML = originalPolicyItems[id];
+                    const item = document.querySelector(`.policy-item[data-id="${id}"]`);
+                    if (item) {
+                        const policyText = item.querySelector('.policy-text');
+                        if (policyText) {
+                            // Security: originalPolicyItems contains trusted YAML text,
+                            // parseMarkdown escapes HTML via escapeHTML() before processing
+                            policyText.innerHTML = parseMarkdown(originalPolicyItems[id]);
+                        }
                     }
                     delete originalPolicyItems[id];
                 });
+                updateSelectionCounters();
+                clearAutoSave();
+                // Reset search filter
+                const searchInput = document.getElementById('item-search');
+                if (searchInput) { searchInput.value = ''; filterItems(''); }
+                const searchClear = document.getElementById('search-clear');
+                if (searchClear) searchClear.style.display = 'none';
                 switchView('welcome');
             }
             if (backToWelcomeBtn) backToWelcomeBtn.addEventListener('click', confirmBackToWelcome);
@@ -4339,6 +5141,7 @@
                     if (clone.classList.contains('added')) {
                         removeSelectedItem(id);
                         clone.classList.remove('added');
+                        clone.setAttribute('aria-pressed', 'false');
                         // Security: SVG icons defined locally, t() returns trusted YAML strings
                         clone.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
                         policyItem.classList.remove('selected');
@@ -4355,14 +5158,145 @@
                         console.log(`Added item to selectedItems with subcategory "${subcategoryTitle}"`);
 
                         clone.classList.add('added');
+                        clone.setAttribute('aria-pressed', 'true');
                         // Security: SVG icons defined locally, t() returns trusted YAML strings
                         clone.innerHTML = window.svgIcons.trash + ' ' + t('btn_remove', 'Nicht verwenden');
                         policyItem.classList.add('selected');
                         markPresetModified();
                     }
+                    updateSelectionCounters();
                 });
             });
             console.log("Editor interactions setup complete.");
+        }
+
+        // --- Auto-Save to localStorage ---
+        const AUTOSAVE_KEY = 'ki-policy-autosave';
+        let autosaveTimer = null;
+
+        function getAutoSaveState() {
+            const elements = {};
+            document.querySelectorAll('.policy-item').forEach(item => {
+                const id = item.dataset.id;
+                if (!id) return;
+                const policyText = item.querySelector('.policy-text');
+                if (!policyText) return;
+                elements[id] = {
+                    currentText: policyText.innerHTML,
+                    originalText: originalPolicyItems[id] || "",
+                    isAdded: item.classList.contains('selected')
+                };
+            });
+            return {
+                title: documentTitle ? documentTitle.textContent : 'KI-Richtlinie',
+                intro: window.documentIntro || documentIntro,
+                language: typeof currentLanguage !== 'undefined' ? currentLanguage : 'de',
+                elements: elements,
+                version: '3.0',
+                timestamp: Date.now()
+            };
+        }
+
+        function scheduleAutoSave() {
+            if (autosaveTimer) clearTimeout(autosaveTimer);
+            autosaveTimer = setTimeout(() => {
+                // Only save if there is actual state worth saving
+                if (selectedItems.length === 0 && !activePreset) return;
+                try {
+                    const state = getAutoSaveState();
+                    localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(state));
+                    showAutoSaveToast();
+                } catch (e) {
+                    console.warn('Auto-save failed:', e);
+                }
+            }, 1000); // Debounce 1s
+        }
+
+        function showAutoSaveToast() {
+            let toast = document.querySelector('.autosave-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'autosave-toast';
+                toast.setAttribute('role', 'status');
+                toast.setAttribute('aria-live', 'polite');
+                document.body.appendChild(toast);
+            }
+            toast.textContent = t('autosave_toast', 'Gespeichert');
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 1500);
+        }
+
+        function clearAutoSave() {
+            try { localStorage.removeItem(AUTOSAVE_KEY); } catch(e) {}
+        }
+
+        function checkAutoSaveRestore() {
+            let saved;
+            try {
+                const raw = localStorage.getItem(AUTOSAVE_KEY);
+                if (!raw) return;
+                saved = JSON.parse(raw);
+                if (!saved || saved.version !== '3.0') { clearAutoSave(); return; }
+                // Check if any items were actually selected
+                const hasSelection = Object.values(saved.elements).some(el => el.isAdded);
+                if (!hasSelection) { clearAutoSave(); return; }
+            } catch(e) { clearAutoSave(); return; }
+
+            // Show restore banner inside the editor header
+            const editorView = document.getElementById('editor-view');
+            if (!editorView) return;
+
+            const banner = document.createElement('div');
+            banner.className = 'autosave-banner';
+            banner.innerHTML = '<span class="autosave-banner-text">' +
+                escapeHTML(t('autosave_restore_text', 'Es gibt eine gespeicherte Arbeitssitzung. Möchten Sie diese wiederherstellen?')) +
+                '</span><div class="autosave-banner-actions">' +
+                '<button class="action-btn" id="autosave-restore-yes">' +
+                escapeHTML(t('autosave_restore_yes', 'Wiederherstellen')) + '</button>' +
+                '<button class="back-btn" id="autosave-restore-no">' +
+                escapeHTML(t('autosave_restore_no', 'Verwerfen')) + '</button></div>';
+
+            // Insert at the very top of editor view
+            editorView.insertBefore(banner, editorView.firstChild);
+
+            document.getElementById('autosave-restore-yes').addEventListener('click', async () => {
+                banner.remove();
+                // If language differs, switch first
+                const savedLang = saved.language || 'de';
+                if (savedLang !== (typeof currentLanguage !== 'undefined' ? currentLanguage : 'de') && typeof initializePolicyLoader === 'function') {
+                    await initializePolicyLoader(savedLang);
+                }
+                applyLoadedState(saved);
+                switchView('editor');
+            });
+            document.getElementById('autosave-restore-no').addEventListener('click', () => {
+                banner.remove();
+                clearAutoSave();
+            });
+        }
+
+        // --- Focus trap for modal dialogs ---
+        let _focusTrapCleanup = null;
+        function trapFocus(modalEl) {
+            releaseFocusTrap();
+            const focusable = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            first.focus();
+            function handler(e) {
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) {
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else {
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            }
+            modalEl.addEventListener('keydown', handler);
+            _focusTrapCleanup = () => modalEl.removeEventListener('keydown', handler);
+        }
+        function releaseFocusTrap() {
+            if (_focusTrapCleanup) { _focusTrapCleanup(); _focusTrapCleanup = null; }
         }
 
         function setupSaveLoadModal() {
@@ -4378,12 +5312,24 @@
             const documentTitle = document.getElementById('document-title'); 
             
             saveLoadBtn.addEventListener('click', () => {
-                if(saveLoadModal) saveLoadModal.classList.add('visible');
+                if(saveLoadModal) {
+                    saveLoadModal.classList.add('visible');
+                    trapFocus(saveLoadModal);
+                }
             });
+            function closeSaveLoadModalFn() {
+                if(saveLoadModal) saveLoadModal.classList.remove('visible');
+                releaseFocusTrap();
+                saveLoadBtn.focus();
+            }
             if (closeSaveLoadModal) {
-                 closeSaveLoadModal.addEventListener('click', () => {
-                     if(saveLoadModal) saveLoadModal.classList.remove('visible');
-                 });
+                 closeSaveLoadModal.addEventListener('click', closeSaveLoadModalFn);
+            }
+            // Close on Escape
+            if (saveLoadModal) {
+                saveLoadModal.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeSaveLoadModalFn();
+                });
             }
             if (saveStateBtn) {
                 saveStateBtn.addEventListener('click', () => { /* Save logic */
@@ -4592,6 +5538,15 @@
             }
         }
 
+        function setupPDFPrint() {
+            const printBtn = document.getElementById('print-pdf-btn');
+            if (printBtn) {
+                printBtn.addEventListener('click', () => {
+                    window.print();
+                });
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             // Load policy data from YAML and render items
@@ -4606,6 +5561,7 @@
             setupViewNavigation();
             setupSaveLoadModal();
             setupHTMLDownload();
+            setupPDFPrint();
             setupPresetHandlers();
 
             // Initialize language switcher
@@ -4613,6 +5569,9 @@
 
             // Handle URL parameters for presets (?preset=ai-learn&upload=true)
             handlePresetUrlParams();
+
+            // Check for auto-saved session to restore
+            checkAutoSaveRestore();
 
             console.log("Application fully initialized.");
         });
