@@ -290,6 +290,37 @@
             text-align: center;
             padding: 40px 16px;
         }
+        .live-preview-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .live-preview-icon-btn {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            cursor: pointer;
+            padding: 2px 6px;
+            line-height: 1;
+        }
+        .live-preview-icon-btn:hover {
+            color: var(--dark-gray);
+        }
+        .live-preview-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px 16px;
+            border-top: 1px solid var(--border-color);
+            background: var(--very-light-gray);
+            position: sticky;
+            bottom: 0;
+        }
+        .live-preview-footer .action-btn {
+            font-size: 0.78rem;
+            padding: 6px 12px;
+        }
         .live-preview-toggle {
             display: none;
             position: fixed;
@@ -335,11 +366,22 @@
                 top: 20px;
                 max-height: calc(100vh - 40px);
                 align-self: flex-start;
+                transition: width 0.2s ease;
             }
+            .live-preview.expanded {
+                width: 700px;
+            }
+            .live-preview.expanded .generated-policy h1 { font-size: 1.5rem; }
+            .live-preview.expanded .generated-policy h2 { font-size: 1.2rem; }
+            .live-preview.expanded .policy-subcategory h3 { font-size: 1rem; }
+            .live-preview.expanded .live-preview-content { font-size: 0.95rem; }
         }
 
         /* Smaller screens: overlay panel */
         @media (max-width: 1199px) {
+            #live-preview-expand {
+                display: none;
+            }
             .live-preview-toggle {
                 display: block;
             }
@@ -432,23 +474,6 @@
 
         .secondary-btn:hover {
             background-color: var(--secondary-hover);
-        }
-
-        /* Result View */
-        .result-header {
-            gap: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-
-        #policy-result {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            line-height: 1.5;
         }
 
         /* Common Styles */
@@ -907,21 +932,6 @@
             padding: 10px 20px;
             background-color: var(--primary-color);
         }
-        .generate-badge {
-            display: inline-block;
-            background-color: rgba(255,255,255,0.25);
-            color: var(--white);
-            font-size: 0.8rem;
-            font-weight: 600;
-            min-width: 20px;
-            height: 20px;
-            line-height: 20px;
-            text-align: center;
-            border-radius: 10px;
-            padding: 0 6px;
-            margin-left: 8px;
-        }
-
         .btn-secondary-action {
             background-color: var(--white);
             color: var(--primary-color);
@@ -1288,15 +1298,6 @@
             margin-top: 10px;
             text-align: center;
             font-size: 0.8rem;
-        }
-        
-        /* Hinweis auf der Ergebnisseite */
-        .result-notice {
-            background-color: var(--very-light-gray);
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            line-height: 1.5;
         }
         
         /* Responsive Design für kleinere Bildschirme */
@@ -1761,39 +1762,31 @@
         /* Print Styles */
         @media print {
             body * {
-                visibility: hidden; /* Hide everything by default */
+                visibility: hidden;
             }
 
-            #result-view, #result-view * {
-                visibility: visible; /* Make result view and its children visible */
+            #live-preview-content, #live-preview-content * {
+                visibility: visible !important;
             }
 
-            #result-view {
+            #live-preview-content {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
-                padding: 0; /* Remove padding */
-                margin: 0; /* Remove margin */
+                padding: 1cm;
+                font-size: inherit;
+                box-shadow: none;
+                border: none;
             }
 
-            .result-header, .result-notice, header, footer, #welcome-view, #editor-view, #save-load-modal, #save-load-btn, #generate-policy-btn, .header-buttons, .live-preview, .live-preview-toggle {
-                display: none !important; /* Force hide specific elements */
-                visibility: hidden !important;
+            .live-preview-header, .live-preview-footer, .live-preview-toggle,
+            header, footer, #welcome-view, .left-panel,
+            #save-load-modal, .header-buttons, .editor-header,
+            .editor-toolbar, .preset-editor-section {
+                display: none !important;
             }
 
-            #policy-result-container { /* Updated ID */
-                box-shadow: none; /* Remove shadow */
-                border: none; /* Remove border */
-                padding: 1cm; /* Add some print margin */
-                visibility: visible !important;
-            }
-            
-            #policy-result-container * {
-                 visibility: visible !important; /* Ensure children are visible */
-            }
-
-            /* Optional: Adjust font size for printing */
             .generated-policy {
                 font-size: 10pt;
             }
@@ -1803,43 +1796,33 @@
             .generated-policy h2 {
                 font-size: 12pt;
             }
-            
-            /* Ensure links are visible when printed */
+
             a:link, a:visited {
                 text-decoration: underline;
-                color: #000; /* Ensure links are black for printing */
+                color: #000;
             }
-            
-            /* Optional: Show URL for links in print */
+
             a[href]:after {
                 content: " (" attr(href) ")";
                 font-size: 90%;
                 color: #555;
             }
-            /* Don't show href for internal links */
             a[href^="#"]:after {
                 content: "";
             }
-            /* Hide specific UI elements within policy text if needed */
-             .item-actions { display: none; } /* Hide buttons if they ever appear here */
 
-            /* Policy Card: keep together on print */
+            .item-actions { display: none; }
+
             .policy-card {
                 page-break-inside: avoid;
                 box-shadow: none;
                 border: 1px solid #ccc;
             }
 
-            #policy-card-container, #policy-card-container * {
-                visibility: visible !important;
-            }
-
-            /* Keep subcategories together where possible */
             .policy-subcategory {
                 page-break-inside: avoid;
             }
 
-            /* TL;DR section: keep together */
             .policy-tldr-section {
                 page-break-inside: avoid;
             }
@@ -2608,8 +2591,7 @@
                     </section>
 
                     <details id="preset-comparison" class="preset-comparison">
-                        <summary data-ui-lang="de">Vorlagen im Vergleich</summary>
-                        <summary data-ui-lang="en" style="display:none">Compare Templates</summary>
+                        <summary data-i18n="comparison_summary">Vorlagen im Vergleich</summary>
                         <div class="preset-comparison-table-wrap">
                             <table class="preset-comparison-table">
                                 <thead>
@@ -2802,7 +2784,6 @@
                             <button data-lang="en" title="English">EN</button>
                         </div>
                         <button id="save-load-btn" class="action-btn btn-secondary-action" data-i18n="btn_save_load">Daten-Export und -Import</button>
-                        <button id="generate-policy-btn" class="action-btn" data-i18n="btn_generate">Richtlinie generieren</button>
                     </div>
             </div>
         </header>
@@ -2850,32 +2831,27 @@
                 <aside id="live-preview" class="live-preview">
                     <div class="live-preview-header">
                         <h3 data-i18n="preview_title">Vorschau</h3>
-                        <button id="live-preview-close" class="live-preview-close" aria-label="Vorschau schließen">&times;</button>
+                        <div class="live-preview-header-actions">
+                            <button id="live-preview-expand" class="live-preview-icon-btn"
+                                    aria-label="Vorschau erweitern" title="Erweitern">&#x26F6;</button>
+                            <button id="live-preview-close" class="live-preview-close"
+                                    aria-label="Vorschau schließen">&times;</button>
+                        </div>
                     </div>
                     <div id="live-preview-content" class="live-preview-content">
                         <p class="live-preview-empty" data-i18n="preview_empty">Wählen Sie Bausteine aus, um eine Vorschau zu sehen.</p>
+                    </div>
+                    <div class="live-preview-footer" id="live-preview-footer" style="display:none">
+                        <button id="preview-copy-btn" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
+                        <button id="preview-download-btn" class="action-btn btn-secondary-action" data-i18n="btn_download_html">Als HTML herunterladen</button>
+                        <button id="preview-pdf-btn" class="action-btn btn-secondary-action" data-i18n="btn_print_pdf">Als PDF speichern</button>
+                        <button id="preview-card-btn" class="action-btn btn-secondary-action" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
                     </div>
                 </aside>
             </div>
             <button id="live-preview-toggle" class="live-preview-toggle" aria-label="Vorschau ein-/ausblenden" data-i18n="btn_preview">Vorschau</button>
         </div>
 
-        <!-- Result View -->
-        <div id="result-view" class="view" role="region" aria-label="Ergebnis">
-            <div class="result-header">
-                <button id="back-to-welcome-result" class="back-btn back-btn--warn" data-i18n="btn_back_to_welcome">Andere Vorlage wählen</button>
-                <button id="back-to-editor" class="back-btn" data-i18n="btn_back_to_editor">Zurück zum Editor</button>
-                <button id="copy-result" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
-                <button id="download-html-btn" class="action-btn btn-secondary-action" data-i18n="btn_download_html">Als HTML herunterladen</button>
-                <button id="print-pdf-btn" class="action-btn btn-secondary-action" data-i18n="btn_print_pdf">Als PDF speichern</button>
-                <button id="copy-card-btn" class="action-btn btn-secondary-action" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
-            </div>
-            <div class="result-notice">
-                <p data-i18n-html="result_notice">Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden.</p>
-            </div>
-            <div id="policy-card-container" style="display:none"></div>
-            <div id="policy-result-container"></div> <!-- Renamed ID -->
-        </div>
     </main>
 
     <!-- Save/Load Modal -->
@@ -3226,12 +3202,7 @@
         // DOM Elements
         const welcomeView = document.getElementById('welcome-view');
         const editorView = document.getElementById('editor-view');
-        const resultView = document.getElementById('result-view');
-        const generatePolicyBtn = document.getElementById('generate-policy-btn');
-        const backToEditorBtn = document.getElementById('back-to-editor');
         const leftPanel = document.querySelector('.left-panel');
-        const policyResultContainer = document.getElementById('policy-result-container'); // Updated ID
-        const copyResultBtn = document.getElementById('copy-result');
         const editTitleBtn = document.getElementById('edit-title-btn');
         const editIntroBtn = document.getElementById('edit-intro-btn');
         const documentTitle = document.getElementById('document-title');
@@ -3290,8 +3261,7 @@
             // Hide all views
             welcomeView.classList.remove('active-view');
             editorView.classList.remove('active-view');
-            resultView.classList.remove('active-view');
-            
+
             // Show target view
             if (targetView === 'welcome') {
                 welcomeView.classList.add('active-view');
@@ -3299,21 +3269,7 @@
             } else if (targetView === 'editor') {
                 editorView.classList.add('active-view');
                 currentView = 'editor';
-                // Update intro display when switching to editor view
                 updateIntroDisplay();
-            } else if (targetView === 'result') {
-                resultView.classList.add('active-view');
-                currentView = 'result';
-                // Show or hide policy card based on preset state
-                const cardContainer = document.getElementById('policy-card-container');
-                const copyCardBtn = document.getElementById('copy-card-btn');
-                if (activePreset) {
-                    // Re-render card to pick up any editor changes
-                    renderPolicyCard();
-                } else {
-                    if (cardContainer) cardContainer.style.display = 'none';
-                    if (copyCardBtn) copyCardBtn.style.display = 'none';
-                }
             }
         }
 
@@ -3708,22 +3664,6 @@
 
             // Update live preview
             schedulePreviewUpdate();
-
-            // Update generate button badge
-            const genBtn = document.getElementById('generate-policy-btn');
-            if (genBtn) {
-                let badge = genBtn.querySelector('.generate-badge');
-                if (selectedItems.length > 0) {
-                    if (!badge) {
-                        badge = document.createElement('span');
-                        badge.className = 'generate-badge';
-                        genBtn.appendChild(badge);
-                    }
-                    badge.textContent = selectedItems.length;
-                } else if (badge) {
-                    badge.remove();
-                }
-            }
         }
 
         function updateToggleAllLabel() {
@@ -3743,12 +3683,19 @@
 
         function updateLivePreview() {
             const container = document.getElementById('live-preview-content');
+            const footer = document.getElementById('live-preview-footer');
+            const cardBtn = document.getElementById('preview-card-btn');
             if (!container) return;
 
             if (selectedItems.length === 0) {
+                // Security: escapeHTML sanitizes t() output (trusted YAML strings)
                 container.innerHTML = `<p class="live-preview-empty">${escapeHTML(t('preview_empty', 'Wählen Sie Bausteine aus, um eine Vorschau zu sehen.'))}</p>`;
+                if (footer) footer.style.display = 'none';
                 return;
             }
+
+            // Show footer when items are selected
+            if (footer) footer.style.display = '';
 
             const itemsByCategory = {};
             selectedItems.forEach(item => {
@@ -3758,6 +3705,7 @@
                 itemsByCategory[item.categoryTitle].push(item);
             });
 
+            // Security: all content from trusted local YAML files, sanitized via escapeHTML + parseMarkdown
             let html = `<div class="generated-policy">`;
             html += `<h1>${escapeHTML(documentTitle.textContent)}</h1>`;
             html += `<div class="policy-date">${escapeHTML(t('date_label', 'Stand'))}: ${new Date().toLocaleDateString(t('date_locale', 'de-DE'))}</div>`;
@@ -3800,15 +3748,30 @@
                 });
                 html += `</div>`;
             });
-            html += `</div></div>`;
+            html += `</div>`;
 
+            // Render policy card inside preview if preset is active
+            if (activePreset) {
+                html += `<div id="preview-card-container" style="margin-top:1.5rem"></div>`;
+                if (cardBtn) cardBtn.style.display = '';
+            } else {
+                if (cardBtn) cardBtn.style.display = 'none';
+            }
+
+            html += `</div>`;
             container.innerHTML = html;
+
+            // Render the card into the preview container
+            if (activePreset) {
+                renderPolicyCard(document.getElementById('preview-card-container'));
+            }
         }
 
         function setupLivePreview() {
             const toggle = document.getElementById('live-preview-toggle');
             const panel = document.getElementById('live-preview');
             const closeBtn = document.getElementById('live-preview-close');
+            const expandBtn = document.getElementById('live-preview-expand');
             if (!toggle || !panel) return;
 
             toggle.addEventListener('click', () => {
@@ -3825,192 +3788,80 @@
                     toggle.textContent = t('btn_preview', 'Vorschau');
                 });
             }
-        }
 
-        // Generate policy
-        function generatePolicy() {
-            // Group items by category
-            const itemsByCategory = {};
-            selectedItems.forEach(item => {
-                if (!itemsByCategory[item.categoryTitle]) {
-                    itemsByCategory[item.categoryTitle] = [];
-                }
-                itemsByCategory[item.categoryTitle].push(item);
-            });
-            
-            // For debugging - show all selected items and their structure
-            console.log("Selected items for policy generation:", selectedItems);
-            
-            // Security: all content from trusted local sources (escapeHTML + parseMarkdown used)
-            let policyHtml = `
-                <div class="generated-policy">
-                    <h1>${escapeHTML(documentTitle.textContent)}</h1>
-                    <div class="policy-date">${escapeHTML(t('date_label', 'Stand'))}: ${new Date().toLocaleDateString(t('date_locale', 'de-DE'))}</div>
-                    <div class="policy-intro">${parseMarkdown(window.documentIntro || documentIntro)}</div>
-            `;
-
-            // Add TL;DR section if preset is active
-            if (activePreset) {
-                const { name: tldrName, bullets: tldrBullets } = getCardNameAndBullets();
-                const displayName = presetModified
-                    ? tldrName + ' ' + t('preset_modified_suffix', '(angepasst)')
-                    : tldrName;
-                if (tldrBullets.length > 0) {
-                    policyHtml += `<div class="policy-tldr-section">`;
-                    policyHtml += `<h2>${escapeHTML(displayName)} – ${escapeHTML(t('preset_tldr_title', 'Zusammenfassung (TL;DR)'))}</h2>`;
-                    policyHtml += `<ul>`;
-                    tldrBullets.forEach(bullet => {
-                        // Security: parseMarkdown escapes HTML before processing
-                        policyHtml += `<li>${parseMarkdown(bullet).replace(/<\/?p>/g, '')}</li>`;
-                    });
-                    policyHtml += `</ul></div>`;
-                }
-            }
-
-            policyHtml += `<div class="policy-content">`;
-            
-            if (selectedItems.length === 0) {
-                policyHtml += `<p class="empty-policy">${escapeHTML(t('empty_policy', 'Keine Bausteine ausgewählt. Kehren Sie zurück zum Editor, um Bausteine hinzuzufügen.'))}</p>`;
-            } else {
-                // Iterate through categories and add content
-                Object.entries(itemsByCategory).forEach(([categoryTitle, items]) => {
-                    // Add category heading (Remove numbering like "1. " etc.)
-                    const cleanCategoryTitle = categoryTitle.replace(/^\d+\.\s*/, '');
-                    policyHtml += `<div class="policy-category">
-                        <h2 class="category-title">${escapeHTML(cleanCategoryTitle)}</h2>`;
-                    
-                    // Group items by subcategory using the stored subcategoryTitle
-                    const itemsBySubcategory = {};
-                    
-                    items.forEach(item => {
-                        // Use the stored subcategoryTitle from when the item was added
-                        const subcategoryTitle = item.subcategoryTitle || t('default_subcategory', 'Allgemein');
-                        
-                        if (!itemsBySubcategory[subcategoryTitle]) {
-                            itemsBySubcategory[subcategoryTitle] = [];
-                        }
-                        itemsBySubcategory[subcategoryTitle].push(item);
-                    });
-                    
-                    console.log("Items by subcategory for category", cleanCategoryTitle, ":", itemsBySubcategory);
-                    
-                    // Add items grouped by subcategory
-                    Object.entries(itemsBySubcategory).forEach(([subcategoryTitle, subcatItems]) => {
-                        // Always add subcategory title for better structure
-                        policyHtml += `<div class="policy-subcategory">
-                            <h3 class="subcategory-title">${escapeHTML(subcategoryTitle)}</h3>`;
-                        console.log("Adding subcategory title to output:", subcategoryTitle);
-                        
-                        // Add items in this subcategory
-                        subcatItems.forEach(item => {
-                            // Check if the text is already HTML (contains tags) or needs to be parsed from markdown
-                            const itemContent = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>'))
-                                ? item.text // Use HTML directly if it contains tags (from inline editor)
-                                : parseMarkdown(item.text); // Otherwise parse from markdown
-                                
-                            policyHtml += `<div class="policy-item-result">
-                                <div class="policy-item-text">${itemContent}</div>
-                            </div>`;
-                        });
-                        
-                        // Close subcategory div
-                        policyHtml += `</div>`;
-                    });
-                    
-                    // Close category div
-                    policyHtml += `</div>`;
+            // Expand/collapse toggle (desktop only)
+            if (expandBtn) {
+                expandBtn.addEventListener('click', () => {
+                    panel.classList.toggle('expanded');
                 });
             }
-            
-            policyHtml += `</div></div>`;
-            
-            policyResultContainer.innerHTML = policyHtml; // Updated ID
+
+            // Preview footer button handlers
+            const previewCopyBtn = document.getElementById('preview-copy-btn');
+            if (previewCopyBtn) previewCopyBtn.addEventListener('click', copyPolicyText);
+
+            const previewCardBtn = document.getElementById('preview-card-btn');
+            if (previewCardBtn) previewCardBtn.addEventListener('click', copyPolicyCard);
         }
-        
-        // Copy to clipboard function
-        copyResultBtn.addEventListener('click', () => {
-            // Get the policy container
-            const policyContainer = policyResultContainer.querySelector('.generated-policy');
-            if (!policyContainer) {
-                console.error("Policy container not found");
-                return;
-            }
-            
-            // Process text with proper formatting for categories and subcategories
+
+        // Copy policy text to clipboard
+        function copyPolicyText() {
+            const policyContainer = document.querySelector('#live-preview-content .generated-policy');
+            if (!policyContainer) return;
+
             let formattedText = '';
-            
-            // Add title and date
+
             const title = policyContainer.querySelector('h1');
-            if (title) {
-                formattedText += title.textContent.trim() + '\n';
-            }
-            
+            if (title) formattedText += title.textContent.trim() + '\n';
+
             const date = policyContainer.querySelector('.policy-date');
-            if (date) {
-                formattedText += date.textContent.trim() + '\n\n';
-            }
-            
-            // Add introduction
+            if (date) formattedText += date.textContent.trim() + '\n\n';
+
             const intro = policyContainer.querySelector('.policy-intro');
-            if (intro) {
-                formattedText += intro.textContent.trim() + '\n\n';
-            }
-            
-            // Process categories and subcategories with proper spacing
-            const categories = policyContainer.querySelectorAll('.policy-category');
-            categories.forEach(category => {
+            if (intro) formattedText += intro.textContent.trim() + '\n\n';
+
+            policyContainer.querySelectorAll('.policy-category').forEach(category => {
                 const categoryTitle = category.querySelector('h2');
-                if (categoryTitle) {
-                    // Add two newlines before category title
-                    formattedText += '\n\n' + categoryTitle.textContent.trim() + '\n';
-                }
-                
-                // Process subcategories
-                const subcategories = category.querySelectorAll('.policy-subcategory');
-                subcategories.forEach(subcategory => {
+                if (categoryTitle) formattedText += '\n\n' + categoryTitle.textContent.trim() + '\n';
+
+                category.querySelectorAll('.policy-subcategory').forEach(subcategory => {
                     const subcategoryTitle = subcategory.querySelector('h3.subcategory-title');
-                    if (subcategoryTitle) {
-                        // Add one newline before subcategory title
-                        formattedText += '\n' + subcategoryTitle.textContent.trim() + '\n';
-                    }
-                    
-                    // Add policy items
-                    const items = subcategory.querySelectorAll('.policy-item-result');
-                    items.forEach(item => {
+                    if (subcategoryTitle) formattedText += '\n' + subcategoryTitle.textContent.trim() + '\n';
+
+                    subcategory.querySelectorAll('.policy-item-result').forEach(item => {
                         formattedText += '\n' + item.textContent.trim() + '\n';
                     });
                 });
             });
-            
-            // Trim any excess whitespace and normalize line breaks
+
             formattedText = formattedText.trim()
-                                        .replace(/\n{3,}/g, '\n\n') // Replace 3+ newlines with 2
-                                        .split('\n')
-                                        .map(line => line.trimStart()) // Remove leading whitespace from each line
-                                        .join('\n');
-            
+                .replace(/\n{3,}/g, '\n\n')
+                .split('\n')
+                .map(line => line.trimStart())
+                .join('\n');
+
+            const copyBtn = document.getElementById('preview-copy-btn');
             navigator.clipboard.writeText(formattedText)
                 .then(() => {
-                    // Show success message
-                    copyResultBtn.textContent = t('copy_success', 'Kopiert!');
-                    copyResultBtn.classList.add('copy-success');
-                    setTimeout(() => {
-                        copyResultBtn.textContent = t('btn_copy_result', 'Text kopieren');
-                        copyResultBtn.classList.remove('copy-success');
-                    }, 2000);
+                    if (copyBtn) {
+                        copyBtn.textContent = t('copy_success', 'Kopiert!');
+                        copyBtn.classList.add('copy-success');
+                        setTimeout(() => {
+                            copyBtn.textContent = t('btn_copy_result', 'Text kopieren');
+                            copyBtn.classList.remove('copy-success');
+                        }, 2000);
+                    }
                 })
                 .catch(err => {
                     console.error('Copy to clipboard error:', err);
                     alert(t('alert_copy_error', 'Konnte nicht in die Zwischenablage kopieren. Bitte manuell kopieren.'));
                 });
-        });
-        
-        
+        }
+
+
 
         // Funktion zum Anwenden des geladenen Zustands
         function applyLoadedState(appState) {
-            console.log("Wende geladenen Zustand an:", appState);
-            
             // 1. Titel und Einleitung aktualisieren
             documentTitle.textContent = appState.title;
             documentIntro = appState.intro;
@@ -4099,26 +3950,15 @@
 
         // Initialisierung aller policy-items mit eindeutigen IDs
         function initializeAllPolicyItems() {
-            console.log("Initialisiere alle policy-items mit eindeutigen IDs");
-            
-            // Sammle alle policy-items
             const allPolicyItems = document.querySelectorAll('.policy-item');
-            
-            // Weise jedem Item eine eindeutige, fortlaufende ID zu
             allPolicyItems.forEach((item, index) => {
                 const id = `item-${index + 1}`;
                 item.dataset.id = id;
-                
-                // Speichere den Originaltext als Markdown (nicht textContent)
                 const policyText = item.querySelector('.policy-text');
                 if (policyText) {
                     originalPolicyItems[id] = policyText.dataset.originalMarkdown || policyText.textContent.trim();
                 }
-                
-                console.log(`Initialisiert: ID ${id}, Text: "${policyText.textContent.trim().substring(0, 30)}..."`);
             });
-            
-            console.log(`${allPolicyItems.length} Elemente initialisiert`);
         }
 
         /**
@@ -4573,9 +4413,18 @@
             if (goToEditor) {
                 switchView('editor');
             } else {
-                generatePolicy();
-                renderPolicyCard();
-                switchView('result');
+                switchView('editor');
+                // Open preview and expand on desktop
+                const panel = document.getElementById('live-preview');
+                if (panel) {
+                    panel.classList.add('open', 'expanded');
+                    const toggle = document.getElementById('live-preview-toggle');
+                    if (toggle) {
+                        toggle.classList.add('active');
+                        toggle.textContent = t('btn_preview_close', 'Vorschau schließen');
+                    }
+                }
+                updateLivePreview();
             }
             showPresetHint(preset.name, preset.color);
         }
@@ -4616,10 +4465,9 @@
          * Rendert die Policy Card im Result View
          * Security: All content comes from trusted local YAML files (same trust as policy texts)
          */
-        function renderPolicyCard() {
+        function renderPolicyCard(targetContainer) {
             if (!activePreset) return;
-            const container = document.getElementById('policy-card-container');
-            const copyBtn = document.getElementById('copy-card-btn');
+            const container = targetContainer || document.getElementById('preview-card-container');
             if (!container) return;
 
             const uploadEnabled = activePreset.uploadEnabled || false;
@@ -4677,7 +4525,6 @@
 
             container.appendChild(cardDiv);
             container.style.display = 'block';
-            if (copyBtn) copyBtn.style.display = '';
         }
 
         /**
@@ -4726,7 +4573,7 @@
             });
             text += '\n' + t('preset_card_footer', 'Erstellt mit dem KI-Policy-Generator der Universität Bamberg');
 
-            const copyBtn = document.getElementById('copy-card-btn');
+            const copyBtn = document.getElementById('preview-card-btn');
             navigator.clipboard.writeText(text)
                 .then(() => {
                     if (copyBtn) {
@@ -4926,12 +4773,6 @@
                 });
             }
 
-            // Copy policy card button
-            const copyCardBtn = document.getElementById('copy-card-btn');
-            if (copyCardBtn) {
-                copyCardBtn.addEventListener('click', copyPolicyCard);
-            }
-
         }
 
         /**
@@ -4960,30 +4801,17 @@
 
         // --- New Helper Functions for Initialization ---
         function initializeUI() {
-            console.log("Initializing UI elements...");
             addSvgIcons();
             updateIntroDisplay();
             initializeAccordions();
             setupToggleAllCategories();
             setupItemSearch();
             setupLivePreview();
-            console.log("UI elements initialized.");
         }
 
         function setupViewNavigation() {
-            console.log("Setting up view navigation...");
-            const generatePolicyBtn = document.getElementById('generate-policy-btn');
-            const backToEditorBtn = document.getElementById('back-to-editor');
-
-            generatePolicyBtn.addEventListener('click', () => {
-                generatePolicy();
-                switchView('result');
-            });
-            backToEditorBtn.addEventListener('click', () => switchView('editor'));
-
-            // "Andere Vorlage wählen" buttons — back to welcome with confirmation
+            // "Andere Vorlage wählen" — back to welcome with confirmation
             const backToWelcomeBtn = document.getElementById('back-to-welcome');
-            const backToWelcomeResultBtn = document.getElementById('back-to-welcome-result');
             function confirmBackToWelcome() {
                 if (selectedItems.length > 0 || activePreset) {
                     if (!confirm(t('confirm_leave_editor', 'Möchten Sie die aktuelle Richtlinie verlassen? Nicht gespeicherte Änderungen gehen verloren.'))) {
@@ -4999,6 +4827,7 @@
                     const btn = item.querySelector('.add-item-btn');
                     if (btn) {
                         btn.classList.remove('added');
+                        // Security: SVG icons defined locally, t() returns trusted YAML strings
                         btn.innerHTML = window.svgIcons.plus + ' ' + t('btn_add', 'Hinzufügen');
                     }
                 });
@@ -5035,7 +4864,6 @@
                 switchView('welcome');
             }
             if (backToWelcomeBtn) backToWelcomeBtn.addEventListener('click', confirmBackToWelcome);
-            if (backToWelcomeResultBtn) backToWelcomeResultBtn.addEventListener('click', confirmBackToWelcome);
 
             // "Editor öffnen" inline link in preset section desc (event delegation for language switch)
             const presetSection = document.getElementById('preset-section');
@@ -5053,7 +4881,6 @@
             if (globalUploadToggle) {
                 globalUploadToggle.addEventListener('change', () => {
                     const enabled = globalUploadToggle.checked;
-                    // Set all preset upload flags to the global value
                     if (presetsData && presetsData.presets) {
                         presetsData.presets.forEach(p => {
                             presetUploadFlags[p.id] = enabled;
@@ -5067,13 +4894,9 @@
             if (editorCard) {
                 editorCard.addEventListener('click', () => switchView('editor'));
             }
-
-            console.log("View navigation setup complete.");
         }
 
         function setupEditorInteractions() {
-            console.log("Setting up editor interactions...");
-            // Need to access these globally defined buttons/elements
             const editTitleBtn = document.getElementById('edit-title-btn');
             const editIntroBtn = document.getElementById('edit-intro-btn');
             const documentIntroDisplay = document.getElementById('document-intro-display');
@@ -5128,7 +4951,6 @@
                         const titleElement = subcategoryElement.querySelector('.subcategory-title');
                         if (titleElement && titleElement.textContent) {
                             subcategoryTitle = titleElement.textContent.trim();
-                            console.log(`Button click: Found subcategory "${subcategoryTitle}" for item`);
                         }
                     }
                     
@@ -5155,7 +4977,6 @@
                             subcategoryTitle: subcategoryTitle,
                             element: policyItem
                         });
-                        console.log(`Added item to selectedItems with subcategory "${subcategoryTitle}"`);
 
                         clone.classList.add('added');
                         clone.setAttribute('aria-pressed', 'true');
@@ -5167,7 +4988,6 @@
                     updateSelectionCounters();
                 });
             });
-            console.log("Editor interactions setup complete.");
         }
 
         // --- Auto-Save to localStorage ---
@@ -5300,8 +5120,6 @@
         }
 
         function setupSaveLoadModal() {
-            console.log("Setting up save/load modal...");
-            // Define these constants here as they are only used in this setup function
             const saveLoadBtn = document.getElementById('save-load-btn');
             const saveLoadModal = document.getElementById('save-load-modal');
             const closeSaveLoadModal = document.getElementById('close-save-load-modal');
@@ -5413,22 +5231,18 @@
             if (stateFileInput) {
                  stateFileInput.addEventListener('change', (event) => { /* Optional: Auto-trigger */ });
             }
-            console.log("Save/load modal setup complete.");
         }
         // --- End of New Helper Functions ---
 
         function setupHTMLDownload() {
-            const downloadHtmlBtn = document.getElementById('download-html-btn');
-            // policyResultContainer and documentTitle are already defined globally
+            const downloadHtmlBtn = document.getElementById('preview-download-btn');
+            const previewContent = document.getElementById('live-preview-content');
 
-            if (downloadHtmlBtn && policyResultContainer && typeof documentTitle !== 'undefined') { // Added check for documentTitle
+            if (downloadHtmlBtn && previewContent) {
                 downloadHtmlBtn.addEventListener('click', () => {
                     try {
-                        // Include policy card if present
-                        const policyCardContainer = document.getElementById('policy-card-container');
-                        const policyCardHtml = (policyCardContainer && policyCardContainer.style.display !== 'none') ? policyCardContainer.innerHTML : '';
-                        const policyHtmlContent = policyCardHtml + policyResultContainer.innerHTML;
-                        const policyTitleText = documentTitle ? documentTitle.textContent : 'KI-Richtlinie'; // Get title text
+                        const policyHtmlContent = previewContent.innerHTML;
+                        const policyTitleText = documentTitle ? documentTitle.textContent : 'KI-Richtlinie';
 
                         // Create the full HTML content for the downloadable file
                         const fullHtml = `
@@ -5533,13 +5347,11 @@
                         alert(t('alert_html_error', 'Fehler beim Erstellen der HTML-Datei. Details siehe Konsole.'));
                     }
                 });
-            } else {
-                console.error("HTML Download Button, result container, or document title not found.");
             }
         }
 
         function setupPDFPrint() {
-            const printBtn = document.getElementById('print-pdf-btn');
+            const printBtn = document.getElementById('preview-pdf-btn');
             if (printBtn) {
                 printBtn.addEventListener('click', () => {
                     window.print();
@@ -5572,8 +5384,6 @@
 
             // Check for auto-saved session to restore
             checkAutoSaveRestore();
-
-            console.log("Application fully initialized.");
         });
 
     </script>

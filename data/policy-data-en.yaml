@@ -710,6 +710,7 @@ ui_strings:
   result_notice: "You can now <strong>print</strong> the generated policy directly in the browser. You can also <strong>select</strong> the text and <strong>copy</strong> it with formatting into a word processor. Alternatively, you can <strong>copy the unformatted text to the clipboard</strong> or <strong>download the formatted text as an HTML file</strong>. The HTML file can be opened in Microsoft Word for further editing."
 
   # Presets
+  comparison_summary: "Compare Templates"
   preset_section_title: "Quick Start: Templates"
   preset_section_desc: "Choose a template as a starting point — or <a href='#' id='start-editor-link'>open the free editor</a>."
   editor_card_desc: "Start without a template and freely compose your AI policy."

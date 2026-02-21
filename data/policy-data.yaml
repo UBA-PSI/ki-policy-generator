@@ -710,6 +710,7 @@ ui_strings:
   result_notice: "Sie können die erzeugte Richtlinie nun direkt im Browser <strong>ausdrucken</strong>. Sie können den Text auch <strong>markieren</strong> und mit den angezeigten Formatierungen in ein Textverarbeitungsprogramm <strong>kopieren</strong>. Alternativ können Sie den <strong>unformatierten Text in die Zwischenablage kopieren</strong> oder den <strong>formatierten Text als HTML-Datei herunterladen</strong>. Die HTML-Datei kann z.B. in Microsoft Word zur weiteren Bearbeitung geöffnet werden."
 
   # Presets
+  comparison_summary: "Vorlagen im Vergleich"
   preset_section_title: "Schnellstart: Vorlagen"
   preset_section_desc: "Wählen Sie eine Vorlage als Ausgangspunkt — oder <a href='#' id='start-editor-link'>öffnen Sie den freien Editor</a>."
   editor_card_desc: "Starten Sie ohne Vorlage und stellen Sie Ihre KI-Richtlinie frei zusammen."
