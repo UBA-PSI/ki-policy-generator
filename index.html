@@ -3740,8 +3740,7 @@
                 Object.entries(itemsBySubcategory).forEach(([subTitle, subItems]) => {
                     html += `<div class="policy-subcategory"><h3 class="subcategory-title">${escapeHTML(subTitle)}</h3>`;
                     subItems.forEach(item => {
-                        const content = (typeof item.text === 'string' && item.text.includes('<') && item.text.includes('>'))
-                            ? item.text : parseMarkdown(item.text);
+                        const content = parseMarkdown(item.text);
                         html += `<div class="policy-item-result"><div class="policy-item-text">${content}</div></div>`;
                     });
                     html += `</div>`;
@@ -3935,11 +3934,12 @@
                         }
                         
                         // Füge das Element zu selectedItems hinzu
+                        // Always store as Markdown for consistent rendering
                         selectedItems.push({
                             id: id,
-                            text: policyText.innerHTML, // Use innerHTML to preserve formatting
+                            text: convertHtmlToMarkdown(policyText.innerHTML),
                             categoryTitle: categoryTitle,
-                            subcategoryTitle: subcategoryTitle, // Store subcategory title
+                            subcategoryTitle: subcategoryTitle,
                             element: item
                         });
                     }
@@ -4270,6 +4270,51 @@
         /**
          * Zeigt das Preset-Detail-Modal
          */
+        /**
+         * Updates only the upload-dependent parts of the preset detail modal
+         * (TL;DR list and items list) without re-creating the toggle or focus trap.
+         */
+        function refreshPresetDetailContent(preset) {
+            const uploadEnabled = presetUploadFlags[preset.id] || false;
+
+            // TL;DR list - built with safe DOM methods
+            const tldrList = document.getElementById('preset-detail-tldr');
+            tldrList.replaceChildren();
+            const allBullets = [...preset.tldr, uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload];
+            allBullets.forEach(bullet => {
+                const li = document.createElement('li');
+                // Security: bullet text from trusted local YAML, parseMarkdown escapes HTML
+                li.innerHTML = parseMarkdown(bullet).replace(/<\/?p>/g, '');
+                tldrList.appendChild(li);
+            });
+
+            // Items list - built with safe DOM methods
+            const itemsList = document.getElementById('preset-detail-items');
+            itemsList.replaceChildren();
+            const allItems = [...preset.items];
+            allItems.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
+
+            allItems.forEach(entry => {
+                const normalized = normalizePresetItem(entry);
+                if (!normalized) return;
+                const yamlId = normalized.yamlId;
+                const runtimeId = yamlIdToRuntimeId[yamlId];
+                const li = document.createElement('li');
+                if (runtimeId) {
+                    const el = document.querySelector(`.policy-item[data-id="${runtimeId}"] .policy-text`);
+                    if (el) {
+                        const text = el.textContent.trim();
+                        li.textContent = text.length > 80 ? text.substring(0, 80) + '...' : text;
+                    } else {
+                        li.textContent = yamlId;
+                    }
+                } else {
+                    li.textContent = yamlId;
+                }
+                itemsList.appendChild(li);
+            });
+        }
+
         function showPresetDetail(preset) {
             const modal = document.getElementById('preset-detail-modal');
             if (!modal) return;
@@ -4284,19 +4329,8 @@
             document.getElementById('preset-detail-name-text').textContent = preset.name;
             document.getElementById('preset-detail-desc').textContent = preset.description;
 
-            // TL;DR list - built with safe DOM methods
-            const tldrList = document.getElementById('preset-detail-tldr');
-            tldrList.replaceChildren();
-            const uploadEnabled = presetUploadFlags[preset.id] || false;
-            const allBullets = [...preset.tldr, uploadEnabled ? preset.tldr_upload : preset.tldr_no_upload];
-            allBullets.forEach(bullet => {
-                const li = document.createElement('li');
-                // Security: bullet text from trusted local YAML, parseMarkdown escapes HTML
-                li.innerHTML = parseMarkdown(bullet).replace(/<\/?p>/g, '');
-                tldrList.appendChild(li);
-            });
-
             // Upload toggle — clone to remove old listeners, then add fresh one
+            const uploadEnabled = presetUploadFlags[preset.id] || false;
             const detailToggle = document.getElementById('preset-detail-upload-toggle');
             const freshToggle = detailToggle.cloneNode(true);
             detailToggle.parentNode.replaceChild(freshToggle, detailToggle);
@@ -4306,42 +4340,15 @@
                 // Sync global upload toggle
                 const globalToggle = document.getElementById('global-upload-toggle');
                 if (globalToggle) {
-                    // Update global toggle: checked if ALL presets have upload enabled
                     const allEnabled = presetsData && presetsData.presets.every(p => presetUploadFlags[p.id]);
                     globalToggle.checked = allEnabled;
                 }
-                // Re-render TL;DR
-                showPresetDetail(preset);
+                // Refresh only the upload-dependent content
+                refreshPresetDetailContent(preset);
             });
 
-            // Items list - built with safe DOM methods
-            const itemsList = document.getElementById('preset-detail-items');
-            itemsList.replaceChildren();
-            const allItems = [...preset.items];
-            // Add upload/no-upload item
-            allItems.push(uploadEnabled ? preset.upload_item : preset.no_upload_item);
-
-            allItems.forEach(entry => {
-                // Normalize: string or {id, text} object
-                const normalized = normalizePresetItem(entry);
-                if (!normalized) return;
-                const yamlId = normalized.yamlId;
-                const runtimeId = yamlIdToRuntimeId[yamlId];
-                const li = document.createElement('li');
-                if (runtimeId) {
-                    const el = document.querySelector(`.policy-item[data-id="${runtimeId}"] .policy-text`);
-                    if (el) {
-                        // Show first ~80 chars of text content
-                        const text = el.textContent.trim();
-                        li.textContent = text.length > 80 ? text.substring(0, 80) + '...' : text;
-                    } else {
-                        li.textContent = yamlId;
-                    }
-                } else {
-                    li.textContent = yamlId;
-                }
-                itemsList.appendChild(li);
-            });
+            // Render upload-dependent content (TL;DR + items)
+            refreshPresetDetailContent(preset);
 
             modal.classList.add('visible');
             trapFocus(modal);
@@ -4410,11 +4417,10 @@
             // Render TL;DR editor (visible in editor view)
             renderPresetEditor(preset, uploadEnabled);
 
-            if (goToEditor) {
-                switchView('editor');
-            } else {
-                switchView('editor');
-                // Open preview and expand on desktop
+            switchView('editor');
+
+            if (!goToEditor) {
+                // "Direkt verwenden": open preview immediately
                 const panel = document.getElementById('live-preview');
                 if (panel) {
                     panel.classList.add('open', 'expanded');
@@ -4841,18 +4847,17 @@
                     window.documentIntro = window.defaultDocumentIntro;
                     updateIntroDisplay();
                 }
-                // Revert any edited item texts back to originals
+                // Revert any edited item texts back to originals (keep map intact for re-entry)
+                // Security: originalPolicyItems contains trusted YAML text,
+                // parseMarkdown escapes HTML via escapeHTML() before processing
                 Object.keys(originalPolicyItems).forEach(id => {
                     const item = document.querySelector(`.policy-item[data-id="${id}"]`);
                     if (item) {
                         const policyText = item.querySelector('.policy-text');
                         if (policyText) {
-                            // Security: originalPolicyItems contains trusted YAML text,
-                            // parseMarkdown escapes HTML via escapeHTML() before processing
                             policyText.innerHTML = parseMarkdown(originalPolicyItems[id]);
                         }
                     }
-                    delete originalPolicyItems[id];
                 });
                 updateSelectionCounters();
                 clearAutoSave();
@@ -4970,9 +4975,10 @@
                         markPresetModified();
                     } else {
                         // Push directly to selectedItems with subcategory info
+                        // Always store as Markdown for consistent rendering
                         selectedItems.push({
                             id: id,
-                            text: policyText,
+                            text: convertHtmlToMarkdown(policyText),
                             categoryTitle: categoryTitle,
                             subcategoryTitle: subcategoryTitle,
                             element: policyItem
@@ -5175,7 +5181,13 @@
                     if (isDebugMode) console.log("App-Zustand (Debug):", JSON.stringify(appState, null, 2));
                     const jsonString = JSON.stringify(appState);
                     const compressed = pako.deflate(jsonString, { level: 9 });
-                    const base64Encoded = btoa(String.fromCharCode.apply(null, compressed));
+                    // Chunked conversion to avoid stack overflow on large buffers
+                    let binaryString = '';
+                    const chunkSize = 8192;
+                    for (let i = 0; i < compressed.length; i += chunkSize) {
+                        binaryString += String.fromCharCode.apply(null, compressed.subarray(i, i + chunkSize));
+                    }
+                    const base64Encoded = btoa(binaryString);
                     let filename = documentTitle ? documentTitle.textContent.toLowerCase().replace(/[äÄ]/g, 'ae').replace(/[öÖ]/g, 'oe').replace(/[üÜ]/g, 'ue').replace(/[ß]/g, 'ss').replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').substring(0, 30) : 'ki-policy';
                     if (!filename) filename = "ki-policy";
                     filename += ".export";
@@ -5241,7 +5253,11 @@
             if (downloadHtmlBtn && previewContent) {
                 downloadHtmlBtn.addEventListener('click', () => {
                     try {
-                        const policyHtmlContent = previewContent.innerHTML;
+                        // Sanitize innerHTML: strip script tags and event handlers (defense-in-depth)
+                        const policyHtmlContent = previewContent.innerHTML
+                            .replace(/<script[\s\S]*?<\/script>/gi, '')
+                            .replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '')
+                            .replace(/\son\w+\s*=[^\s>]+/gi, '');
                         const policyTitleText = documentTitle ? documentTitle.textContent : 'KI-Richtlinie';
 
                         // Create the full HTML content for the downloadable file
