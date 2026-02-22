@@ -5,8 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self';">
     <title>KI-Policy-Creator für Lehrende</title>
-    <script src="pako.min.js"></script>
-    <script src="lib/js-yaml.min.js"></script>
+    <script>
+    (function() {
+        var LOCAL_VERSION = '3.1.0';
+
+        var script = document.createElement('script');
+        script.src = 'version.js?ts=' + Date.now();
+        script.onload = function() {
+            if (window.APP_VERSION && LOCAL_VERSION !== window.APP_VERSION) {
+                var url = new URL(window.location.href);
+                if (url.searchParams.get('v') === window.APP_VERSION) {
+                    // Schon redirected aber noch stale → hard reload (einmalig)
+                    var reloadKey = 'cache_bust_' + window.APP_VERSION;
+                    if (!sessionStorage.getItem(reloadKey)) {
+                        sessionStorage.setItem(reloadKey, '1');
+                        location.reload(true);
+                    }
+                    // Nach Reload immer noch stale → weitermachen mit alter Version
+                } else {
+                    url.searchParams.set('v', window.APP_VERSION);
+                    window.location.href = url.toString();
+                }
+            }
+        };
+        script.onerror = function() {
+            // version.js nicht erreichbar → einfach weitermachen
+            console.warn('version.js could not be loaded, skipping cache check');
+        };
+        document.head.appendChild(script);
+    })();
+    </script>
+    <script src="pako.min.js?v=3.1.0"></script>
+    <script src="lib/js-yaml.min.js?v=3.1.0"></script>
     <style>
         :root {
             --primary-color: #0060df;
@@ -5403,6 +5433,6 @@
         });
 
     </script>
-    <script src="policy-loader.js"></script>
+    <script src="policy-loader.js?v=3.1.0"></script>
 </body>
 </html>
