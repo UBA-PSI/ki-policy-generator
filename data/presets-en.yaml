@@ -1,12 +1,12 @@
 # AI Policy Generator - Preset Templates
-# Version: 2.1
+# Version: 2.2
 # Language: en
 #
 # Items can be specified as a simple string (= default text from policy-data-en.yaml)
 # or as an object { id, text } (= preset-specific text).
 # upload_item / no_upload_item follow the same schema.
 
-version: "2.0"
+version: "2.2"
 
 presets:
   # ============================================================
@@ -43,9 +43,20 @@ presets:
 
           - The examination takes the form of a **supervised written exam** without access to AI tools or the internet.
           - Permitted aids will be announced at the beginning of the exam.
+      - "lehrende-keine-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: &upload_item_permission
+      id: "urheberrecht-erlaubnis"
+      text: |
+        Most course materials provided in this course are copyrighted. For the following, explicitly released materials, processing by AI services is permitted under conditions:
+
+        - Materials marked with the note **"AI use permitted"** in the learning management system.
+
+        This usage right applies only to the university's own **HAWKI** service as well as common AI services (ChatGPT, Claude, Copilot, Gemini) and only for the purpose of personal summarization and comprehension checks. Uploading to other services or for other purposes is not permitted.
+
+        All other materials may **not** be uploaded to AI services.
     no_upload_item: "urheberrecht-verbot"
 
   # ============================================================
@@ -67,8 +78,16 @@ presets:
       This document establishes the guidelines for the use of AI tools in this course. The use of AI is generally permitted for learning purposes. The examination is conducted without AI support. Labeling of AI use is not required.
     items:
       - "grundsatz-erlaubt"
+      - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
-      - "verboten-regel"
+      - id: "verboten-regel"
+        text: |
+          The following types of AI use are expressly **not** permitted in this course:
+
+          - Use of AI tools for creating graded submissions and examination performances – the examination performance must be completed entirely independently.
+          - Use of AI during supervised examinations (written exams, etc.), unless explicitly permitted by the examination regulations or the instructor – this may be treated as an attempt at deception.
+          - Use of AI to circumvent learning objectives that explicitly require independent critical thinking, creative problem-solving, analytical skills, or specific methodological competencies.
+          - Uploading copyrighted course materials or personal data to cloud-based AI systems without explicit permission (see Section 3).
       - "datenschutz-regel"
       - id: "pruefung-massnahmen"
         text: |
@@ -80,7 +99,8 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: *upload_item_permission
     no_upload_item: "urheberrecht-verbot"
 
   # ============================================================
@@ -102,11 +122,13 @@ presets:
       This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented with simple labeling (tool + purpose).
     items:
       - "grundsatz-erlaubt"
+      - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-einfach"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           We are aware that the use of AI in unsupervised assessments (e.g., term papers) is difficult to control and may compromise fairness and equal opportunity. To ensure a valid assessment of your individual competencies, the following measures are applied in this course:
@@ -118,7 +140,8 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: *upload_item_permission
     no_upload_item: "urheberrecht-verbot"
 
   # ============================================================
@@ -145,6 +168,7 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           We are aware that the use of AI in unsupervised assessments (e.g., term papers) is difficult to control and may compromise fairness and equal opportunity. To ensure a valid assessment of your individual competencies, the following measures are applied in this course:
@@ -156,7 +180,8 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: *upload_item_permission
     no_upload_item: "urheberrecht-verbot"
 
   # ============================================================
@@ -190,6 +215,7 @@ presets:
           - Use of AI to circumvent learning objectives that explicitly require independent critical thinking or specific methodological competencies.
           - Uploading copyrighted course materials or personal data to cloud-based AI systems without explicit permission.
       - "datenschutz-regel"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           AI tools may be used without restrictions for creating submissions. Individual competence is demonstrated through a defense:
@@ -201,7 +227,8 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: *upload_item_permission
     no_upload_item: "urheberrecht-verbot"
 
   # ============================================================
@@ -239,6 +266,7 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           AI competence is an explicit learning objective of this course. Both the process and the result of AI use are assessed:
@@ -247,8 +275,10 @@ presets:
           - The **quality of AI use** – prompt quality, critical review of results, independent further processing – is included in the assessment.
           - A final **portfolio** documents AI use throughout the semester and is part of the examination.
       - "halluzinationen-warnung"
+      - "prompting-tipps"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-    upload_item: "urheberrecht-erlaubnis"
+      - "unterstuetzung-angebot"
+    upload_item: *upload_item_permission
     no_upload_item: "urheberrecht-verbot"

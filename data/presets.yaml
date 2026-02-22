@@ -1,12 +1,12 @@
 # KI-Policy-Generator - Preset-Vorlagen
-# Version: 2.1
+# Version: 2.2
 # Sprache: de
 #
 # Items können entweder als einfacher String (= Default-Text aus policy-data.yaml)
 # oder als Objekt { id, text } (= preset-spezifischer Text) angegeben werden.
 # upload_item / no_upload_item folgen demselben Schema.
 
-version: "2.0"
+version: "2.2"
 
 presets:
   # ============================================================
@@ -43,8 +43,10 @@ presets:
 
           - Die Prüfungsleistung erfolgt als **beaufsichtigte schriftliche Prüfung** (Klausur) ohne Zugang zu KI-Werkzeugen oder dem Internet.
           - Zulässige Hilfsmittel werden zu Beginn der Prüfung bekanntgegeben.
+      - "lehrende-keine-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: &upload_item_erlaubnis
       id: "urheberrecht-erlaubnis"
       text: |
@@ -76,8 +78,16 @@ presets:
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Der Einsatz von KI ist zum Lernen grundsätzlich erlaubt. Die Prüfungsleistung wird ohne KI-Unterstützung erbracht. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich.
     items:
       - "grundsatz-erlaubt"
+      - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
-      - "verboten-regel"
+      - id: "verboten-regel"
+        text: |
+          Folgende Nutzungsarten von KI sind in dieser Lehrveranstaltung ausdrücklich **nicht** erlaubt:
+
+          - Nutzung von KI-Werkzeugen bei der Erstellung bewerteter Abgaben und Prüfungsleistungen – die Prüfungsleistung muss vollständig eigenständig erbracht werden.
+          - Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich durch die Prüfungsordnung oder die Lehrperson gestattet – dies kann als Täuschungsversuch gewertet werden.
+          - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken, kreatives Problemlösen, Analysefähigkeiten oder spezifische methodische Kompetenzen erfordern.
+          - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis (siehe Abschnitt 3).
       - "datenschutz-regel"
       - id: "pruefung-massnahmen"
         text: |
@@ -89,6 +99,7 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: *upload_item_erlaubnis
     no_upload_item: "urheberrecht-verbot"
 
@@ -111,11 +122,13 @@ presets:
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen als Hilfsmittel eingesetzt werden, auch bei bewerteten Abgaben. Die Nutzung ist mit einer einfachen Kennzeichnung (Tool + Zweck) zu dokumentieren.
     items:
       - "grundsatz-erlaubt"
+      - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-einfach"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           Wir sind uns bewusst, dass die Nutzung von KI bei unbeaufsichtigten Prüfungsleistungen (z.B. Hausarbeiten) kaum kontrollierbar ist und dies Chancengleichheit und Fairness gefährden kann. Um dennoch eine valide Bewertung Ihrer individuellen Kompetenzen sicherzustellen, werden in diesem Kurs folgende Maßnahmen angewendet:
@@ -127,6 +140,7 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: *upload_item_erlaubnis
     no_upload_item: "urheberrecht-verbot"
 
@@ -154,6 +168,7 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           Wir sind uns bewusst, dass die Nutzung von KI bei unbeaufsichtigten Prüfungsleistungen (z.B. Hausarbeiten) kaum kontrollierbar ist und dies Chancengleichheit und Fairness gefährden kann. Um dennoch eine valide Bewertung Ihrer individuellen Kompetenzen sicherzustellen, werden in diesem Kurs folgende Maßnahmen angewendet:
@@ -165,6 +180,7 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: *upload_item_erlaubnis
     no_upload_item: "urheberrecht-verbot"
 
@@ -199,6 +215,7 @@ presets:
           - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken oder spezifische methodische Kompetenzen erfordern.
           - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis.
       - "datenschutz-regel"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           KI-Werkzeuge dürfen bei der Erstellung von Abgaben ohne Einschränkung eingesetzt werden. Der individuelle Kompetenznachweis erfolgt durch eine Verteidigung:
@@ -210,6 +227,7 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: *upload_item_erlaubnis
     no_upload_item: "urheberrecht-verbot"
 
@@ -248,6 +266,7 @@ presets:
       - "verboten-regel"
       - "datenschutz-regel"
       - "kennzeichnung-detailliert"
+      - "zugang-chancengleichheit"
       - id: "pruefung-massnahmen"
         text: |
           KI-Kompetenz ist ein explizites Lernziel dieser Lehrveranstaltung. Sowohl der Prozess als auch das Ergebnis der KI-Nutzung werden bewertet:
@@ -256,8 +275,10 @@ presets:
           - Die **Qualität des KI-Einsatzes** – Promptqualität, kritische Überprüfung der Ergebnisse, eigenständige Weiterverarbeitung – fließt in die Bewertung ein.
           - Ein abschließendes **Portfolio** dokumentiert den KI-Einsatz über das Semester und ist Teil der Prüfungsleistung.
       - "halluzinationen-warnung"
+      - "prompting-tipps"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
+      - "unterstuetzung-angebot"
     upload_item: *upload_item_erlaubnis
     no_upload_item: "urheberrecht-verbot"

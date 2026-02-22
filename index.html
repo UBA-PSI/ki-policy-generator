@@ -7,7 +7,7 @@
     <title>KI-Policy-Creator für Lehrende</title>
     <script>
     (function() {
-        var LOCAL_VERSION = '3.1.0';
+        var LOCAL_VERSION = '3.2.0';
 
         var script = document.createElement('script');
         script.src = 'version.js?ts=' + Date.now();
@@ -35,8 +35,8 @@
         document.head.appendChild(script);
     })();
     </script>
-    <script src="pako.min.js?v=3.1.0"></script>
-    <script src="lib/js-yaml.min.js?v=3.1.0"></script>
+    <script src="pako.min.js?v=3.2.0"></script>
+    <script src="lib/js-yaml.min.js?v=3.2.0"></script>
     <style>
         :root {
             --primary-color: #0060df;
@@ -2008,14 +2008,22 @@
             transition: box-shadow 0.2s;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .preset-card:hover {
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        .preset-card-header {
+            padding: 0.65rem 1.25rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
         .preset-card-body {
-            padding: 1.1rem 1.25rem;
+            padding: 0.75rem 1.25rem 1.1rem;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -2030,13 +2038,6 @@
             display: flex;
             align-items: center;
             gap: 0.45rem;
-        }
-
-        .preset-card-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
         }
 
         .preset-card-desc {
@@ -2066,7 +2067,7 @@
             content: "\2013";
             position: absolute;
             left: 0;
-            color: var(--light-gray);
+            color: var(--preset-accent, var(--light-gray));
         }
 
 
@@ -2184,31 +2185,26 @@
         }
 
         .preset-detail-header-inner {
-            padding: 1.5rem 1.5rem 0;
+            padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            border-radius: 12px 12px 0 0;
         }
 
         .preset-detail-name {
             font-size: 1.4rem;
             font-weight: 700;
-            color: var(--dark-gray);
+            color: inherit;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .preset-detail-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
         .preset-detail-desc {
             font-size: 0.95rem;
-            color: var(--medium-gray);
+            color: inherit;
+            opacity: 0.85;
             margin-top: 0.3rem;
         }
 
@@ -2217,13 +2213,14 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--light-gray);
+            color: inherit;
+            opacity: 0.7;
             padding: 0;
             line-height: 1;
         }
 
         .preset-detail-close:hover {
-            color: var(--dark-gray);
+            opacity: 1;
         }
 
         .preset-detail-body {
@@ -2260,6 +2257,7 @@
             position: absolute;
             left: 0.3em;
             font-weight: bold;
+            color: var(--preset-accent, inherit);
         }
 
         .preset-detail-items {
@@ -2625,6 +2623,7 @@
                         <div class="preset-comparison-table-wrap">
                             <table class="preset-comparison-table">
                                 <thead>
+                                    <!-- Preset colors must match data/presets.yaml -->
                                     <tr>
                                         <th></th>
                                         <th><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</th>
@@ -2956,7 +2955,6 @@
                 <div class="preset-detail-header-inner">
                     <div>
                         <div id="preset-detail-name" class="preset-detail-name">
-                            <span id="preset-detail-dot" class="preset-detail-dot"></span>
                             <span id="preset-detail-name-text"></span>
                         </div>
                         <div id="preset-detail-desc" class="preset-detail-desc"></div>
@@ -4203,6 +4201,11 @@
         // Preset Feature Functions
         // ============================================================
 
+        function getContrastColorForOklch(oklchColor) {
+            const lightness = parseFloat((oklchColor.match(/oklch\((\d+\.?\d*)%/) || [])[1] || 50);
+            return lightness > 70 ? 'rgba(0,0,0,0.85)' : '#fff';
+        }
+
         /**
          * Rendert die 6 Preset-Cards im Grid
          */
@@ -4221,19 +4224,19 @@
                 const card = document.createElement('div');
                 card.className = 'preset-card';
                 card.dataset.presetId = preset.id;
+                card.style.setProperty('--preset-accent', preset.color);
+
+                // Colored header with preset name
+                const header = document.createElement('div');
+                header.className = 'preset-card-header';
+                header.style.backgroundColor = preset.color;
+                header.style.color = getContrastColorForOklch(preset.color);
+                header.textContent = preset.name;
+                card.appendChild(header);
 
                 // Body
                 const body = document.createElement('div');
                 body.className = 'preset-card-body';
-
-                const name = document.createElement('div');
-                name.className = 'preset-card-name';
-                const dot = document.createElement('span');
-                dot.className = 'preset-card-dot';
-                dot.style.backgroundColor = preset.color;
-                name.appendChild(dot);
-                name.appendChild(document.createTextNode(preset.name));
-                body.appendChild(name);
 
                 const desc = document.createElement('div');
                 desc.className = 'preset-card-desc';
@@ -4252,8 +4255,8 @@
                 body.appendChild(tldrList);
                 card.appendChild(body);
 
-                // Click handler on card body
-                body.addEventListener('click', () => showPresetDetail(preset));
+                // Click handler on entire card
+                card.addEventListener('click', () => showPresetDetail(preset));
 
                 grid.appendChild(card);
             });
@@ -4297,9 +4300,6 @@
             grid.appendChild(editorCard);
         }
 
-        /**
-         * Zeigt das Preset-Detail-Modal
-         */
         /**
          * Updates only the upload-dependent parts of the preset detail modal
          * (TL;DR list and items list) without re-creating the toggle or focus trap.
@@ -4352,8 +4352,15 @@
             // Store reference to current preset
             modal._currentPreset = preset;
 
-            // Color dot
-            document.getElementById('preset-detail-dot').style.backgroundColor = preset.color;
+            // Color the modal header
+            const headerInner = modal.querySelector('.preset-detail-header-inner');
+            if (headerInner) {
+                headerInner.style.backgroundColor = preset.color;
+                headerInner.style.color = getContrastColorForOklch(preset.color);
+            }
+
+            // Set preset accent color for bullets
+            modal.style.setProperty('--preset-accent', preset.color);
 
             // Name & description
             document.getElementById('preset-detail-name-text').textContent = preset.name;
@@ -5433,6 +5440,6 @@
         });
 
     </script>
-    <script src="policy-loader.js?v=3.1.0"></script>
+    <script src="policy-loader.js?v=3.2.0"></script>
 </body>
 </html>
