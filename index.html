@@ -549,6 +549,12 @@
             align-items: center;
             margin-bottom: 8px;
         }
+        .category-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
         .category-header h2 {
             margin: 0;
             font-size: 1.3em;
@@ -567,11 +573,31 @@
             text-align: center;
             border-radius: 11px;
             padding: 0 7px;
-            margin-left: 10px;
             flex-shrink: 0;
         }
         .category-count.has-items {
             display: inline-block;
+        }
+        .category-header-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .scroll-to-preview-btn {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #aaa;
+            padding: 2px 6px;
+            line-height: 1;
+            transition: color 0.15s, border-color 0.15s;
+        }
+        .scroll-to-preview-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--border-color);
         }
         .category-content {
             max-height: 0;
@@ -1330,8 +1356,90 @@
             font-size: 0.8rem;
         }
         
+        /* University Branding Bar */
+        .uni-branding-bar {
+            background-color: #3D3C3B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 2.5rem;
+            z-index: 200;
+        }
+
+        .uni-branding-bar a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+
+        .uni-branding-bar a:hover {
+            opacity: 0.85;
+        }
+
+        .uni-branding-logo {
+            height: 26px;
+            width: auto;
+        }
+
+        .uni-branding-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .uni-branding-right a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+        }
+
+        .uni-branding-right a:hover {
+            color: white;
+        }
+
+        .uni-branding-separator {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+        }
+
+        /* Byline under hero title (mobile fallback) */
+        .welcome-byline {
+            display: none;
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+            margin-top: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-byline a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--light-gray);
+        }
+
+        .welcome-byline a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
         /* Responsive Design für kleinere Bildschirme */
         @media (max-width: 768px) {
+            .uni-branding-bar {
+                padding: 0.5rem 1rem;
+            }
+            .uni-branding-logo {
+                height: 20px;
+            }
+            .uni-branding-right {
+                display: none;
+            }
+            .welcome-byline {
+                display: block;
+            }
             .header-top-row {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1787,75 +1895,6 @@
         .component-item {
             word-break: break-word;
             hyphens: auto;
-        }
-
-        /* Print Styles */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-
-            #live-preview-content, #live-preview-content * {
-                visibility: visible !important;
-            }
-
-            #live-preview-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 1cm;
-                font-size: inherit;
-                box-shadow: none;
-                border: none;
-            }
-
-            .live-preview-header, .live-preview-footer, .live-preview-toggle,
-            header, footer, #welcome-view, .left-panel,
-            #save-load-modal, .header-buttons, .editor-header,
-            .editor-toolbar, .preset-editor-section {
-                display: none !important;
-            }
-
-            .generated-policy {
-                font-size: 10pt;
-            }
-            .generated-policy h1 {
-                font-size: 16pt;
-            }
-            .generated-policy h2 {
-                font-size: 12pt;
-            }
-
-            a:link, a:visited {
-                text-decoration: underline;
-                color: #000;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-                font-size: 90%;
-                color: #555;
-            }
-            a[href^="#"]:after {
-                content: "";
-            }
-
-            .item-actions { display: none; }
-
-            .policy-card {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ccc;
-            }
-
-            .policy-subcategory {
-                page-break-inside: avoid;
-            }
-
-            .policy-tldr-section {
-                page-break-inside: avoid;
-            }
         }
 
         .policy-subcategory {
@@ -2586,6 +2625,21 @@
 </head>
 <body>
     <a href="#editor-view" class="skip-link">Zum Inhalt springen</a>
+
+    <!-- University Branding Bar -->
+    <nav class="uni-branding-bar" aria-label="Universität Bamberg">
+        <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
+            <img src="images/uba-logo-social-weiss.svg" alt="Universität Bamberg" class="uni-branding-logo">
+            <span>Universität Bamberg</span>
+        </a>
+        <div class="uni-branding-right">
+            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+            <span class="uni-branding-separator">|</span>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener" data-ui-lang="de">Sprecher des CIO</a>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener" data-ui-lang="en" style="display:none">CIO Speaker</a>
+        </div>
+    </nav>
+
     <!-- Welcome View - moved outside main container -->
     <div id="welcome-view" class="view active-view" role="region" aria-label="Startseite">
         <div class="welcome-content">
@@ -2599,6 +2653,8 @@
                         </div>
                     </div>
                     <p class="version-info">Version v3 / 2025-01-28</p>
+                    <p class="welcome-byline" data-ui-lang="de"><a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a> · <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">Sprecher des Chief Information Office</a></p>
+                    <p class="welcome-byline" data-ui-lang="en" style="display:none"><a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a> · <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">Speaker of the Chief Information Office</a></p>
                     <p class="intro-text" data-i18n="welcome_intro">Ein Tool zum Erstellen einer KI-Richtlinie für Lehrveranstaltungen</p>
 
                     <section class="preset-section" id="preset-section">
@@ -2873,7 +2929,6 @@
                     <div class="live-preview-footer" id="live-preview-footer" style="display:none">
                         <button id="preview-copy-btn" class="action-btn" data-i18n="btn_copy_result">Text kopieren</button>
                         <button id="preview-download-btn" class="action-btn btn-secondary-action" data-i18n="btn_download_html">Als HTML herunterladen</button>
-                        <button id="preview-pdf-btn" class="action-btn btn-secondary-action" data-i18n="btn_print_pdf">Als PDF speichern</button>
                         <button id="preview-card-btn" class="action-btn btn-secondary-action" data-i18n="btn_copy_card" style="display:none">Policy Card kopieren</button>
                     </div>
                 </aside>
@@ -3493,24 +3548,80 @@
                 header.setAttribute('tabindex', '0');
                 header.setAttribute('aria-expanded', 'false');
 
-                // Remove old chevrons and count badges first
+                // Remove old chevrons, count badges, left/right wrappers first
                 const oldChevron = header.querySelector('.chevron');
                 if (oldChevron) oldChevron.remove();
                 const oldCount = header.querySelector('.category-count');
                 if (oldCount) oldCount.remove();
+                const oldLeft = header.querySelector('.category-header-left');
+                if (oldLeft) {
+                    // Move h2 back to header before removing wrapper
+                    const h2 = oldLeft.querySelector('h2');
+                    if (h2) header.insertBefore(h2, oldLeft);
+                    oldLeft.remove();
+                }
+                header.querySelectorAll('.category-header-right').forEach(el => el.remove());
 
-                // Add count badge (between h2 and chevron)
+                // Wrap h2 + count badge in a left group
+                const h2 = header.querySelector('h2');
+                const leftGroup = document.createElement('div');
+                leftGroup.className = 'category-header-left';
+                if (h2) {
+                    header.insertBefore(leftGroup, h2);
+                    leftGroup.appendChild(h2);
+                }
+
                 const countBadge = document.createElement('span');
                 countBadge.className = 'category-count';
                 countBadge.textContent = '0';
-                header.appendChild(countBadge);
+                leftGroup.appendChild(countBadge);
 
-                // Add new chevron
+                // Right side: scroll-to-preview button + chevron
+                const rightGroup = document.createElement('div');
+                rightGroup.className = 'category-header-right';
+
+                const scrollBtn = document.createElement('button');
+                scrollBtn.className = 'scroll-to-preview-btn';
+                scrollBtn.setAttribute('aria-label', t('btn_scroll_to_preview', 'In Vorschau anzeigen'));
+                scrollBtn.title = t('btn_scroll_to_preview', 'In Vorschau anzeigen');
+                scrollBtn.textContent = '\u2192'; // → arrow
+                scrollBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const catH2 = header.querySelector('h2');
+                    if (!catH2) return;
+                    const catTitle = catH2.textContent.replace(/^\d+\.\s*/, '');
+                    const anchorId = 'preview-cat-' + catTitle.replace(/[^a-zA-Z0-9äöüÄÖÜß]+/g, '-').toLowerCase();
+                    const panel = document.getElementById('live-preview');
+                    const toggle = document.getElementById('live-preview-toggle');
+                    // Open preview if not open
+                    if (panel && !panel.classList.contains('open')) {
+                        panel.classList.add('open');
+                        if (toggle) {
+                            toggle.classList.add('active');
+                            toggle.textContent = t('btn_preview_close', 'Vorschau schließen');
+                        }
+                        updateLivePreview();
+                    }
+                    // Scroll to anchor
+                    setTimeout(() => {
+                        const target = document.getElementById(anchorId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            target.style.transition = 'background-color 0.3s';
+                            target.style.backgroundColor = '#fff3cd';
+                            setTimeout(() => { target.style.backgroundColor = ''; }, 1500);
+                        }
+                    }, 100);
+                });
+                rightGroup.appendChild(scrollBtn);
+
                 const chevron = document.createElement('span');
                 chevron.className = 'chevron';
                 chevron.textContent = '\u25BC'; // Down arrow
                 chevron.setAttribute('aria-hidden', 'true');
-                header.appendChild(chevron);
+                rightGroup.appendChild(chevron);
+
+                header.appendChild(rightGroup);
             });
 
             // Remove old click handlers by using event delegation instead
@@ -3758,7 +3869,8 @@
             html += `<div class="policy-content">`;
             Object.entries(itemsByCategory).forEach(([categoryTitle, items]) => {
                 const cleanCategoryTitle = categoryTitle.replace(/^\d+\.\s*/, '');
-                html += `<div class="policy-category"><h2 class="category-title">${escapeHTML(cleanCategoryTitle)}</h2>`;
+                const catAnchorId = 'preview-cat-' + cleanCategoryTitle.replace(/[^a-zA-Z0-9äöüÄÖÜß]+/g, '-').toLowerCase();
+                html += `<div class="policy-category" id="${catAnchorId}"><h2 class="category-title">${escapeHTML(cleanCategoryTitle)}</h2>`;
                 const itemsBySubcategory = {};
                 items.forEach(item => {
                     const sub = item.subcategoryTitle || t('default_subcategory', 'Allgemein');
@@ -5403,15 +5515,6 @@
             }
         }
 
-        function setupPDFPrint() {
-            const printBtn = document.getElementById('preview-pdf-btn');
-            if (printBtn) {
-                printBtn.addEventListener('click', () => {
-                    window.print();
-                });
-            }
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             // Load policy data from YAML and render items
@@ -5426,7 +5529,6 @@
             setupViewNavigation();
             setupSaveLoadModal();
             setupHTMLDownload();
-            setupPDFPrint();
             setupPresetHandlers();
 
             // Initialize language switcher

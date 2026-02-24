@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Skill v1-NoUpload – KI-Richtlinie: AI-Skill v1</title>
+    <meta name="description" content="KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.">
+    <meta property="og:title" content="AI-Skill v1-NoUpload – KI-Richtlinie: AI-Skill v1">
+    <meta property="og:description" content="KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ki-policy.org/p/ai-skill/de/">
+    <link rel="canonical" href="https://ki-policy.org/p/ai-skill/de/">
+    <link rel="alternate" hreflang="en" href="https://ki-policy.org/p/ai-skill/en/">
+    <link rel="alternate" hreflang="de" href="https://ki-policy.org/p/ai-skill/de/">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 300;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-300.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-400.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 500;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-500.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-700.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* University Branding Bar */
+        .uni-branding-bar {
+            background-color: #3D3C3B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            z-index: 200;
+        }
+        .uni-branding-bar a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+        .uni-branding-bar a:hover { opacity: 0.85; }
+        .uni-branding-logo { height: 26px; width: auto; }
+        .uni-branding-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .uni-branding-right a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+        }
+        .uni-branding-right a:hover { color: white; }
+        .uni-branding-separator { color: rgba(255,255,255,0.3); font-size: 0.75rem; }
+
+        /* Navigation */
+        .page-nav {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            border: 1px solid #ddd;
+            background: #fff;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover { background: #f0f0f0; }
+        .nav-btn.active {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .nav-spacer { flex: 1; min-width: 0; }
+        .nav-customize {
+            font-size: 0.85rem;
+            color: #1a73e8;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-customize:hover { text-decoration: underline; }
+
+        /* Main content */
+        .page-content {
+            max-width: 750px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Generated policy styles */
+        .generated-policy h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+        .generated-policy h2 { font-size: 1.4rem; margin-top: 1rem; margin-bottom: 0.4rem; }
+        .policy-date { color: #666; margin-bottom: 1rem; font-style: italic; }
+        .policy-intro { margin-bottom: 1rem; }
+        .policy-category { margin-bottom: 1.5rem; }
+        .policy-category h2 { font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+        .policy-subcategory { margin-top: 1.5rem; margin-bottom: 1rem; }
+        .policy-subcategory:first-child { margin-top: 0.8rem; }
+        .subcategory-title { font-size: 1rem; font-weight: 600; color: #555; margin-bottom: 0.8rem; }
+        .policy-item-result { margin-bottom: 1.2rem; }
+        .policy-item-text p { margin-bottom: 0.3rem; }
+        .policy-item-text ul, .policy-item-text ol { margin-top: 0.2rem; margin-bottom: 0.3rem; padding-left: 1.5rem; }
+        .policy-item-text li { margin-bottom: 0.2rem; }
+
+        /* TL;DR section */
+        .policy-tldr-section { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; }
+        .policy-tldr-section h2 { font-size: 1.1rem; margin-bottom: 0.5rem; border: none; padding: 0; }
+        .policy-tldr-section ul { list-style: disc; padding-left: 1.5rem; margin: 0; }
+        .policy-tldr-section li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+
+        /* Policy card */
+        .policy-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .policy-card-header { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; }
+        .policy-card-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .policy-card-title { font-size: 1.1rem; font-weight: 700; }
+        .policy-card-upload-badge { font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: #f9f9f9; border: 1px solid #e0e0e0; color: #666; margin-left: auto; white-space: nowrap; }
+        .policy-card-tldr { list-style: none; padding: 1rem 1.2rem; margin: 0; }
+        .policy-card-tldr li { padding: 0.3rem 0 0.3rem 1.3em; position: relative; font-size: 0.9rem; }
+        .policy-card-tldr li::before { content: "\2022"; position: absolute; left: 0; font-weight: bold; }
+        .policy-card-footer { padding: 0.6rem 1.2rem; border-top: 1px solid #e0e0e0; background: #f9f9f9; font-size: 0.75rem; color: #999; text-align: center; }
+
+        /* Footer */
+        .page-footer {
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .page-footer a { color: #666; }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; }
+            .uni-branding-bar { display: none; }
+            .page-nav { display: none; }
+            .page-content {
+                box-shadow: none;
+                margin: 0;
+                padding: 1rem;
+                max-width: 100%;
+            }
+            .page-footer { display: none; }
+            .policy-card { box-shadow: none; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .uni-branding-bar { padding: 0.5rem 1rem; justify-content: center; }
+            .uni-branding-logo { height: 20px; }
+            .uni-branding-right { display: none; }
+            .page-content { margin: 1rem; padding: 1.2rem; }
+            .page-nav {
+                padding: 0.5rem 1rem;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            .nav-spacer { display: none; }
+            .nav-customize { font-size: 0.8rem; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="uni-branding-bar" aria-label="Universität Bamberg">
+        <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
+            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
+            <span>Universität Bamberg</span>
+        </a>
+        <div class="uni-branding-right">
+            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+            <span class="uni-branding-separator">|</span>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">Sprecher des CIO</a>
+        </div>
+    </nav>
+
+    <nav class="page-nav">
+        <div class="nav-group">
+            <a href="../de/" class="nav-btn active">DE</a>
+            <a href="../en/" class="nav-btn ">EN</a>
+        </div>
+        <div class="nav-group">
+            <a href="./" class="nav-btn active">Kein Upload</a>
+            <a href="upload/" class="nav-btn ">Upload erlaubt</a>
+        </div>
+        <div class="nav-spacer"></div>
+        <a href="/v3/?preset=ai-skill&amp;upload=false&amp;lang=de" class="nav-customize">Im Generator anpassen &rarr;</a>
+    </nav>
+
+    <main class="page-content">
+        <div class="generated-policy">
+            <h1>KI-Richtlinie: AI-Skill v1</h1>
+<div class="policy-date">Stand: <span id="policy-date"></span></div>
+<div class="policy-intro"><p>Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Kompetenz ist ein explizites Lernziel. KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden. Sowohl der Prozess als auch das Ergebnis der KI-Nutzung fließen in die Bewertung ein.</p></div>
+<div class="policy-tldr-section">
+<h2>AI-Skill v1-NoUpload – Zusammenfassung (TL;DR)</h2>
+<ul>
+<li>KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden.</li>
+<li>Prompt-Protokoll mit Reflexion ist Pflichtbestandteil und wird benotet.</li>
+<li>Die Qualität des KI-Einsatzes fließt in die Bewertung ein.</li>
+<li>Ein Portfolio dokumentiert den KI-Einsatz über das Semester.</li>
+<li>Kursmaterialien dürfen <strong>nicht</strong> in KI-Tools hochgeladen werden.</li>
+</ul></div>
+<div class="policy-content">
+<div class="policy-category"><h2 class="category-title">Grundlagen und Lernziele</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Grundprinzip zum KI-Einsatz</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini etc.) ist in dieser Lehrveranstaltung nicht nur erlaubt, sondern ein <strong>explizites Lernziel</strong>. Sie sollen KI-Werkzeuge aktiv, gezielt und reflektiert einsetzen lernen. Es gelten die spezifischen Regelungen dieser Policy bezüglich Dokumentation und akademischer Integrität.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Lernziele in Bezug auf KI</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Zusätzlich zu den grundlegenden KI-Kompetenzen sollen Sie in dieser Lehrveranstaltung lernen:
+<ul>
+<li>Die spezifischen Stärken und Schwächen verschiedener KI-Modelle und Betriebsarten (z.B. lokale Modelle versus kommerziell angebotene Modelle) für unterschiedliche Aufgaben einzuschätzen.</li>
+<li>Strategien zur Überprüfung und Validierung von KI-generierten Informationen mithilfe wissenschaftlicher Methoden anzuwenden.</li>
+<li>Die ethischen Implikationen des KI-Einsatzes im Fachgebiet zu diskutieren.</li>
+<li>KI-Werkzeuge zur Unterstützung wissenschaftlicher Arbeitsprozesse (Recherche, Analyse, Texterstellung) gezielt und reflektiert einzusetzen.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Erlaubte und verbotene Nutzung</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Erlaubte Nutzung ohne Kennzeichnungspflicht</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Folgende Nutzungsarten von KI sind als persönliche Lernhilfe erlaubt und müssen <strong>nicht</strong> gesondert gekennzeichnet werden:
+<ul>
+<li>Nutzung zur individuellen Prüfungsvorbereitung (z.B. Erstellen von Übungsfragen, Zusammenfassungen eigener Notizen, Lernkarten).</li>
+<li>Generieren von Erklärungen zu Konzepten oder Fachbegriffen für das eigene Verständnis.</li>
+<li>Übersetzen von fremdsprachigen Texten (z.B. Fachartikeln) für das eigene Verständnis.</li>
+<li>Nutzung in explizit dafür vorgesehenen Übungsphasen während der Lehrveranstaltung (wenn von der Lehrperson angeleitet).</li>
+<li>Rechtschreib- und Grammatikprüfung durch Standard-Software (z.B. in Word).</li>
+<li>Unterstützung bei der Formatierung und Zitierweise von schriftlichen Aufgaben.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Erlaubte Nutzung mit Kennzeichnungspflicht</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Folgende Nutzungsarten von KI sind erlaubt, sofern sie transparent und nachvollziehbar gemäß den Vorgaben dieser Richtlinie gekennzeichnet werden:
+<ul>
+<li>Unterstützung bei der Ideenfindung, Strukturierung und Gliederung von schriftlichen Arbeiten, Hausaufgaben oder Präsentationen.</li>
+<li>Hilfe bei der sprachlichen Überarbeitung und Verbesserung eigener Texte (über reine Rechtschreib-/Grammatikkorrektur hinausgehend, z.B. Stil, Formulierungsvorschläge).</li>
+<li>Generieren von Beispielen, Analogien oder alternativen Erklärungsansätzen zur Veranschaulichung eigener Argumente.</li>
+<li>Brainstorming zu möglichen Argumenten, Gegenargumenten oder Perspektiven für eine Analyse.</li>
+<li>Unterstützung bei der Literaturrecherche (z.B. Vorschläge für Suchbegriffe, Zusammenfassung von Abstracts, Suche nach Quellen mit &quot;Deep Research&quot;-Funktionen von KI-Werkzeuge.</li>
+<li>Generierung von Code-Snippets oder Debugging-Hilfe (falls relevant für das Fach).</li>
+<li>Erstellung von Visualisierungen und Grafiken zur Unterstützung von Präsentationen oder schriftlichen Arbeiten (z.B. durch Tools zur automatischen Visualisierung von Daten oder Konzepten).</li>
+<li>Transkription und Zusammenfassung von Audio-/Videoquellen.</li>
+</ul>
+<strong>Entscheidend ist:</strong> Die Kernleistung (Analyse, Argumentation, kritische Einordnung, eigene Schlussfolgerungen) muss von Ihnen selbst erbracht werden.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Verbotene KI-Nutzung</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Folgende Nutzungsarten von KI sind in dieser Lehrveranstaltung ausdrücklich <strong>nicht</strong> erlaubt:
+<ul>
+<li>Einreichen von KI-generierten Inhalten als eigene Arbeit ohne ausreichende Kennzeichnung – dies kann als Täuschungsversuch gewertet werden.</li>
+<li>Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich durch die Prüfungsordnung oder die Lehrperson gestattet – dies kann als Täuschungsversuch gewertet werden.</li>
+<li>Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken, kreatives Problemlösen, Analysefähigkeiten oder spezifische methodische Kompetenzen erfordern.</li>
+<li>Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis (siehe Abschnitt 3).</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Urheberrecht und Datenschutz</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Datenschutzaspekte</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Beachten Sie bei der Nutzung von KI-Diensten den Datenschutz:
+<ul>
+<li>Geben Sie <strong>keine personenbezogenen Daten</strong> (z.B. Namen, Matrikelnummern, E-Mail-Adressen, Diskussionsbeiträge) in externe KI-Werkzeuge ein (weder eigene noch die von anderen Studierenden oder die Daten von Dozierenden).</li>
+<li>Seien Sie sich bewusst, dass viele Cloud-basierte KI-Dienste Ihre Eingaben speichern und potenziell zum Training ihrer Modelle verwenden.</li>
+<li>Nutzen Sie nach Möglichkeit datenschutzfreundlichere Alternativen wie von Ihrer Hochschule bereitgestellte KI-Dienste oder lokal auf Ihrem Rechner laufende KI-Modelle, falls möglich.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Umgang mit urheberrechtlich geschützten Materialien</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Die in diesem Kurs bereitgestellten Lehrmaterialien (Folien, Skripte, Aufgaben etc.) sind urheberrechtlich geschützt. Es ist Ihnen <strong>nicht</strong> gestattet, diese Materialien oder wesentliche Teile davon zu externen Cloud-basierten KI-Diensten (wie ChatGPT, Copilot, Claude, Gemini, etc.) hochzuladen oder diese dort zur Analyse oder Verarbeitung einzugeben.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Kennzeichnung der KI-Nutzung</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Format der Kennzeichnung</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Kennzeichnen Sie die Nutzung von KI-Systemen in schriftlichen Abgaben wie folgt:</p>
+
+<p><strong>1. Abschnitt &quot;Dokumentation der KI-Nutzung&quot; im Anhang:</strong>
+<ul>
+<li><strong>Verwendete Tools:</strong> Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. &quot;ChatGPT (OpenAI, Modell GPT-5)&quot;, &quot;Claude (Anthropic)&quot;).</li>
+<li><strong>Nutzungsprotokoll (Beispiele):</strong> Dokumentieren Sie exemplarisch Anfragen (Prompts) und die daraus resultierenden KI-Antworten, die Ihre Arbeit beeinflusst haben. Beschreiben Sie kurz, wie Sie die Antwort verwendet oder überarbeitet haben. (Umfang nach Absprache mit Lehrperson, z.B. 2-3 Beispiele).</li>
+<li><strong>Reflexion:</strong> Fügen Sie eine kurze persönliche Reflexion (ca. 100-200 Wörter) hinzu: Wie hat die KI-Nutzung Ihren Arbeitsprozess beeinflusst? Wo lagen die Vorteile, wo die Herausforderungen oder Grenzen?</li>
+</ul>
+<strong>2. Direkte Kennzeichnung im Text (nur bei direkter Übernahme):</strong>
+<ul>
+<li>Bei wörtlicher oder leicht paraphrasierter Übernahme von KI-generierten Passagen, kennzeichnen Sie diese direkt im Text (z.B. durch eine Fußnote: &quot;Dieser Absatz basiert auf einem Vorschlag von ChatGPT.&quot;).</li>
+</ul>
+<strong>3. KI-gestützt gefundene Quellen im Literaturverzeichnis:</strong>
+<ul>
+<li>Wenn Sie Literaturquellen mithilfe von KI-Werkzeugen gefunden haben (z.B. durch &quot;Deep Research&quot;-Funktionen), kennzeichnen Sie dies im Literaturverzeichnis durch einen Zusatz wie &quot;[via KI-Recherche]&quot; oder dokumentieren Sie es im Abschnitt zur KI-Nutzung.</li>
+<li>Überprüfen Sie alle KI-vorgeschlagenen Quellen sorgfältig auf Existenz und korrekte bibliographische Angaben, bevor Sie diese übernehmen.</li>
+</ul>
+Zusätzlich ist ggf. die allgemeine Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Chancengleichheit und Zugang</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Zugang zu KI-Werkzeuge</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Um die Chancengleichheit zu wahren, wird in dieser Lehrveranstaltung nicht vorausgesetzt, dass Sie Zugang zu kostenpflichtigen KI-Premiumdiensten haben. Die Lernziele der Lehrveranstaltung können auf folgende Weise erreicht werden:
+<ul>
+<li>Nutzung kostenfreier Basisversionen gängiger KI-Anbieter (z.B. ChatGPT, Claude, Gemini).</li>
+<li>Ggf. von Ihrer Hochschule bereitgestellte KI-Dienste.</li>
+</ul>
+Die Nutzung kostenpflichtiger Dienste erfolgt auf eigene Verantwortung und eigene Kosten.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Prüfungsgrundsätze und KI-Nutzung</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>KI-Kompetenz ist ein explizites Lernziel dieser Lehrveranstaltung. Sowohl der Prozess als auch das Ergebnis der KI-Nutzung werden bewertet:
+<ul>
+<li>Das <strong>Prompt-Protokoll mit Reflexion</strong> ist Pflichtbestandteil jeder Abgabe und wird benotet.</li>
+<li>Die <strong>Qualität des KI-Einsatzes</strong> – Promptqualität, kritische Überprüfung der Ergebnisse, eigenständige Weiterverarbeitung – fließt in die Bewertung ein.</li>
+<li>Ein abschließendes <strong>Portfolio</strong> dokumentiert den KI-Einsatz über das Semester und ist Teil der Prüfungsleistung.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Praktische Tipps zum KI-Einsatz</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Umgang mit KI-Fehlern (&quot;Halluzinationen&quot; etc.)</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>KI-Systeme machen Fehler. Verlassen Sie sich nicht blind auf KI-generierte Informationen. Achten Sie insbesondere auf:
+<ul>
+<li><strong>Faktische Fehler (&quot;Halluzinationen&quot;):</strong> Die KI erfindet Fakten, Daten oder Ereignisse, die plausibel klingen, aber falsch sind.</li>
+<li><strong>Erfundene Quellen:</strong> Die KI zitiert Quellen (Bücher, Artikel), die nicht existieren oder deren Inhalt falsch wiedergegeben wird.</li>
+<li><strong>Veraltetes Wissen:</strong> Die Trainingsdaten der KI sind nicht immer aktuell. Informationen können veraltet sein.</li>
+<li><strong>Lückenhafte oder einseitige Darstellung:</strong> Wichtige Aspekte, Perspektiven oder Gegenargumente können fehlen.</li>
+<li><strong>Bias:</strong> Die KI kann unbewusste Vorurteile aus den Trainingsdaten reproduzieren.</li>
+</ul>
+<strong>Strategien zur Überprüfung:</strong>
+<ul>
+<li>Überprüfen Sie zentrale Aussagen und Fakten anhand wissenschaftlicher Quellen (z.B. Fachliteratur, Datenbanken).</li>
+<li>Verifizieren Sie Zitate und Quellenangaben – existiert die Quelle wirklich? Stimmt die Aussage?</li>
+<li>Vergleichen Sie die Antworten verschiedener KI-Werkzeuge oder suchen Sie aktiv nach Gegenpositionen.</li>
+<li>Seien Sie besonders skeptisch bei sehr spezifischen oder überraschenden Aussagen.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Prompt-Strategien</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Für bessere Ergebnisse bei der KI-Nutzung können folgende Strategien beim Formulieren von Anfragen (Prompts) hilfreich sein:
+<ul>
+<li><strong>Spezifisch sein:</strong> Je genauer Ihre Frage, desto besser die Antwort. Vermeiden Sie vage Anfragen.</li>
+<li><strong>Kontext geben:</strong> Erklären Sie kurz den Hintergrund oder das Ziel Ihrer Anfrage (z.B. &quot;Ich schreibe eine Hausarbeit über X und brauche Y&quot;).</li>
+<li><strong>Rolle zuweisen:</strong> Bitten Sie die KI, eine bestimmte Rolle einzunehmen (z.B. &quot;Erkläre es mir wie einem Studienanfänger&quot;, &quot;Antworte als kritischer Gutachter&quot;).</li>
+<li><strong>Format anhand von Beispielen vorgeben:</strong> Sagen Sie der KI, wie die Antwort aussehen soll (z.B. &quot;Liste in Stichpunkten&quot;, &quot;Erstelle eine Tabelle&quot;, &quot;Fasse in drei Sätzen zusammen&quot;, &quot;Antworte wie in diesem Beispiel&quot;).</li>
+<li><strong>Iterativ arbeiten:</strong> Stellen Sie Folgefragen, bitten Sie um Klärung oder um Überarbeitung der Antwort. Beachten Sie dabei, dass manche KI-Werkzeuge zu sogenannter &quot;Sycophancy&quot; neigen – sie stimmen Ihnen zu, auch wenn Sie falsch liegen. Hinterfragen Sie daher kritisch, wenn die KI Ihnen uneingeschränkt recht gibt, insbesondere bei komplexen oder kontroversen Themen.</li>
+<li><strong>Neutral formulieren:</strong> Vermeiden Sie suggestive Fragen, die die Antwort in eine Richtung lenken (statt &quot;Stimmt es, dass X gut ist?&quot;, besser &quot;Was sind die Vor- und Nachteile von X?&quot;).</li>
+</ul>
+<em>Beispiel für einen spezifischen Prompt:</em>
+&quot;Erkläre das Konzept &#x27;Distributed Cognition&#x27; für einen Masterstudenten der Pädagogik. Gib zuerst eine kurze Definition (max. 50 Wörter), dann zwei Beispiele aus dem Bildungskontext und nenne abschließend drei Kritikpunkte an diesem Konzept. Strukturiere die Antwort mit klaren Überschriften. Liste einschlägige Literaturquellen auf.&quot;</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Unterstützung bei Fragen zum KI-Einsatz</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Bei Fragen oder Unsicherheiten zum Einsatz von KI in dieser Lehrveranstaltung oder zur Auslegung dieser Policy können Sie sich gerne an mich wenden:
+<ul>
+<li>In meiner Sprechstunde</li>
+<li>Per E-Mail oder im Forum der Lehrveranstaltung</li>
+<li>Im Rahmen der Lehrveranstaltung (wir planen Zeit für Diskussionen ein).</li>
+</ul>
+Zusätzliche Ressourcen und Beratung bieten:
+<ul>
+<li>Die hochschulweiten Informationsangebote zu KI in der Lehre.</li>
+<li>Die didaktische Beratung Ihrer Hochschule.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">KI-Einsatz durch Lehrende</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Allgemeine Hinweise</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Auch die Lehrpersonen, die diese Lehrveranstaltung durchführen, nutzen KI-Werkzeuge, etwa um Materialien zu erstellen oder die Kommunikation zu unterstützen. Dabei achten wir stets auf die Einhaltung von Datenschutz und Urheberrecht sowie auf eine kritische Prüfung der KI-Ergebnisse.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Verarbeitung von Studierendendaten</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Wir versichern Ihnen, dass von Ihnen eingereichte Arbeiten, personenbezogene Daten oder Diskussionsbeiträge von uns <strong>nicht</strong> in externe, Cloud-basierte KI-Systeme hochgeladen oder zur Analyse eingegeben werden.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Feedback und Bewertung</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Bei der Bewertung von Prüfungsleistungen (z.B. Klausuren, Hausarbeiten, Referate), die in Ihre Endnote einfließen, setzen wir <strong>keine</strong> KI-Werkzeuge ein. Die Bewertung erfolgt ausschließlich durch menschliche Prüferinnen und Prüfer.</p></div></div>
+</div>
+</div>
+</div>
+<div class="policy-card">
+<div class="policy-card-header">
+<span class="policy-card-dot" style="background-color: oklch(75.23% 0.209 144.64)"></span>
+<span class="policy-card-title">AI-Skill v1-NoUpload</span>
+<span class="policy-card-upload-badge">Kein Upload</span>
+</div>
+<ul class="policy-card-tldr">
+<li>KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden.</li>
+<li>Prompt-Protokoll mit Reflexion ist Pflichtbestandteil und wird benotet.</li>
+<li>Die Qualität des KI-Einsatzes fließt in die Bewertung ein.</li>
+<li>Ein Portfolio dokumentiert den KI-Einsatz über das Semester.</li>
+<li>Kursmaterialien dürfen nicht in KI-Tools hochgeladen werden.</li>
+</ul>
+<div class="policy-card-footer">Erstellt mit dem KI-Policy-Generator der Universität Bamberg</div>
+</div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        Erstellt mit dem <a href="/v3/">KI-Policy-Generator</a>
+        &middot;
+        Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    </footer>
+
+    <script>
+        // Set current date
+        document.getElementById('policy-date').textContent =
+            new Date().toLocaleDateString('de-DE');
+    </script>
+</body>
+</html>

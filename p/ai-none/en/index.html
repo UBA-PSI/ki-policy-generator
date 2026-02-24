@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-None v1-NoUpload – AI Policy: AI-None v1</title>
+    <meta name="description" content="No AI use. Examination in controlled setting.">
+    <meta property="og:title" content="AI-None v1-NoUpload – AI Policy: AI-None v1">
+    <meta property="og:description" content="No AI use. Examination in controlled setting.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ki-policy.org/p/ai-none/en/">
+    <link rel="canonical" href="https://ki-policy.org/p/ai-none/en/">
+    <link rel="alternate" hreflang="de" href="https://ki-policy.org/p/ai-none/de/">
+    <link rel="alternate" hreflang="en" href="https://ki-policy.org/p/ai-none/en/">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 300;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-300.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-400.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 500;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-500.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-700.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* University Branding Bar */
+        .uni-branding-bar {
+            background-color: #3D3C3B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            z-index: 200;
+        }
+        .uni-branding-bar a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+        .uni-branding-bar a:hover { opacity: 0.85; }
+        .uni-branding-logo { height: 26px; width: auto; }
+        .uni-branding-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .uni-branding-right a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+        }
+        .uni-branding-right a:hover { color: white; }
+        .uni-branding-separator { color: rgba(255,255,255,0.3); font-size: 0.75rem; }
+
+        /* Navigation */
+        .page-nav {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            border: 1px solid #ddd;
+            background: #fff;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover { background: #f0f0f0; }
+        .nav-btn.active {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .nav-spacer { flex: 1; min-width: 0; }
+        .nav-customize {
+            font-size: 0.85rem;
+            color: #1a73e8;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-customize:hover { text-decoration: underline; }
+
+        /* Main content */
+        .page-content {
+            max-width: 750px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Generated policy styles */
+        .generated-policy h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+        .generated-policy h2 { font-size: 1.4rem; margin-top: 1rem; margin-bottom: 0.4rem; }
+        .policy-date { color: #666; margin-bottom: 1rem; font-style: italic; }
+        .policy-intro { margin-bottom: 1rem; }
+        .policy-category { margin-bottom: 1.5rem; }
+        .policy-category h2 { font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+        .policy-subcategory { margin-top: 1.5rem; margin-bottom: 1rem; }
+        .policy-subcategory:first-child { margin-top: 0.8rem; }
+        .subcategory-title { font-size: 1rem; font-weight: 600; color: #555; margin-bottom: 0.8rem; }
+        .policy-item-result { margin-bottom: 1.2rem; }
+        .policy-item-text p { margin-bottom: 0.3rem; }
+        .policy-item-text ul, .policy-item-text ol { margin-top: 0.2rem; margin-bottom: 0.3rem; padding-left: 1.5rem; }
+        .policy-item-text li { margin-bottom: 0.2rem; }
+
+        /* TL;DR section */
+        .policy-tldr-section { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; }
+        .policy-tldr-section h2 { font-size: 1.1rem; margin-bottom: 0.5rem; border: none; padding: 0; }
+        .policy-tldr-section ul { list-style: disc; padding-left: 1.5rem; margin: 0; }
+        .policy-tldr-section li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+
+        /* Policy card */
+        .policy-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .policy-card-header { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; }
+        .policy-card-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .policy-card-title { font-size: 1.1rem; font-weight: 700; }
+        .policy-card-upload-badge { font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: #f9f9f9; border: 1px solid #e0e0e0; color: #666; margin-left: auto; white-space: nowrap; }
+        .policy-card-tldr { list-style: none; padding: 1rem 1.2rem; margin: 0; }
+        .policy-card-tldr li { padding: 0.3rem 0 0.3rem 1.3em; position: relative; font-size: 0.9rem; }
+        .policy-card-tldr li::before { content: "\2022"; position: absolute; left: 0; font-weight: bold; }
+        .policy-card-footer { padding: 0.6rem 1.2rem; border-top: 1px solid #e0e0e0; background: #f9f9f9; font-size: 0.75rem; color: #999; text-align: center; }
+
+        /* Footer */
+        .page-footer {
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .page-footer a { color: #666; }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; }
+            .uni-branding-bar { display: none; }
+            .page-nav { display: none; }
+            .page-content {
+                box-shadow: none;
+                margin: 0;
+                padding: 1rem;
+                max-width: 100%;
+            }
+            .page-footer { display: none; }
+            .policy-card { box-shadow: none; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .uni-branding-bar { padding: 0.5rem 1rem; justify-content: center; }
+            .uni-branding-logo { height: 20px; }
+            .uni-branding-right { display: none; }
+            .page-content { margin: 1rem; padding: 1.2rem; }
+            .page-nav {
+                padding: 0.5rem 1rem;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            .nav-spacer { display: none; }
+            .nav-customize { font-size: 0.8rem; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="uni-branding-bar" aria-label="Universität Bamberg">
+        <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
+            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
+            <span>Universität Bamberg</span>
+        </a>
+        <div class="uni-branding-right">
+            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+            <span class="uni-branding-separator">|</span>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">CIO Speaker</a>
+        </div>
+    </nav>
+
+    <nav class="page-nav">
+        <div class="nav-group">
+            <a href="../de/" class="nav-btn ">DE</a>
+            <a href="../en/" class="nav-btn active">EN</a>
+        </div>
+        <div class="nav-group">
+            <a href="./" class="nav-btn active">No upload</a>
+            <a href="upload/" class="nav-btn ">Upload allowed</a>
+        </div>
+        <div class="nav-spacer"></div>
+        <a href="/v3/?preset=ai-none&amp;upload=false&amp;lang=en" class="nav-customize">Customize in Generator &rarr;</a>
+    </nav>
+
+    <main class="page-content">
+        <div class="generated-policy">
+            <h1>AI Policy: AI-None v1</h1>
+<div class="policy-date">Date: <span id="policy-date"></span></div>
+<div class="policy-intro"><p>This document establishes the guidelines for the use of AI tools in this course. In this course, the use of AI tools is generally not permitted. The examination is conducted in a controlled setting without AI support.</p></div>
+<div class="policy-tldr-section">
+<h2>AI-None v1-NoUpload – Summary (TL;DR)</h2>
+<ul>
+<li>AI tools are <strong>not permitted</strong> in this course – neither as a learning aid nor for submissions.</li>
+<li>The examination takes place in a controlled setting without AI access.</li>
+<li>Course materials may <strong>not</strong> be uploaded to AI tools.</li>
+</ul></div>
+<div class="policy-content">
+<div class="policy-category"><h2 class="category-title">Fundamentals and Learning Objectives</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Basic Principle for AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, etc.) is <strong>not permitted</strong> in this course. This includes both the use for graded submissions and the use as a learning aid, unless explicitly stated otherwise.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Permitted and Prohibited Use</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Prohibited AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>In this course, the use of AI tools is <strong>generally not permitted</strong>. This includes in particular:
+<ul>
+<li>The use of AI tools to create, revise, or improve texts, presentations, or other submissions.</li>
+<li>The use of AI tools during supervised examinations (written exams, etc.) – this will be treated as an attempt at deception.</li>
+<li>Uploading copyrighted course materials or personal data to AI systems.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Copyright and Data Protection</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Data Protection Aspects</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>When using AI services, observe data protection:
+<ul>
+<li>Do <strong>not</strong> enter any personal data (e.g., names, student IDs, email addresses, discussion contributions) into external AI tools (neither your own nor those of other students or instructors).</li>
+<li>Be aware that many cloud-based AI services store your inputs and potentially use them to train their models.</li>
+<li>Where possible, use more privacy-friendly alternatives such as AI services provided by your university or AI models running locally on your computer, if possible.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Handling Copyrighted Materials</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The teaching materials provided in this course (slides, scripts, assignments, etc.) are protected by copyright. You are <strong>not</strong> permitted to upload these materials or substantial parts thereof to external cloud-based AI services (such as ChatGPT, Copilot, Claude, Gemini, etc.) or enter them there for analysis or processing.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Equal Opportunity and Access</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Examination Principles and AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Since AI tools are not permitted in this course, the examination is conducted exclusively in a controlled setting without AI support:
+<ul>
+<li>The examination takes the form of a <strong>supervised written exam</strong> without access to AI tools or the internet.</li>
+<li>Permitted aids will be announced at the beginning of the exam.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">AI Use by Instructors</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">General Information</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The instructors conducting this course do not use AI tools for the preparation and delivery of the course.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Processing of Student Data</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>We assure you that work you submit, personal data, or discussion contributions will <strong>not</strong> be uploaded to or entered into external, cloud-based AI systems by us for analysis.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Feedback and Assessment</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>When assessing examination performances (e.g., exams, term papers, presentations) that count toward your final grade, we do <strong>not</strong> use AI tools. Assessment is carried out exclusively by human examiners.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Practical Tips for AI Use</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Support for Questions About AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>If you have questions or uncertainties about the use of AI in this course or about the interpretation of this policy, please feel free to contact me:
+<ul>
+<li>During my office hours</li>
+<li>By email or in the course forum</li>
+<li>During the course (we will schedule time for discussions).</li>
+</ul>
+Additional resources and advice are offered by:
+<ul>
+<li>Your university&#x27;s information resources on AI in teaching.</li>
+<li>Your university&#x27;s didactic advisory services.</li>
+</ul></div></div>
+</div>
+</div>
+</div>
+<div class="policy-card">
+<div class="policy-card-header">
+<span class="policy-card-dot" style="background-color: oklch(58.63% 0.231 19.6)"></span>
+<span class="policy-card-title">AI-None v1-NoUpload</span>
+<span class="policy-card-upload-badge">No upload</span>
+</div>
+<ul class="policy-card-tldr">
+<li>AI tools are not permitted in this course – neither as a learning aid nor for submissions.</li>
+<li>The examination takes place in a controlled setting without AI access.</li>
+<li>Course materials may not be uploaded to AI tools.</li>
+</ul>
+<div class="policy-card-footer">Created with the AI Policy Generator of the University of Bamberg</div>
+</div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        Created with the <a href="/v3/">AI Policy Generator</a>
+        &middot;
+        Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    </footer>
+
+    <script>
+        // Set current date
+        document.getElementById('policy-date').textContent =
+            new Date().toLocaleDateString('en-US');
+    </script>
+</body>
+</html>

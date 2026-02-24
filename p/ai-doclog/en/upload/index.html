@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-DocLog v1-Upload – AI Policy: AI-DocLog v1</title>
+    <meta name="description" content="AI permitted for submissions. Prompt log and reflection required.">
+    <meta property="og:title" content="AI-DocLog v1-Upload – AI Policy: AI-DocLog v1">
+    <meta property="og:description" content="AI permitted for submissions. Prompt log and reflection required.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ki-policy.org/p/ai-doclog/en/upload/">
+    <link rel="canonical" href="https://ki-policy.org/p/ai-doclog/en/upload/">
+    <link rel="alternate" hreflang="de" href="https://ki-policy.org/p/ai-doclog/de/upload/">
+    <link rel="alternate" hreflang="en" href="https://ki-policy.org/p/ai-doclog/en/upload/">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 300;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-300.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-400.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 500;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-500.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-700.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* University Branding Bar */
+        .uni-branding-bar {
+            background-color: #3D3C3B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            z-index: 200;
+        }
+        .uni-branding-bar a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+        .uni-branding-bar a:hover { opacity: 0.85; }
+        .uni-branding-logo { height: 26px; width: auto; }
+        .uni-branding-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .uni-branding-right a {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+        }
+        .uni-branding-right a:hover { color: white; }
+        .uni-branding-separator { color: rgba(255,255,255,0.3); font-size: 0.75rem; }
+
+        /* Navigation */
+        .page-nav {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            border: 1px solid #ddd;
+            background: #fff;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover { background: #f0f0f0; }
+        .nav-btn.active {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .nav-spacer { flex: 1; min-width: 0; }
+        .nav-customize {
+            font-size: 0.85rem;
+            color: #1a73e8;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-customize:hover { text-decoration: underline; }
+
+        /* Main content */
+        .page-content {
+            max-width: 750px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Generated policy styles */
+        .generated-policy h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+        .generated-policy h2 { font-size: 1.4rem; margin-top: 1rem; margin-bottom: 0.4rem; }
+        .policy-date { color: #666; margin-bottom: 1rem; font-style: italic; }
+        .policy-intro { margin-bottom: 1rem; }
+        .policy-category { margin-bottom: 1.5rem; }
+        .policy-category h2 { font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+        .policy-subcategory { margin-top: 1.5rem; margin-bottom: 1rem; }
+        .policy-subcategory:first-child { margin-top: 0.8rem; }
+        .subcategory-title { font-size: 1rem; font-weight: 600; color: #555; margin-bottom: 0.8rem; }
+        .policy-item-result { margin-bottom: 1.2rem; }
+        .policy-item-text p { margin-bottom: 0.3rem; }
+        .policy-item-text ul, .policy-item-text ol { margin-top: 0.2rem; margin-bottom: 0.3rem; padding-left: 1.5rem; }
+        .policy-item-text li { margin-bottom: 0.2rem; }
+
+        /* TL;DR section */
+        .policy-tldr-section { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; }
+        .policy-tldr-section h2 { font-size: 1.1rem; margin-bottom: 0.5rem; border: none; padding: 0; }
+        .policy-tldr-section ul { list-style: disc; padding-left: 1.5rem; margin: 0; }
+        .policy-tldr-section li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+
+        /* Policy card */
+        .policy-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .policy-card-header { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; }
+        .policy-card-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .policy-card-title { font-size: 1.1rem; font-weight: 700; }
+        .policy-card-upload-badge { font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: #f9f9f9; border: 1px solid #e0e0e0; color: #666; margin-left: auto; white-space: nowrap; }
+        .policy-card-tldr { list-style: none; padding: 1rem 1.2rem; margin: 0; }
+        .policy-card-tldr li { padding: 0.3rem 0 0.3rem 1.3em; position: relative; font-size: 0.9rem; }
+        .policy-card-tldr li::before { content: "\2022"; position: absolute; left: 0; font-weight: bold; }
+        .policy-card-footer { padding: 0.6rem 1.2rem; border-top: 1px solid #e0e0e0; background: #f9f9f9; font-size: 0.75rem; color: #999; text-align: center; }
+
+        /* Footer */
+        .page-footer {
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .page-footer a { color: #666; }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; }
+            .uni-branding-bar { display: none; }
+            .page-nav { display: none; }
+            .page-content {
+                box-shadow: none;
+                margin: 0;
+                padding: 1rem;
+                max-width: 100%;
+            }
+            .page-footer { display: none; }
+            .policy-card { box-shadow: none; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .uni-branding-bar { padding: 0.5rem 1rem; justify-content: center; }
+            .uni-branding-logo { height: 20px; }
+            .uni-branding-right { display: none; }
+            .page-content { margin: 1rem; padding: 1.2rem; }
+            .page-nav {
+                padding: 0.5rem 1rem;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            .nav-spacer { display: none; }
+            .nav-customize { font-size: 0.8rem; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="uni-branding-bar" aria-label="Universität Bamberg">
+        <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
+            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
+            <span>Universität Bamberg</span>
+        </a>
+        <div class="uni-branding-right">
+            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+            <span class="uni-branding-separator">|</span>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">CIO Speaker</a>
+        </div>
+    </nav>
+
+    <nav class="page-nav">
+        <div class="nav-group">
+            <a href="../de/upload/" class="nav-btn ">DE</a>
+            <a href="../en/upload/" class="nav-btn active">EN</a>
+        </div>
+        <div class="nav-group">
+            <a href="../" class="nav-btn ">No upload</a>
+            <a href="./" class="nav-btn active">Upload allowed</a>
+        </div>
+        <div class="nav-spacer"></div>
+        <a href="/v3/?preset=ai-doclog&amp;upload=true&amp;lang=en" class="nav-customize">Customize in Generator &rarr;</a>
+    </nav>
+
+    <main class="page-content">
+        <div class="generated-policy">
+            <h1>AI Policy: AI-DocLog v1</h1>
+<div class="policy-date">Date: <span id="policy-date"></span></div>
+<div class="policy-intro"><p>This document establishes the guidelines for the use of AI tools in this course. AI tools may be used as aids, including for graded submissions. Usage must be documented in detail with a prompt log and reflection.</p></div>
+<div class="policy-tldr-section">
+<h2>AI-DocLog v1-Upload – Summary (TL;DR)</h2>
+<ul>
+<li>AI tools may be used for submissions – reflective documentation is mandatory.</li>
+<li>Prompt log and personal reflection are part of every submission.</li>
+<li>The quality of AI use (prompts, review, further processing) is included in the assessment.</li>
+<li>Course materials may be uploaded to AI tools.</li>
+</ul></div>
+<div class="policy-content">
+<div class="policy-category"><h2 class="category-title">Fundamentals and Learning Objectives</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Basic Principle for AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, etc.) is generally permitted in this course as an aid to support the learning process. However, the specific regulations of this policy regarding permitted and prohibited use, labeling, and academic integrity apply.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Permitted and Prohibited Use</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Permitted Use Without Labeling Requirement</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The following types of AI use are permitted as personal learning aids and do <strong>not</strong> need to be specifically labeled:
+<ul>
+<li>Use for individual exam preparation (e.g., creating practice questions, summaries of your own notes, flashcards).</li>
+<li>Generating explanations of concepts or technical terms for your own understanding.</li>
+<li>Translating foreign language texts (e.g., academic articles) for your own understanding.</li>
+<li>Use in explicitly designated practice phases during the course (when guided by the instructor).</li>
+<li>Spell and grammar checking through standard software (e.g., in Word).</li>
+<li>Support with formatting and citation styles for written assignments.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Permitted Use With Labeling Requirement</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The following types of AI use are permitted, provided they are transparently and traceably labeled according to the guidelines of this policy:
+<ul>
+<li>Support with brainstorming, structuring, and outlining written work, homework, or presentations.</li>
+<li>Help with linguistic revision and improvement of your own texts (beyond mere spelling/grammar correction, e.g., style, phrasing suggestions).</li>
+<li>Generating examples, analogies, or alternative explanatory approaches to illustrate your own arguments.</li>
+<li>Brainstorming possible arguments, counterarguments, or perspectives for an analysis.</li>
+<li>Support with literature research (e.g., suggestions for search terms, summarizing abstracts, searching for sources with &quot;Deep Research&quot; functions of AI tools).</li>
+<li>Generation of code snippets or debugging assistance (if relevant to the subject).</li>
+<li>Creation of visualizations and graphics to support presentations or written work (e.g., through tools for automatic visualization of data or concepts).</li>
+<li>Transcription and summarization of audio/video sources.</li>
+</ul>
+<strong>What matters is:</strong> The core work (analysis, argumentation, critical evaluation, your own conclusions) must be done by yourself.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Prohibited AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The following types of AI use are expressly <strong>not</strong> permitted in this course:
+<ul>
+<li>Submitting AI-generated content as your own work without adequate labeling – this may be considered an attempt to deceive.</li>
+<li>Use of AI during supervised examinations (exams, etc.), unless expressly permitted by the examination regulations or the instructor – this may be considered an attempt to deceive.</li>
+<li>Using AI to circumvent learning objectives that explicitly require independent critical thinking, creative problem-solving, analytical skills, or specific methodological competencies.</li>
+<li>Uploading copyrighted course materials or personal data to cloud-based AI systems without explicit permission (see Section 3).</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Copyright and Data Protection</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Data Protection Aspects</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>When using AI services, observe data protection:
+<ul>
+<li>Do <strong>not</strong> enter any personal data (e.g., names, student IDs, email addresses, discussion contributions) into external AI tools (neither your own nor those of other students or instructors).</li>
+<li>Be aware that many cloud-based AI services store your inputs and potentially use them to train their models.</li>
+<li>Where possible, use more privacy-friendly alternatives such as AI services provided by your university or AI models running locally on your computer, if possible.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Handling Copyrighted Materials</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Most course materials provided in this course are copyrighted. For the following, explicitly released materials, processing by AI services is permitted under conditions:
+<ul>
+<li>Materials marked with the note <strong>&quot;AI use permitted&quot;</strong> in the learning management system.</li>
+</ul>
+This usage right applies only to common AI services (ChatGPT, Claude, Copilot, Gemini) and only for the purpose of personal summarization and comprehension checks. Uploading to other services or for other purposes is not permitted.</p>
+
+<p>All other materials may <strong>not</strong> be uploaded to AI services.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Labeling of AI Use</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Labeling Format</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>Label the use of AI systems in written submissions as follows:</p>
+
+<p><strong>1. &quot;Documentation of AI Use&quot; section in the appendix:</strong>
+<ul>
+<li><strong>Tools used:</strong> List of all AI tools used with name, provider, and version if applicable (e.g., &quot;ChatGPT (OpenAI, model GPT-5)&quot;, &quot;Claude (Anthropic)&quot;).</li>
+<li><strong>Usage protocol (examples):</strong> Document exemplary requests (prompts) and the resulting AI responses that influenced your work. Briefly describe how you used or revised the response. (Scope by agreement with instructor, e.g., 2-3 examples).</li>
+<li><strong>Reflection:</strong> Add a brief personal reflection (approx. 100-200 words): How did AI use influence your work process? What were the advantages, where were the challenges or limitations?</li>
+</ul>
+<strong>2. Direct labeling in the text (only for direct adoption):</strong>
+<ul>
+<li>For verbatim or slightly paraphrased adoption of AI-generated passages, label these directly in the text (e.g., with a footnote: &quot;This paragraph is based on a suggestion from ChatGPT.&quot;).</li>
+</ul>
+<strong>3. AI-assisted sources in the bibliography:</strong>
+<ul>
+<li>If you found literature sources with the help of AI tools (e.g., through &quot;Deep Research&quot; functions), mark this in the bibliography with an addition like &quot;[via AI research]&quot; or document it in the section on AI use.</li>
+<li>Carefully verify all AI-suggested sources for existence and correct bibliographic information before adopting them.</li>
+</ul>
+Additionally, the general declaration of independent work according to the guidelines of your examination regulations may need to be submitted.</p></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Equal Opportunity and Access</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Access to AI Tools</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>To maintain equal opportunity, this course does not assume that you have access to paid AI premium services. The learning objectives of the course can be achieved in the following ways:
+<ul>
+<li>Using free basic versions of common AI providers (e.g., ChatGPT, Claude, Gemini).</li>
+<li>AI services provided by your university, if available.</li>
+</ul>
+The use of paid services is at your own responsibility and expense.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Examination Principles and AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>We are aware that the use of AI in unsupervised assessments (e.g., term papers) is difficult to control and may compromise fairness and equal opportunity. To ensure a valid assessment of your individual competencies, the following measures are applied in this course:
+<ul>
+<li>The <strong>prompt log and reflection</strong> are mandatory components of every submission and are included in the assessment.</li>
+<li>Submissions may be supplemented by an <strong>oral colloquium</strong> in which the AI-assisted work process is reflected upon.</li>
+<li>Assignments require demonstrably <strong>independent analytical work</strong> that goes beyond merely reproducing AI outputs.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">Practical Tips for AI Use</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">Dealing with AI Errors (&quot;Hallucinations&quot;, etc.)</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>AI systems make mistakes. Do not blindly rely on AI-generated information. Pay particular attention to:
+<ul>
+<li><strong>Factual errors (&quot;hallucinations&quot;):</strong> The AI invents facts, data, or events that sound plausible but are wrong.</li>
+<li><strong>Invented sources:</strong> The AI cites sources (books, articles) that do not exist or whose content is incorrectly represented.</li>
+<li><strong>Outdated knowledge:</strong> The AI&#x27;s training data is not always current. Information may be outdated.</li>
+<li><strong>Incomplete or one-sided presentation:</strong> Important aspects, perspectives, or counterarguments may be missing.</li>
+<li><strong>Bias:</strong> The AI can reproduce unconscious biases from the training data.</li>
+</ul>
+<strong>Verification strategies:</strong>
+<ul>
+<li>Verify central statements and facts using scientific sources (e.g., academic literature, databases).</li>
+<li>Verify citations and source references – does the source really exist? Is the statement accurate?</li>
+<li>Compare the answers of different AI tools or actively search for opposing positions.</li>
+<li>Be particularly skeptical of very specific or surprising statements.</li>
+</ul></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Support for Questions About AI Use</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>If you have questions or uncertainties about the use of AI in this course or about the interpretation of this policy, please feel free to contact me:
+<ul>
+<li>During my office hours</li>
+<li>By email or in the course forum</li>
+<li>During the course (we will schedule time for discussions).</li>
+</ul>
+Additional resources and advice are offered by:
+<ul>
+<li>Your university&#x27;s information resources on AI in teaching.</li>
+<li>Your university&#x27;s didactic advisory services.</li>
+</ul></div></div>
+</div>
+</div>
+<div class="policy-category"><h2 class="category-title">AI Use by Instructors</h2>
+<div class="policy-subcategory"><h3 class="subcategory-title">General Information</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>The instructors conducting this course also use AI tools, for example to create materials or support communication. In doing so, we always ensure compliance with data protection and copyright, as well as critical review of AI results.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Processing of Student Data</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>We assure you that work you submit, personal data, or discussion contributions will <strong>not</strong> be uploaded to or entered into external, cloud-based AI systems by us for analysis.</p></div></div>
+</div>
+<div class="policy-subcategory"><h3 class="subcategory-title">Feedback and Assessment</h3>
+<div class="policy-item-result"><div class="policy-item-text"><p>When assessing examination performances (e.g., exams, term papers, presentations) that count toward your final grade, we do <strong>not</strong> use AI tools. Assessment is carried out exclusively by human examiners.</p></div></div>
+</div>
+</div>
+</div>
+<div class="policy-card">
+<div class="policy-card-header">
+<span class="policy-card-dot" style="background-color: oklch(54.87% 0.222 260.33)"></span>
+<span class="policy-card-title">AI-DocLog v1-Upload</span>
+<span class="policy-card-upload-badge">Course material upload allowed</span>
+</div>
+<ul class="policy-card-tldr">
+<li>AI tools may be used for submissions – reflective documentation is mandatory.</li>
+<li>Prompt log and personal reflection are part of every submission.</li>
+<li>The quality of AI use (prompts, review, further processing) is included in the assessment.</li>
+<li>Course materials may be uploaded to AI tools.</li>
+</ul>
+<div class="policy-card-footer">Created with the AI Policy Generator of the University of Bamberg</div>
+</div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        Created with the <a href="/v3/">AI Policy Generator</a>
+        &middot;
+        Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    </footer>
+
+    <script>
+        // Set current date
+        document.getElementById('policy-date').textContent =
+            new Date().toLocaleDateString('en-US');
+    </script>
+</body>
+</html>

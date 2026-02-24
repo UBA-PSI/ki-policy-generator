@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Policy Presets – Übersicht</title>
+    <meta name="description" content="Standardisierte KI-Richtlinien für Hochschullehre – von AI-None bis AI-Skill.">
+    <meta property="og:title" content="KI-Policy Presets">
+    <meta property="og:description" content="Standardisierte KI-Richtlinien für Hochschullehre – 6 Presets von No-AI bis AI-Kompetenz als Lernziel.">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-400.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-700.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .page-header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+        .page-header p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .page-header a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .page-header a:hover {
+            text-decoration: underline;
+        }
+
+        .presets-grid {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .preset-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .preset-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+        }
+        .preset-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+        .preset-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+        .preset-desc {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 0;
+        }
+        .preset-desc-en {
+            color: #888;
+            font-style: italic;
+        }
+        .preset-card-body {
+            padding: 0 1.2rem 0.5rem 1.2rem;
+        }
+        .preset-bullets {
+            list-style: disc;
+            padding-left: 2.5rem;
+            font-size: 0.88rem;
+            color: #444;
+        }
+        .preset-bullets li {
+            margin-bottom: 0.15rem;
+        }
+        .preset-card-links {
+            padding: 0.6rem 1.2rem;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .preset-card-links a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .preset-card-links a:hover {
+            text-decoration: underline;
+        }
+        .upload-link {
+            color: #888 !important;
+            font-size: 0.8rem;
+        }
+        .link-sep {
+            color: #ccc;
+        }
+
+        .page-footer {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .page-footer a { color: #666; }
+
+        @media (max-width: 600px) {
+            .page-header { padding: 1.5rem 1rem; }
+            .page-header h1 { font-size: 1.4rem; }
+            .presets-grid { margin: 1rem auto; }
+        }
+
+        @media print {
+            body { background: #fff; }
+            .preset-card { box-shadow: none; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <h1>KI-Policy Presets</h1>
+        <p>Standardisierte KI-Richtlinien für die Hochschullehre – von <em>kein KI-Einsatz</em> bis <em>KI-Kompetenz als Lernziel</em>.</p>
+        <p style="margin-top: 0.5rem;"><a href="/v3/">KI-Policy-Generator &rarr;</a></p>
+    </header>
+
+    <div class="presets-grid">
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(58.63% 0.231 19.6);">
+                <span class="preset-dot" style="background-color: oklch(58.63% 0.231 19.6);"></span>
+                <div>
+                    <h2 class="preset-name">AI-None v1</h2>
+                    <p class="preset-desc">Kein KI-Einsatz. Prüfung in kontrolliertem Setting.</p>
+                    <p class="preset-desc preset-desc-en">No AI use. Examination in controlled setting.</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Werkzeuge sind in dieser Lehrveranstaltung <strong>nicht erlaubt</strong> – weder als Lernhilfe noch bei Abgaben.</li>
+<li>Die Prüfung findet in einem kontrollierten Setting ohne KI-Zugang statt.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-none/de/">Deutsch</a>
+                <a href="ai-none/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-none/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-none/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(74.61% 0.171 51.56);">
+                <span class="preset-dot" style="background-color: oklch(74.61% 0.171 51.56);"></span>
+                <div>
+                    <h2 class="preset-name">AI-Learn v1</h2>
+                    <p class="preset-desc">KI zum Lernen frei. Prüfungsleistung ohne KI.</p>
+                    <p class="preset-desc preset-desc-en">AI free for learning. Examination without AI.</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen).</li>
+<li>Die Prüfungsleistung wird ohne KI-Unterstützung erbracht (z.B. Klausur).</li>
+<li>Keine Kennzeichnung der KI-Nutzung erforderlich.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-learn/de/">Deutsch</a>
+                <a href="ai-learn/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-learn/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-learn/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(82.39% 0.133 91.5);">
+                <span class="preset-dot" style="background-color: oklch(82.39% 0.133 91.5);"></span>
+                <div>
+                    <h2 class="preset-name">AI-DocShort v1</h2>
+                    <p class="preset-desc">KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck).</p>
+                    <p class="preset-desc preset-desc-en">AI permitted for submissions. Simple labeling (tool + purpose).</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Werkzeuge dürfen auch bei Abgaben als Hilfsmittel eingesetzt werden.</li>
+<li>Einfache Kennzeichnung am Ende der Arbeit: genutztes Tool und Einsatzzweck angeben.</li>
+<li>Die Kernleistung (Analyse, Argumentation, Schlussfolgerungen) muss eigenständig erbracht werden.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-docshort/de/">Deutsch</a>
+                <a href="ai-docshort/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-docshort/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-docshort/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(54.87% 0.222 260.33);">
+                <span class="preset-dot" style="background-color: oklch(54.87% 0.222 260.33);"></span>
+                <div>
+                    <h2 class="preset-name">AI-DocLog v1</h2>
+                    <p class="preset-desc">KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich.</p>
+                    <p class="preset-desc preset-desc-en">AI permitted for submissions. Prompt log and reflection required.</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Werkzeuge dürfen bei Abgaben eingesetzt werden – reflektierte Dokumentation ist Pflicht.</li>
+<li>Prompt-Protokoll und persönliche Reflexion sind Bestandteil jeder Abgabe.</li>
+<li>Die Qualität der KI-Nutzung (Prompts, Prüfung, Weiterverarbeitung) fließt in die Bewertung ein.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-doclog/de/">Deutsch</a>
+                <a href="ai-doclog/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-doclog/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-doclog/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(49.39% 0.215 298.31);">
+                <span class="preset-dot" style="background-color: oklch(49.39% 0.215 298.31);"></span>
+                <div>
+                    <h2 class="preset-name">AI-Defend v1</h2>
+                    <p class="preset-desc">KI ohne Einschränkung. Kompetenznachweis durch Verteidigung.</p>
+                    <p class="preset-desc preset-desc-en">AI without restrictions. Competence proof through defense.</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Werkzeuge dürfen uneingeschränkt eingesetzt werden – auch bei Abgaben.</li>
+<li>Kompetenznachweis durch mündliche oder schriftliche Verteidigung der eingereichten Arbeit.</li>
+<li>Keine Kennzeichnung der KI-Nutzung erforderlich.</li>
+<li>Wer die Arbeit nicht überzeugend vertreten kann, muss mit schlechterer Bewertung rechnen.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-defend/de/">Deutsch</a>
+                <a href="ai-defend/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-defend/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-defend/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+        <div class="preset-card">
+            <div class="preset-card-header" style="border-left: 4px solid oklch(75.23% 0.209 144.64);">
+                <span class="preset-dot" style="background-color: oklch(75.23% 0.209 144.64);"></span>
+                <div>
+                    <h2 class="preset-name">AI-Skill v1</h2>
+                    <p class="preset-desc">KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.</p>
+                    <p class="preset-desc preset-desc-en">AI competence is a learning objective. Process and result are assessed.</p>
+                </div>
+            </div>
+            <div class="preset-card-body">
+                <ul class="preset-bullets"><li>KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden.</li>
+<li>Prompt-Protokoll mit Reflexion ist Pflichtbestandteil und wird benotet.</li>
+<li>Die Qualität des KI-Einsatzes fließt in die Bewertung ein.</li>
+<li>Ein Portfolio dokumentiert den KI-Einsatz über das Semester.</li>
+</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="ai-skill/de/">Deutsch</a>
+                <a href="ai-skill/en/">English</a>
+                <span class="link-sep">·</span>
+                <a href="ai-skill/de/upload/" class="upload-link">DE + Upload</a>
+                <a href="ai-skill/en/upload/" class="upload-link">EN + Upload</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="page-footer">
+        Erstellt mit dem <a href="/v3/">KI-Policy-Generator</a>
+        &middot;
+        Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    </footer>
+</body>
+</html>
