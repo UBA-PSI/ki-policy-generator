@@ -47,7 +47,7 @@ async function loadPolicyData(language = 'de') {
     const filename = language === 'de' ? 'policy-data.yaml' : `policy-data-${language}.yaml`;
 
     try {
-        const cacheBust = window.APP_VERSION || '3.2.0';
+        const cacheBust = window.APP_VERSION || '3.3.0';
         const response = await fetch(`data/${filename}?v=${cacheBust}`);
         if (!response.ok) {
             throw new Error(`Failed to load ${filename}: ${response.status}`);
@@ -349,7 +349,7 @@ async function loadPresets(language = 'de') {
     const filename = language === 'de' ? 'presets.yaml' : `presets-${language}.yaml`;
 
     try {
-        const cacheBust = window.APP_VERSION || '3.2.0';
+        const cacheBust = window.APP_VERSION || '3.3.0';
         const response = await fetch(`data/${filename}?v=${cacheBust}`);
         if (!response.ok) {
             throw new Error(`Failed to load ${filename}: ${response.status}`);
