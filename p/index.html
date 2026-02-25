@@ -201,24 +201,23 @@
             border-color: #333;
         }
         .dt-result-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.1rem;
+            display: block;
+            font-size: 1.3rem;
             font-weight: 700;
-            padding: 0.4rem 1rem;
-            border: 2px solid #999;
-            border-radius: 0;
-            margin-bottom: 0.5rem;
+            padding: 0.15rem 0 0.15rem 0.75rem;
+            border: none;
+            border-left: 4px solid #999;
+            margin-bottom: 0.6rem;
         }
         .dt-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
+            display: none;
+        }
+        .dt-result {
+            max-width: 38em;
         }
         .dt-result-desc {
             font-size: 0.95rem;
+            font-style: italic;
             color: #555;
             margin-bottom: 0.7rem;
         }
@@ -230,7 +229,7 @@
             background: none;
             color: #333;
             text-decoration: none;
-            border-bottom: 2px solid #333;
+            border-bottom: 1px solid #555;
             transition: border-color 0.15s;
         }
         .dt-view-preset:hover { border-color: #999; }
@@ -286,9 +285,8 @@
         }
         .dt-breadcrumb-item {
             background: none;
-            border-radius: 0;
-            padding: 0.2rem 0.3rem;
-            border-bottom: 1px solid #ccc;
+            border: none;
+            padding: 0.1rem 0;
         }
         .dt-bc-answer {
             font-weight: 600;
@@ -525,8 +523,8 @@
     <div class="page-main">
         <!-- Decision Tree Section -->
         <section class="content-section" id="decision-tree-section">
-            <h2 class="section-title" data-lang="de">Welches Preset passt zu Ihrem Kurs?</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">Which preset fits your course?</h2>
+            <h2 class="section-title" data-lang="de">Entscheidungshilfe</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Decision guide</h2>
             <div id="dt-container">
 <div class="decision-tree" data-lang="de">
 <div class="dt-step dt-active" data-step="q1">
@@ -564,7 +562,7 @@
 <button class="dt-back">&larr; Zurück</button>
 </div>
 <div class="dt-step dt-result" data-step="r-none">
-<div class="dt-result-badge" style="border-color:oklch(58.63% 0.231 19.6)"><span class="dt-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(58.63% 0.231 19.6)">AI-None v1</div>
 <div class="dt-result-desc">KI-Werkzeuge sind nicht erlaubt – weder zum Lernen noch bei Abgaben.</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge sind in dieser Lehrveranstaltung <strong>nicht erlaubt</strong> – weder zum Lernen noch bei Abgaben.</li>
@@ -573,7 +571,7 @@
 <a href="ai-none/de/" class="dt-view-preset">AI-None v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-learn-1">
-<div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="dt-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
 <div class="dt-result-desc">KI darf frei zum Lernen genutzt werden. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen).</li>
@@ -584,7 +582,7 @@
 <a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-learn-2">
-<div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="dt-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
 <div class="dt-result-desc">KI darf zum Lernen genutzt werden, aber nicht bei bewerteten Arbeiten. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen).</li>
@@ -595,7 +593,7 @@
 <a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-docshort">
-<div class="dt-result-badge" style="border-color:oklch(82.39% 0.133 91.5)"><span class="dt-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(82.39% 0.133 91.5)">AI-DocShort v1</div>
 <div class="dt-result-desc">KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck).</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge dürfen auch bei bewerteten Arbeiten ohne Aufsicht als Hilfsmittel eingesetzt werden.</li>
@@ -606,7 +604,7 @@
 <a href="ai-docshort/de/" class="dt-view-preset">AI-DocShort v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-doclog">
-<div class="dt-result-badge" style="border-color:oklch(54.87% 0.222 260.33)"><span class="dt-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(54.87% 0.222 260.33)">AI-DocLog v1</div>
 <div class="dt-result-desc">KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich.</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge dürfen bei bewerteten Arbeiten ohne Aufsicht eingesetzt werden – reflektierte Dokumentation ist Pflicht.</li>
@@ -617,7 +615,7 @@
 <a href="ai-doclog/de/" class="dt-view-preset">AI-DocLog v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-defend">
-<div class="dt-result-badge" style="border-color:oklch(49.39% 0.215 298.31)"><span class="dt-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(49.39% 0.215 298.31)">AI-Defend v1</div>
 <div class="dt-result-desc">KI ohne Einschränkung. Kompetenznachweis durch Prüfung unter Aufsicht.</div>
 <ul class="dt-result-tldr">
 <li>KI-Werkzeuge dürfen <strong>ohne Einschränkung</strong> eingesetzt werden – auch bei allen bewerteten Arbeiten ohne Aufsicht.</li>
@@ -628,7 +626,7 @@
 <a href="ai-defend/de/" class="dt-view-preset">AI-Defend v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-skill">
-<div class="dt-result-badge" style="border-color:oklch(75.23% 0.209 144.64)"><span class="dt-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(75.23% 0.209 144.64)">AI-Skill v1</div>
 <div class="dt-result-desc">KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.</div>
 <ul class="dt-result-tldr">
 <li>KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden.</li>
@@ -675,7 +673,7 @@
 <button class="dt-back">&larr; Back</button>
 </div>
 <div class="dt-step dt-result" data-step="r-none">
-<div class="dt-result-badge" style="border-color:oklch(58.63% 0.231 19.6)"><span class="dt-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(58.63% 0.231 19.6)">AI-None v1</div>
 <div class="dt-result-desc">AI tools are not permitted – neither for learning nor for submissions.</div>
 <ul class="dt-result-tldr">
 <li>AI tools are <strong>not permitted</strong> in this course – neither for learning nor for submissions.</li>
@@ -684,7 +682,7 @@
 <a href="ai-none/en/" class="dt-view-preset">AI-None v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-learn-1">
-<div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="dt-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
 <div class="dt-result-desc">AI may be used freely for learning. The exam is supervised without AI.</div>
 <ul class="dt-result-tldr">
 <li>AI tools may be freely used for learning (e.g., exam preparation, explanations).</li>
@@ -695,7 +693,7 @@
 <a href="ai-learn/en/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-learn-2">
-<div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="dt-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
 <div class="dt-result-desc">AI may be used for learning but not for graded work. The exam is supervised without AI.</div>
 <ul class="dt-result-tldr">
 <li>AI tools may be freely used for learning (e.g., exam preparation, explanations).</li>
@@ -706,7 +704,7 @@
 <a href="ai-learn/en/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-docshort">
-<div class="dt-result-badge" style="border-color:oklch(82.39% 0.133 91.5)"><span class="dt-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(82.39% 0.133 91.5)">AI-DocShort v1</div>
 <div class="dt-result-desc">AI permitted for submissions. Simple labeling (tool + purpose).</div>
 <ul class="dt-result-tldr">
 <li>AI tools may be used as aids for unsupervised graded work.</li>
@@ -717,7 +715,7 @@
 <a href="ai-docshort/en/" class="dt-view-preset">AI-DocShort v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-doclog">
-<div class="dt-result-badge" style="border-color:oklch(54.87% 0.222 260.33)"><span class="dt-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(54.87% 0.222 260.33)">AI-DocLog v1</div>
 <div class="dt-result-desc">AI permitted for submissions. Prompt log and reflection required.</div>
 <ul class="dt-result-tldr">
 <li>AI tools may be used for unsupervised graded work – reflective documentation is mandatory.</li>
@@ -728,7 +726,7 @@
 <a href="ai-doclog/en/" class="dt-view-preset">AI-DocLog v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-defend">
-<div class="dt-result-badge" style="border-color:oklch(49.39% 0.215 298.31)"><span class="dt-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(49.39% 0.215 298.31)">AI-Defend v1</div>
 <div class="dt-result-desc">AI without restrictions. Competence verified through supervised exam.</div>
 <ul class="dt-result-tldr">
 <li>AI tools may be used <strong>without restrictions</strong> – including for all unsupervised graded work.</li>
@@ -739,7 +737,7 @@
 <a href="ai-defend/en/" class="dt-view-preset">AI-Defend v1 &rarr;</a>
 </div>
 <div class="dt-step dt-result" data-step="r-skill">
-<div class="dt-result-badge" style="border-color:oklch(75.23% 0.209 144.64)"><span class="dt-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill v1</div>
+<div class="dt-result-badge" style="border-left-color:oklch(75.23% 0.209 144.64)">AI-Skill v1</div>
 <div class="dt-result-desc">AI competence is a learning goal. Process and result are assessed.</div>
 <ul class="dt-result-tldr">
 <li>AI competence is an explicit learning objective – AI tools should be used actively and reflectively.</li>
@@ -750,14 +748,14 @@
 <a href="ai-skill/en/" class="dt-view-preset">AI-Skill v1 &rarr;</a>
 </div>
 </div>
-                <button class="dt-restart" id="dt-restart" style="display:none">↺ <span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
+                <button class="dt-restart" id="dt-restart" style="display:none"><span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
             </div>
         </section>
 
         <!-- Comparison Table Section -->
         <section class="content-section" id="comparison-section">
-            <h2 class="section-title" data-lang="de">Alle Presets im Vergleich</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">All Presets at a Glance</h2>
+            <h2 class="section-title" data-lang="de">Vergleich</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Comparison</h2>
 <div class="comparison-table-wrap" data-lang="de">
 <table class="comparison-table">
 <thead><tr>
@@ -811,7 +809,7 @@
 <td>Protokoll + Reflexion (benotet)</td>
 </tr>
 </tbody></table>
-<p class="comparison-hint">Restriktiv ← → Permissiv</p>
+<p class="comparison-hint">↑ Restriktiv · Permissiv ↓</p>
 </div>
 <div class="comparison-table-wrap" data-lang="en" style="display:none">
 <table class="comparison-table">
@@ -866,14 +864,14 @@
 <td>Log + reflection (graded)</td>
 </tr>
 </tbody></table>
-<p class="comparison-hint">Restrictive ← → Permissive</p>
+<p class="comparison-hint">↑ Restrictive · Permissive ↓</p>
 </div>
         </section>
 
         <!-- Preset Cards Section -->
         <section class="content-section" id="presets-section">
-            <h2 class="section-title" data-lang="de">Presets im Detail</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">Presets in Detail</h2>
+            <h2 class="section-title" data-lang="de">Presets</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Presets</h2>
             <div class="upload-toggle-bar">
                 <label>
                     <input type="checkbox" id="upload-toggle">

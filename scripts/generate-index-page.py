@@ -136,7 +136,7 @@ COMPARISON_TABLE = {
             {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Erlaubt', '\u2713 Ohne Einschr\u00e4nkung', 'Ohne KI (verifiziert B)', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Erlaubt', '\u2713 KI-Kompetenz ist Lernziel', 'KI-Kompetenz wird gepr\u00fcft', 'Protokoll + Reflexion (benotet)'], 'classes': ['c-yes', 'c-yes', '', '']},
         ],
-        'hint': 'Restriktiv \u2190 \u2192 Permissiv',
+        'hint': '\u2191 Restriktiv \u00b7 Permissiv \u2193',
     },
     'en': {
         'headers': ['Preset', 'A: AI for Learning', 'B: AI for Unsupervised Work', 'C: Supervised Assessment', 'Documentation'],
@@ -148,7 +148,7 @@ COMPARISON_TABLE = {
             {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Allowed', '\u2713 Without restrictions', 'Without AI (verifies B)', 'Not required'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Allowed', '\u2713 AI competence is learning goal', 'AI competence assessed', 'Log + reflection (graded)'], 'classes': ['c-yes', 'c-yes', '', '']},
         ],
-        'hint': 'Restrictive \u2190 \u2192 Permissive',
+        'hint': '\u2191 Restrictive \u00b7 Permissive \u2193',
     },
 }
 
@@ -184,7 +184,7 @@ def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
         name = preset.get('name', pid)
         tldr = preset.get('tldr', [])
         parts.append(f'<div class="dt-step dt-result" data-step="{result_id}">')
-        parts.append(f'<div class="dt-result-badge" style="border-color:{color}"><span class="dt-dot" style="background:{color}"></span>{escape(name)}</div>')
+        parts.append(f'<div class="dt-result-badge" style="border-left-color:{color}">{escape(name)}</div>')
         parts.append(f'<div class="dt-result-desc">{escape(result["desc"])}</div>')
         if tldr:
             parts.append('<ul class="dt-result-tldr">')
@@ -490,24 +490,23 @@ def main():
             border-color: #333;
         }}
         .dt-result-badge {{
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.1rem;
+            display: block;
+            font-size: 1.3rem;
             font-weight: 700;
-            padding: 0.4rem 1rem;
-            border: 2px solid #999;
-            border-radius: 0;
-            margin-bottom: 0.5rem;
+            padding: 0.15rem 0 0.15rem 0.75rem;
+            border: none;
+            border-left: 4px solid #999;
+            margin-bottom: 0.6rem;
         }}
         .dt-dot {{
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
+            display: none;
+        }}
+        .dt-result {{
+            max-width: 38em;
         }}
         .dt-result-desc {{
             font-size: 0.95rem;
+            font-style: italic;
             color: #555;
             margin-bottom: 0.7rem;
         }}
@@ -519,7 +518,7 @@ def main():
             background: none;
             color: #333;
             text-decoration: none;
-            border-bottom: 2px solid #333;
+            border-bottom: 1px solid #555;
             transition: border-color 0.15s;
         }}
         .dt-view-preset:hover {{ border-color: #999; }}
@@ -575,9 +574,8 @@ def main():
         }}
         .dt-breadcrumb-item {{
             background: none;
-            border-radius: 0;
-            padding: 0.2rem 0.3rem;
-            border-bottom: 1px solid #ccc;
+            border: none;
+            padding: 0.1rem 0;
         }}
         .dt-bc-answer {{
             font-weight: 600;
@@ -814,27 +812,27 @@ def main():
     <div class="page-main">
         <!-- Decision Tree Section -->
         <section class="content-section" id="decision-tree-section">
-            <h2 class="section-title" data-lang="de">Welches Preset passt zu Ihrem Kurs?</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">Which preset fits your course?</h2>
+            <h2 class="section-title" data-lang="de">Entscheidungshilfe</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Decision guide</h2>
             <div id="dt-container">
 {dt_de}
 {dt_en}
-                <button class="dt-restart" id="dt-restart" style="display:none">\u21ba <span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
+                <button class="dt-restart" id="dt-restart" style="display:none"><span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
             </div>
         </section>
 
         <!-- Comparison Table Section -->
         <section class="content-section" id="comparison-section">
-            <h2 class="section-title" data-lang="de">Alle Presets im Vergleich</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">All Presets at a Glance</h2>
+            <h2 class="section-title" data-lang="de">Vergleich</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Comparison</h2>
 {ct_de}
 {ct_en}
         </section>
 
         <!-- Preset Cards Section -->
         <section class="content-section" id="presets-section">
-            <h2 class="section-title" data-lang="de">Presets im Detail</h2>
-            <h2 class="section-title" data-lang="en" style="display:none">Presets in Detail</h2>
+            <h2 class="section-title" data-lang="de">Presets</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Presets</h2>
             <div class="upload-toggle-bar">
                 <label>
                     <input type="checkbox" id="upload-toggle">
