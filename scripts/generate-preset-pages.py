@@ -252,6 +252,7 @@ def group_items_by_category(items):
 def generate_policy_content(preset, items_grouped, upload, lang, ui_strings):
     """Generate the inner policy HTML content."""
     date_label = ui_strings.get('date_label', 'Stand')
+    preset_color = preset.get('color', '#666')
 
     parts = []
 
@@ -280,13 +281,19 @@ def generate_policy_content(preset, items_grouped, upload, lang, ui_strings):
         parts.append(f'<li>{parse_markdown_inline(bullet)}</li>')
     parts.append('</ul></div>')
 
+    # Subcategory titles that get visual highlighting
+    highlight_titles = {'Prüfungsgrundsätze und KI-Nutzung', 'Examination Principles and AI Use'}
+
     # Policy content by category / subcategory
     parts.append('<div class="policy-content">')
     for cat_title, subcategories in items_grouped.items():
         clean_cat = re.sub(r'^\d+\.\s*', '', cat_title)
         parts.append(f'<div class="policy-category"><h2 class="category-title">{escape_html(clean_cat)}</h2>')
         for sub_title, items in subcategories.items():
-            parts.append(f'<div class="policy-subcategory"><h3 class="subcategory-title">{escape_html(sub_title)}</h3>')
+            is_highlight = sub_title in highlight_titles
+            sub_class = 'policy-subcategory policy-distinguishing-section' if is_highlight else 'policy-subcategory'
+            style_attr = f' style="border-top-color: {preset_color}; background: color-mix(in oklch, {preset_color} 6%, white);"' if is_highlight else ''
+            parts.append(f'<div class="{sub_class}"{style_attr}><h3 class="subcategory-title">{escape_html(sub_title)}</h3>')
             for item in items:
                 content = parse_markdown(item['text'])
                 parts.append(f'<div class="policy-item-result"><div class="policy-item-text">{content}</div></div>')
@@ -507,6 +514,12 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
         .policy-category h2 {{ font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; margin-bottom: 1rem; }}
         .policy-subcategory {{ margin-top: 1.5rem; margin-bottom: 1rem; }}
         .policy-subcategory:first-child {{ margin-top: 0.8rem; }}
+        .policy-distinguishing-section {{
+            border-top: 3px solid #666;
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+        }}
         .subcategory-title {{ font-size: 1rem; font-weight: 600; color: #555; margin-bottom: 0.8rem; }}
         .policy-item-result {{ margin-bottom: 1.2rem; }}
         .policy-item-text p {{ margin-bottom: 0.3rem; }}

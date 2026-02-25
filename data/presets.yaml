@@ -18,8 +18,8 @@ presets:
     color: "oklch(58.63% 0.231 19.6)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge sind in dieser Lehrveranstaltung **nicht erlaubt** – weder als Lernhilfe noch bei Abgaben."
-      - "Die Prüfung findet in einem kontrollierten Setting ohne KI-Zugang statt."
+      - "KI-Werkzeuge sind in dieser Lehrveranstaltung **nicht erlaubt** – weder zum Lernen noch bei Abgaben."
+      - "Die Prüfung findet unter Aufsicht ohne KI-Zugang statt."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
     document_title: "KI-Richtlinie: AI-None v1"
@@ -28,7 +28,7 @@ presets:
     items:
       - id: "grundsatz-erlaubt"
         text: |
-          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung **nicht gestattet**. Dies umfasst sowohl die Nutzung bei bewerteten Abgaben als auch die Nutzung als Lernhilfe, soweit nicht ausdrücklich anders angegeben.
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini etc.) ist in dieser Lehrveranstaltung **nicht gestattet**. Dies umfasst sowohl die Nutzung bei bewerteten Abgaben als auch die Nutzung als Lernhilfe, soweit nicht ausdrücklich anders angegeben.
       - id: "verboten-regel"
         text: |
           In dieser Lehrveranstaltung ist der Einsatz von KI-Werkzeugen **grundsätzlich nicht gestattet**. Dies umfasst insbesondere:
@@ -36,28 +36,30 @@ presets:
           - Die Verwendung von KI-Werkzeugen zur Erstellung, Überarbeitung oder Verbesserung von Texten, Präsentationen oder anderen Abgaben.
           - Die Nutzung von KI-Werkzeugen während beaufsichtigter Prüfungen (Klausuren etc.) – dies wird als Täuschungsversuch gewertet.
           - Das Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in KI-Systeme.
-      - "datenschutz-regel"
+      - "datenschutz-regel-generic"
       - id: "pruefung-massnahmen"
         text: |
           Da KI-Werkzeuge in dieser Lehrveranstaltung nicht gestattet sind, wird die Prüfungsleistung ausschließlich in einem kontrollierten Setting ohne KI-Unterstützung erbracht:
+
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
 
           - Die Prüfungsleistung erfolgt als **beaufsichtigte schriftliche Prüfung** (Klausur) ohne Zugang zu KI-Werkzeugen oder dem Internet.
           - Zulässige Hilfsmittel werden zu Beginn der Prüfung bekanntgegeben.
       - "lehrende-keine-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: &upload_item_erlaubnis
-      id: "urheberrecht-erlaubnis"
+      id: "urheberrecht-erlaubnis-generic"
       text: |
         Die meisten in diesem Kurs bereitgestellten Lehrmaterialien sind urheberrechtlich geschützt. Für folgende, explizit freigegebene Materialien ist die Verarbeitung durch KI-Dienste unter Auflagen erlaubt:
 
         - Materialien, die im Lernmanagementsystem mit dem Vermerk **„KI-Nutzung erlaubt"** gekennzeichnet sind.
 
-        Dieses Nutzungsrecht gilt nur für den universitätseigenen Dienst **HAWKI** sowie für gängige KI-Dienste (ChatGPT, Claude, Copilot, Gemini) und nur zum Zweck der persönlichen Zusammenfassung und Verständniskontrolle. Das Hochladen zu anderen Diensten oder zu anderen Zwecken ist nicht gestattet.
+        Dieses Nutzungsrecht gilt nur für gängige KI-Dienste (ChatGPT, Claude, Copilot, Gemini) und nur zum Zweck der persönlichen Zusammenfassung und Verständniskontrolle. Das Hochladen zu anderen Diensten oder zu anderen Zwecken ist nicht gestattet.
 
         Alle anderen Materialien dürfen **nicht** zu KI-Diensten hochgeladen werden.
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"
 
   # ============================================================
   # AI-Learn: KI zum Lernen frei
@@ -69,7 +71,8 @@ presets:
     upload_default: false
     tldr:
       - "KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen)."
-      - "Die Prüfungsleistung wird ohne KI-Unterstützung erbracht (z.B. Klausur)."
+      - "KI darf **nicht** bei bewerteten Arbeiten eingesetzt werden, die ohne Aufsicht erstellt werden (z.B. Hausaufgaben, Seminararbeiten, Projektabgaben)."
+      - "Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht (z.B. Klausur, mündliche Prüfung) ohne KI."
       - "Keine Kennzeichnung der KI-Nutzung erforderlich."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
@@ -77,7 +80,7 @@ presets:
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. Der Einsatz von KI ist zum Lernen grundsätzlich erlaubt. Die Prüfungsleistung wird ohne KI-Unterstützung erbracht. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich.
     items:
-      - "grundsatz-erlaubt"
+      - "grundsatz-erlaubt-generic"
       - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
       - id: "verboten-regel"
@@ -88,20 +91,23 @@ presets:
           - Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich durch die Prüfungsordnung oder die Lehrperson gestattet – dies kann als Täuschungsversuch gewertet werden.
           - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken, kreatives Problemlösen, Analysefähigkeiten oder spezifische methodische Kompetenzen erfordern.
           - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis (siehe Abschnitt 3).
-      - "datenschutz-regel"
+      - "datenschutz-regel-generic"
       - id: "pruefung-massnahmen"
         text: |
           KI-Werkzeuge sind im Semester frei zum Lernen nutzbar. Die Prüfungsleistung wird jedoch ohne KI-Unterstützung erbracht, um Ihre individuellen Kompetenzen valide bewerten zu können:
 
-          - Die Prüfungsleistung erfolgt als **beaufsichtigte schriftliche Prüfung** (Klausur), bei der KI-Werkzeuge und Internet nicht zugelassen sind.
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
+
+          - Falls der Kurs bewertete Arbeiten ohne Aufsicht umfasst (z.B. Hausaufgaben, Übungsblätter, Seminararbeiten), dürfen KI-Werkzeuge bei diesen Arbeiten **nicht** eingesetzt werden. Die Arbeiten müssen eigenständig erstellt werden.
+          - Die Prüfungsleistung erfolgt als **beaufsichtigte Prüfung** (Klausur oder mündliche Prüfung), bei der KI-Werkzeuge und Internet nicht zugelassen sind.
           - Die Prüfung fokussiert auf Verständnis und Transfer, nicht auf reine Wissensreproduktion.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: *upload_item_erlaubnis
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"
 
   # ============================================================
   # AI-DocShort: Einfache Kennzeichnung
@@ -112,26 +118,29 @@ presets:
     color: "oklch(82.39% 0.133 91.5)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen auch bei Abgaben als Hilfsmittel eingesetzt werden."
-      - "Einfache Kennzeichnung am Ende der Arbeit: genutztes Tool und Einsatzzweck angeben."
+      - "KI-Werkzeuge dürfen auch bei bewerteten Arbeiten ohne Aufsicht als Hilfsmittel eingesetzt werden."
+      - "Einfache Kennzeichnung am Ende der Arbeit erforderlich: genutztes Tool und Einsatzzweck angeben."
       - "Die Kernleistung (Analyse, Argumentation, Schlussfolgerungen) muss eigenständig erbracht werden."
+      - "Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht ohne KI."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
     document_title: "KI-Richtlinie: AI-DocShort v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen als Hilfsmittel eingesetzt werden, auch bei bewerteten Abgaben. Die Nutzung ist mit einer einfachen Kennzeichnung (Tool + Zweck) zu dokumentieren.
     items:
-      - "grundsatz-erlaubt"
+      - "grundsatz-erlaubt-generic"
       - "kompetenzen-standard"
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
-      - "datenschutz-regel"
-      - "kennzeichnung-einfach"
-      - "zugang-chancengleichheit"
+      - "datenschutz-regel-generic"
+      - "kennzeichnung-einfach-generic"
+      - "zugang-chancengleichheit-generic"
       - id: "pruefung-massnahmen"
         text: |
           Wir sind uns bewusst, dass die Nutzung von KI bei unbeaufsichtigten Prüfungsleistungen (z.B. Hausarbeiten) kaum kontrollierbar ist und dies Chancengleichheit und Fairness gefährden kann. Um dennoch eine valide Bewertung Ihrer individuellen Kompetenzen sicherzustellen, werden in diesem Kurs folgende Maßnahmen angewendet:
+
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
 
           - Schriftliche Abgaben werden durch ein **kurzes mündliches Kolloquium** ergänzt, in dem das Verständnis und die Eigenständigkeit überprüft werden.
           - Die Aufgabenstellungen zielen verstärkt auf **Transfer und kritische Analyse** ab, nicht auf reine Wissensreproduktion.
@@ -140,9 +149,9 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: *upload_item_erlaubnis
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"
 
   # ============================================================
   # AI-DocLog: Prompt-Protokoll + Reflexion
@@ -153,25 +162,28 @@ presets:
     color: "oklch(54.87% 0.222 260.33)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen bei Abgaben eingesetzt werden – reflektierte Dokumentation ist Pflicht."
+      - "KI-Werkzeuge dürfen bei bewerteten Arbeiten ohne Aufsicht eingesetzt werden – reflektierte Dokumentation ist Pflicht."
       - "Prompt-Protokoll und persönliche Reflexion sind Bestandteil jeder Abgabe."
       - "Die Qualität der KI-Nutzung (Prompts, Prüfung, Weiterverarbeitung) fließt in die Bewertung ein."
+      - "Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht ohne KI."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
     document_title: "KI-Richtlinie: AI-DocLog v1"
     document_intro: |
       Dieses Dokument legt die Richtlinien für die Nutzung von KI-Werkzeugen in dieser Lehrveranstaltung fest. KI-Werkzeuge dürfen als Hilfsmittel eingesetzt werden, auch bei bewerteten Abgaben. Die Nutzung ist detailliert mit einem Prompt-Protokoll und einer Reflexion zu dokumentieren.
     items:
-      - "grundsatz-erlaubt"
+      - "grundsatz-erlaubt-generic"
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
-      - "datenschutz-regel"
-      - "kennzeichnung-detailliert"
-      - "zugang-chancengleichheit"
+      - "datenschutz-regel-generic"
+      - "kennzeichnung-detailliert-generic"
+      - "zugang-chancengleichheit-generic"
       - id: "pruefung-massnahmen"
         text: |
           Wir sind uns bewusst, dass die Nutzung von KI bei unbeaufsichtigten Prüfungsleistungen (z.B. Hausarbeiten) kaum kontrollierbar ist und dies Chancengleichheit und Fairness gefährden kann. Um dennoch eine valide Bewertung Ihrer individuellen Kompetenzen sicherzustellen, werden in diesem Kurs folgende Maßnahmen angewendet:
+
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
 
           - Das **Prompt-Protokoll und die Reflexion** sind Pflichtbestandteile jeder Abgabe und fließen in die Bewertung ein.
           - Abgaben können durch ein **mündliches Kolloquium** ergänzt werden, in dem die KI-gestützte Arbeitsweise reflektiert wird.
@@ -180,9 +192,9 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: *upload_item_erlaubnis
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"
 
   # ============================================================
   # AI-Defend: Kompetenznachweis durch Verteidigung
@@ -193,10 +205,10 @@ presets:
     color: "oklch(49.39% 0.215 298.31)"
     upload_default: false
     tldr:
-      - "KI-Werkzeuge dürfen uneingeschränkt eingesetzt werden – auch bei Abgaben."
-      - "Kompetenznachweis durch mündliche oder schriftliche Verteidigung der eingereichten Arbeit."
+      - "KI-Werkzeuge dürfen **ohne Einschränkung** eingesetzt werden – auch bei allen bewerteten Arbeiten ohne Aufsicht."
       - "Keine Kennzeichnung der KI-Nutzung erforderlich."
-      - "Wer die Arbeit nicht überzeugend vertreten kann, muss mit schlechterer Bewertung rechnen."
+      - "Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht (mündlich oder schriftlich), in der die eingereichte Arbeit vertreten werden muss."
+      - "Wer die Arbeit nicht überzeugend vertreten kann, muss mit einer deutlich schlechteren Bewertung rechnen."
     tldr_upload: "Kursmaterialien dürfen in KI-Tools hochgeladen werden."
     tldr_no_upload: "Kursmaterialien dürfen **nicht** in KI-Tools hochgeladen werden."
     document_title: "KI-Richtlinie: AI-Defend v1"
@@ -205,7 +217,7 @@ presets:
     items:
       - id: "grundsatz-erlaubt"
         text: |
-          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung **ohne Einschränkung** erlaubt – sowohl zum Lernen als auch bei der Erstellung von Abgaben. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich. Der Kompetenznachweis erfolgt durch eine Verteidigung der eingereichten Arbeit.
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini etc.) ist in dieser Lehrveranstaltung **ohne Einschränkung** erlaubt – sowohl zum Lernen als auch bei der Erstellung von Abgaben. Eine Kennzeichnung der KI-Nutzung ist nicht erforderlich. Der Kompetenznachweis erfolgt durch eine Verteidigung der eingereichten Arbeit.
       - "erlaubt-ohne-kennzeichnung-regel"
       - id: "verboten-regel"
         text: |
@@ -214,22 +226,23 @@ presets:
           - Nutzung von KI während beaufsichtigter Prüfungen (Klausuren etc.), sofern nicht ausdrücklich gestattet – dies kann als Täuschungsversuch gewertet werden.
           - Verwendung von KI zur Umgehung von Lernzielen, die explizit eigenständiges kritisches Denken oder spezifische methodische Kompetenzen erfordern.
           - Hochladen von urheberrechtlich geschützten Kursmaterialien oder personenbezogenen Daten in Cloud-basierte KI-Systeme ohne explizite Erlaubnis.
-      - "datenschutz-regel"
-      - "zugang-chancengleichheit"
+      - "datenschutz-regel-generic"
+      - "zugang-chancengleichheit-generic"
       - id: "pruefung-massnahmen"
         text: |
-          KI-Werkzeuge dürfen bei der Erstellung von Abgaben ohne Einschränkung eingesetzt werden. Der individuelle Kompetenznachweis erfolgt durch eine Verteidigung:
+          KI-Werkzeuge dürfen bei der Erstellung von Abgaben ohne Einschränkung eingesetzt werden. Der individuelle Kompetenznachweis erfolgt durch eine **Prüfung unter Aufsicht** (mündliches Prüfungsgespräch **oder** beaufsichtigte schriftliche Prüfung). Dabei wird überprüft, ob die Inhalte der eingereichten Arbeiten eigenständig vertreten und erläutert werden können.
 
-          - Eingereichte Arbeiten werden in einem **mündlichen Prüfungsgespräch verteidigt**. Dabei wird überprüft, ob Inhalt und Argumentation eigenständig vertreten werden können.
-          - Die **mündliche Verteidigung** fließt maßgeblich in die Gesamtbewertung ein.
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
+
+          - Die **Prüfung unter Aufsicht** fließt maßgeblich in die Gesamtbewertung ein.
           - Wer die eingereichte Arbeit nicht überzeugend vertreten kann, muss mit einer deutlich schlechteren Bewertung rechnen.
       - "halluzinationen-warnung"
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: *upload_item_erlaubnis
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"
 
   # ============================================================
   # AI-Skill: KI-Kompetenz als Lernziel
@@ -252,7 +265,7 @@ presets:
     items:
       - id: "grundsatz-erlaubt"
         text: |
-          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung nicht nur erlaubt, sondern ein **explizites Lernziel**. Sie sollen KI-Werkzeuge aktiv, gezielt und reflektiert einsetzen lernen. Es gelten die spezifischen Regelungen dieser Policy bezüglich Dokumentation und akademischer Integrität.
+          Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini etc.) ist in dieser Lehrveranstaltung nicht nur erlaubt, sondern ein **explizites Lernziel**. Sie sollen KI-Werkzeuge aktiv, gezielt und reflektiert einsetzen lernen. Es gelten die spezifischen Regelungen dieser Policy bezüglich Dokumentation und akademischer Integrität.
       - id: "kompetenzen-erweitert"
         text: |
           Zusätzlich zu den grundlegenden KI-Kompetenzen sollen Sie in dieser Lehrveranstaltung lernen:
@@ -264,12 +277,14 @@ presets:
       - "erlaubt-ohne-kennzeichnung-regel"
       - "erlaubt-mit-kennzeichnung-regel"
       - "verboten-regel"
-      - "datenschutz-regel"
-      - "kennzeichnung-detailliert"
-      - "zugang-chancengleichheit"
+      - "datenschutz-regel-generic"
+      - "kennzeichnung-detailliert-generic"
+      - "zugang-chancengleichheit-generic"
       - id: "pruefung-massnahmen"
         text: |
           KI-Kompetenz ist ein explizites Lernziel dieser Lehrveranstaltung. Sowohl der Prozess als auch das Ergebnis der KI-Nutzung werden bewertet:
+
+          Als „Arbeiten ohne Aufsicht" gelten alle bewerteten Leistungen, die außerhalb einer kontrollierten Prüfungsumgebung erstellt werden – zum Beispiel Hausaufgaben, Übungsblätter, Seminar- und Hausarbeiten, Projektabgaben (Code, Reports), Abschlussarbeiten sowie die Vorbereitung von Materialien für Referate und Präsentationen (Folien, Handouts, Sprechernotizen). Die Durchführung eines Referats oder einer Präsentation selbst gilt als Leistung unter Aufsicht.
 
           - Das **Prompt-Protokoll mit Reflexion** ist Pflichtbestandteil jeder Abgabe und wird benotet.
           - Die **Qualität des KI-Einsatzes** – Promptqualität, kritische Überprüfung der Ergebnisse, eigenständige Weiterverarbeitung – fließt in die Bewertung ein.
@@ -279,6 +294,6 @@ presets:
       - "lehrende-nutzen-ki"
       - "daten-keine-cloud"
       - "bewertung-keine-ki"
-      - "unterstuetzung-angebot"
+      - "unterstuetzung-angebot-generic"
     upload_item: *upload_item_erlaubnis
-    no_upload_item: "urheberrecht-verbot"
+    no_upload_item: "urheberrecht-verbot-generic"

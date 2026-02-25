@@ -39,6 +39,13 @@ categories:
             text: |
               The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) is generally permitted in this course as an aid to support the learning process. However, the specific regulations of this policy regarding permitted and prohibited use, labeling, and academic integrity apply.
 
+          - id: "grundsatz-erlaubt-generic"
+            tags:
+              - { label: "Principle", type: "grundsatz" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              The use of AI tools (such as ChatGPT, Copilot, Claude, Gemini, etc.) is generally permitted in this course as an aid to support the learning process. However, the specific regulations of this policy regarding permitted and prohibited use, labeling, and academic integrity apply.
+
           - id: "grundsatz-erlaeuterung"
             tags:
               - { label: "Explanation (for students)", type: "erlaeuterung-studierende" }
@@ -191,6 +198,14 @@ categories:
             text: |
               The teaching materials provided in this course (slides, scripts, assignments, etc.) are protected by copyright. You are **not** permitted to upload these materials or substantial parts thereof to external cloud-based AI services (such as ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) or enter them there for analysis or processing.
 
+          - id: "urheberrecht-verbot-generic"
+            tags:
+              - { label: "Copyright", type: "recht" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule: Standard (Prohibition)", type: "regel-standard" }
+            text: |
+              The teaching materials provided in this course (slides, scripts, assignments, etc.) are protected by copyright. You are **not** permitted to upload these materials or substantial parts thereof to external cloud-based AI services (such as ChatGPT, Copilot, Claude, Gemini, etc.) or enter them there for analysis or processing.
+
           - id: "urheberrecht-erlaubnis"
             tags:
               - { label: "Copyright", type: "recht" }
@@ -202,6 +217,20 @@ categories:
               - Documents explicitly marked with the note "[e.g., 'AI use permitted']".
 
               This usage right **applies only** to the services [list of permitted services, e.g., HAWKI, ChatGPT, Copilot, Claude, Gemini] and only for the purpose [define purpose, e.g., personal summarization, comprehension check]. Uploading to other services or for other purposes is not permitted.
+
+              All other materials may **not** be uploaded to AI services.
+
+          - id: "urheberrecht-erlaubnis-generic"
+            tags:
+              - { label: "Copyright", type: "recht" }
+              - { label: "Rule: Alternative (Permission)", type: "regel-alternativ" }
+            text: |
+              Most teaching materials provided in this course are protected by copyright. However, for the following explicitly marked materials, processing by AI services is permitted under conditions:
+
+              - Materials in the folder "[Name of the folder, e.g., 'Released for AI']".
+              - Documents explicitly marked with the note "[e.g., 'AI use permitted']".
+
+              This usage right **applies only** to the services [list of permitted services, e.g., ChatGPT, Copilot, Claude, Gemini] and only for the purpose [define purpose, e.g., personal summarization, comprehension check]. Uploading to other services or for other purposes is not permitted.
 
               All other materials may **not** be uploaded to AI services.
 
@@ -228,6 +257,18 @@ categories:
               - Do **not** enter any personal data (e.g., names, student IDs, email addresses, discussion contributions) into external AI tools (neither your own nor those of other students or instructors).
               - Be aware that many cloud-based AI services store your inputs and potentially use them to train their models.
               - Where possible, use more privacy-friendly alternatives such as the university's own HAWKI service or AI models running locally on your computer, if possible.
+
+          - id: "datenschutz-regel-generic"
+            tags:
+              - { label: "Data Protection", type: "datenschutz" }
+              - { label: "Important", type: "wichtig" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              When using AI services, observe data protection:
+
+              - Do **not** enter any personal data (e.g., names, student IDs, email addresses, discussion contributions) into external AI tools (neither your own nor those of other students or instructors).
+              - Be aware that many cloud-based AI services store your inputs and potentially use them to train their models.
+              - Where possible, use more privacy-friendly alternatives such as AI services provided by your university or AI models running locally on your computer, if possible.
 
           - id: "datenschutz-erlaeuterung"
             tags:
@@ -267,6 +308,26 @@ categories:
 
               Additionally, the declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
 
+          - id: "kennzeichnung-einfach-generic"
+            tags:
+              - { label: "Labeling", type: "kennzeichnung" }
+              - { label: "Recommended", type: "empfohlen" }
+              - { label: "Rule: Simple Variant", type: "regel-standard" }
+            text: |
+              Label the use of AI systems in written submissions as follows:
+
+              At the end of your work (before the bibliography), add a separate section with the heading "Declaration on the Use of AI Tools". There, briefly list:
+
+              - Which AI tools you used (e.g., "ChatGPT, DeepL Write, Copilot").
+              - For which work steps you used them (e.g., "brainstorming", "linguistic revision of introduction", "literature research keywords", "code generation for function X").
+
+              *Example:*
+              **Declaration on the Use of AI Tools**
+              Tools used: ChatGPT, DeepL Write
+              Purposes: Brainstorming for outline points, linguistic revision of the methods section.
+
+              Additionally, the declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
+
           - id: "kennzeichnung-detailliert"
             tags:
               - { label: "Labeling", type: "kennzeichnung" }
@@ -277,6 +338,30 @@ categories:
               **1. "Documentation of AI Use" section in the appendix:**
 
               - **Tools used:** List of all AI tools used with name, provider, and version if applicable (e.g., "ChatGPT (OpenAI, model GPT-5)", "HAWKI (University of Bamberg)").
+              - **Usage protocol (examples):** Document exemplary requests (prompts) and the resulting AI responses that influenced your work. Briefly describe how you used or revised the response. (Scope by agreement with instructor, e.g., 2-3 examples).
+              - **Reflection:** Add a brief personal reflection (approx. 100-200 words): How did AI use influence your work process? What were the advantages, where were the challenges or limitations?
+
+              **2. Direct labeling in the text (only for direct adoption):**
+
+              - For verbatim or slightly paraphrased adoption of AI-generated passages, label these directly in the text (e.g., with a footnote: "This paragraph is based on a suggestion from ChatGPT.").
+
+              **3. AI-assisted sources in the bibliography:**
+
+              - If you found literature sources with the help of AI tools (e.g., through "Deep Research" functions), mark this in the bibliography with an addition like "[via AI research]" or document it in the section on AI use.
+              - Carefully verify all AI-suggested sources for existence and correct bibliographic information before adopting them.
+
+              Additionally, the general declaration of independent work according to the guidelines of your examination regulations may need to be submitted.
+
+          - id: "kennzeichnung-detailliert-generic"
+            tags:
+              - { label: "Labeling", type: "kennzeichnung" }
+              - { label: "Rule: Detailed Variant", type: "regel-alternativ" }
+            text: |
+              Label the use of AI systems in written submissions as follows:
+
+              **1. "Documentation of AI Use" section in the appendix:**
+
+              - **Tools used:** List of all AI tools used with name, provider, and version if applicable (e.g., "ChatGPT (OpenAI, model GPT-5)", "Claude (Anthropic)").
               - **Usage protocol (examples):** Document exemplary requests (prompts) and the resulting AI responses that influenced your work. Briefly describe how you used or revised the response. (Scope by agreement with instructor, e.g., 2-3 examples).
               - **Reflection:** Add a brief personal reflection (approx. 100-200 words): How did AI use influence your work process? What were the advantages, where were the challenges or limitations?
 
@@ -342,6 +427,18 @@ categories:
 
               - Using free basic versions of common AI providers (e.g., ChatGPT, Claude, Gemini).
               - The university's own HAWKI service, which is available free of charge to all students.
+
+              The use of paid services is at your own responsibility and expense.
+
+          - id: "zugang-chancengleichheit-generic"
+            tags:
+              - { label: "Equal Opportunity", type: "fairness" }
+              - { label: "Rule", type: "regel-standard" }
+            text: |
+              To maintain equal opportunity, this course does not assume that you have access to paid AI premium services. The learning objectives of the course can be achieved in the following ways:
+
+              - Using free basic versions of common AI providers (e.g., ChatGPT, Claude, Gemini).
+              - AI services provided by your university, if available.
 
               The use of paid services is at your own responsibility and expense.
 
@@ -476,6 +573,22 @@ categories:
               - Information on the use of AI at the University of Bamberg: https://www.uni-bamberg.de/cio/ki/
               - The Center for University Didactics (ZHD): https://www.uni-bamberg.de/zhd/
               - The Media Didactics Service Center (MD): https://www.uni-bamberg.de/md/
+
+          - id: "unterstuetzung-angebot-generic"
+            tags:
+              - { label: "Offering", type: "angebot" }
+              - { label: "Offering", type: "regel-standard" }
+            text: |
+              If you have questions or uncertainties about the use of AI in this course or about the interpretation of this policy, please feel free to contact me:
+
+              - During my office hours
+              - By email or in the course forum
+              - During the course (we will schedule time for discussions).
+
+              Additional resources and advice are offered by:
+
+              - Your university's information resources on AI in teaching.
+              - Your university's didactic advisory services.
 
           - id: "unterstuetzung-erlaeuterung"
             tags:
@@ -650,11 +763,11 @@ ui_strings:
   btn_back_to_editor: "Back to Editor"
   btn_copy_result: "Copy Text"
   btn_download_html: "Download as HTML"
-  btn_print_pdf: "Save as PDF"
 
   # Buttons - Editor Toolbar
   btn_expand_all: "Expand all"
   btn_collapse_all: "Collapse all"
+  btn_scroll_to_preview: "Show in preview"
   search_placeholder: "Search items…"
   search_no_results: "No results for"
 
@@ -711,6 +824,7 @@ ui_strings:
 
   # Presets
   comparison_summary: "Compare Templates"
+  decision_tree_summary: "Which preset fits your course? → Find out"
   preset_section_title: "Quick Start: Templates"
   preset_section_desc: "Choose a template as a starting point — or <a href='#' id='start-editor-link'>open the free editor</a>."
   editor_card_desc: "Start without a template and freely compose your AI policy."

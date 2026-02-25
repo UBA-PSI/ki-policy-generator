@@ -39,6 +39,13 @@ categories:
             text: |
               Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini, HAWKI etc.) ist in dieser Lehrveranstaltung grundsätzlich als Hilfsmittel zur Unterstützung des Lernprozesses erlaubt. Es gelten jedoch die spezifischen Regelungen dieser Policy bezüglich erlaubter und verbotener Nutzung, Kennzeichnung und akademischer Integrität.
 
+          - id: "grundsatz-erlaubt-generic"
+            tags:
+              - { label: "Grundsatz", type: "grundsatz" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Der Einsatz von KI-Werkzeugen (wie ChatGPT, Copilot, Claude, Gemini etc.) ist in dieser Lehrveranstaltung grundsätzlich als Hilfsmittel zur Unterstützung des Lernprozesses erlaubt. Es gelten jedoch die spezifischen Regelungen dieser Policy bezüglich erlaubter und verbotener Nutzung, Kennzeichnung und akademischer Integrität.
+
           - id: "grundsatz-erlaeuterung"
             tags:
               - { label: "Erläuterung (für Studierende)", type: "erlaeuterung-studierende" }
@@ -191,6 +198,14 @@ categories:
             text: |
               Die in diesem Kurs bereitgestellten Lehrmaterialien (Folien, Skripte, Aufgaben etc.) sind urheberrechtlich geschützt. Es ist Ihnen **nicht** gestattet, diese Materialien oder wesentliche Teile davon zu externen Cloud-basierten KI-Diensten (wie ChatGPT, Copilot, Claude, Gemini, HAWKI, etc.) hochzuladen oder diese dort zur Analyse oder Verarbeitung einzugeben.
 
+          - id: "urheberrecht-verbot-generic"
+            tags:
+              - { label: "Urheberrecht", type: "recht" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel: Standard (Verbot)", type: "regel-standard" }
+            text: |
+              Die in diesem Kurs bereitgestellten Lehrmaterialien (Folien, Skripte, Aufgaben etc.) sind urheberrechtlich geschützt. Es ist Ihnen **nicht** gestattet, diese Materialien oder wesentliche Teile davon zu externen Cloud-basierten KI-Diensten (wie ChatGPT, Copilot, Claude, Gemini, etc.) hochzuladen oder diese dort zur Analyse oder Verarbeitung einzugeben.
+
           - id: "urheberrecht-erlaubnis"
             tags:
               - { label: "Urheberrecht", type: "recht" }
@@ -202,6 +217,20 @@ categories:
               - Dokumente, die explizit mit dem Vermerk "[z.B. 'KI-Nutzung erlaubt']" gekennzeichnet sind.
 
               Dieses Nutzungsrecht **gilt nur** für die Dienste [Liste der erlaubten Dienste, z.B. HAWKI, ChatGPT, Copilot, Claude, Gemini] und nur zum Zweck [Zweck definieren, z.B. der persönlichen Zusammenfassung, der Verständniskontrolle]. Das Hochladen zu anderen Diensten oder zu anderen Zwecken ist nicht gestattet.
+
+              Alle anderen Materialien dürfen **nicht** zu KI-Diensten hochgeladen werden.
+
+          - id: "urheberrecht-erlaubnis-generic"
+            tags:
+              - { label: "Urheberrecht", type: "recht" }
+              - { label: "Regel: Alternativ (Erlaubnis)", type: "regel-alternativ" }
+            text: |
+              Die meisten in diesem Kurs bereitgestellten Lehrmaterialien sind urheberrechtlich geschützt. Für folgende, explizit gekennzeichnete Materialien ist die Verarbeitung durch KI-Dienste jedoch unter Auflagen erlaubt:
+
+              - Materialien im Ordner "[Name des Ordners, z.B. 'Freigegeben für KI']".
+              - Dokumente, die explizit mit dem Vermerk "[z.B. 'KI-Nutzung erlaubt']" gekennzeichnet sind.
+
+              Dieses Nutzungsrecht **gilt nur** für die Dienste [Liste der erlaubten Dienste, z.B. ChatGPT, Copilot, Claude, Gemini] und nur zum Zweck [Zweck definieren, z.B. der persönlichen Zusammenfassung, der Verständniskontrolle]. Das Hochladen zu anderen Diensten oder zu anderen Zwecken ist nicht gestattet.
 
               Alle anderen Materialien dürfen **nicht** zu KI-Diensten hochgeladen werden.
 
@@ -228,6 +257,18 @@ categories:
               - Geben Sie **keine personenbezogenen Daten** (z.B. Namen, Matrikelnummern, E-Mail-Adressen, Diskussionsbeiträge) in externe KI-Werkzeuge ein (weder eigene noch die von anderen Studierenden oder die Daten von Dozierenden).
               - Seien Sie sich bewusst, dass viele Cloud-basierte KI-Dienste Ihre Eingaben speichern und potenziell zum Training ihrer Modelle verwenden.
               - Nutzen Sie nach Möglichkeit datenschutzfreundlichere Alternativen wie den universitätseigenen Dienst HAWKI oder lokal auf Ihrem Rechner laufende KI-Modelle, falls möglich.
+
+          - id: "datenschutz-regel-generic"
+            tags:
+              - { label: "Datenschutz", type: "datenschutz" }
+              - { label: "Wichtig", type: "wichtig" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Beachten Sie bei der Nutzung von KI-Diensten den Datenschutz:
+
+              - Geben Sie **keine personenbezogenen Daten** (z.B. Namen, Matrikelnummern, E-Mail-Adressen, Diskussionsbeiträge) in externe KI-Werkzeuge ein (weder eigene noch die von anderen Studierenden oder die Daten von Dozierenden).
+              - Seien Sie sich bewusst, dass viele Cloud-basierte KI-Dienste Ihre Eingaben speichern und potenziell zum Training ihrer Modelle verwenden.
+              - Nutzen Sie nach Möglichkeit datenschutzfreundlichere Alternativen wie von Ihrer Hochschule bereitgestellte KI-Dienste oder lokal auf Ihrem Rechner laufende KI-Modelle, falls möglich.
 
           - id: "datenschutz-erlaeuterung"
             tags:
@@ -267,6 +308,26 @@ categories:
 
               Zusätzlich ist ggf. die Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
 
+          - id: "kennzeichnung-einfach-generic"
+            tags:
+              - { label: "Kennzeichnung", type: "kennzeichnung" }
+              - { label: "Empfohlen", type: "empfohlen" }
+              - { label: "Regel: Variante Einfach", type: "regel-standard" }
+            text: |
+              Kennzeichnen Sie die Nutzung von KI-Systemen in schriftlichen Abgaben wie folgt:
+
+              Fügen Sie am Ende Ihrer Arbeit (vor dem Literaturverzeichnis) einen separaten Abschnitt mit der Überschrift "Erklärung zur Nutzung von KI-Werkzeugen" ein. Geben Sie dort stichpunktartig an:
+
+              - Welche KI-Werkzeuge Sie verwendet haben (z.B. "ChatGPT, DeepL Write, Copilot").
+              - Für welche Arbeitsschritte Sie diese eingesetzt haben (z.B. "Ideenfindung", "Sprachliche Überarbeitung Einleitung", "Literaturrecherche-Keywords", "Code-Generierung für Funktion X").
+
+              *Beispiel:*
+              **Erklärung zur Nutzung von KI-Werkzeugen**
+              Verwendete Tools: ChatGPT, DeepL Write
+              Einsatzzwecke: Brainstorming für Gliederungspunkte, sprachliche Überarbeitung des Methodenteils.
+
+              Zusätzlich ist ggf. die Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
+
           - id: "kennzeichnung-detailliert"
             tags:
               - { label: "Kennzeichnung", type: "kennzeichnung" }
@@ -277,6 +338,30 @@ categories:
               **1. Abschnitt "Dokumentation der KI-Nutzung" im Anhang:**
 
               - **Verwendete Tools:** Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. "ChatGPT (OpenAI, Modell GPT-5)", "HAWKI (Universität Bamberg)").
+              - **Nutzungsprotokoll (Beispiele):** Dokumentieren Sie exemplarisch Anfragen (Prompts) und die daraus resultierenden KI-Antworten, die Ihre Arbeit beeinflusst haben. Beschreiben Sie kurz, wie Sie die Antwort verwendet oder überarbeitet haben. (Umfang nach Absprache mit Lehrperson, z.B. 2-3 Beispiele).
+              - **Reflexion:** Fügen Sie eine kurze persönliche Reflexion (ca. 100-200 Wörter) hinzu: Wie hat die KI-Nutzung Ihren Arbeitsprozess beeinflusst? Wo lagen die Vorteile, wo die Herausforderungen oder Grenzen?
+
+              **2. Direkte Kennzeichnung im Text (nur bei direkter Übernahme):**
+
+              - Bei wörtlicher oder leicht paraphrasierter Übernahme von KI-generierten Passagen, kennzeichnen Sie diese direkt im Text (z.B. durch eine Fußnote: "Dieser Absatz basiert auf einem Vorschlag von ChatGPT.").
+
+              **3. KI-gestützt gefundene Quellen im Literaturverzeichnis:**
+
+              - Wenn Sie Literaturquellen mithilfe von KI-Werkzeugen gefunden haben (z.B. durch "Deep Research"-Funktionen), kennzeichnen Sie dies im Literaturverzeichnis durch einen Zusatz wie "[via KI-Recherche]" oder dokumentieren Sie es im Abschnitt zur KI-Nutzung.
+              - Überprüfen Sie alle KI-vorgeschlagenen Quellen sorgfältig auf Existenz und korrekte bibliographische Angaben, bevor Sie diese übernehmen.
+
+              Zusätzlich ist ggf. die allgemeine Eigenständigkeitserklärung gemäß den Richtlinien Ihrer Prüfungsordnung abzugeben.
+
+          - id: "kennzeichnung-detailliert-generic"
+            tags:
+              - { label: "Kennzeichnung", type: "kennzeichnung" }
+              - { label: "Regel: Variante Detailliert", type: "regel-alternativ" }
+            text: |
+              Kennzeichnen Sie die Nutzung von KI-Systemen in schriftlichen Abgaben wie folgt:
+
+              **1. Abschnitt "Dokumentation der KI-Nutzung" im Anhang:**
+
+              - **Verwendete Tools:** Liste aller genutzten KI-Werkzeuge mit Namen, Anbieter und ggf. Version (z.B. "ChatGPT (OpenAI, Modell GPT-5)", "Claude (Anthropic)").
               - **Nutzungsprotokoll (Beispiele):** Dokumentieren Sie exemplarisch Anfragen (Prompts) und die daraus resultierenden KI-Antworten, die Ihre Arbeit beeinflusst haben. Beschreiben Sie kurz, wie Sie die Antwort verwendet oder überarbeitet haben. (Umfang nach Absprache mit Lehrperson, z.B. 2-3 Beispiele).
               - **Reflexion:** Fügen Sie eine kurze persönliche Reflexion (ca. 100-200 Wörter) hinzu: Wie hat die KI-Nutzung Ihren Arbeitsprozess beeinflusst? Wo lagen die Vorteile, wo die Herausforderungen oder Grenzen?
 
@@ -342,6 +427,18 @@ categories:
 
               - Nutzung kostenfreier Basisversionen gängiger KI-Anbieter (z.B. ChatGPT, Claude, Gemini).
               - Der universitätseigene Dienst HAWKI, der allen Studierenden kostenlos zur Verfügung steht.
+
+              Die Nutzung kostenpflichtiger Dienste erfolgt auf eigene Verantwortung und eigene Kosten.
+
+          - id: "zugang-chancengleichheit-generic"
+            tags:
+              - { label: "Chancengleichheit", type: "fairness" }
+              - { label: "Regel", type: "regel-standard" }
+            text: |
+              Um die Chancengleichheit zu wahren, wird in dieser Lehrveranstaltung nicht vorausgesetzt, dass Sie Zugang zu kostenpflichtigen KI-Premiumdiensten haben. Die Lernziele der Lehrveranstaltung können auf folgende Weise erreicht werden:
+
+              - Nutzung kostenfreier Basisversionen gängiger KI-Anbieter (z.B. ChatGPT, Claude, Gemini).
+              - Ggf. von Ihrer Hochschule bereitgestellte KI-Dienste.
 
               Die Nutzung kostenpflichtiger Dienste erfolgt auf eigene Verantwortung und eigene Kosten.
 
@@ -476,6 +573,22 @@ categories:
               - Die Hinweise zur Nutzung von KI an der Universität Bamberg: https://www.uni-bamberg.de/cio/ki/
               - Das Zentrum für Hochschuldidaktik (ZHD): https://www.uni-bamberg.de/zhd/
               - Die Mediendidaktische Servicestelle (MD): https://www.uni-bamberg.de/md/
+
+          - id: "unterstuetzung-angebot-generic"
+            tags:
+              - { label: "Angebot", type: "angebot" }
+              - { label: "Angebot", type: "regel-standard" }
+            text: |
+              Bei Fragen oder Unsicherheiten zum Einsatz von KI in dieser Lehrveranstaltung oder zur Auslegung dieser Policy können Sie sich gerne an mich wenden:
+
+              - In meiner Sprechstunde
+              - Per E-Mail oder im Forum der Lehrveranstaltung
+              - Im Rahmen der Lehrveranstaltung (wir planen Zeit für Diskussionen ein).
+
+              Zusätzliche Ressourcen und Beratung bieten:
+
+              - Die hochschulweiten Informationsangebote zu KI in der Lehre.
+              - Die didaktische Beratung Ihrer Hochschule.
 
           - id: "unterstuetzung-erlaeuterung"
             tags:
@@ -650,11 +763,11 @@ ui_strings:
   btn_back_to_editor: "Zurück zum Editor"
   btn_copy_result: "Text kopieren"
   btn_download_html: "Als HTML herunterladen"
-  btn_print_pdf: "Als PDF speichern"
 
   # Buttons - Editor Toolbar
   btn_expand_all: "Alle aufklappen"
   btn_collapse_all: "Alle zuklappen"
+  btn_scroll_to_preview: "In Vorschau anzeigen"
   search_placeholder: "Bausteine durchsuchen…"
   search_no_results: "Keine Treffer für"
 
@@ -711,6 +824,7 @@ ui_strings:
 
   # Presets
   comparison_summary: "Vorlagen im Vergleich"
+  decision_tree_summary: "Welches Preset passt zu Ihrem Kurs? → Finden Sie es heraus"
   preset_section_title: "Schnellstart: Vorlagen"
   preset_section_desc: "Wählen Sie eine Vorlage als Ausgangspunkt — oder <a href='#' id='start-editor-link'>öffnen Sie den freien Editor</a>."
   editor_card_desc: "Starten Sie ohne Vorlage und stellen Sie Ihre KI-Richtlinie frei zusammen."

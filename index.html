@@ -2019,6 +2019,137 @@
             margin-bottom: 0;
         }
 
+        /* Decision Tree */
+        .preset-decision-tree {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .preset-decision-tree summary {
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            padding: 8px 0;
+            list-style: none;
+        }
+        .preset-decision-tree summary::-webkit-details-marker { display: none; }
+        .preset-decision-tree summary::before {
+            content: '▸ ';
+            font-size: 0.85rem;
+        }
+        .preset-decision-tree[open] summary::before {
+            content: '▾ ';
+        }
+        .decision-tree-container {
+            margin-top: 0.5rem;
+        }
+        .dt-step {
+            display: none;
+            animation: dtFadeIn 0.25s ease;
+        }
+        .dt-step.dt-active {
+            display: block;
+        }
+        @keyframes dtFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dt-question {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.3rem;
+        }
+        .dt-hint {
+            font-size: 0.8rem;
+            color: var(--light-gray);
+            margin-bottom: 0.5rem;
+        }
+        .dt-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .dt-option {
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: #fff;
+            color: var(--dark-gray);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .dt-option:hover {
+            background: var(--very-light-gray);
+            border-color: var(--primary-color);
+        }
+        .dt-option.dt-selected {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+        .dt-result-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border: 2px solid #999;
+            border-radius: 6px;
+            margin-bottom: 0.4rem;
+        }
+        .dt-result-desc {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+            margin-bottom: 0.6rem;
+        }
+        .dt-use-preset {
+            padding: 0.35rem 0.8rem;
+            font-size: 0.85rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            background: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .dt-use-preset:hover {
+            opacity: 0.85;
+        }
+        .dt-restart {
+            margin-top: 0.6rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fff;
+            color: var(--medium-gray);
+            cursor: pointer;
+        }
+        .dt-restart:hover {
+            background: var(--very-light-gray);
+        }
+        .dt-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.78rem;
+            color: var(--light-gray);
+        }
+        .dt-breadcrumb-item {
+            background: var(--very-light-gray);
+            border-radius: 3px;
+            padding: 0.15rem 0.5rem;
+        }
+        .dt-breadcrumb-item .dt-bc-answer {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
         /* Preset Grid */
         .preset-grid {
             display: grid;
@@ -2678,66 +2809,263 @@
                         <summary data-i18n="comparison_summary">Vorlagen im Vergleich</summary>
                         <div class="preset-comparison-table-wrap">
                             <table class="preset-comparison-table">
-                                <thead>
-                                    <!-- Preset colors must match data/presets.yaml -->
+                                <thead data-ui-lang="de">
                                     <tr>
-                                        <th></th>
-                                        <th><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</th>
-                                        <th><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</th>
-                                        <th><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</th>
-                                        <th><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</th>
-                                        <th><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</th>
-                                        <th><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</th>
+                                        <th>Preset</th>
+                                        <th>A: KI zum Lernen</th>
+                                        <th>B: KI bei Arbeiten ohne Aufsicht</th>
+                                        <th>C: Prüfung unter Aufsicht</th>
+                                        <th>Kennzeichnung</th>
+                                    </tr>
+                                </thead>
+                                <thead data-ui-lang="en" style="display:none">
+                                    <tr>
+                                        <th>Preset</th>
+                                        <th>A: AI for Learning</th>
+                                        <th>B: AI for Unsupervised Work</th>
+                                        <th>C: Supervised Assessment</th>
+                                        <th>Documentation</th>
                                     </tr>
                                 </thead>
                                 <tbody data-ui-lang="de">
                                     <tr>
-                                        <td class="row-label">KI zum Lernen</td>
-                                        <td class="c-no">Nein</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</td>
+                                        <td class="c-no">✗ Nicht erlaubt</td>
+                                        <td class="c-no">✗ Nicht erlaubt</td>
+                                        <td>Ohne KI</td>
+                                        <td>–</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">KI bei Abgaben</td>
-                                        <td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td><td class="c-yes">Ja</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td class="c-no">✗ Nicht erlaubt</td>
+                                        <td>Ohne KI</td>
+                                        <td>Nicht erforderlich</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">Kennzeichnung</td>
-                                        <td>Keine</td><td>Keine</td><td>Einfach</td><td>Detailliert</td><td>Keine</td><td>Detailliert</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td>Ohne KI</td>
+                                        <td>Einfach (Tool + Zweck)</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">Prüfungsform</td>
-                                        <td>Klausur</td><td>Klausur</td><td>Kolloquium</td><td>Kolloquium</td><td>Verteidigung</td><td>Portfolio</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td>Ohne KI</td>
+                                        <td>Ausführlich (Protokoll + Reflexion)</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">KI-Kompetenz Lernziel</td>
-                                        <td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-no">Nein</td><td class="c-yes">Ja</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td class="c-yes">✓ Ohne Einschränkung</td>
+                                        <td>Ohne KI (verifiziert B)</td>
+                                        <td>Nicht erforderlich</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</td>
+                                        <td class="c-yes">✓ Erlaubt</td>
+                                        <td class="c-yes">✓ KI-Kompetenz ist Lernziel</td>
+                                        <td>KI-Kompetenz wird geprüft</td>
+                                        <td>Protokoll + Reflexion (benotet)</td>
                                     </tr>
                                 </tbody>
                                 <tbody data-ui-lang="en" style="display:none">
                                     <tr>
-                                        <td class="row-label">AI for Learning</td>
-                                        <td class="c-no">No</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</td>
+                                        <td class="c-no">✗ Not allowed</td>
+                                        <td class="c-no">✗ Not allowed</td>
+                                        <td>Without AI</td>
+                                        <td>–</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">AI for Submissions</td>
-                                        <td class="c-no">No</td><td class="c-no">No</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td><td class="c-yes">Yes</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td class="c-no">✗ Not allowed</td>
+                                        <td>Without AI</td>
+                                        <td>Not required</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">Documentation</td>
-                                        <td>None</td><td>None</td><td>Simple</td><td>Detailed</td><td>None</td><td>Detailed</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td>Without AI</td>
+                                        <td>Simple (tool + purpose)</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">Exam Format</td>
-                                        <td>Exam</td><td>Exam</td><td>Colloquium</td><td>Colloquium</td><td>Defense</td><td>Portfolio</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td>Without AI</td>
+                                        <td>Detailed (log + reflection)</td>
                                     </tr>
                                     <tr>
-                                        <td class="row-label">AI Competence Goal</td>
-                                        <td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-no">No</td><td class="c-yes">Yes</td>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td class="c-yes">✓ Without restrictions</td>
+                                        <td>Without AI (verifies B)</td>
+                                        <td>Not required</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-label"><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</td>
+                                        <td class="c-yes">✓ Allowed</td>
+                                        <td class="c-yes">✓ AI competence is learning goal</td>
+                                        <td>AI competence assessed</td>
+                                        <td>Log + reflection (graded)</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <p class="comparison-hint" data-ui-lang="de">Restriktiv &larr; &rarr; Permissiv</p>
                         <p class="comparison-hint" data-ui-lang="en" style="display:none">Restrictive &larr; &rarr; Permissive</p>
+                    </details>
+
+                    <details id="preset-decision-tree" class="preset-decision-tree">
+                        <summary data-i18n="decision_tree_summary">Welches Preset passt zu Ihrem Kurs? → Finden Sie es heraus</summary>
+                        <div class="decision-tree-container">
+                            <!-- DE decision tree -->
+                            <div class="decision-tree" data-ui-lang="de" id="decision-tree-de">
+                                <div class="dt-step dt-active" data-step="q1">
+                                    <div class="dt-question">Soll KI zum Lernen im Semester erlaubt sein?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-none">Nein</button>
+                                        <button class="dt-option" data-next="q2">Ja</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q2">
+                                    <div class="dt-question">Gibt es bewertete Arbeiten, die ohne Aufsicht erstellt werden?</div>
+                                    <div class="dt-hint">z.B. Hausaufgaben, Seminararbeiten, Projektabgaben, Folienvorbereitung für Referate</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-learn-1">Nein</button>
+                                        <button class="dt-option" data-next="q3">Ja</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q3">
+                                    <div class="dt-question">Soll KI bei diesen Arbeiten erlaubt sein?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-learn-2">Nein</button>
+                                        <button class="dt-option" data-next="q4">Ja</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q4">
+                                    <div class="dt-question">Wie wird sichergestellt, dass Studierende die Inhalte beherrschen?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-docshort">Einfache Kennzeichnung (Tool + Zweck)</button>
+                                        <button class="dt-option" data-next="r-doclog">Ausführliche Dokumentation (Prompt-Protokoll + Reflexion)</button>
+                                        <button class="dt-option" data-next="r-defend">Prüfung unter Aufsicht (mündlich oder schriftlich)</button>
+                                        <button class="dt-option" data-next="r-skill">KI-Kompetenz ist selbst Lernziel</button>
+                                    </div>
+                                </div>
+                                <!-- Results -->
+                                <div class="dt-step dt-result" data-step="r-none">
+                                    <div class="dt-result-badge" style="border-color:oklch(58.63% 0.231 19.6)"><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</div>
+                                    <div class="dt-result-desc">KI-Werkzeuge sind nicht erlaubt – weder zum Lernen noch bei Abgaben.</div>
+                                    <button class="dt-use-preset" data-preset="ai-none">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-learn-1">
+                                    <div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</div>
+                                    <div class="dt-result-desc">KI darf frei zum Lernen genutzt werden. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
+                                    <button class="dt-use-preset" data-preset="ai-learn">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-learn-2">
+                                    <div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</div>
+                                    <div class="dt-result-desc">KI darf zum Lernen genutzt werden, aber nicht bei bewerteten Arbeiten. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
+                                    <button class="dt-use-preset" data-preset="ai-learn">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-docshort">
+                                    <div class="dt-result-badge" style="border-color:oklch(82.39% 0.133 91.5)"><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</div>
+                                    <div class="dt-result-desc">KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck).</div>
+                                    <button class="dt-use-preset" data-preset="ai-docshort">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-doclog">
+                                    <div class="dt-result-badge" style="border-color:oklch(54.87% 0.222 260.33)"><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</div>
+                                    <div class="dt-result-desc">KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich.</div>
+                                    <button class="dt-use-preset" data-preset="ai-doclog">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-defend">
+                                    <div class="dt-result-badge" style="border-color:oklch(49.39% 0.215 298.31)"><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</div>
+                                    <div class="dt-result-desc">KI ohne Einschränkung. Kompetenznachweis durch Prüfung unter Aufsicht.</div>
+                                    <button class="dt-use-preset" data-preset="ai-defend">Vorlage laden</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-skill">
+                                    <div class="dt-result-badge" style="border-color:oklch(75.23% 0.209 144.64)"><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</div>
+                                    <div class="dt-result-desc">KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.</div>
+                                    <button class="dt-use-preset" data-preset="ai-skill">Vorlage laden</button>
+                                </div>
+                            </div>
+                            <!-- EN decision tree -->
+                            <div class="decision-tree" data-ui-lang="en" style="display:none" id="decision-tree-en">
+                                <div class="dt-step dt-active" data-step="q1">
+                                    <div class="dt-question">Should AI be allowed for learning during the semester?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-none">No</button>
+                                        <button class="dt-option" data-next="q2">Yes</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q2">
+                                    <div class="dt-question">Are there graded assignments produced without supervision?</div>
+                                    <div class="dt-hint">e.g., homework, term papers, project deliverables, slide preparation for presentations</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-learn-1">No</button>
+                                        <button class="dt-option" data-next="q3">Yes</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q3">
+                                    <div class="dt-question">Should AI be allowed for these assignments?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-learn-2">No</button>
+                                        <button class="dt-option" data-next="q4">Yes</button>
+                                    </div>
+                                </div>
+                                <div class="dt-step" data-step="q4">
+                                    <div class="dt-question">How do you ensure students master the content?</div>
+                                    <div class="dt-options">
+                                        <button class="dt-option" data-next="r-docshort">Simple labeling (tool + purpose)</button>
+                                        <button class="dt-option" data-next="r-doclog">Detailed documentation (prompt log + reflection)</button>
+                                        <button class="dt-option" data-next="r-defend">Supervised exam (oral or written)</button>
+                                        <button class="dt-option" data-next="r-skill">AI competence is itself a learning goal</button>
+                                    </div>
+                                </div>
+                                <!-- Results -->
+                                <div class="dt-step dt-result" data-step="r-none">
+                                    <div class="dt-result-badge" style="border-color:oklch(58.63% 0.231 19.6)"><span class="comparison-dot" style="background:oklch(58.63% 0.231 19.6)"></span>AI-None</div>
+                                    <div class="dt-result-desc">AI tools are not permitted – neither for learning nor for submissions.</div>
+                                    <button class="dt-use-preset" data-preset="ai-none">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-learn-1">
+                                    <div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</div>
+                                    <div class="dt-result-desc">AI may be used freely for learning. The exam is supervised without AI.</div>
+                                    <button class="dt-use-preset" data-preset="ai-learn">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-learn-2">
+                                    <div class="dt-result-badge" style="border-color:oklch(74.61% 0.171 51.56)"><span class="comparison-dot" style="background:oklch(74.61% 0.171 51.56)"></span>AI-Learn</div>
+                                    <div class="dt-result-desc">AI may be used for learning but not for graded work. The exam is supervised without AI.</div>
+                                    <button class="dt-use-preset" data-preset="ai-learn">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-docshort">
+                                    <div class="dt-result-badge" style="border-color:oklch(82.39% 0.133 91.5)"><span class="comparison-dot" style="background:oklch(82.39% 0.133 91.5)"></span>AI-DocShort</div>
+                                    <div class="dt-result-desc">AI permitted for submissions. Simple labeling (tool + purpose).</div>
+                                    <button class="dt-use-preset" data-preset="ai-docshort">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-doclog">
+                                    <div class="dt-result-badge" style="border-color:oklch(54.87% 0.222 260.33)"><span class="comparison-dot" style="background:oklch(54.87% 0.222 260.33)"></span>AI-DocLog</div>
+                                    <div class="dt-result-desc">AI permitted for submissions. Prompt log and reflection required.</div>
+                                    <button class="dt-use-preset" data-preset="ai-doclog">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-defend">
+                                    <div class="dt-result-badge" style="border-color:oklch(49.39% 0.215 298.31)"><span class="comparison-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</div>
+                                    <div class="dt-result-desc">AI without restrictions. Competence verified through supervised exam.</div>
+                                    <button class="dt-use-preset" data-preset="ai-defend">Load preset</button>
+                                </div>
+                                <div class="dt-step dt-result" data-step="r-skill">
+                                    <div class="dt-result-badge" style="border-color:oklch(75.23% 0.209 144.64)"><span class="comparison-dot" style="background:oklch(75.23% 0.209 144.64)"></span>AI-Skill</div>
+                                    <div class="dt-result-desc">AI competence is a learning goal. Process and result are assessed.</div>
+                                    <button class="dt-use-preset" data-preset="ai-skill">Load preset</button>
+                                </div>
+                            </div>
+                            <button class="dt-restart" style="display:none">↺ <span data-ui-lang="de">Neu starten</span><span data-ui-lang="en" style="display:none">Start over</span></button>
+                        </div>
                     </details>
 
                     <!-- German welcome content -->
@@ -4931,6 +5259,79 @@
         }
 
         /**
+         * Decision Tree — interactive preset finder
+         */
+        function initDecisionTree() {
+            document.querySelectorAll('.decision-tree').forEach(tree => {
+                const steps = tree.querySelectorAll('.dt-step');
+                const restartBtn = tree.closest('.decision-tree-container').querySelector('.dt-restart');
+                const history = [];
+
+                function showStep(stepId) {
+                    steps.forEach(s => s.classList.remove('dt-active'));
+                    const target = tree.querySelector('[data-step="' + stepId + '"]');
+                    if (target) {
+                        target.classList.add('dt-active');
+                        if (target.classList.contains('dt-result')) {
+                            restartBtn.style.display = '';
+                        }
+                    }
+                    // Build breadcrumb using safe DOM methods
+                    let bc = tree.querySelector('.dt-breadcrumb');
+                    if (!bc) {
+                        bc = document.createElement('div');
+                        bc.className = 'dt-breadcrumb';
+                        tree.prepend(bc);
+                    }
+                    while (bc.firstChild) bc.removeChild(bc.firstChild);
+                    history.forEach(h => {
+                        const item = document.createElement('span');
+                        item.className = 'dt-breadcrumb-item';
+                        item.textContent = h.q + ' → ';
+                        const answerSpan = document.createElement('span');
+                        answerSpan.className = 'dt-bc-answer';
+                        answerSpan.textContent = h.a;
+                        item.appendChild(answerSpan);
+                        bc.appendChild(item);
+                    });
+                    bc.style.display = history.length === 0 ? 'none' : '';
+                }
+
+                tree.addEventListener('click', e => {
+                    const opt = e.target.closest('.dt-option');
+                    if (opt) {
+                        const currentStep = opt.closest('.dt-step');
+                        const questionEl = currentStep.querySelector('.dt-question');
+                        history.push({ q: questionEl.textContent.substring(0, 30) + '…', a: opt.textContent });
+                        // Mark selected
+                        currentStep.querySelectorAll('.dt-option').forEach(b => b.classList.remove('dt-selected'));
+                        opt.classList.add('dt-selected');
+                        showStep(opt.dataset.next);
+                    }
+                    const useBtn = e.target.closest('.dt-use-preset');
+                    if (useBtn) {
+                        const presetId = useBtn.dataset.preset;
+                        if (presetsData) {
+                            const preset = presetsData.presets.find(p => p.id === presetId);
+                            if (preset) applyPreset(preset, false);
+                        }
+                    }
+                });
+
+                if (restartBtn) {
+                    restartBtn.addEventListener('click', () => {
+                        history.length = 0;
+                        steps.forEach(s => s.classList.remove('dt-active'));
+                        tree.querySelector('[data-step="q1"]').classList.add('dt-active');
+                        restartBtn.style.display = 'none';
+                        const bc = tree.querySelector('.dt-breadcrumb');
+                        if (bc) bc.style.display = 'none';
+                    });
+                }
+            });
+        }
+
+        /**
          * URL-Parameter verarbeiten (?preset=ai-learn&upload=true)
          */
         function handlePresetUrlParams() {
@@ -4962,6 +5363,7 @@
             setupToggleAllCategories();
             setupItemSearch();
             setupLivePreview();
+            initDecisionTree();
         }
 
         function setupViewNavigation() {

@@ -1,0 +1,873 @@
+#!/usr/bin/env python3
+"""
+Generate the overview page for /p/index.html listing all presets.
+
+Includes: branding bar, decision tree (expanded), comparison table (A/B/C model),
+preset cards, bilingual DE/EN toggle, and responsive design.
+"""
+
+import html
+import os
+import re
+import sys
+
+import yaml
+
+
+def escape(text):
+    return html.escape(text, quote=True)
+
+
+def parse_inline_md(text):
+    """Minimal inline markdown: **bold** only."""
+    text = escape(text)
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    return text
+
+
+# ---------------------------------------------------------------------------
+# Decision tree data (structural, not content — hardcoded in both languages)
+# ---------------------------------------------------------------------------
+
+DECISION_TREE = {
+    'de': {
+        'q1': {
+            'question': 'Soll KI zum Lernen im Semester erlaubt sein?',
+            'hint': None,
+            'options': [
+                {'label': 'Nein', 'next': 'r-none'},
+                {'label': 'Ja', 'next': 'q2'},
+            ],
+        },
+        'q2': {
+            'question': 'Gibt es bewertete Arbeiten, die ohne Aufsicht erstellt werden?',
+            'hint': 'z.\u202fB. Hausaufgaben, Seminararbeiten, Projektabgaben, Folienvorbereitung f\u00fcr Referate',
+            'options': [
+                {'label': 'Nein', 'next': 'r-learn-1'},
+                {'label': 'Ja', 'next': 'q3'},
+            ],
+        },
+        'q3': {
+            'question': 'Soll KI bei diesen Arbeiten erlaubt sein?',
+            'hint': None,
+            'options': [
+                {'label': 'Nein', 'next': 'r-learn-2'},
+                {'label': 'Ja', 'next': 'q4'},
+            ],
+        },
+        'q4': {
+            'question': 'Wie wird sichergestellt, dass Studierende die Inhalte beherrschen?',
+            'hint': None,
+            'options': [
+                {'label': 'Einfache Kennzeichnung (Tool + Zweck)', 'next': 'r-docshort'},
+                {'label': 'Ausf\u00fchrliche Dokumentation (Prompt-Protokoll + Reflexion)', 'next': 'r-doclog'},
+                {'label': 'Pr\u00fcfung unter Aufsicht (m\u00fcndlich oder schriftlich)', 'next': 'r-defend'},
+                {'label': 'KI-Kompetenz ist selbst Lernziel', 'next': 'r-skill'},
+            ],
+        },
+        'results': {
+            'r-none': {'preset': 'ai-none', 'desc': 'KI-Werkzeuge sind nicht erlaubt \u2013 weder zum Lernen noch bei Abgaben.'},
+            'r-learn-1': {'preset': 'ai-learn', 'desc': 'KI darf frei zum Lernen genutzt werden. Die Pr\u00fcfung erfolgt unter Aufsicht ohne KI.'},
+            'r-learn-2': {'preset': 'ai-learn', 'desc': 'KI darf zum Lernen genutzt werden, aber nicht bei bewerteten Arbeiten. Die Pr\u00fcfung erfolgt unter Aufsicht ohne KI.'},
+            'r-docshort': {'preset': 'ai-docshort', 'desc': 'KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck).'},
+            'r-doclog': {'preset': 'ai-doclog', 'desc': 'KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich.'},
+            'r-defend': {'preset': 'ai-defend', 'desc': 'KI ohne Einschr\u00e4nkung. Kompetenznachweis durch Pr\u00fcfung unter Aufsicht.'},
+            'r-skill': {'preset': 'ai-skill', 'desc': 'KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.'},
+        },
+        'restart': 'Neu starten',
+    },
+    'en': {
+        'q1': {
+            'question': 'Should AI be allowed for learning during the semester?',
+            'hint': None,
+            'options': [
+                {'label': 'No', 'next': 'r-none'},
+                {'label': 'Yes', 'next': 'q2'},
+            ],
+        },
+        'q2': {
+            'question': 'Are there graded assignments produced without supervision?',
+            'hint': 'e.g., homework, term papers, project deliverables, slide preparation for presentations',
+            'options': [
+                {'label': 'No', 'next': 'r-learn-1'},
+                {'label': 'Yes', 'next': 'q3'},
+            ],
+        },
+        'q3': {
+            'question': 'Should AI be allowed for these assignments?',
+            'hint': None,
+            'options': [
+                {'label': 'No', 'next': 'r-learn-2'},
+                {'label': 'Yes', 'next': 'q4'},
+            ],
+        },
+        'q4': {
+            'question': 'How do you ensure students master the content?',
+            'hint': None,
+            'options': [
+                {'label': 'Simple labeling (tool + purpose)', 'next': 'r-docshort'},
+                {'label': 'Detailed documentation (prompt log + reflection)', 'next': 'r-doclog'},
+                {'label': 'Supervised exam (oral or written)', 'next': 'r-defend'},
+                {'label': 'AI competence is itself a learning goal', 'next': 'r-skill'},
+            ],
+        },
+        'results': {
+            'r-none': {'preset': 'ai-none', 'desc': 'AI tools are not permitted \u2013 neither for learning nor for submissions.'},
+            'r-learn-1': {'preset': 'ai-learn', 'desc': 'AI may be used freely for learning. The exam is supervised without AI.'},
+            'r-learn-2': {'preset': 'ai-learn', 'desc': 'AI may be used for learning but not for graded work. The exam is supervised without AI.'},
+            'r-docshort': {'preset': 'ai-docshort', 'desc': 'AI permitted for submissions. Simple labeling (tool + purpose).'},
+            'r-doclog': {'preset': 'ai-doclog', 'desc': 'AI permitted for submissions. Prompt log and reflection required.'},
+            'r-defend': {'preset': 'ai-defend', 'desc': 'AI without restrictions. Competence verified through supervised exam.'},
+            'r-skill': {'preset': 'ai-skill', 'desc': 'AI competence is a learning goal. Process and result are assessed.'},
+        },
+        'restart': 'Start over',
+    },
+}
+
+# Comparison table data
+COMPARISON_TABLE = {
+    'de': {
+        'headers': ['Preset', 'A: KI zum Lernen', 'B: KI bei Arbeiten ohne Aufsicht', 'C: Pr\u00fcfung unter Aufsicht', 'Kennzeichnung'],
+        'rows': [
+            {'preset': 'ai-none', 'name': 'AI-None', 'cells': ['\u2717 Nicht erlaubt', '\u2717 Nicht erlaubt', 'Ohne KI', '\u2013'], 'classes': ['c-no', 'c-no', '', '']},
+            {'preset': 'ai-learn', 'name': 'AI-Learn', 'cells': ['\u2713 Erlaubt', '\u2717 Nicht erlaubt', 'Ohne KI', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-no', '', '']},
+            {'preset': 'ai-docshort', 'name': 'AI-DocShort', 'cells': ['\u2713 Erlaubt', '\u2713 Erlaubt', 'Ohne KI', 'Einfach (Tool + Zweck)'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-doclog', 'name': 'AI-DocLog', 'cells': ['\u2713 Erlaubt', '\u2713 Erlaubt', 'Ohne KI', 'Ausf\u00fchrlich (Protokoll + Reflexion)'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Erlaubt', '\u2713 Ohne Einschr\u00e4nkung', 'Ohne KI (verifiziert B)', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Erlaubt', '\u2713 KI-Kompetenz ist Lernziel', 'KI-Kompetenz wird gepr\u00fcft', 'Protokoll + Reflexion (benotet)'], 'classes': ['c-yes', 'c-yes', '', '']},
+        ],
+        'hint': 'Restriktiv \u2190 \u2192 Permissiv',
+    },
+    'en': {
+        'headers': ['Preset', 'A: AI for Learning', 'B: AI for Unsupervised Work', 'C: Supervised Assessment', 'Documentation'],
+        'rows': [
+            {'preset': 'ai-none', 'name': 'AI-None', 'cells': ['\u2717 Not allowed', '\u2717 Not allowed', 'Without AI', '\u2013'], 'classes': ['c-no', 'c-no', '', '']},
+            {'preset': 'ai-learn', 'name': 'AI-Learn', 'cells': ['\u2713 Allowed', '\u2717 Not allowed', 'Without AI', 'Not required'], 'classes': ['c-yes', 'c-no', '', '']},
+            {'preset': 'ai-docshort', 'name': 'AI-DocShort', 'cells': ['\u2713 Allowed', '\u2713 Allowed', 'Without AI', 'Simple (tool + purpose)'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-doclog', 'name': 'AI-DocLog', 'cells': ['\u2713 Allowed', '\u2713 Allowed', 'Without AI', 'Detailed (log + reflection)'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Allowed', '\u2713 Without restrictions', 'Without AI (verifies B)', 'Not required'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Allowed', '\u2713 AI competence is learning goal', 'AI competence assessed', 'Log + reflection (graded)'], 'classes': ['c-yes', 'c-yes', '', '']},
+        ],
+        'hint': 'Restrictive \u2190 \u2192 Permissive',
+    },
+}
+
+
+def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
+    """Build the decision tree HTML for one language."""
+    parts = []
+    hide = ' style="display:none"' if hidden else ''
+    parts.append(f'<div class="decision-tree" data-lang="{lang}"{hide}>')
+
+    # Question steps
+    for step_id in ['q1', 'q2', 'q3', 'q4']:
+        step = tree_data[step_id]
+        active = ' dt-active' if step_id == 'q1' else ''
+        parts.append(f'<div class="dt-step{active}" data-step="{step_id}">')
+        parts.append(f'<div class="dt-question">{escape(step["question"])}</div>')
+        if step['hint']:
+            parts.append(f'<div class="dt-hint">{escape(step["hint"])}</div>')
+        parts.append('<div class="dt-options">')
+        for opt in step['options']:
+            parts.append(f'<button class="dt-option" data-next="{opt["next"]}">{escape(opt["label"])}</button>')
+        parts.append('</div></div>')
+
+    # Result steps
+    for result_id, result in tree_data['results'].items():
+        pid = result['preset']
+        color = presets_by_id.get(pid, {}).get('color', '#666')
+        name = presets_by_id.get(pid, {}).get('name', pid)
+        parts.append(f'<div class="dt-step dt-result" data-step="{result_id}">')
+        parts.append(f'<div class="dt-result-badge" style="border-color:{color}"><span class="dt-dot" style="background:{color}"></span>{escape(name)}</div>')
+        parts.append(f'<div class="dt-result-desc">{escape(result["desc"])}</div>')
+        parts.append(f'<a href="{pid}/{lang}/" class="dt-view-preset">{escape(name)} &rarr;</a>')
+        parts.append('</div>')
+
+    parts.append('</div>')
+    return '\n'.join(parts)
+
+
+def build_comparison_table_html(table_data, presets_by_id, lang, hidden=False):
+    """Build the comparison table HTML for one language."""
+    parts = []
+    hide = ' style="display:none"' if hidden else ''
+    parts.append(f'<div class="comparison-table-wrap" data-lang="{lang}"{hide}>')
+    parts.append('<table class="comparison-table">')
+
+    # Header
+    parts.append('<thead><tr>')
+    for h in table_data['headers']:
+        parts.append(f'<th>{escape(h)}</th>')
+    parts.append('</tr></thead>')
+
+    # Body
+    parts.append('<tbody>')
+    for row in table_data['rows']:
+        pid = row['preset']
+        color = presets_by_id.get(pid, {}).get('color', '#666')
+        parts.append('<tr>')
+        parts.append(f'<td class="row-label"><a href="{pid}/{lang}/"><span class="ct-dot" style="background:{color}"></span>{escape(row["name"])}</a></td>')
+        for cell, cls in zip(row['cells'], row['classes']):
+            cls_attr = f' class="{cls}"' if cls else ''
+            parts.append(f'<td{cls_attr}>{escape(cell)}</td>')
+        parts.append('</tr>')
+    parts.append('</tbody></table>')
+
+    parts.append(f'<p class="comparison-hint">{escape(table_data["hint"])}</p>')
+    parts.append('</div>')
+    return '\n'.join(parts)
+
+
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    data_dir = os.path.join(project_root, 'data')
+    output_dir = os.path.join(project_root, 'p')
+
+    presets_de = yaml.safe_load(open(os.path.join(data_dir, 'presets.yaml'), encoding='utf-8'))
+    presets_en = yaml.safe_load(open(os.path.join(data_dir, 'presets-en.yaml'), encoding='utf-8'))
+
+    presets_by_id_de = {p['id']: p for p in presets_de.get('presets', [])}
+    presets_by_id_en = {p['id']: p for p in presets_en.get('presets', [])}
+
+    # Build decision trees
+    dt_de = build_decision_tree_html(DECISION_TREE['de'], presets_by_id_de, 'de')
+    dt_en = build_decision_tree_html(DECISION_TREE['en'], presets_by_id_en, 'en', hidden=True)
+
+    # Build comparison tables
+    ct_de = build_comparison_table_html(COMPARISON_TABLE['de'], presets_by_id_de, 'de')
+    ct_en = build_comparison_table_html(COMPARISON_TABLE['en'], presets_by_id_en, 'en', hidden=True)
+
+    # Build preset cards
+    cards_html = ''
+    for preset in presets_de.get('presets', []):
+        pid = preset['id']
+        en = presets_by_id_en.get(pid, {})
+        color = preset.get('color', '#666')
+        name = preset.get('name', pid)
+        desc_de = preset.get('description', '')
+        desc_en = en.get('description', '')
+
+        # TL;DR bullets (DE)
+        bullets_de = ''
+        for b in preset.get('tldr', []):
+            bullets_de += f'<li>{parse_inline_md(b)}</li>\n'
+
+        # TL;DR bullets (EN)
+        bullets_en = ''
+        for b in en.get('tldr', []):
+            bullets_en += f'<li>{parse_inline_md(b)}</li>\n'
+
+        cards_html += f'''
+        <div class="preset-card">
+            <div class="preset-card-header" style="background-color: {color}; color: #fff;">
+                <h2 class="preset-name">{escape(name)}</h2>
+            </div>
+            <div class="preset-card-body">
+                <p class="preset-desc" data-lang="de">{escape(desc_de)}</p>
+                <p class="preset-desc" data-lang="en" style="display:none">{escape(desc_en)}</p>
+                <ul class="preset-bullets" data-lang="de">{bullets_de}</ul>
+                <ul class="preset-bullets" data-lang="en" style="display:none">{bullets_en}</ul>
+            </div>
+            <div class="preset-card-links">
+                <a href="{pid}/de/" data-lang="de">Deutsch</a>
+                <a href="{pid}/en/" data-lang="de">English</a>
+                <a href="{pid}/en/" data-lang="en" style="display:none">English</a>
+                <a href="{pid}/de/" data-lang="en" style="display:none">Deutsch</a>
+                <span class="link-sep">&middot;</span>
+                <a href="{pid}/de/upload/" class="upload-link" data-lang="de">DE + Upload</a>
+                <a href="{pid}/en/upload/" class="upload-link">EN + Upload</a>
+                <a href="{pid}/de/upload/" class="upload-link" data-lang="en" style="display:none">DE + Upload</a>
+            </div>
+        </div>
+'''
+
+    page_html = f'''<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Policy Presets \u2013 \u00dcbersicht</title>
+    <meta name="description" content="Standardisierte KI-Richtlinien f\u00fcr Hochschullehre \u2013 von AI-None bis AI-Skill.">
+    <meta property="og:title" content="KI-Policy Presets">
+    <meta property="og:description" content="Standardisierte KI-Richtlinien f\u00fcr Hochschullehre \u2013 6 Presets von No-AI bis KI-Kompetenz als Lernziel.">
+    <style>
+        @font-face {{
+            font-family: 'Roboto';
+            font-weight: 300;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-300.woff2') format('woff2');
+        }}
+        @font-face {{
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-400.woff2') format('woff2');
+        }}
+        @font-face {{
+            font-family: 'Roboto';
+            font-weight: 500;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-500.woff2') format('woff2');
+        }}
+        @font-face {{
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-style: normal;
+            src: url('/v3/fonts/Roboto-700.woff2') format('woff2');
+        }}
+
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+
+        body {{
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }}
+
+        /* Branding Bar */
+        .uni-branding-bar {{
+            background-color: #3D3C3B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+        }}
+        .uni-branding-bar a {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }}
+        .uni-branding-bar a:hover {{ opacity: 0.85; }}
+        .uni-branding-logo {{ height: 26px; width: auto; }}
+        .uni-branding-right {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }}
+        .uni-branding-right a {{
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+        }}
+        .uni-branding-right a:hover {{ color: white; }}
+        .uni-branding-separator {{ color: rgba(255,255,255,0.3); font-size: 0.75rem; }}
+
+        /* Page Header */
+        .page-header {{
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+        }}
+        .page-header h1 {{
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }}
+        .page-header .subtitle {{
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 0.8rem;
+        }}
+        .lang-toggle {{
+            display: inline-flex;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }}
+        .lang-toggle button {{
+            padding: 0.3rem 0.7rem;
+            border: none;
+            background: #fff;
+            color: #555;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: inherit;
+            transition: background 0.15s;
+        }}
+        .lang-toggle button:not(:last-child) {{
+            border-right: 1px solid #ddd;
+        }}
+        .lang-toggle button:hover {{ background: #f0f0f0; }}
+        .lang-toggle button.active {{
+            background: #333;
+            color: #fff;
+        }}
+
+        /* Main content area */
+        .page-main {{
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }}
+
+        /* Section styling */
+        .content-section {{
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+        }}
+        .section-title {{
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }}
+        .section-icon {{
+            font-size: 1.3rem;
+        }}
+
+        /* Decision Tree */
+        .decision-tree {{ }}
+        .dt-step {{
+            display: none;
+            animation: dtFadeIn 0.25s ease;
+        }}
+        .dt-step.dt-active {{
+            display: block;
+        }}
+        @keyframes dtFadeIn {{
+            from {{ opacity: 0; transform: translateY(6px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
+        }}
+        .dt-question {{
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }}
+        .dt-hint {{
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 0.6rem;
+        }}
+        .dt-options {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }}
+        .dt-option {{
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+        }}
+        .dt-option:hover {{
+            background: #f8f8f8;
+            border-color: #999;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }}
+        .dt-option.dt-selected {{
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }}
+        .dt-result-badge {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border: 2px solid #999;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }}
+        .dt-dot {{
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }}
+        .dt-result-desc {{
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 0.7rem;
+        }}
+        .dt-view-preset {{
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }}
+        .dt-view-preset:hover {{ opacity: 0.85; }}
+        .dt-restart {{
+            margin-top: 0.8rem;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.85rem;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+        }}
+        .dt-restart:hover {{ background: #f5f5f5; }}
+        .dt-breadcrumb {{
+            display: none;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
+            color: #888;
+        }}
+        .dt-breadcrumb-item {{
+            background: #f5f5f5;
+            border-radius: 3px;
+            padding: 0.2rem 0.5rem;
+        }}
+        .dt-bc-answer {{
+            font-weight: 600;
+            color: #333;
+        }}
+
+        /* Comparison Table */
+        .comparison-table-wrap {{
+            overflow-x: auto;
+        }}
+        .comparison-table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }}
+        .comparison-table th,
+        .comparison-table td {{
+            padding: 8px 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }}
+        .comparison-table th {{
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #555;
+            background: #fafafa;
+            position: sticky;
+            top: 0;
+        }}
+        .comparison-table .row-label {{
+            text-align: left;
+            font-weight: 500;
+            white-space: normal;
+            min-width: 100px;
+        }}
+        .comparison-table .row-label a {{
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }}
+        .comparison-table .row-label a:hover {{ text-decoration: underline; }}
+        .ct-dot {{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }}
+        .comparison-table .c-yes {{
+            color: #2e7d32;
+            font-weight: 500;
+        }}
+        .comparison-table .c-no {{
+            color: #bbb;
+        }}
+        .comparison-hint {{
+            text-align: center;
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 8px;
+        }}
+
+        /* Preset Cards Grid */
+        .presets-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }}
+        .preset-card {{
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: box-shadow 0.15s;
+        }}
+        .preset-card:hover {{
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }}
+        .preset-card-header {{
+            padding: 0.7rem 1rem;
+        }}
+        .preset-name {{
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }}
+        .preset-card-body {{
+            padding: 0.6rem 1rem 0.4rem;
+        }}
+        .preset-desc {{
+            font-size: 0.85rem;
+            color: #555;
+            margin: 0 0 0.4rem;
+        }}
+        .preset-bullets {{
+            list-style: disc;
+            padding-left: 1.5rem;
+            font-size: 0.82rem;
+            color: #444;
+            margin: 0;
+        }}
+        .preset-bullets li {{
+            margin-bottom: 0.15rem;
+        }}
+        .preset-card-links {{
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }}
+        .preset-card-links a {{
+            color: #1a73e8;
+            text-decoration: none;
+        }}
+        .preset-card-links a:hover {{
+            text-decoration: underline;
+        }}
+        .upload-link {{
+            color: #888 !important;
+            font-size: 0.78rem;
+        }}
+        .link-sep {{
+            color: #ccc;
+        }}
+
+        /* Footer */
+        .page-footer {{
+            max-width: 960px;
+            margin: 1.5rem auto 2rem;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }}
+        .page-footer a {{ color: #666; }}
+
+        /* Mobile */
+        @media (max-width: 768px) {{
+            .uni-branding-bar {{ padding: 0.5rem 1rem; justify-content: center; }}
+            .uni-branding-logo {{ height: 20px; }}
+            .uni-branding-right {{ display: none; }}
+            .page-header {{ padding: 1.5rem 1rem 1rem; }}
+            .page-header h1 {{ font-size: 1.4rem; }}
+            .content-section {{ padding: 1rem; margin-top: 1rem; }}
+            .presets-grid {{ grid-template-columns: 1fr; }}
+            .dt-options {{ flex-direction: column; }}
+            .dt-option {{ text-align: left; }}
+            .comparison-table {{ font-size: 0.78rem; }}
+            .comparison-table th,
+            .comparison-table td {{ padding: 6px 8px; }}
+        }}
+
+        @media print {{
+            body {{ background: #fff; }}
+            .uni-branding-bar {{ display: none; }}
+            .content-section {{ box-shadow: none; border: 1px solid #ddd; }}
+            .preset-card {{ box-shadow: none; border: 1px solid #ddd; }}
+        }}
+    </style>
+</head>
+<body>
+    <nav class="uni-branding-bar" aria-label="Universit\u00e4t Bamberg">
+        <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
+            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
+            <span>Universit\u00e4t Bamberg</span>
+        </a>
+        <div class="uni-branding-right">
+            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+            <span class="uni-branding-separator">|</span>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener" data-lang="de">Sprecher des CIO</a>
+            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener" data-lang="en" style="display:none">CIO Speaker</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1 data-lang="de">KI-Policy Presets</h1>
+        <h1 data-lang="en" style="display:none">AI Policy Presets</h1>
+        <p class="subtitle" data-lang="de">Standardisierte KI-Richtlinien f\u00fcr die Hochschullehre \u2013 von <em>kein KI-Einsatz</em> bis <em>KI-Kompetenz als Lernziel</em>.</p>
+        <p class="subtitle" data-lang="en" style="display:none">Standardized AI policies for higher education \u2013 from <em>no AI use</em> to <em>AI competence as learning objective</em>.</p>
+        <div style="margin-top: 0.6rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+            <div class="lang-toggle" role="group" aria-label="Language">
+                <button data-lang-btn="de" class="active">DE</button>
+                <button data-lang-btn="en">EN</button>
+            </div>
+            <a href="/v3/" style="color: #1a73e8; text-decoration: none; font-size: 0.9rem;" data-lang="de">KI-Policy-Generator &rarr;</a>
+            <a href="/v3/" style="color: #1a73e8; text-decoration: none; font-size: 0.9rem; display:none" data-lang="en">AI Policy Generator &rarr;</a>
+        </div>
+    </header>
+
+    <div class="page-main">
+        <!-- Decision Tree Section -->
+        <section class="content-section" id="decision-tree-section">
+            <h2 class="section-title" data-lang="de">Welches Preset passt zu Ihrem Kurs?</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Which preset fits your course?</h2>
+            <div id="dt-container">
+{dt_de}
+{dt_en}
+                <button class="dt-restart" id="dt-restart" style="display:none">\u21ba <span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
+            </div>
+        </section>
+
+        <!-- Comparison Table Section -->
+        <section class="content-section" id="comparison-section">
+            <h2 class="section-title" data-lang="de">Alle Presets im Vergleich</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">All Presets at a Glance</h2>
+{ct_de}
+{ct_en}
+        </section>
+
+        <!-- Preset Cards Section -->
+        <section class="content-section" id="presets-section">
+            <h2 class="section-title" data-lang="de">Presets im Detail</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Presets in Detail</h2>
+            <div class="presets-grid">
+{cards_html}
+            </div>
+        </section>
+    </div>
+
+    <footer class="page-footer">
+        <span data-lang="de">Erstellt mit dem <a href="/v3/">KI-Policy-Generator</a></span>
+        <span data-lang="en" style="display:none">Created with the <a href="/v3/">AI Policy Generator</a></span>
+        &middot;
+        <span data-lang="de">Inhalte lizenziert unter</span>
+        <span data-lang="en" style="display:none">Content licensed under</span>
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    </footer>
+
+    <script>
+        // Language toggle
+        (function() {{
+            var currentLang = 'de';
+            var langBtns = document.querySelectorAll('[data-lang-btn]');
+
+            function setLang(lang) {{
+                currentLang = lang;
+                // Toggle buttons
+                langBtns.forEach(function(btn) {{
+                    btn.classList.toggle('active', btn.dataset.langBtn === lang);
+                }});
+                // Toggle all data-lang elements
+                document.querySelectorAll('[data-lang]').forEach(function(el) {{
+                    el.style.display = el.dataset.lang === lang ? '' : 'none';
+                }});
+                // Update html lang
+                document.documentElement.lang = lang;
+            }}
+
+            langBtns.forEach(function(btn) {{
+                btn.addEventListener('click', function() {{
+                    setLang(btn.dataset.langBtn);
+                }});
+            }});
+
+            // Decision tree logic
+            document.querySelectorAll('.decision-tree').forEach(function(tree) {{
+                var steps = tree.querySelectorAll('.dt-step');
+                var restartBtn = document.getElementById('dt-restart');
+                var history = [];
+
+                function showStep(stepId) {{
+                    steps.forEach(function(s) {{ s.classList.remove('dt-active'); }});
+                    var target = tree.querySelector('[data-step="' + stepId + '"]');
+                    if (target) {{
+                        target.classList.add('dt-active');
+                        if (target.classList.contains('dt-result') && restartBtn) {{
+                            restartBtn.style.display = '';
+                        }}
+                    }}
+                    // Breadcrumb
+                    var bc = tree.querySelector('.dt-breadcrumb');
+                    if (!bc) {{
+                        bc = document.createElement('div');
+                        bc.className = 'dt-breadcrumb';
+                        tree.prepend(bc);
+                    }}
+                    while (bc.firstChild) bc.removeChild(bc.firstChild);
+                    history.forEach(function(h) {{
+                        var item = document.createElement('span');
+                        item.className = 'dt-breadcrumb-item';
+                        item.textContent = h.q + ' \u2192 ';
+                        var ans = document.createElement('span');
+                        ans.className = 'dt-bc-answer';
+                        ans.textContent = h.a;
+                        item.appendChild(ans);
+                        bc.appendChild(item);
+                    }});
+                    bc.style.display = history.length === 0 ? 'none' : 'flex';
+                }}
+
+                tree.addEventListener('click', function(e) {{
+                    var opt = e.target.closest('.dt-option');
+                    if (opt) {{
+                        var currentStep = opt.closest('.dt-step');
+                        var questionEl = currentStep.querySelector('.dt-question');
+                        history.push({{ q: questionEl.textContent.substring(0, 30) + '\u2026', a: opt.textContent }});
+                        currentStep.querySelectorAll('.dt-option').forEach(function(b) {{ b.classList.remove('dt-selected'); }});
+                        opt.classList.add('dt-selected');
+                        showStep(opt.dataset.next);
+                    }}
+                }});
+
+                if (restartBtn) {{
+                    restartBtn.addEventListener('click', function() {{
+                        history.length = 0;
+                        steps.forEach(function(s) {{ s.classList.remove('dt-active'); }});
+                        tree.querySelector('[data-step="q1"]').classList.add('dt-active');
+                        restartBtn.style.display = 'none';
+                        var bc = tree.querySelector('.dt-breadcrumb');
+                        if (bc) bc.style.display = 'none';
+                    }});
+                }}
+            }});
+        }})();
+    </script>
+</body>
+</html>'''
+
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(page_html)
+
+    print(f'Generated {os.path.join(output_dir, "index.html")}')
+
+
+if __name__ == '__main__':
+    main()
