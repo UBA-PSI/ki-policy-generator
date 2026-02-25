@@ -438,17 +438,11 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
         }}
         .uni-branding-bar a:hover {{ opacity: 0.85; }}
         .uni-branding-logo {{ height: 26px; width: auto; }}
-        .uni-branding-right {{
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .branding-back {{
+            color: white;
+            font-size: 0.85rem;
+            text-decoration: none;
         }}
-        .uni-branding-right a {{
-            color: rgba(255,255,255,0.75);
-            font-size: 0.8rem;
-        }}
-        .uni-branding-right a:hover {{ color: white; }}
-        .uni-branding-separator {{ color: rgba(255,255,255,0.3); font-size: 0.75rem; }}
 
         /* Navigation */
         .page-nav {{
@@ -571,9 +565,9 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
 
         /* Mobile */
         @media (max-width: 768px) {{
-            .uni-branding-bar {{ padding: 0.5rem 1rem; justify-content: center; }}
+            .uni-branding-bar {{ padding: 0.5rem 1rem; }}
+            .uni-branding-bar a span {{ display: none; }}
             .uni-branding-logo {{ height: 20px; }}
-            .uni-branding-right {{ display: none; }}
             .page-content {{ margin: 1rem; padding: 1.2rem; }}
             .page-nav {{
                 padding: 0.5rem 1rem;
@@ -586,16 +580,12 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
     </style>
 </head>
 <body>
-    <nav class="uni-branding-bar" aria-label="Universität Bamberg">
+    <nav class="uni-branding-bar" aria-label="{'Preset-Übersicht' if lang == 'de' else 'Preset overview'}">
+        <a href="/ki-policy-generator/v3/p/" class="branding-back">&larr; {'Alle Presets' if lang == 'de' else 'All Presets'}</a>
         <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
-            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
             <span>Universität Bamberg</span>
+            <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
         </a>
-        <div class="uni-branding-right">
-            <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
-            <span class="uni-branding-separator">|</span>
-            <a href="https://www.uni-bamberg.de/cio/" target="_blank" rel="noopener">{escape_html(cio_label)}</a>
-        </div>
     </nav>
 
     <nav class="page-nav">
@@ -621,6 +611,8 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
         {escape_html(created_with)} <a href="{escape_html(generator_base_url)}">{escape_html(generator_name)}</a>
         &middot;
         {escape_html(license_text)} <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+        &middot;
+        <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
     </footer>
 
     <script>
