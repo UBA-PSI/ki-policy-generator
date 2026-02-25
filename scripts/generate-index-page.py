@@ -329,7 +329,7 @@ def main():
             font-size: 16px;
             line-height: 1.6;
             color: #333;
-            background: #f5f5f5;
+            background: #fff;
         }}
 
         /* Branding Bar */
@@ -366,8 +366,8 @@ def main():
 
         /* Page Header */
         .page-header {{
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            background: none;
+            border-bottom: none;
             padding: 2rem 1.5rem 1.5rem;
             text-align: center;
         }}
@@ -416,19 +416,24 @@ def main():
 
         /* Section styling */
         .content-section {{
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            margin-top: 1.5rem;
-            padding: 1.5rem;
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+            margin-top: 2.5rem;
+            padding: 0;
+        }}
+        .content-section + .content-section {{
+            border-top: 1px solid #e0e0e0;
+            padding-top: 2.5rem;
         }}
         .section-title {{
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 1.2rem;
+            display: block;
         }}
         .section-icon {{
             font-size: 1.3rem;
@@ -469,16 +474,15 @@ def main():
             font-size: 0.9rem;
             font-family: inherit;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 0;
             background: #fff;
             color: #333;
             cursor: pointer;
-            transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+            transition: background 0.15s, border-color 0.15s;
         }}
         .dt-option:hover {{
             background: #f8f8f8;
             border-color: #999;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }}
         .dt-option.dt-selected {{
             background: #333;
@@ -493,7 +497,7 @@ def main():
             font-weight: 700;
             padding: 0.4rem 1rem;
             border: 2px solid #999;
-            border-radius: 8px;
+            border-radius: 0;
             margin-bottom: 0.5rem;
         }}
         .dt-dot {{
@@ -509,43 +513,45 @@ def main():
         }}
         .dt-view-preset {{
             display: inline-block;
-            padding: 0.4rem 1rem;
+            padding: 0;
             font-size: 0.9rem;
-            border-radius: 6px;
-            background: #333;
-            color: #fff;
+            font-weight: 500;
+            background: none;
+            color: #333;
             text-decoration: none;
-            transition: opacity 0.15s;
+            border-bottom: 2px solid #333;
+            transition: border-color 0.15s;
         }}
-        .dt-view-preset:hover {{ opacity: 0.85; }}
+        .dt-view-preset:hover {{ border-color: #999; }}
         .dt-back {{
             margin-top: 0.6rem;
-            padding: 0.3rem 0.7rem;
+            padding: 0;
             font-size: 0.82rem;
             font-family: inherit;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #fff;
+            border: none;
+            background: none;
             color: #666;
             cursor: pointer;
-            transition: background 0.15s;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }}
-        .dt-back:hover {{ background: #f5f5f5; }}
+        .dt-back:hover {{ color: #333; }}
         .dt-restart {{
             margin-top: 0.8rem;
-            padding: 0.35rem 0.8rem;
+            padding: 0;
             font-size: 0.85rem;
             font-family: inherit;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #fff;
+            border: none;
+            background: none;
             color: #666;
             cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }}
-        .dt-restart:hover {{ background: #f5f5f5; }}
+        .dt-restart:hover {{ color: #333; }}
         .dt-result-tldr {{
-            list-style: disc;
-            padding-left: 1.5rem;
+            list-style: none;
+            padding-left: 0;
             font-size: 0.85rem;
             color: #444;
             margin: 0.5rem 0 0.8rem;
@@ -553,6 +559,11 @@ def main():
         }}
         .dt-result-tldr li {{
             margin-bottom: 0.2rem;
+            padding-left: 1.2em;
+            text-indent: -1.2em;
+        }}
+        .dt-result-tldr li::before {{
+            content: '\\2013\\00a0';
         }}
         .dt-breadcrumb {{
             display: none;
@@ -563,16 +574,17 @@ def main():
             color: #888;
         }}
         .dt-breadcrumb-item {{
-            background: #f5f5f5;
-            border-radius: 3px;
-            padding: 0.2rem 0.5rem;
+            background: none;
+            border-radius: 0;
+            padding: 0.2rem 0.3rem;
+            border-bottom: 1px solid #ccc;
         }}
         .dt-bc-answer {{
             font-weight: 600;
             color: #333;
         }}
 
-        /* Comparison Table */
+        /* Comparison Table — Tufte style */
         .comparison-table-wrap {{
             overflow-x: auto;
         }}
@@ -580,19 +592,28 @@ def main():
             width: 100%;
             border-collapse: collapse;
             font-size: 0.85rem;
-            white-space: nowrap;
+        }}
+        .comparison-table thead {{
+            border-top: 2px solid #333;
+            border-bottom: 1px solid #333;
+        }}
+        .comparison-table tbody {{
+            border-bottom: 1px solid #333;
         }}
         .comparison-table th,
         .comparison-table td {{
             padding: 8px 12px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
+            text-align: left;
+            border-bottom: none;
+        }}
+        .comparison-table tbody tr:nth-child(even) {{
+            background: #fafafa;
         }}
         .comparison-table th {{
             font-weight: 600;
             font-size: 0.8rem;
             color: #555;
-            background: #fafafa;
+            background: none;
             position: sticky;
             top: 0;
         }}
@@ -619,15 +640,16 @@ def main():
         }}
         .comparison-table .c-yes {{
             color: #2e7d32;
-            font-weight: 500;
+            font-weight: 400;
         }}
         .comparison-table .c-no {{
             color: #bbb;
         }}
         .comparison-hint {{
-            text-align: center;
+            text-align: left;
             font-size: 0.8rem;
-            color: #bbb;
+            font-style: italic;
+            color: #999;
             margin-top: 8px;
         }}
 
@@ -639,15 +661,12 @@ def main():
         }}
         .preset-card {{
             background: #fff;
-            border-radius: 8px;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            transition: box-shadow 0.15s;
+            border: 1px solid #ddd;
+            border-top: none;
             display: flex;
             flex-direction: column;
-        }}
-        .preset-card:hover {{
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }}
         .preset-card-header {{
             padding: 0.7rem 1rem;
@@ -667,34 +686,36 @@ def main():
             margin: 0 0 0.4rem;
         }}
         .preset-bullets {{
-            list-style: disc;
-            padding-left: 1.5rem;
+            list-style: none;
+            padding-left: 0;
             font-size: 0.82rem;
             color: #444;
             margin: 0;
         }}
         .preset-bullets li {{
             margin-bottom: 0.15rem;
+            padding-left: 1.2em;
+            text-indent: -1.2em;
+        }}
+        .preset-bullets li::before {{
+            content: '\\2013\\00a0';
         }}
         .preset-card-footer {{
             padding: 0.6rem 1rem;
-            border-top: 1px solid #f0f0f0;
+            border-top: none;
         }}
         .preset-cta {{
             display: block;
-            text-align: center;
-            padding: 0.45rem 1rem;
+            text-align: left;
+            padding: 0;
             font-size: 0.85rem;
             font-weight: 500;
-            color: #1a73e8;
+            color: #333;
             text-decoration: none;
-            border: 1px solid #1a73e8;
-            border-radius: 6px;
-            transition: background 0.15s, color 0.15s;
         }}
         .preset-cta:hover {{
-            background: #1a73e8;
-            color: #fff;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }}
 
         /* Upload toggle above cards */
@@ -703,9 +724,9 @@ def main():
             align-items: center;
             gap: 0.6rem;
             margin-bottom: 1rem;
-            padding: 0.6rem 0.8rem;
-            background: #f8f8f8;
-            border-radius: 6px;
+            padding: 0;
+            background: none;
+            border-radius: 0;
             font-size: 0.85rem;
         }}
         .upload-toggle-bar label {{
@@ -744,7 +765,8 @@ def main():
             .uni-branding-right {{ display: none; }}
             .page-header {{ padding: 1.5rem 1rem 1rem; }}
             .page-header h1 {{ font-size: 1.4rem; }}
-            .content-section {{ padding: 1rem; margin-top: 1rem; }}
+            .content-section {{ margin-top: 1.5rem; }}
+            .content-section + .content-section {{ padding-top: 1.5rem; }}
             .presets-grid {{ grid-template-columns: 1fr; }}
             .dt-options {{ flex-direction: column; }}
             .dt-option {{ text-align: left; }}
@@ -754,10 +776,9 @@ def main():
         }}
 
         @media print {{
-            body {{ background: #fff; }}
             .uni-branding-bar {{ display: none; }}
-            .content-section {{ box-shadow: none; border: 1px solid #ddd; }}
-            .preset-card {{ box-shadow: none; border: 1px solid #ddd; }}
+            .comparison-table thead {{ border-top-width: 1px; }}
+            .preset-card {{ border: 1px solid #ccc; }}
         }}
     </style>
 </head>
@@ -785,8 +806,8 @@ def main():
                 <button data-lang-btn="de" class="active">DE</button>
                 <button data-lang-btn="en">EN</button>
             </div>
-            <a href="/v3/" style="color: #1a73e8; text-decoration: none; font-size: 0.9rem;" data-lang="de">KI-Policy-Generator &rarr;</a>
-            <a href="/v3/" style="color: #1a73e8; text-decoration: none; font-size: 0.9rem; display:none" data-lang="en">AI Policy Generator &rarr;</a>
+            <a href="/v3/" style="color: #333; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #999;" data-lang="de">KI-Policy-Generator &rarr;</a>
+            <a href="/v3/" style="color: #333; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #999; display:none" data-lang="en">AI Policy Generator &rarr;</a>
         </div>
     </header>
 
