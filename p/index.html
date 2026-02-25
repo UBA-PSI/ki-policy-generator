@@ -200,41 +200,46 @@
             color: #fff;
             border-color: #333;
         }
-        .dt-result-badge {
-            display: block;
-            font-size: 1.3rem;
-            font-weight: 700;
-            padding: 0.15rem 0 0.15rem 0.75rem;
-            border: none;
-            border-left: 4px solid #999;
-            margin-bottom: 0.6rem;
-        }
         .dt-dot {
             display: none;
         }
-        .dt-result {
-            max-width: 38em;
+        .dt-result.dt-active {
+            display: block;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 3px solid var(--preset-color, #999);
+            border-radius: 6px;
+            margin-top: 0.6rem;
+            overflow: hidden;
+        }
+        .dt-result-head {
+            padding: 1.4rem 1.5rem 1.2rem;
+        }
+        .dt-result-badge {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
         }
         .dt-result-desc {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-style: italic;
-            color: #555;
-            margin-bottom: 0.7rem;
+            color: #666;
+            line-height: 1.5;
         }
         .dt-view-preset {
-            display: inline-block;
-            padding: 0;
+            display: block;
+            padding: 1rem 1.5rem;
             font-size: 0.9rem;
             font-weight: 500;
             background: none;
             color: #333;
             text-decoration: none;
-            border-bottom: 1px solid #555;
-            transition: border-color 0.15s;
+            border-top: 1px solid #eee;
+            transition: background 0.15s;
         }
-        .dt-view-preset:hover { border-color: #999; }
+        .dt-view-preset:hover { background: #f8f8f6; }
         .dt-back {
-            margin-top: 0.6rem;
+            margin-top: 0.8rem;
             padding: 0;
             font-size: 0.82rem;
             font-family: inherit;
@@ -247,7 +252,7 @@
         }
         .dt-back:hover { color: #333; }
         .dt-restart {
-            margin-top: 0.8rem;
+            margin-top: 1rem;
             padding: 0;
             font-size: 0.85rem;
             font-family: inherit;
@@ -259,22 +264,34 @@
             text-underline-offset: 2px;
         }
         .dt-restart:hover { color: #333; }
-        .dt-result-tldr {
-            list-style: none;
-            padding-left: 0;
-            font-size: 0.85rem;
-            color: #444;
-            margin: 0.5rem 0 0.8rem;
-            line-height: 1.5;
+        .dt-props {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            background: #fafaf8;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
         }
-        .dt-result-tldr li {
-            margin-bottom: 0.2rem;
-            padding-left: 1.2em;
-            text-indent: -1.2em;
+        .dt-prop {
+            padding: 0.8rem 1.2rem;
         }
-        .dt-result-tldr li::before {
-            content: '\2013\00a0';
+        .dt-prop + .dt-prop {
+            border-left: 1px solid #eee;
         }
+        .dt-prop-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #999;
+            margin-bottom: 0.3rem;
+        }
+        .dt-prop-value {
+            font-size: 0.88rem;
+            color: #333;
+            line-height: 1.4;
+        }
+        .dt-prop-value.c-yes { color: #2e7d32; }
+        .dt-prop-value.c-no  { color: #aaa; }
         .dt-breadcrumb {
             display: none;
             flex-wrap: wrap;
@@ -479,6 +496,11 @@
             .presets-grid { grid-template-columns: 1fr; }
             .dt-options { flex-direction: column; }
             .dt-option { text-align: left; }
+            .dt-result-head { padding: 1.1rem 1.1rem 1rem; }
+            .dt-props { grid-template-columns: repeat(2, 1fr); }
+            .dt-prop { padding: 0.65rem 0.9rem; }
+            .dt-prop:nth-child(1), .dt-prop:nth-child(2) { border-bottom: 1px solid #eee; }
+            .dt-view-preset { padding: 0.8rem 1.1rem; }
             .comparison-table { font-size: 0.78rem; }
             .comparison-table th,
             .comparison-table td { padding: 6px 8px; }
@@ -561,80 +583,96 @@
 </div>
 <button class="dt-back">&larr; Zurück</button>
 </div>
-<div class="dt-step dt-result" data-step="r-none">
-<div class="dt-result-badge" style="border-left-color:oklch(58.63% 0.231 19.6)">AI-None v1</div>
+<div class="dt-step dt-result" data-step="r-none" style="--preset-color:oklch(58.63% 0.231 19.6)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-None v1</div>
 <div class="dt-result-desc">KI-Werkzeuge sind nicht erlaubt – weder zum Lernen noch bei Abgaben.</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge sind in dieser Lehrveranstaltung <strong>nicht erlaubt</strong> – weder zum Lernen noch bei Abgaben.</li>
-<li>Die Prüfung findet unter Aufsicht ohne KI-Zugang statt.</li>
-</ul>
-<a href="ai-none/de/" class="dt-view-preset">AI-None v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-learn-1">
-<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-no">✗ Nicht erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-no">✗ Nicht erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">–</div></div>
+</div>
+<a href="ai-none/de/" class="dt-view-preset">AI-None v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-learn-1" style="--preset-color:oklch(74.61% 0.171 51.56)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Learn v1</div>
 <div class="dt-result-desc">KI darf frei zum Lernen genutzt werden. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen).</li>
-<li>KI darf <strong>nicht</strong> bei bewerteten Arbeiten eingesetzt werden, die ohne Aufsicht erstellt werden (z.B. Hausaufgaben, Seminararbeiten, Projektabgaben).</li>
-<li>Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht (z.B. Klausur, mündliche Prüfung) ohne KI.</li>
-<li>Keine Kennzeichnung der KI-Nutzung erforderlich.</li>
-</ul>
-<a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-learn-2">
-<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-no">✗ Nicht erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Nicht erforderlich</div></div>
+</div>
+<a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-learn-2" style="--preset-color:oklch(74.61% 0.171 51.56)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Learn v1</div>
 <div class="dt-result-desc">KI darf zum Lernen genutzt werden, aber nicht bei bewerteten Arbeiten. Die Prüfung erfolgt unter Aufsicht ohne KI.</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge dürfen frei zum Lernen eingesetzt werden (z.B. Prüfungsvorbereitung, Erklärungen).</li>
-<li>KI darf <strong>nicht</strong> bei bewerteten Arbeiten eingesetzt werden, die ohne Aufsicht erstellt werden (z.B. Hausaufgaben, Seminararbeiten, Projektabgaben).</li>
-<li>Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht (z.B. Klausur, mündliche Prüfung) ohne KI.</li>
-<li>Keine Kennzeichnung der KI-Nutzung erforderlich.</li>
-</ul>
-<a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-docshort">
-<div class="dt-result-badge" style="border-left-color:oklch(82.39% 0.133 91.5)">AI-DocShort v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-no">✗ Nicht erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Nicht erforderlich</div></div>
+</div>
+<a href="ai-learn/de/" class="dt-view-preset">AI-Learn v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-docshort" style="--preset-color:oklch(82.39% 0.133 91.5)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-DocShort v1</div>
 <div class="dt-result-desc">KI bei Abgaben erlaubt. Einfache Kennzeichnung (Tool + Zweck).</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge dürfen auch bei bewerteten Arbeiten ohne Aufsicht als Hilfsmittel eingesetzt werden.</li>
-<li>Einfache Kennzeichnung am Ende der Arbeit erforderlich: genutztes Tool und Einsatzzweck angeben.</li>
-<li>Die Kernleistung (Analyse, Argumentation, Schlussfolgerungen) muss eigenständig erbracht werden.</li>
-<li>Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht ohne KI.</li>
-</ul>
-<a href="ai-docshort/de/" class="dt-view-preset">AI-DocShort v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-doclog">
-<div class="dt-result-badge" style="border-left-color:oklch(54.87% 0.222 260.33)">AI-DocLog v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Einfach (Tool + Zweck)</div></div>
+</div>
+<a href="ai-docshort/de/" class="dt-view-preset">AI-DocShort v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-doclog" style="--preset-color:oklch(54.87% 0.222 260.33)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-DocLog v1</div>
 <div class="dt-result-desc">KI bei Abgaben erlaubt. Prompt-Protokoll und Reflexion erforderlich.</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge dürfen bei bewerteten Arbeiten ohne Aufsicht eingesetzt werden – reflektierte Dokumentation ist Pflicht.</li>
-<li>Prompt-Protokoll und persönliche Reflexion sind Bestandteil jeder Abgabe.</li>
-<li>Die Qualität der KI-Nutzung (Prompts, Prüfung, Weiterverarbeitung) fließt in die Bewertung ein.</li>
-<li>Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht ohne KI.</li>
-</ul>
-<a href="ai-doclog/de/" class="dt-view-preset">AI-DocLog v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-defend">
-<div class="dt-result-badge" style="border-left-color:oklch(49.39% 0.215 298.31)">AI-Defend v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Ausführlich (Protokoll + Reflexion)</div></div>
+</div>
+<a href="ai-doclog/de/" class="dt-view-preset">AI-DocLog v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-defend" style="--preset-color:oklch(49.39% 0.215 298.31)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Defend v1</div>
 <div class="dt-result-desc">KI ohne Einschränkung. Kompetenznachweis durch Prüfung unter Aufsicht.</div>
-<ul class="dt-result-tldr">
-<li>KI-Werkzeuge dürfen <strong>ohne Einschränkung</strong> eingesetzt werden – auch bei allen bewerteten Arbeiten ohne Aufsicht.</li>
-<li>Keine Kennzeichnung der KI-Nutzung erforderlich.</li>
-<li>Der Kompetenznachweis erfolgt durch eine Prüfung unter Aufsicht (mündlich oder schriftlich), in der die eingereichte Arbeit vertreten werden muss.</li>
-<li>Wer die Arbeit nicht überzeugend vertreten kann, muss mit einer deutlich schlechteren Bewertung rechnen.</li>
-</ul>
-<a href="ai-defend/de/" class="dt-view-preset">AI-Defend v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-skill">
-<div class="dt-result-badge" style="border-left-color:oklch(75.23% 0.209 144.64)">AI-Skill v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-yes">✓ Ohne Einschränkung</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">Ohne KI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Nicht erforderlich</div></div>
+</div>
+<a href="ai-defend/de/" class="dt-view-preset">AI-Defend v1 ansehen &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-skill" style="--preset-color:oklch(75.23% 0.209 144.64)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Skill v1</div>
 <div class="dt-result-desc">KI-Kompetenz ist Lernziel. Prozess und Ergebnis werden bewertet.</div>
-<ul class="dt-result-tldr">
-<li>KI-Kompetenz ist explizites Lernziel – KI-Werkzeuge sollen aktiv und reflektiert eingesetzt werden.</li>
-<li>Prompt-Protokoll mit Reflexion ist Pflichtbestandteil und wird benotet.</li>
-<li>Die Qualität des KI-Einsatzes fließt in die Bewertung ein.</li>
-<li>Ein Portfolio dokumentiert den KI-Einsatz über das Semester.</li>
-</ul>
-<a href="ai-skill/de/" class="dt-view-preset">AI-Skill v1 &rarr;</a>
+</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">KI zum Lernen</div><div class="dt-prop-value c-yes">✓ Erlaubt</div></div>
+<div class="dt-prop"><div class="dt-prop-label">KI bei Arbeiten ohne Aufsicht</div><div class="dt-prop-value c-yes">✓ KI-Kompetenz ist Lernziel</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Prüfung unter Aufsicht</div><div class="dt-prop-value">KI-Kompetenz wird geprüft</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Kennzeichnung</div><div class="dt-prop-value">Protokoll + Reflexion (benotet)</div></div>
+</div>
+<a href="ai-skill/de/" class="dt-view-preset">AI-Skill v1 ansehen &rarr;</a>
 </div>
 </div>
 <div class="decision-tree" data-lang="en" style="display:none">
@@ -672,80 +710,96 @@
 </div>
 <button class="dt-back">&larr; Back</button>
 </div>
-<div class="dt-step dt-result" data-step="r-none">
-<div class="dt-result-badge" style="border-left-color:oklch(58.63% 0.231 19.6)">AI-None v1</div>
+<div class="dt-step dt-result" data-step="r-none" style="--preset-color:oklch(58.63% 0.231 19.6)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-None v1</div>
 <div class="dt-result-desc">AI tools are not permitted – neither for learning nor for submissions.</div>
-<ul class="dt-result-tldr">
-<li>AI tools are <strong>not permitted</strong> in this course – neither for learning nor for submissions.</li>
-<li>The examination takes place under supervision without AI access.</li>
-</ul>
-<a href="ai-none/en/" class="dt-view-preset">AI-None v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-learn-1">
-<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-no">✗ Not allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-no">✗ Not allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">–</div></div>
+</div>
+<a href="ai-none/en/" class="dt-view-preset">View AI-None v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-learn-1" style="--preset-color:oklch(74.61% 0.171 51.56)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Learn v1</div>
 <div class="dt-result-desc">AI may be used freely for learning. The exam is supervised without AI.</div>
-<ul class="dt-result-tldr">
-<li>AI tools may be freely used for learning (e.g., exam preparation, explanations).</li>
-<li>AI may <strong>not</strong> be used for graded assignments produced without supervision (e.g., homework, term papers, project deliverables).</li>
-<li>Competence is verified through a supervised examination (e.g., written exam, oral exam) without AI.</li>
-<li>No labeling of AI use required.</li>
-</ul>
-<a href="ai-learn/en/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-learn-2">
-<div class="dt-result-badge" style="border-left-color:oklch(74.61% 0.171 51.56)">AI-Learn v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-no">✗ Not allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Not required</div></div>
+</div>
+<a href="ai-learn/en/" class="dt-view-preset">View AI-Learn v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-learn-2" style="--preset-color:oklch(74.61% 0.171 51.56)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Learn v1</div>
 <div class="dt-result-desc">AI may be used for learning but not for graded work. The exam is supervised without AI.</div>
-<ul class="dt-result-tldr">
-<li>AI tools may be freely used for learning (e.g., exam preparation, explanations).</li>
-<li>AI may <strong>not</strong> be used for graded assignments produced without supervision (e.g., homework, term papers, project deliverables).</li>
-<li>Competence is verified through a supervised examination (e.g., written exam, oral exam) without AI.</li>
-<li>No labeling of AI use required.</li>
-</ul>
-<a href="ai-learn/en/" class="dt-view-preset">AI-Learn v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-docshort">
-<div class="dt-result-badge" style="border-left-color:oklch(82.39% 0.133 91.5)">AI-DocShort v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-no">✗ Not allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Not required</div></div>
+</div>
+<a href="ai-learn/en/" class="dt-view-preset">View AI-Learn v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-docshort" style="--preset-color:oklch(82.39% 0.133 91.5)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-DocShort v1</div>
 <div class="dt-result-desc">AI permitted for submissions. Simple labeling (tool + purpose).</div>
-<ul class="dt-result-tldr">
-<li>AI tools may be used as aids for unsupervised graded work.</li>
-<li>Simple labeling at the end of the work required: state tool used and purpose.</li>
-<li>Core work (analysis, argumentation, conclusions) must be done independently.</li>
-<li>Competence is verified through a supervised examination without AI.</li>
-</ul>
-<a href="ai-docshort/en/" class="dt-view-preset">AI-DocShort v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-doclog">
-<div class="dt-result-badge" style="border-left-color:oklch(54.87% 0.222 260.33)">AI-DocLog v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Simple (tool + purpose)</div></div>
+</div>
+<a href="ai-docshort/en/" class="dt-view-preset">View AI-DocShort v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-doclog" style="--preset-color:oklch(54.87% 0.222 260.33)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-DocLog v1</div>
 <div class="dt-result-desc">AI permitted for submissions. Prompt log and reflection required.</div>
-<ul class="dt-result-tldr">
-<li>AI tools may be used for unsupervised graded work – reflective documentation is mandatory.</li>
-<li>Prompt log and personal reflection are part of every submission.</li>
-<li>The quality of AI use (prompts, review, further processing) is included in the assessment.</li>
-<li>Competence is verified through a supervised examination without AI.</li>
-</ul>
-<a href="ai-doclog/en/" class="dt-view-preset">AI-DocLog v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-defend">
-<div class="dt-result-badge" style="border-left-color:oklch(49.39% 0.215 298.31)">AI-Defend v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Detailed (log + reflection)</div></div>
+</div>
+<a href="ai-doclog/en/" class="dt-view-preset">View AI-DocLog v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-defend" style="--preset-color:oklch(49.39% 0.215 298.31)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Defend v1</div>
 <div class="dt-result-desc">AI without restrictions. Competence verified through supervised exam.</div>
-<ul class="dt-result-tldr">
-<li>AI tools may be used <strong>without restrictions</strong> – including for all unsupervised graded work.</li>
-<li>No labeling of AI use required.</li>
-<li>Competence is verified through a supervised examination (oral or written), in which the submitted work must be represented.</li>
-<li>Those who cannot convincingly represent their work must expect a significantly lower grade.</li>
-</ul>
-<a href="ai-defend/en/" class="dt-view-preset">AI-Defend v1 &rarr;</a>
 </div>
-<div class="dt-step dt-result" data-step="r-skill">
-<div class="dt-result-badge" style="border-left-color:oklch(75.23% 0.209 144.64)">AI-Skill v1</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-yes">✓ Without restrictions</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">Without AI</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Not required</div></div>
+</div>
+<a href="ai-defend/en/" class="dt-view-preset">View AI-Defend v1 &rarr;</a>
+</div>
+<div class="dt-step dt-result" data-step="r-skill" style="--preset-color:oklch(75.23% 0.209 144.64)">
+<div class="dt-result-head">
+<div class="dt-result-badge">AI-Skill v1</div>
 <div class="dt-result-desc">AI competence is a learning goal. Process and result are assessed.</div>
-<ul class="dt-result-tldr">
-<li>AI competence is an explicit learning objective – AI tools should be used actively and reflectively.</li>
-<li>Prompt log with reflection is a mandatory component and is graded.</li>
-<li>The quality of AI use is included in the assessment.</li>
-<li>A portfolio documents AI use throughout the semester.</li>
-</ul>
-<a href="ai-skill/en/" class="dt-view-preset">AI-Skill v1 &rarr;</a>
+</div>
+<div class="dt-props">
+<div class="dt-prop"><div class="dt-prop-label">AI for Learning</div><div class="dt-prop-value c-yes">✓ Allowed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">AI for Unsupervised Work</div><div class="dt-prop-value c-yes">✓ AI competence is learning goal</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Supervised Assessment</div><div class="dt-prop-value">AI competence assessed</div></div>
+<div class="dt-prop"><div class="dt-prop-label">Documentation</div><div class="dt-prop-value">Log + reflection (graded)</div></div>
+</div>
+<a href="ai-skill/en/" class="dt-view-preset">View AI-Skill v1 &rarr;</a>
 </div>
 </div>
                 <button class="dt-restart" id="dt-restart" style="display:none"><span data-lang="de">Neu starten</span><span data-lang="en" style="display:none">Start over</span></button>
@@ -798,7 +852,7 @@
 <td class="row-label"><a href="ai-defend/de/"><span class="ct-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</a></td>
 <td class="c-yes">✓ Erlaubt</td>
 <td class="c-yes">✓ Ohne Einschränkung</td>
-<td>Ohne KI (verifiziert B)</td>
+<td>Ohne KI</td>
 <td>Nicht erforderlich</td>
 </tr>
 <tr>
@@ -853,7 +907,7 @@
 <td class="row-label"><a href="ai-defend/en/"><span class="ct-dot" style="background:oklch(49.39% 0.215 298.31)"></span>AI-Defend</a></td>
 <td class="c-yes">✓ Allowed</td>
 <td class="c-yes">✓ Without restrictions</td>
-<td>Without AI (verifies B)</td>
+<td>Without AI</td>
 <td>Not required</td>
 </tr>
 <tr>

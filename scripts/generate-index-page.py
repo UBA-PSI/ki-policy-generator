@@ -133,7 +133,7 @@ COMPARISON_TABLE = {
             {'preset': 'ai-learn', 'name': 'AI-Learn', 'cells': ['\u2713 Erlaubt', '\u2717 Nicht erlaubt', 'Ohne KI', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-no', '', '']},
             {'preset': 'ai-docshort', 'name': 'AI-DocShort', 'cells': ['\u2713 Erlaubt', '\u2713 Erlaubt', 'Ohne KI', 'Einfach (Tool + Zweck)'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-doclog', 'name': 'AI-DocLog', 'cells': ['\u2713 Erlaubt', '\u2713 Erlaubt', 'Ohne KI', 'Ausf\u00fchrlich (Protokoll + Reflexion)'], 'classes': ['c-yes', 'c-yes', '', '']},
-            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Erlaubt', '\u2713 Ohne Einschr\u00e4nkung', 'Ohne KI (verifiziert B)', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Erlaubt', '\u2713 Ohne Einschr\u00e4nkung', 'Ohne KI', 'Nicht erforderlich'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Erlaubt', '\u2713 KI-Kompetenz ist Lernziel', 'KI-Kompetenz wird gepr\u00fcft', 'Protokoll + Reflexion (benotet)'], 'classes': ['c-yes', 'c-yes', '', '']},
         ],
         'hint': '\u2191 Restriktiv \u00b7 Permissiv \u2193',
@@ -145,7 +145,7 @@ COMPARISON_TABLE = {
             {'preset': 'ai-learn', 'name': 'AI-Learn', 'cells': ['\u2713 Allowed', '\u2717 Not allowed', 'Without AI', 'Not required'], 'classes': ['c-yes', 'c-no', '', '']},
             {'preset': 'ai-docshort', 'name': 'AI-DocShort', 'cells': ['\u2713 Allowed', '\u2713 Allowed', 'Without AI', 'Simple (tool + purpose)'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-doclog', 'name': 'AI-DocLog', 'cells': ['\u2713 Allowed', '\u2713 Allowed', 'Without AI', 'Detailed (log + reflection)'], 'classes': ['c-yes', 'c-yes', '', '']},
-            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Allowed', '\u2713 Without restrictions', 'Without AI (verifies B)', 'Not required'], 'classes': ['c-yes', 'c-yes', '', '']},
+            {'preset': 'ai-defend', 'name': 'AI-Defend', 'cells': ['\u2713 Allowed', '\u2713 Without restrictions', 'Without AI', 'Not required'], 'classes': ['c-yes', 'c-yes', '', '']},
             {'preset': 'ai-skill', 'name': 'AI-Skill', 'cells': ['\u2713 Allowed', '\u2713 AI competence is learning goal', 'AI competence assessed', 'Log + reflection (graded)'], 'classes': ['c-yes', 'c-yes', '', '']},
         ],
         'hint': '\u2191 Restrictive \u00b7 Permissive \u2193',
@@ -153,9 +153,12 @@ COMPARISON_TABLE = {
 }
 
 
-def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
+def build_decision_tree_html(tree_data, presets_by_id, lang, table_data, hidden=False):
     """Build the decision tree HTML for one language."""
     back_label = 'Zurück' if lang == 'de' else 'Back'
+    table_by_preset = {row['preset']: row for row in table_data['rows']}
+    # Strip "A: " / "B: " / "C: " prefix from headers, skip first (Preset) column
+    prop_labels = [re.sub(r'^[A-C]:\s*', '', h) for h in table_data['headers'][1:]]
     parts = []
     hide = ' style="display:none"' if hidden else ''
     parts.append(f'<div class="decision-tree" data-lang="{lang}"{hide}>')
@@ -182,16 +185,19 @@ def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
         preset = presets_by_id.get(pid, {})
         color = preset.get('color', '#666')
         name = preset.get('name', pid)
-        tldr = preset.get('tldr', [])
-        parts.append(f'<div class="dt-step dt-result" data-step="{result_id}">')
-        parts.append(f'<div class="dt-result-badge" style="border-left-color:{color}">{escape(name)}</div>')
+        parts.append(f'<div class="dt-step dt-result" data-step="{result_id}" style="--preset-color:{color}">')
+        parts.append(f'<div class="dt-result-head">')
+        parts.append(f'<div class="dt-result-badge">{escape(name)}</div>')
         parts.append(f'<div class="dt-result-desc">{escape(result["desc"])}</div>')
-        if tldr:
-            parts.append('<ul class="dt-result-tldr">')
-            for b in tldr:
-                parts.append(f'<li>{parse_inline_md(b)}</li>')
-            parts.append('</ul>')
-        parts.append(f'<a href="{pid}/{lang}/" class="dt-view-preset">{escape(name)} &rarr;</a>')
+        parts.append('</div>')
+        row = table_by_preset.get(pid)
+        if row:
+            parts.append('<div class="dt-props">')
+            for label, cell, cls in zip(prop_labels, row['cells'], row['classes']):
+                cls_attr = f' {cls}' if cls else ''
+                parts.append(f'<div class="dt-prop"><div class="dt-prop-label">{escape(label)}</div><div class="dt-prop-value{cls_attr}">{escape(cell)}</div></div>')
+            parts.append('</div>')
+        parts.append(f'<a href="{pid}/{lang}/" class="dt-view-preset">{escape(name)} ansehen &rarr;</a>' if lang == 'de' else f'<a href="{pid}/{lang}/" class="dt-view-preset">View {escape(name)} &rarr;</a>')
         parts.append('</div>')
 
     parts.append('</div>')
@@ -242,8 +248,8 @@ def main():
     presets_by_id_en = {p['id']: p for p in presets_en.get('presets', [])}
 
     # Build decision trees
-    dt_de = build_decision_tree_html(DECISION_TREE['de'], presets_by_id_de, 'de')
-    dt_en = build_decision_tree_html(DECISION_TREE['en'], presets_by_id_en, 'en', hidden=True)
+    dt_de = build_decision_tree_html(DECISION_TREE['de'], presets_by_id_de, 'de', COMPARISON_TABLE['de'])
+    dt_en = build_decision_tree_html(DECISION_TREE['en'], presets_by_id_en, 'en', COMPARISON_TABLE['en'], hidden=True)
 
     # Build comparison tables
     ct_de = build_comparison_table_html(COMPARISON_TABLE['de'], presets_by_id_de, 'de')
@@ -489,41 +495,46 @@ def main():
             color: #fff;
             border-color: #333;
         }}
-        .dt-result-badge {{
-            display: block;
-            font-size: 1.3rem;
-            font-weight: 700;
-            padding: 0.15rem 0 0.15rem 0.75rem;
-            border: none;
-            border-left: 4px solid #999;
-            margin-bottom: 0.6rem;
-        }}
         .dt-dot {{
             display: none;
         }}
-        .dt-result {{
-            max-width: 38em;
+        .dt-result.dt-active {{
+            display: block;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 3px solid var(--preset-color, #999);
+            border-radius: 6px;
+            margin-top: 0.6rem;
+            overflow: hidden;
+        }}
+        .dt-result-head {{
+            padding: 1.4rem 1.5rem 1.2rem;
+        }}
+        .dt-result-badge {{
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
         }}
         .dt-result-desc {{
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-style: italic;
-            color: #555;
-            margin-bottom: 0.7rem;
+            color: #666;
+            line-height: 1.5;
         }}
         .dt-view-preset {{
-            display: inline-block;
-            padding: 0;
+            display: block;
+            padding: 1rem 1.5rem;
             font-size: 0.9rem;
             font-weight: 500;
             background: none;
             color: #333;
             text-decoration: none;
-            border-bottom: 1px solid #555;
-            transition: border-color 0.15s;
+            border-top: 1px solid #eee;
+            transition: background 0.15s;
         }}
-        .dt-view-preset:hover {{ border-color: #999; }}
+        .dt-view-preset:hover {{ background: #f8f8f6; }}
         .dt-back {{
-            margin-top: 0.6rem;
+            margin-top: 0.8rem;
             padding: 0;
             font-size: 0.82rem;
             font-family: inherit;
@@ -536,7 +547,7 @@ def main():
         }}
         .dt-back:hover {{ color: #333; }}
         .dt-restart {{
-            margin-top: 0.8rem;
+            margin-top: 1rem;
             padding: 0;
             font-size: 0.85rem;
             font-family: inherit;
@@ -548,22 +559,34 @@ def main():
             text-underline-offset: 2px;
         }}
         .dt-restart:hover {{ color: #333; }}
-        .dt-result-tldr {{
-            list-style: none;
-            padding-left: 0;
-            font-size: 0.85rem;
-            color: #444;
-            margin: 0.5rem 0 0.8rem;
-            line-height: 1.5;
+        .dt-props {{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            background: #fafaf8;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
         }}
-        .dt-result-tldr li {{
-            margin-bottom: 0.2rem;
-            padding-left: 1.2em;
-            text-indent: -1.2em;
+        .dt-prop {{
+            padding: 0.8rem 1.2rem;
         }}
-        .dt-result-tldr li::before {{
-            content: '\\2013\\00a0';
+        .dt-prop + .dt-prop {{
+            border-left: 1px solid #eee;
         }}
+        .dt-prop-label {{
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #999;
+            margin-bottom: 0.3rem;
+        }}
+        .dt-prop-value {{
+            font-size: 0.88rem;
+            color: #333;
+            line-height: 1.4;
+        }}
+        .dt-prop-value.c-yes {{ color: #2e7d32; }}
+        .dt-prop-value.c-no  {{ color: #aaa; }}
         .dt-breadcrumb {{
             display: none;
             flex-wrap: wrap;
@@ -768,6 +791,11 @@ def main():
             .presets-grid {{ grid-template-columns: 1fr; }}
             .dt-options {{ flex-direction: column; }}
             .dt-option {{ text-align: left; }}
+            .dt-result-head {{ padding: 1.1rem 1.1rem 1rem; }}
+            .dt-props {{ grid-template-columns: repeat(2, 1fr); }}
+            .dt-prop {{ padding: 0.65rem 0.9rem; }}
+            .dt-prop:nth-child(1), .dt-prop:nth-child(2) {{ border-bottom: 1px solid #eee; }}
+            .dt-view-preset {{ padding: 0.8rem 1.1rem; }}
             .comparison-table {{ font-size: 0.78rem; }}
             .comparison-table th,
             .comparison-table td {{ padding: 6px 8px; }}
