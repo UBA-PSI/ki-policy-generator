@@ -155,6 +155,7 @@ COMPARISON_TABLE = {
 
 def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
     """Build the decision tree HTML for one language."""
+    back_label = 'Zurück' if lang == 'de' else 'Back'
     parts = []
     hide = ' style="display:none"' if hidden else ''
     parts.append(f'<div class="decision-tree" data-lang="{lang}"{hide}>')
@@ -170,16 +171,26 @@ def build_decision_tree_html(tree_data, presets_by_id, lang, hidden=False):
         parts.append('<div class="dt-options">')
         for opt in step['options']:
             parts.append(f'<button class="dt-option" data-next="{opt["next"]}">{escape(opt["label"])}</button>')
-        parts.append('</div></div>')
+        parts.append('</div>')
+        if step_id != 'q1':
+            parts.append(f'<button class="dt-back">&larr; {escape(back_label)}</button>')
+        parts.append('</div>')
 
     # Result steps
     for result_id, result in tree_data['results'].items():
         pid = result['preset']
-        color = presets_by_id.get(pid, {}).get('color', '#666')
-        name = presets_by_id.get(pid, {}).get('name', pid)
+        preset = presets_by_id.get(pid, {})
+        color = preset.get('color', '#666')
+        name = preset.get('name', pid)
+        tldr = preset.get('tldr', [])
         parts.append(f'<div class="dt-step dt-result" data-step="{result_id}">')
         parts.append(f'<div class="dt-result-badge" style="border-color:{color}"><span class="dt-dot" style="background:{color}"></span>{escape(name)}</div>')
         parts.append(f'<div class="dt-result-desc">{escape(result["desc"])}</div>')
+        if tldr:
+            parts.append('<ul class="dt-result-tldr">')
+            for b in tldr:
+                parts.append(f'<li>{parse_inline_md(b)}</li>')
+            parts.append('</ul>')
         parts.append(f'<a href="{pid}/{lang}/" class="dt-view-preset">{escape(name)} &rarr;</a>')
         parts.append('</div>')
 
@@ -259,7 +270,7 @@ def main():
             bullets_en += f'<li>{parse_inline_md(b)}</li>\n'
 
         cards_html += f'''
-        <div class="preset-card">
+        <div class="preset-card" data-preset="{pid}">
             <div class="preset-card-header" style="background-color: {color}; color: #fff;">
                 <h2 class="preset-name">{escape(name)}</h2>
             </div>
@@ -269,15 +280,9 @@ def main():
                 <ul class="preset-bullets" data-lang="de">{bullets_de}</ul>
                 <ul class="preset-bullets" data-lang="en" style="display:none">{bullets_en}</ul>
             </div>
-            <div class="preset-card-links">
-                <a href="{pid}/de/" data-lang="de">Deutsch</a>
-                <a href="{pid}/en/" data-lang="de">English</a>
-                <a href="{pid}/en/" data-lang="en" style="display:none">English</a>
-                <a href="{pid}/de/" data-lang="en" style="display:none">Deutsch</a>
-                <span class="link-sep">&middot;</span>
-                <a href="{pid}/de/upload/" class="upload-link" data-lang="de">DE + Upload</a>
-                <a href="{pid}/en/upload/" class="upload-link">EN + Upload</a>
-                <a href="{pid}/de/upload/" class="upload-link" data-lang="en" style="display:none">DE + Upload</a>
+            <div class="preset-card-footer">
+                <a href="{pid}/de/" class="preset-cta" data-lang="de">Richtlinie ansehen &rarr;</a>
+                <a href="{pid}/en/" class="preset-cta" data-lang="en" style="display:none">View policy &rarr;</a>
             </div>
         </div>
 '''
@@ -513,6 +518,19 @@ def main():
             transition: opacity 0.15s;
         }}
         .dt-view-preset:hover {{ opacity: 0.85; }}
+        .dt-back {{
+            margin-top: 0.6rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.82rem;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+            transition: background 0.15s;
+        }}
+        .dt-back:hover {{ background: #f5f5f5; }}
         .dt-restart {{
             margin-top: 0.8rem;
             padding: 0.35rem 0.8rem;
@@ -525,6 +543,17 @@ def main():
             cursor: pointer;
         }}
         .dt-restart:hover {{ background: #f5f5f5; }}
+        .dt-result-tldr {{
+            list-style: disc;
+            padding-left: 1.5rem;
+            font-size: 0.85rem;
+            color: #444;
+            margin: 0.5rem 0 0.8rem;
+            line-height: 1.5;
+        }}
+        .dt-result-tldr li {{
+            margin-bottom: 0.2rem;
+        }}
         .dt-breadcrumb {{
             display: none;
             flex-wrap: wrap;
@@ -614,6 +643,8 @@ def main():
             overflow: hidden;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
             transition: box-shadow 0.15s;
+            display: flex;
+            flex-direction: column;
         }}
         .preset-card:hover {{
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
@@ -628,6 +659,7 @@ def main():
         }}
         .preset-card-body {{
             padding: 0.6rem 1rem 0.4rem;
+            flex: 1;
         }}
         .preset-desc {{
             font-size: 0.85rem;
@@ -644,29 +676,54 @@ def main():
         .preset-bullets li {{
             margin-bottom: 0.15rem;
         }}
-        .preset-card-links {{
-            padding: 0.5rem 1rem;
+        .preset-card-footer {{
+            padding: 0.6rem 1rem;
             border-top: 1px solid #f0f0f0;
-            background: #fafafa;
-            font-size: 0.82rem;
+        }}
+        .preset-cta {{
+            display: block;
+            text-align: center;
+            padding: 0.45rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a73e8;
+            text-decoration: none;
+            border: 1px solid #1a73e8;
+            border-radius: 6px;
+            transition: background 0.15s, color 0.15s;
+        }}
+        .preset-cta:hover {{
+            background: #1a73e8;
+            color: #fff;
+        }}
+
+        /* Upload toggle above cards */
+        .upload-toggle-bar {{
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 0.8rem;
+            background: #f8f8f8;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }}
+        .upload-toggle-bar label {{
             display: flex;
             align-items: center;
             gap: 0.4rem;
-            flex-wrap: wrap;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
         }}
-        .preset-card-links a {{
-            color: #1a73e8;
-            text-decoration: none;
+        .upload-toggle-bar input[type="checkbox"] {{
+            width: 16px;
+            height: 16px;
+            accent-color: #1a73e8;
         }}
-        .preset-card-links a:hover {{
-            text-decoration: underline;
-        }}
-        .upload-link {{
-            color: #888 !important;
-            font-size: 0.78rem;
-        }}
-        .link-sep {{
-            color: #ccc;
+        .upload-toggle-desc {{
+            color: #777;
+            font-size: 0.82rem;
         }}
 
         /* Footer */
@@ -757,6 +814,15 @@ def main():
         <section class="content-section" id="presets-section">
             <h2 class="section-title" data-lang="de">Presets im Detail</h2>
             <h2 class="section-title" data-lang="en" style="display:none">Presets in Detail</h2>
+            <div class="upload-toggle-bar">
+                <label>
+                    <input type="checkbox" id="upload-toggle">
+                    <span data-lang="de">Upload-Variante</span>
+                    <span data-lang="en" style="display:none">Upload variant</span>
+                </label>
+                <span class="upload-toggle-desc" data-lang="de">Erlaubt Studierenden, gekennzeichnete Kursmaterialien in KI-Tools hochzuladen.</span>
+                <span class="upload-toggle-desc" data-lang="en" style="display:none">Allows students to upload marked course materials to AI tools.</span>
+            </div>
             <div class="presets-grid">
 {cards_html}
             </div>
@@ -773,23 +839,23 @@ def main():
     </footer>
 
     <script>
-        // Language toggle
         (function() {{
             var currentLang = 'de';
+            var uploadOn = false;
             var langBtns = document.querySelectorAll('[data-lang-btn]');
+            var uploadToggle = document.getElementById('upload-toggle');
 
+            // --- Language toggle ---
             function setLang(lang) {{
                 currentLang = lang;
-                // Toggle buttons
                 langBtns.forEach(function(btn) {{
                     btn.classList.toggle('active', btn.dataset.langBtn === lang);
                 }});
-                // Toggle all data-lang elements
                 document.querySelectorAll('[data-lang]').forEach(function(el) {{
                     el.style.display = el.dataset.lang === lang ? '' : 'none';
                 }});
-                // Update html lang
                 document.documentElement.lang = lang;
+                updateCardLinks();
             }}
 
             langBtns.forEach(function(btn) {{
@@ -798,7 +864,32 @@ def main():
                 }});
             }});
 
-            // Decision tree logic
+            // --- Upload toggle ---
+            function updateCardLinks() {{
+                document.querySelectorAll('.preset-card').forEach(function(card) {{
+                    var pid = card.dataset.preset;
+                    var suffix = uploadOn ? '/upload/' : '/';
+                    card.querySelectorAll('.preset-cta').forEach(function(a) {{
+                        if (a.style.display !== 'none') {{
+                            a.href = pid + '/' + currentLang + suffix;
+                        }}
+                    }});
+                    // Update hidden lang link too for when lang switches
+                    card.querySelectorAll('.preset-cta').forEach(function(a) {{
+                        var linkLang = a.dataset.lang;
+                        if (linkLang) a.href = pid + '/' + linkLang + suffix;
+                    }});
+                }});
+            }}
+
+            if (uploadToggle) {{
+                uploadToggle.addEventListener('change', function() {{
+                    uploadOn = this.checked;
+                    updateCardLinks();
+                }});
+            }}
+
+            // --- Decision tree logic ---
             document.querySelectorAll('.decision-tree').forEach(function(tree) {{
                 var steps = tree.querySelectorAll('.dt-step');
                 var restartBtn = document.getElementById('dt-restart');
@@ -834,15 +925,55 @@ def main():
                     bc.style.display = history.length === 0 ? 'none' : 'flex';
                 }}
 
+                function goBack() {{
+                    if (history.length === 0) return;
+                    var prev = history.pop();
+                    // Find the step to go back to
+                    var targetStep = prev.stepId;
+                    steps.forEach(function(s) {{ s.classList.remove('dt-active'); }});
+                    var target = tree.querySelector('[data-step="' + targetStep + '"]');
+                    if (target) {{
+                        // Clear selection on that step
+                        target.querySelectorAll('.dt-option').forEach(function(b) {{ b.classList.remove('dt-selected'); }});
+                        target.classList.add('dt-active');
+                    }}
+                    if (restartBtn) restartBtn.style.display = 'none';
+                    // Update breadcrumb
+                    var bc = tree.querySelector('.dt-breadcrumb');
+                    if (bc) {{
+                        while (bc.firstChild) bc.removeChild(bc.firstChild);
+                        history.forEach(function(h) {{
+                            var item = document.createElement('span');
+                            item.className = 'dt-breadcrumb-item';
+                            item.textContent = h.q + ' \u2192 ';
+                            var ans = document.createElement('span');
+                            ans.className = 'dt-bc-answer';
+                            ans.textContent = h.a;
+                            item.appendChild(ans);
+                            bc.appendChild(item);
+                        }});
+                        bc.style.display = history.length === 0 ? 'none' : 'flex';
+                    }}
+                }}
+
                 tree.addEventListener('click', function(e) {{
+                    // Option click — advance
                     var opt = e.target.closest('.dt-option');
                     if (opt) {{
                         var currentStep = opt.closest('.dt-step');
+                        var stepId = currentStep.dataset.step;
                         var questionEl = currentStep.querySelector('.dt-question');
-                        history.push({{ q: questionEl.textContent.substring(0, 30) + '\u2026', a: opt.textContent }});
+                        history.push({{ stepId: stepId, q: questionEl.textContent.substring(0, 30) + '\u2026', a: opt.textContent }});
                         currentStep.querySelectorAll('.dt-option').forEach(function(b) {{ b.classList.remove('dt-selected'); }});
                         opt.classList.add('dt-selected');
                         showStep(opt.dataset.next);
+                        return;
+                    }}
+                    // Back button click
+                    var backBtn = e.target.closest('.dt-back');
+                    if (backBtn) {{
+                        goBack();
+                        return;
                     }}
                 }});
 
@@ -853,7 +984,7 @@ def main():
                         tree.querySelector('[data-step="q1"]').classList.add('dt-active');
                         restartBtn.style.display = 'none';
                         var bc = tree.querySelector('.dt-breadcrumb');
-                        if (bc) bc.style.display = 'none';
+                        if (bc) {{ while (bc.firstChild) bc.removeChild(bc.firstChild); bc.style.display = 'none'; }}
                     }});
                 }}
             }});
