@@ -783,11 +783,13 @@ def main():
         .info-boxes-grid > div {{
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             gap: 1.5rem;
             width: 100%;
         }}
         .welcome-secondary-box {{
             flex: 1 1 0;
+            min-width: calc(50% - 0.75rem);
             background: #fff;
             border-radius: 8px;
             padding: 1.2rem 1.4rem;
