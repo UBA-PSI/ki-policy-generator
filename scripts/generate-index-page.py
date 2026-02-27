@@ -909,6 +909,14 @@ def main():
             margin-bottom: 8px;
             line-height: 1.4;
         }}
+        .site-footer a {{
+            color: #555;
+            text-decoration-color: rgba(85, 85, 85, 0.3);
+        }}
+        .site-footer a:hover {{
+            color: #333;
+            text-decoration-color: currentColor;
+        }}
         .footer-links {{
             display: flex;
             justify-content: center;
