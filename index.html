@@ -1731,6 +1731,52 @@
             color: var(--primary-color);
         }
 
+        .related-tools-box {
+            background-color: #f5faf8;
+            padding: 0;
+            text-align: left;
+        }
+
+        .related-tools-box h2 {
+            font-size: 1.2rem;
+            color: #2e7d5b;
+            margin: 0 0 0.7rem 0;
+            padding: 0;
+            border-bottom: 1px solid #c8e0d5;
+            padding-bottom: 0.7rem;
+        }
+
+        .related-tools-box p {
+            margin-bottom: 0.6rem;
+            color: #3d6b56;
+            line-height: 1.5;
+        }
+
+        .related-tools-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .related-tools-box li {
+            color: #3d6b56;
+            line-height: 1.4;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.7rem;
+            position: relative;
+            border-bottom: 1px dotted rgba(46, 125, 91, 0.15);
+            font-size: 0.9rem;
+        }
+
+        .related-tools-box li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .related-tools-box a {
+            color: #2e7d5b;
+        }
+
         /* License box styling */
         .license-box {
             background-color: #f7faf7;
@@ -3125,61 +3171,8 @@
                     </div>
                 </div>
 
-                <div class="welcome-secondary-column">
-                    <!-- German disclaimer and technical notes -->
-                    <div data-ui-lang="de">
-                        <div class="welcome-secondary-box disclaimer-box">
-                            <h2>Wichtige Hinweise</h2>
-                            <p>Dieser Generator ist ein <strong>unterstützendes Angebot</strong>.</p>
-                            <ul>
-                                <li><strong>Nicht unreflektiert einsetzen:</strong> Lehrveranstaltungsspezifische KI-Richtlinien können zu neuen Problemen führen. Studierende erhalten am Semesteranfang in mehreren Lehrveranstaltungen ähnliche Dokumente mit leicht unterschiedlichem Inhalt – wie bei AGB liest dann niemand mehr das Kleingedruckte. Außerdem besteht die Gefahr des „Bike-Sheddings": Jede Lehrperson glaubt zu wissen, wie man KI am besten nutzt – am Ende diskutieren wir länger über Policys als wir unterrichten. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">Mehr dazu hier einem Beitrag von Dominik Herrmann.</a></li>
-                                <li><strong>Keine Verpflichtung:</strong> Es besteht <strong>keine Verpflichtung</strong> seitens der Universität Bamberg, eine solche Richtlinie zu erstellen oder dieses Tool zu nutzen.</li>
-                                <li><strong>Keine offizielle Position:</strong> Die bereitgestellten Textbausteine und Inhalte stellen <strong>keine</strong> offizielle Position der Universität Bamberg dar.</li>
-                                <li><strong>Keine Produktempfehlung:</strong> Werden in den Bausteinen beispielhaft KI-Werkzeuge genannt, dient dies rein informativen Zwecken zur Veranschaulichung. Es handelt sich dabei <strong>nicht</strong> um eine Empfehlung oder Aufforderung zur Nutzung bestimmter Produkte.</li>
-                                <li><strong>Ihre Verantwortung:</strong> Die Verantwortung für die Einhaltung der rechtlichen Rahmenbedingungen und die finale inhaltliche Ausgestaltung Ihrer KI-Policy liegt bei Ihnen als Lehrperson.</li>
-                                <li><strong>Dynamische Inhalte:</strong> Aufgrund des fortlaufenden wissenschaftlichen Diskurses könnte sich der Inhalt dieses Generators in Zukunft ändern. Die Inhalte dieser Version bleiben unverändert online zugänglich. Alte Versionen enthalten einen Link zur jeweils aktuellen Version des Generators.</li>
-                            </ul>
-                        </div>
-
-                        <div class="welcome-secondary-box technical-notes">
-                            <h2>Technische Hinweise</h2>
-                            <ul>
-                                <li>Sie nutzen aktuell <strong>Version v3</strong> dieses Generators. Die vorherige Version war <a href="../v2.html">Version v2</a>.</li>
-                                <li><strong>Speichern und Laden:</strong> Export und Import funktionieren <strong>nur innerhalb derselben Version</strong> des Generators. Ältere Versionen bleiben weiterhin online zugänglich.</li>
-                                <li><strong>Fertige Policy erzeugen:</strong> Sie können Ihre KI-Richtlinie jederzeit in die Zwischenablage kopieren und in Ihre eigenen Dokumente oder Lernmanagementsysteme einfügen.</li>
-                                <li><strong>Datensparsamkeit:</strong> Der KI-Policy-Generator läuft vollständig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</li>
-                                <li><strong>Formatierung:</strong> In den Textfeldern können Sie Markdown verwenden: **fett**, *kursiv*, - für Listen.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- English disclaimer and technical notes -->
-                    <div data-ui-lang="en" style="display:none">
-                        <div class="welcome-secondary-box disclaimer-box">
-                            <h2>Important Notes</h2>
-                            <p>This generator is a <strong>supporting tool</strong>.</p>
-                            <ul>
-                                <li><strong>Don't use without reflection:</strong> Course-specific AI policies can lead to new problems. Students receive similar documents with slightly different content in multiple courses at the beginning of each semester – like with terms and conditions, nobody reads the fine print anymore. There is also the danger of "bike-shedding": every instructor thinks they know how to best use AI – and we end up discussing policies longer than we teach. <a href="https://uni-mal-anders.de/de/shorts/2025-10-23-pruefungen-ki-versuchung-lehrende/" target="_blank">More on this in an article by Dominik Herrmann.</a></li>
-                                <li><strong>No obligation:</strong> There is <strong>no obligation</strong> by the University of Bamberg to create such a policy or to use this tool.</li>
-                                <li><strong>No official position:</strong> The provided text modules and content do <strong>not</strong> represent an official position of the University of Bamberg.</li>
-                                <li><strong>No product recommendation:</strong> When AI tools are mentioned as examples in the modules, this serves purely informational purposes for illustration. This does <strong>not</strong> constitute a recommendation or invitation to use specific products.</li>
-                                <li><strong>Your responsibility:</strong> The responsibility for compliance with the legal framework and the final content of your AI policy lies with you as the instructor.</li>
-                                <li><strong>Dynamic content:</strong> Due to the ongoing scientific discourse, the content of this generator may change in the future. The content of this version will remain available online unchanged. Older versions contain a link to the current version of the generator.</li>
-                            </ul>
-                        </div>
-
-                        <div class="welcome-secondary-box technical-notes">
-                            <h2>Technical Notes</h2>
-                            <ul>
-                                <li>You are currently using <strong>Version v3</strong> of this generator. The previous version was <a href="../v2.html">Version v2</a>.</li>
-                                <li><strong>Save and Load:</strong> Export and import only work <strong>within the same version</strong> of the generator. Older versions remain accessible online.</li>
-                                <li><strong>Generate policy:</strong> You can copy your AI policy to the clipboard at any time and paste it into your own documents or learning management systems.</li>
-                                <li><strong>Data privacy:</strong> The AI Policy Generator runs entirely client-side. The content you enter is not sent to the server.</li>
-                                <li><strong>Formatting:</strong> You can use Markdown in the text fields: **bold**, *italic*, - for lists.</li>
-                            </ul>
-                        </div>
-                    </div>
-
+                <div class="welcome-secondary-column" id="info-boxes-container">
+                    <!-- Loaded from data/info-boxes.html -->
                 </div>
             </div>
         </div>
@@ -5243,7 +5236,11 @@
                 useBtn.addEventListener('click', () => {
                     if (!modal) return;
                     const preset = modal._currentPreset;
-                    if (preset) applyPreset(preset, false);
+                    if (!preset) return;
+                    const lang = typeof currentLanguage !== 'undefined' ? currentLanguage : 'de';
+                    const uploadEnabled = presetUploadFlags[preset.id] || false;
+                    const uploadSuffix = uploadEnabled ? 'upload/' : '';
+                    window.location.href = '../p/' + preset.id + '/' + lang + '/' + uploadSuffix;
                 });
             }
 
@@ -5917,6 +5914,24 @@
             }
         }
 
+        // Load shared info boxes from external snippet (trusted local file, same origin)
+        async function loadInfoBoxes() {
+            const container = document.getElementById('info-boxes-container');
+            if (!container) return;
+            try {
+                const resp = await fetch('data/info-boxes.html');
+                if (!resp.ok) throw new Error(resp.statusText);
+                container.innerHTML = await resp.text();
+                // Apply current language visibility to loaded elements
+                const lang = typeof currentLanguage !== 'undefined' ? currentLanguage : 'de';
+                container.querySelectorAll('[data-ui-lang]').forEach(el => {
+                    el.style.display = el.dataset.uiLang === lang ? '' : 'none';
+                });
+            } catch (err) {
+                console.error('Failed to load info boxes:', err);
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             // Load policy data from YAML and render items
@@ -5925,6 +5940,9 @@
             } catch (error) {
                 console.error('Failed to load policy data:', error);
             }
+
+            // Load shared info boxes
+            loadInfoBoxes();
 
             // Setup different parts of the application
             initializeUI();

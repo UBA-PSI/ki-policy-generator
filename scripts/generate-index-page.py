@@ -244,6 +244,12 @@ def main():
     presets_de = yaml.safe_load(open(os.path.join(data_dir, 'presets.yaml'), encoding='utf-8'))
     presets_en = yaml.safe_load(open(os.path.join(data_dir, 'presets-en.yaml'), encoding='utf-8'))
 
+    # Load shared info boxes and transform for /p/ (data-ui-lang -> data-lang)
+    info_boxes_path = os.path.join(data_dir, 'info-boxes.html')
+    with open(info_boxes_path, encoding='utf-8') as f:
+        info_boxes_html = f.read()
+    info_boxes_html = info_boxes_html.replace('data-ui-lang', 'data-lang')
+
     presets_by_id_de = {p['id']: p for p in presets_de.get('presets', [])}
     presets_by_id_en = {p['id']: p for p in presets_en.get('presets', [])}
 
@@ -768,7 +774,158 @@ def main():
             font-size: 0.82rem;
         }}
 
-        /* Footer */
+        /* Info boxes */
+        .info-boxes-grid {{
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+        }}
+        .info-boxes-grid > div {{
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 100%;
+        }}
+        .welcome-secondary-box {{
+            flex: 1 1 0;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }}
+        .welcome-secondary-box h2 {{
+            font-size: 1.05rem;
+            margin: 0 0 0.7rem 0;
+            padding: 0 0 0.7rem 0;
+        }}
+        .welcome-secondary-box ul {{
+            list-style: none;
+            padding-left: 0;
+        }}
+        .welcome-secondary-box li {{
+            line-height: 1.4;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.7rem;
+            position: relative;
+        }}
+        .welcome-secondary-box li:last-child {{
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }}
+        .welcome-secondary-box p {{
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }}
+        /* Disclaimer box */
+        .disclaimer-box {{
+            background-color: #fefcf5;
+        }}
+        .disclaimer-box h2 {{
+            color: #ab8b36;
+            border-bottom: 1px solid #e8e0cc;
+        }}
+        .disclaimer-box p,
+        .disclaimer-box li {{
+            color: #8a6d3b;
+        }}
+        .disclaimer-box li {{
+            border-bottom: 1px dotted rgba(138, 109, 59, 0.15);
+        }}
+        /* Technical notes box */
+        .technical-notes {{
+            background-color: #f7f9fa;
+            border-color: #e2e8ed;
+        }}
+        .technical-notes h2 {{
+            color: #456789;
+            border-bottom: 1px solid #e2e8ed;
+        }}
+        .technical-notes li {{
+            color: #555;
+            border-bottom: 1px dotted rgba(100, 100, 100, 0.15);
+        }}
+        .technical-notes a {{
+            color: #333;
+        }}
+        /* Related tools box */
+        .related-tools-box {{
+            background-color: #f5faf8;
+        }}
+        .related-tools-box h2 {{
+            color: #2e7d5b;
+            border-bottom: 1px solid #c8e0d5;
+        }}
+        .related-tools-box p,
+        .related-tools-box li {{
+            color: #3d6b56;
+        }}
+        .related-tools-box li {{
+            border-bottom: 1px dotted rgba(46, 125, 91, 0.15);
+        }}
+        .related-tools-box a {{
+            color: #2e7d5b;
+        }}
+        @media (max-width: 768px) {{
+            .info-boxes-grid,
+            .info-boxes-grid > div {{
+                flex-direction: column;
+            }}
+        }}
+
+        /* Site footer */
+        .site-footer {{
+            max-width: 960px;
+            margin: 3rem auto 0;
+            padding: 2rem 1rem 2rem;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }}
+        .site-footer h3 {{
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #333;
+        }}
+        .site-footer p {{
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }}
+        .footer-links {{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin: 12px 0;
+        }}
+        .footer-links a {{
+            color: #333;
+            text-decoration: none;
+        }}
+        .footer-links a:hover {{
+            text-decoration: underline;
+        }}
+        .footer-license {{
+            margin: 12px 0;
+            font-size: 0.82rem;
+            color: #999;
+        }}
+        .footer-license a {{
+            color: #666;
+            text-decoration: underline;
+        }}
+        .footer-bottom {{
+            border-top: 1px solid #e0e0e0;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #999;
+        }}
+
+        /* Page footer (simple) */
         .page-footer {{
             max-width: 960px;
             margin: 1.5rem auto 2rem;
@@ -874,15 +1031,56 @@ def main():
 {cards_html}
             </div>
         </section>
+
+        <!-- Info Boxes Section -->
+        <section class="content-section" id="info-section">
+            <h2 class="section-title" data-lang="de">Hinweise</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Notes</h2>
+            <div class="info-boxes-grid">
+{info_boxes_html}
+            </div>
+        </section>
     </div>
 
-    <footer class="page-footer">
-        <span data-lang="de">Erstellt mit dem <a href="/v3/">KI-Policy-Generator</a></span>
-        <span data-lang="en" style="display:none">Created with the <a href="/v3/">AI Policy Generator</a></span>
-        &middot;
-        <span data-lang="de">Inhalte lizenziert unter</span>
-        <span data-lang="en" style="display:none">Content licensed under</span>
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+    <footer class="site-footer">
+        <div data-lang="de">
+            <div class="footer-section">
+                <h3>&Uuml;ber diesen Generator</h3>
+                <p>Dieser KI-Policy-Generator wird vom <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office der Universit&auml;t Bamberg</a> betrieben.</p>
+                <p>Bei der Entwicklung der Texte und des Generators kam Generative KI zum Einsatz.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">Weiterf&uuml;hrende Informationen</a>
+                <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
+                <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Impressum</a>
+                <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Datenschutz</a>
+            </div>
+            <div class="footer-license">
+                <p>Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a>, Code unter <a href="https://opensource.org/licenses/MIT" target="_blank">MIT-Lizenz</a></p>
+            </div>
+            <div class="footer-bottom">
+                <p>Der KI-Policy-Generator l&auml;uft vollst&auml;ndig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</p>
+            </div>
+        </div>
+        <div data-lang="en" style="display:none">
+            <div class="footer-section">
+                <h3>About this Generator</h3>
+                <p>This AI Policy Generator is operated by the <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office of the University of Bamberg</a>.</p>
+                <p>Generative AI was used in the development of the texts and the generator.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">More Information</a>
+                <a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a>
+                <a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Legal Notice</a>
+                <a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Privacy Policy</a>
+            </div>
+            <div class="footer-license">
+                <p>Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank">CC BY-SA 4.0</a>, code under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
+            </div>
+            <div class="footer-bottom">
+                <p>The AI Policy Generator runs entirely client-side. The content you enter is not sent to the server.</p>
+            </div>
+        </div>
     </footer>
 
     <script>
