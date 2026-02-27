@@ -849,8 +849,21 @@ def main():
             color: #555;
             border-bottom: 1px dotted rgba(100, 100, 100, 0.15);
         }}
+        .disclaimer-box a {{
+            color: #8b6914;
+            text-decoration-color: rgba(139, 105, 20, 0.3);
+        }}
+        .disclaimer-box a:hover {{
+            color: #6b5100;
+            text-decoration-color: currentColor;
+        }}
         .technical-notes a {{
-            color: #333;
+            color: #456789;
+            text-decoration-color: rgba(69, 103, 137, 0.3);
+        }}
+        .technical-notes a:hover {{
+            color: #2a4d6e;
+            text-decoration-color: currentColor;
         }}
         /* Related tools box */
         .related-tools-box {{
