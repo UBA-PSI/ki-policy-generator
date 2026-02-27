@@ -540,13 +540,63 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
         /* Footer */
         .page-footer {{
             max-width: 750px;
-            margin: 0 auto 2rem;
-            padding: 1rem 2rem;
+            margin: 2rem auto 0;
+            padding: 2rem 1rem;
+            border-top: 1px solid #e0e0e0;
             text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }}
+        .page-footer h3 {{
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #333;
+        }}
+        .page-footer p {{
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }}
+        .page-footer a {{
+            color: #555;
+            text-decoration-color: rgba(85, 85, 85, 0.3);
+        }}
+        .page-footer a:hover {{
+            color: #333;
+            text-decoration-color: currentColor;
+        }}
+        .footer-links {{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin: 12px 0;
+        }}
+        .footer-links a {{
+            color: #333;
+            text-decoration: none;
+        }}
+        .footer-links a:hover {{
+            text-decoration: underline;
+        }}
+        .footer-license {{
+            margin: 12px 0;
+            font-size: 0.82rem;
+            color: #999;
+        }}
+        .footer-license a {{
+            color: #666;
+            text-decoration: underline;
+        }}
+        .footer-bottom {{
+            border-top: 1px solid #e0e0e0;
+            padding-top: 12px;
+            margin-top: 12px;
             font-size: 0.8rem;
             color: #999;
         }}
-        .page-footer a {{ color: #666; }}
+        .footer-logo {{
+            margin-top: 12px;
+        }}
 
         /* Print styles */
         @media print {{
@@ -608,11 +658,7 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
     </main>
 
     <footer class="page-footer">
-        {escape_html(created_with)} <a href="{escape_html(generator_base_url)}">{escape_html(generator_name)}</a>
-        &middot;
-        {escape_html(license_text)} <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
-        &middot;
-        <a href="https://psi.uni-bamberg.de/de/ueberuns/" target="_blank" rel="noopener">Prof. Dr. Dominik Herrmann</a>
+        {'<div class="footer-section"><h3>&Uuml;ber diesen Generator</h3><p>Dieser KI-Policy-Generator wird vom <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office der Universit&auml;t Bamberg</a> betrieben und im Rahmen des Projekts <a href="https://projekt-bakule.de/" target="_blank">BaKuLe</a> entwickelt. BaKuLe ist ein Hochschulentwicklungsprojekt der Universit&auml;t Bamberg, gef&ouml;rdert durch die <a href="https://stiftung-hochschullehre.de/" target="_blank">Stiftung Innovation in der Hochschullehre</a>.</p><p>Bei der Entwicklung der Texte und des Generators kam Generative KI zum Einsatz.</p><p class="footer-logo"><a href="https://stiftung-hochschullehre.de/" target="_blank"><img src="/v3/images/logo-stil.svg" alt="Stiftung Innovation in der Hochschullehre" height="40"></a></p></div><div class="footer-links"><a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">Weiterf&uuml;hrende Informationen</a><a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a><a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Impressum</a><a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Datenschutz</a></div><div class="footer-license"><p>Inhalte lizenziert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank">CC BY-SA 4.0</a>, Code unter <a href="https://opensource.org/licenses/MIT" target="_blank">MIT-Lizenz</a></p></div><div class="footer-bottom"><p>Der KI-Policy-Generator l&auml;uft vollst&auml;ndig clientseitig. Die Inhalte, die Sie eingeben, werden nicht an den Server gesendet.</p></div>' if lang == 'de' else '<div class="footer-section"><h3>About this Generator</h3><p>This AI Policy Generator is operated by the <a href="https://www.uni-bamberg.de/cio/" target="_blank">Chief Information Office of the University of Bamberg</a> and developed as part of the <a href="https://projekt-bakule.de/" target="_blank">BaKuLe</a> project. BaKuLe is a higher education development project at the University of Bamberg, funded by the <a href="https://stiftung-hochschullehre.de/" target="_blank">Foundation for Innovation in Higher Education Teaching</a>.</p><p>Generative AI was used in the development of the texts and the generator.</p><p class="footer-logo"><a href="https://stiftung-hochschullehre.de/" target="_blank"><img src="/v3/images/logo-stil.svg" alt="Foundation for Innovation in Higher Education Teaching" height="40"></a></p></div><div class="footer-links"><a href="https://www.uni-bamberg.de/cio/ki/" target="_blank">More Information</a><a href="https://github.com/UBA-PSI/ki-policy-generator" target="_blank">GitHub</a><a href="https://www.uni-bamberg.de/cio/kontaktnavigation/impressum/" target="_blank">Legal Notice</a><a href="https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/webauftritt/" target="_blank">Privacy Policy</a></div><div class="footer-license"><p>Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank">CC BY-SA 4.0</a>, code under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></p></div><div class="footer-bottom"><p>The AI Policy Generator runs entirely client-side. The content you enter is not sent to the server.</p></div>'}
     </footer>
 
     <script>
