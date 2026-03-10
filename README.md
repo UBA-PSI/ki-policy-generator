@@ -53,7 +53,7 @@ Dieses Projekt verwendet eine duale Lizenzierung:
 
 **Dominik Herrmann**
 Otto-Friedrich-Universität Bamberg
-https://www.uni-bamberg.de/psi/
+https://psi.uni-bamberg.de/
 
 ## Kontakt
 
