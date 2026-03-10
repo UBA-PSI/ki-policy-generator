@@ -2,7 +2,7 @@
 
 Ein interaktives Werkzeug zur Erstellung von KI-Richtlinien für Lehrveranstaltungen an Hochschulen.
 
-**Live-Version:** https://web.psi.uni-bamberg.de/ki-policy-generator/v3/
+**Live-Version:** https://ki-policy.org/
 
 ## Funktionen
 
