@@ -42,6 +42,12 @@ sed -i '' "s/ts=[0-9]*/ts=${TS}/g" root-index.html
 
 echo "=== Deploying to ${REMOTE}:${REMOTE_ROOT} ==="
 
+# Create remote backup before overwriting anything
+BACKUP_TS=$(date +%Y%m%d-%H%M%S)
+BACKUP_FILE="backup-pre-${VERSION}-${BACKUP_TS}.tar.gz"
+echo "Creating remote backup ${BACKUP_FILE}…"
+ssh "${REMOTE}" "mkdir -p ${REMOTE_ROOT}/backups && tar -czf ${REMOTE_ROOT}/backups/${BACKUP_FILE} --exclude='backups' -C ${REMOTE_ROOT} ."
+
 # Deploy generator to /v3/
 echo "Syncing /v3/ (generator)…"
 rsync -avz --delete \

@@ -334,9 +334,14 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
     upload_suffix = '-Upload' if upload else '-NoUpload'
     display_name = preset_name + upload_suffix
 
-    # Navigation URLs (relative)
-    lang_switch_url = f'../{"en" if lang == "de" else "de"}/' + ('upload/' if upload else '')
-    upload_switch_url = 'upload/' if not upload else '../'
+    # Navigation URLs (absolute, server-rooted)
+    preset_root = f'/p/{preset_id}'
+    upload_seg = 'upload/' if upload else ''
+    de_url = f'{preset_root}/de/{upload_seg}'
+    en_url = f'{preset_root}/en/{upload_seg}'
+    no_upload_url = f'{preset_root}/{lang}/'
+    upload_url = f'{preset_root}/{lang}/upload/'
+    presets_index_url = '/p/'
 
     # Generator link
     generator_url = f'{generator_base_url}?preset={preset_id}&upload={"true" if upload else "false"}&lang={lang}'
@@ -631,7 +636,7 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
 </head>
 <body>
     <nav class="uni-branding-bar" aria-label="{'Preset-Übersicht' if lang == 'de' else 'Preset overview'}">
-        <a href="{'../../' if not upload else '../../../'}" class="branding-back">&larr; {'Alle Presets' if lang == 'de' else 'All Presets'}</a>
+        <a href="{presets_index_url}" class="branding-back">&larr; {'Alle Presets' if lang == 'de' else 'All Presets'}</a>
         <a href="https://www.uni-bamberg.de/" target="_blank" rel="noopener">
             <span>Universität Bamberg</span>
             <svg class="uni-branding-logo" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="76.6" cy="106" r="36" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M26.7,25.2C65.4,1.3 115.6,8.2 146.4,41.6C177.2,75 180.1,125.6 153.1,162.2" style="fill:none;stroke:white;stroke-width:19.84px"/><path d="M11.2,109.2C9.8,82.5 25,57.6 49.4,46.5C73.8,35.4 102.5,40.2 121.8,58.7C141.2,77.2 147.3,105.7 137.3,130.5C127.3,155.4 103.1,171.6 76.3,171.5" style="fill:none;stroke:white;stroke-width:19.84px"/></svg>
@@ -640,12 +645,12 @@ def generate_full_page(preset, policy_content, upload, lang, other_lang, ui_stri
 
     <nav class="page-nav">
         <div class="nav-group">
-            <a href="../de/{'' if not upload else 'upload/'}" class="nav-btn {'active' if lang == 'de' else ''}">DE</a>
-            <a href="../en/{'' if not upload else 'upload/'}" class="nav-btn {'active' if lang == 'en' else ''}">EN</a>
+            <a href="{de_url}" class="nav-btn {'active' if lang == 'de' else ''}">DE</a>
+            <a href="{en_url}" class="nav-btn {'active' if lang == 'en' else ''}">EN</a>
         </div>
         <div class="nav-group">
-            <a href="{'../' if upload else './'}" class="nav-btn {'active' if not upload else ''}">{escape_html('Kein Upload' if lang == 'de' else 'No upload')}</a>
-            <a href="{'./' if upload else 'upload/'}" class="nav-btn {'active' if upload else ''}">{escape_html('Upload erlaubt' if lang == 'de' else 'Upload allowed')}</a>
+            <a href="{no_upload_url}" class="nav-btn {'active' if not upload else ''}">{escape_html('Kein Upload' if lang == 'de' else 'No upload')}</a>
+            <a href="{upload_url}" class="nav-btn {'active' if upload else ''}">{escape_html('Upload erlaubt' if lang == 'de' else 'Upload allowed')}</a>
         </div>
         <div class="nav-spacer"></div>
         <a href="{escape_html(generator_url)}" class="nav-customize">{escape_html(customize_label)} &rarr;</a>
