@@ -32,9 +32,13 @@ sed -i '' "s/policy-loader\.js?v=[^\"']*/policy-loader.js?v=${VERSION}/" index.h
 # Update hardcoded fallback in policy-loader.js
 sed -i '' "s/window\.APP_VERSION || '[^']*'/window.APP_VERSION || '${VERSION}'/" policy-loader.js
 
-# Generate static preset pages
+# Generate static preset pages (prefer repo venv so PyYAML is available)
 echo "Generating static preset pages…"
-python3 scripts/generate-preset-pages.py
+if [ -x "${SCRIPT_DIR}/.venv/bin/python3" ]; then
+    "${SCRIPT_DIR}/.venv/bin/python3" scripts/generate-preset-pages.py
+else
+    python3 scripts/generate-preset-pages.py
+fi
 
 # Update cache-bust timestamp in root-index.html
 TS=$(date +%s)
